@@ -13,7 +13,7 @@ public class AudioLibraryVLCPlayerTest
 {
     @Test
     public void playNoteUsingVlcPlayer() {
-        AudioLibrary.initialize();
+        AudioLibrary.initializeWithGivenSeconds(1);
         List<File> audioFiles = new ArrayList<File>();
         AudioLibrary.addFileIfFound( audioFiles, BaseNotes.DHA );
         VLCBasedPlayer.playList( audioFiles );
