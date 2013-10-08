@@ -1,0 +1,21 @@
+package com.shruti.music;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import com.shruti.music.AudioLibrary.VLCBasedPlayer;
+import com.shruti.music.Playable.BaseNotes;
+
+public class AudioLibraryVLCPlayerTest
+{
+    @Test
+    public void playNoteUsingVlcPlayer() {
+        AudioLibrary.initialize();
+        List<File> audioFiles = new ArrayList<File>();
+        AudioLibrary.addFileIfFound( audioFiles, BaseNotes.DHA );
+        VLCBasedPlayer.playList( audioFiles );
+    }
+}
