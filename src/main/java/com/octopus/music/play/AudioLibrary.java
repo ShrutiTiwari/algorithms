@@ -1,20 +1,28 @@
 package com.octopus.music.play;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.octopus.music.play.AudioPlayer.CommandExecutor;
+import com.octopus.music.play.AudioPlayer.VLCPlayer;
+
 public class AudioLibrary {
 
 	//static final String VLC_PLAYER = "C:/Program Files/VideoLAN/VLC/vlc.exe";
-    static final String VLC_PLAYER = "C:/software/VideoLAN/VLC/vlc.exe";
+    static final String VLC_EXE_LOCATION = "C:/software/VideoLAN/VLC/vlc.exe";
 	//private static final String AUDIO_LIBRARY = "C:\\recognition-puzzles\\";
 	private static final String AUDIO_LIBRARY = "recognition-puzzles/";
 	private static final String FOLDER_PREFIX = "note-recognition-";
 	static Map<String, File> allNoteAudios;
+	
+	private static final AudioPlayer audioPlayer= new VLCPlayer( CommandExecutor.WINDOWS, VLC_EXE_LOCATION );
 
+	public static AudioPlayer audioPlayer(){
+	    return audioPlayer;
+	}
+	
 	public static void initialize() {
 		initializeWithGivenSeconds(2);
 	}
@@ -48,43 +56,5 @@ public class AudioLibrary {
 			allNoteAudios.put(noteName, audioFile);
 		}
 		return allNoteAudios;
-	}
-	static class WindowsBasedVLCPlayer {
-		private static final String vlcOption = "--play-and-exit";
-		private final Runtime runtime = Runtime.getRuntime();
-		private final String[] command;
-
-		private WindowsBasedVLCPlayer(String[] command) {
-			this.command=command;
-		}
-
-		static void play(File... audioFiles) {
-			String[] command = new String[2 + audioFiles.length];
-			command[0] = VLC_PLAYER;
-			command[1] = vlcOption;
-			int i = 0;
-			for (File each : audioFiles) {
-				command[i++ + 2] = each.getAbsolutePath();
-			}
-			new WindowsBasedVLCPlayer(command).play();
-		}
-
-		static void playList(List<File> audioFiles) {
-			play(audioFiles.toArray(new File[audioFiles.size()]));
-		}
-
-		private void play() {
-			try {
-				Process p = runtime.exec(command);
-				int success = p.waitFor();
-				if (success != 0) {
-					System.out.println("process execution failed ");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

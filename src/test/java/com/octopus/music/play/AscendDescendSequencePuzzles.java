@@ -2,12 +2,12 @@ package com.octopus.music.play;
 
 import java.util.HashSet;
 
-import com.octopus.music.play.ArohiAvrohiPlayer;
+import com.octopus.music.play.SequencePlayer;
 import com.octopus.music.play.AudioLibrary;
-import com.octopus.music.play.ArohiAvrohiPlayer.AllThaat;
+import com.octopus.music.play.SequencePlayer.AllThaat;
 
-public class ArohiAvrohiPuzzles {
-	public ArohiAvrohiPuzzles() {
+public class AscendDescendSequencePuzzles {
+	public AscendDescendSequencePuzzles() {
 		AudioLibrary.initializeWithGivenSeconds(1);
 	}
 
@@ -16,28 +16,28 @@ public class ArohiAvrohiPuzzles {
 		System.out.println("Repeating each item[" + repeatCount + "] \n");
 		for (int i = 0; i < 3; i++) {
 			//puzzleBuilder.playArohiAvrohi(repeatCount, SecondYearRaag.values());
-			playArohiAvrohi(repeatCount, ArohiAvrohiPlayer
+			playAscendAndDescend(repeatCount, SequencePlayer
 					.AllThaat.values());
 			System.out.println("round[" + i + "] done \n");
 		}
 	}
 
-	private void playArohiAvrohi(int count, ArohiAvrohiPlayer... raags) {
-		AllThaat.BILAWAL.playAarohiAvrohi();
+	private void playAscendAndDescend(int count, SequencePlayer... raags) {
+		AllThaat.BILAWAL.playAscendAndDescend();
 		System.out.println("\n Played [BILAWAL]");
-		HashSet<ArohiAvrohiPlayer> hasheddata = randomize(raags);
-		for (ArohiAvrohiPlayer each : hasheddata) {
+		HashSet<SequencePlayer> hasheddata = randomize(raags);
+		for (SequencePlayer each : hasheddata) {
 			for (int i = 0; i < count; i++) {
-				each.playAarohiAvrohi();
+				each.playAscendAndDescend();
 				System.out.println("\nPlayed [" + each.name() + "] ." + i);
 				System.out.println("\n");
 			}
 		}
 	}
 
-	private HashSet<ArohiAvrohiPlayer> randomize(ArohiAvrohiPlayer... raag) {
-		HashSet<ArohiAvrohiPlayer> hasheddata = new HashSet<ArohiAvrohiPlayer>();
-		for (ArohiAvrohiPlayer each : raag) {
+	private HashSet<SequencePlayer> randomize(SequencePlayer... raag) {
+		HashSet<SequencePlayer> hasheddata = new HashSet<SequencePlayer>();
+		for (SequencePlayer each : raag) {
 			hasheddata.add(each);
 		}
 		return hasheddata;

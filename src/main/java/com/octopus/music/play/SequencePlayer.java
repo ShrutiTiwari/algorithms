@@ -2,20 +2,20 @@ package com.octopus.music.play;
 
 import static com.octopus.music.play.Playable.BaseNotes.*;
 
-public interface ArohiAvrohiPlayer {
+public interface SequencePlayer {
 	public String name();
 
-	public void playAarohi();
+	public void playAscend();
 
-	public void playAarohiAvrohi();
+	public void playAscendAndDescend();
 
-	public void playAvrohi();
+	public void playDescend();
 
 	public void playSequence(String sequence);
 
 	public String type();
 
-	public enum AllThaat implements ArohiAvrohiPlayer {
+	public enum AllThaat implements SequencePlayer {
 		BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
 		PURVI(RE_, GA, MA_, PA, DHA_, NI),
 		MARWA(RE_, GA, MA_, PA, DHA, NI),
@@ -27,24 +27,24 @@ public interface ArohiAvrohiPlayer {
 		BHAIRAVI(RE_, GA_, MA, PA, DHA_, NI_),
 		TODI(RE_, GA_, MA_, PA, DHA_, NI);
 
-		private final Playable[] aarohiNotes;
-		private final Playable[] avrohiNotes;
+		private final Playable[] ascendNotes;
+		private final Playable[] descendNotes;
 
-		private AllThaat(Playable... aarohiNotes) {
-			this.aarohiNotes = aarohiNotes;
-			this.avrohiNotes = Util.reverse(aarohiNotes);
+		private AllThaat(Playable... ascendNotes) {
+			this.ascendNotes = ascendNotes;
+			this.descendNotes = Util.reverse(ascendNotes);
 		}
 
-		public void playAarohi() {
-			Util.play(SA, aarohiNotes, HIGH_SA);
+		public void playAscend() {
+			Util.play(SA, ascendNotes, HIGH_SA);
 		}
 
-		public void playAarohiAvrohi() {
-			Util.play(SA, aarohiNotes, HIGH_SA, avrohiNotes);
+		public void playAscendAndDescend() {
+			Util.play(SA, ascendNotes, HIGH_SA, descendNotes);
 		}
 
-		public void playAvrohi() {
-			Util.play(HIGH_SA, avrohiNotes, SA);
+		public void playDescend() {
+			Util.play(HIGH_SA, descendNotes, SA);
 		}
 
 		public void playSequence(String sequence) {
@@ -73,12 +73,12 @@ public interface ArohiAvrohiPlayer {
 				String[] splitExp=expression.split(delim);
 				int numOfNotesInPattern= splitExp.length;
 				System.out.println(numOfNotesInPattern);
-				ascSequ=createSequence(SA, HIGH_SA, aarohiNotes, numOfNotesInPattern);
-				descSequ=createSequence( HIGH_SA, SA, avrohiNotes, numOfNotesInPattern);
+				ascSequ=createSequence(SA, HIGH_SA, ascendNotes, numOfNotesInPattern);
+				descSequ=createSequence( HIGH_SA, SA, descendNotes, numOfNotesInPattern);
 			}
 
 			private Playable[] createSequence(BaseNotes firstNote, BaseNotes lastNote, Playable[] seqNotes, int numOfNotesInPattern) {
-				int numOfDistinctNotes = aarohiNotes.length+2;
+				int numOfDistinctNotes = ascendNotes.length+2;
 				int totalNotesInSeq= (numOfDistinctNotes-numOfNotesInPattern)*numOfNotesInPattern+2;
 				System.out.println(totalNotesInSeq);
 
@@ -113,31 +113,31 @@ public interface ArohiAvrohiPlayer {
 		}
 	}
 
-	public enum Pattern implements ArohiAvrohiPlayer {
+	public enum Pattern implements SequencePlayer {
 		Khamaj(  NI_),
 		Bilawal(  NI),
 		Dha(DHA);
-		private final Playable[] aarohiNotes;
-		private final Playable[] avrohiNotes;
+		private final Playable[] ascendNotes;
+		private final Playable[] descendNotes;
 
-		private Pattern(Playable... aarohiNotes) {
-			this.aarohiNotes = aarohiNotes;
-			this.avrohiNotes = Util.reverse(aarohiNotes);
+		private Pattern(Playable... ascendNotes) {
+			this.ascendNotes = ascendNotes;
+			this.descendNotes = Util.reverse(ascendNotes);
 		}
 
 		
-		public void playAarohi() {
-			Util.play(PA, aarohiNotes, HIGH_SA);
+		public void playAscend() {
+			Util.play(PA, ascendNotes, HIGH_SA);
 		}
 
 		
-		public void playAarohiAvrohi() {
-			playAarohi();
-			playAvrohi();
+		public void playAscendAndDescend() {
+			playAscend();
+			playDescend();
 		}
 		
-		public void playAvrohi() {
-			Util.play(HIGH_SA, avrohiNotes, PA);
+		public void playDescend() {
+			Util.play(HIGH_SA, descendNotes, PA);
 		}
 
 		
@@ -152,7 +152,7 @@ public interface ArohiAvrohiPlayer {
 		}
 	}
 
-	public enum SecondYearRaag implements ArohiAvrohiPlayer {
+	public enum SecondYearRaag implements SequencePlayer {
 		GUJARI_TODI(RE_, GA_, MA_, DHA_, NI),
 		BAIRAGI(RE_, MA, PA, NI_),
 		SHUDH_SARANG(sequence(RE, MA_, PA, NI), sequence(NI, DHA, PA, MA_, PA, MA, RE)),
@@ -160,17 +160,17 @@ public interface ArohiAvrohiPlayer {
 		PURYA_KALYAN(sequence(RE_, GA, MA_, PA, MA_, DHA, NI), sequence(NI, DHA, PA, DHA, MA_, PA, GA, MA_, RE_, GA, RE_)),
 		MULTANI(sequence(GA_, MA_, PA, NI), sequence(NI, DHA_, PA, MA_, GA_, RE_));
 
-		private final Playable[] aarohiNotes;
-		private final Playable[] avrohiNotes;
+		private final Playable[] ascendNotes;
+		private final Playable[] descendNotes;
 
-		private SecondYearRaag(Playable... aarohiNotes) {
-			this.aarohiNotes = aarohiNotes;
-			this.avrohiNotes = Util.reverse(aarohiNotes);
+		private SecondYearRaag(Playable... ascendNotes) {
+			this.ascendNotes = ascendNotes;
+			this.descendNotes = Util.reverse(ascendNotes);
 		}
 
-		private SecondYearRaag(Playable[] aarohiNotes, Playable[] avrohiNotes) {
-			this.aarohiNotes = aarohiNotes;
-			this.avrohiNotes = avrohiNotes;
+		private SecondYearRaag(Playable[] ascendNotes, Playable[] descendNotes) {
+			this.ascendNotes = ascendNotes;
+			this.descendNotes = descendNotes;
 		}
 
 		private static Playable[] sequence(Playable... notes) {
@@ -178,18 +178,18 @@ public interface ArohiAvrohiPlayer {
 		}
 
 		
-		public void playAarohi() {
-			Util.play(SA, aarohiNotes, HIGH_SA);
+		public void playAscend() {
+			Util.play(SA, ascendNotes, HIGH_SA);
 		}
 
 		
-		public void playAarohiAvrohi() {
-			playAarohi();
-			playAvrohi();
+		public void playAscendAndDescend() {
+			playAscend();
+			playDescend();
 		}
 		
-		public void playAvrohi() {
-			Util.play(HIGH_SA, avrohiNotes, SA);
+		public void playDescend() {
+			Util.play(HIGH_SA, descendNotes, SA);
 		}
 
 		
@@ -209,17 +209,17 @@ public interface ArohiAvrohiPlayer {
 			NotePlayer.play(start,middleNotes,end);
 		}
 
-		static void play(Playable start, Playable[] arohiNotes, Playable end, Playable[] avrohiNotes) {
-			NotePlayer.play(start,arohiNotes,end, avrohiNotes);
+		static void play(Playable start, Playable[] ascendNotes, Playable end, Playable[] descendNotes) {
+			NotePlayer.play(start,ascendNotes,end, descendNotes);
 		}
 
-		static Playable[] reverse(Playable... aarohiNotes) {
-			int count = aarohiNotes.length;
-			Playable[] avrohi = new Playable[count];
+		static Playable[] reverse(Playable... ascendNotes) {
+			int count = ascendNotes.length;
+			Playable[] dscendNotes = new Playable[count];
 			for (int i = 0; i < count; i++) {
-				avrohi[i] = aarohiNotes[count - i - 1];
+				dscendNotes[i] = ascendNotes[count - i - 1];
 			}
-			return avrohi;
+			return dscendNotes;
 		}
 
 		static Playable[] sequence(Playable... notes) {

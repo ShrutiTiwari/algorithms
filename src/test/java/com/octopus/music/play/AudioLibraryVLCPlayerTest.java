@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.octopus.music.play.AudioLibrary;
-import com.octopus.music.play.AudioLibrary.WindowsBasedVLCPlayer;
 import com.octopus.music.play.Playable.BaseNotes;
 
 public class AudioLibraryVLCPlayerTest
@@ -17,6 +16,6 @@ public class AudioLibraryVLCPlayerTest
         AudioLibrary.initializeWithGivenSeconds(1);
         List<File> audioFiles = new ArrayList<File>();
         AudioLibrary.addFileIfFound( audioFiles, BaseNotes.DHA );
-        WindowsBasedVLCPlayer.playList( audioFiles );
+        AudioLibrary.audioPlayer().playList( audioFiles);
     }
 }

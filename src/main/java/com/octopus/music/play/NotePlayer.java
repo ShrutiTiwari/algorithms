@@ -1,12 +1,10 @@
 package com.octopus.music.play;
 
+import static com.octopus.music.play.AudioLibrary.addFileIfFound;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.octopus.music.play.AudioLibrary.WindowsBasedVLCPlayer;
-
-import static com.octopus.music.play.AudioLibrary.*;
 public class NotePlayer {
 	public static void play(List<Playable> notes) {
 		List<File> audioFiles = new ArrayList<File>();
@@ -16,7 +14,7 @@ public class NotePlayer {
 			printPlaylist.append(", " + each);
 		}
 		System.out.println("playing	[" + printPlaylist.toString() + "]");
-		WindowsBasedVLCPlayer.playList(audioFiles);
+		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
 	public static void play(Playable start, Playable[] middleNotes, Playable end) {
@@ -31,7 +29,7 @@ public class NotePlayer {
 		addFileIfFound(audioFiles, end);
 		printPlaylist.append(", " + end);
 		System.out.print("playing	[" + printPlaylist.toString() + "]");
-		WindowsBasedVLCPlayer.playList(audioFiles);
+		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
 	public static void play(Playable start, Playable[] arohiNotes, Playable end, Playable[] avrohiNotes) {
@@ -56,7 +54,7 @@ public class NotePlayer {
 		printPlaylist.append(", " + start);
 
 		System.out.print("\t[" + printPlaylist.toString() + "]");
-		WindowsBasedVLCPlayer.playList(audioFiles);
+		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
 	public static void playArray(Playable[] ascNotes, Playable[] descNotes) {
@@ -71,6 +69,6 @@ public class NotePlayer {
 			printPlaylist.append(", " + each);
 		}
 		System.out.print("playing	[" + printPlaylist.toString() + "]");
-		WindowsBasedVLCPlayer.playList(audioFiles);
+		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 }

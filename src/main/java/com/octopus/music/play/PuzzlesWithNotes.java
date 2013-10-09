@@ -8,7 +8,7 @@ import java.util.List;
 
 import static com.octopus.music.play.Playable.BaseNotes.*;
 
-public class NoteRecognition {
+public class PuzzlesWithNotes {
 
 	static HashSet<Playable> saTopa = new HashSet<Playable>();
 	static HashSet<Playable> paToHighSa = new HashSet<Playable>();
