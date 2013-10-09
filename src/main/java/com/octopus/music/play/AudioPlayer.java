@@ -1,7 +1,10 @@
 package com.octopus.music.play;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public interface AudioPlayer
@@ -47,10 +50,14 @@ public interface AudioPlayer
             
             public void executeCommand(String[] command) {
                 try {
+                	for(String each: command){
+                		System.out.println(each);
+                	}
+                	
                     Process p = runtime.exec( command );
                     int success = p.waitFor();
                     if( success != 0 ) {
-                        System.out.println( "process execution failed " );
+                        printError(p);
                     }
                 } catch( IOException e ) {
                     e.printStackTrace();
@@ -58,6 +65,15 @@ public interface AudioPlayer
                     e.printStackTrace();
                 }
             }
+
+			private void printError(Process p) throws IOException {
+				System.out.println( "process execution failed " + p.exitValue() );
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+				String s=null;
+				while((s=bufferedReader.readLine())!=null){
+				System.out.println( s);
+				}
+			}
         }
     }
 }
