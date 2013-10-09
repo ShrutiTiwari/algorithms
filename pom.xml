@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<groupId>com.octopus</groupId>
-	<artifactId>test-algorithms</artifactId>
+	<groupId>com.aqua</groupId>
+	<artifactId>octopus</artifactId>
 	<version>1.0.-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<modelVersion>4.0.0</modelVersion>
-	<name>test-algorithms</name>
 
 	<dependencies>
 		<dependency>
@@ -102,7 +101,8 @@
 	</reporting>
  -->
 	<scm>
-		<connection>scm:svn:https://github.com/ShrutiTiwari/algorithms</connection>
-		<developerConnection>scm:svn:https://github.com/ShrutiTiwari/algorithms</developerConnection>
+		<connection>scm:svn:https://github.com/ShrutiTiwari/octopus</connection>
+		<developerConnection>scm:svn:https://github.com/ShrutiTiwari/octopus</developerConnection>
 	</scm>
+	<name>octopus</name>
 </project>

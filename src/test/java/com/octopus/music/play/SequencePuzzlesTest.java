@@ -1,9 +1,9 @@
-package com.octopus.music.play;
+package com.aqua.music.play;
 
 import org.junit.Test;
 
-import com.octopus.music.play.AudioLibrary;
-import com.octopus.music.play.SequencePlayer.AllThaat;
+import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.play.SequencePlayer.AllThaat;
 
 public class SequencePuzzlesTest
 {

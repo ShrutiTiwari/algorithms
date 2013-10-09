@@ -1,4 +1,4 @@
-package com.octopus.music.play;
+package com.aqua.music.play;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.octopus.music.play.AudioLibrary;
-import com.octopus.music.play.Playable.BaseNotes;
+import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.play.Playable.BaseNotes;
 
 public class AudioLibraryVLCPlayerTest
 {

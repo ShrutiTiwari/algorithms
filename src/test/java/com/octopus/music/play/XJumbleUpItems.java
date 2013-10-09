@@ -1,4 +1,4 @@
-package com.octopus.music.play;
+package com.aqua.music.play;
 
 import java.io.File;
 import java.util.HashSet;

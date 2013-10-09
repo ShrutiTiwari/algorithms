@@ -1,9 +1,9 @@
-package com.octopus.text.search.pair;
+package com.aqua.text.search.pair;
 
 import java.util.List;
 
-import com.octopus.text.search.pair.KeywordOccurance;
-import com.octopus.text.search.pair.MicroIndex;
+import com.aqua.text.search.pair.KeywordOccurance;
+import com.aqua.text.search.pair.MicroIndex;
 
 import junit.framework.TestCase;
 

@@ -1,6 +1,6 @@
-package com.octopus.numbers.sorting;
+package com.aqua.numbers.sorting;
 
-import com.octopus.numbers.sorting.MergeSortArray;
+import com.aqua.numbers.sorting.MergeSortArray;
 
 import junit.framework.TestCase;
 

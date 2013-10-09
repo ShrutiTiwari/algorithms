@@ -1,8 +1,8 @@
-package com.octopus.large.numbers.operation;
+package com.aqua.large.numbers.operation;
 
 import java.math.BigInteger;
 
-import com.octopus.large.numbers.operation.LargeInteger;
+import com.aqua.large.numbers.operation.LargeInteger;
 
 import junit.framework.TestCase;
 

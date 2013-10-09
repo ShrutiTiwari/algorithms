@@ -1,10 +1,10 @@
-package com.octopus.music.play;
+package com.aqua.music.play;
 
 import java.util.HashSet;
 
-import com.octopus.music.play.SequencePlayer;
-import com.octopus.music.play.AudioLibrary;
-import com.octopus.music.play.SequencePlayer.AllThaat;
+import com.aqua.music.play.SequencePlayer;
+import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.play.SequencePlayer.AllThaat;
 
 public class AscendDescendSequencePuzzles {
 	public AscendDescendSequencePuzzles() {

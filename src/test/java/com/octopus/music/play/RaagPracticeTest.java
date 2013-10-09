@@ -1,9 +1,9 @@
-package com.octopus.music.play;
+package com.aqua.music.play;
 
 import org.junit.Test;
 
-import com.octopus.music.play.SequencePlayer;
-import com.octopus.music.play.AudioLibrary;
+import com.aqua.music.play.SequencePlayer;
+import com.aqua.music.play.AudioLibrary;
 
 public class RaagPracticeTest
 {

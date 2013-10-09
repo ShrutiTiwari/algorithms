@@ -1,9 +1,9 @@
-package com.octopus.numbers.sequence;
+package com.aqua.numbers.sequence;
 
 import junit.framework.TestCase;
 
-import com.octopus.numbers.sequence.DistinctDigitNumberGenerator;
-import com.octopus.numbers.sequence.DistinctDigitNumbersInRange;
+import com.aqua.numbers.sequence.DistinctDigitNumberGenerator;
+import com.aqua.numbers.sequence.DistinctDigitNumbersInRange;
 
 public class DistinctDigitNumberGeneratorTest extends TestCase
 {
