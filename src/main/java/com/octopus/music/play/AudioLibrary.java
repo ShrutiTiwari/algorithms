@@ -9,26 +9,26 @@ import com.octopus.music.play.AudioPlayer.CommandExecutor;
 import com.octopus.music.play.AudioPlayer.VLCPlayer;
 
 public class AudioLibrary {
-
-	//static final String VLC_PLAYER = "C:/Program Files/VideoLAN/VLC/vlc.exe";
-    static final String VLC_EXE_LOCATION = "C:/software/VideoLAN/VLC/vlc.exe";
-	//private static final String AUDIO_LIBRARY = "C:\\recognition-puzzles\\";
+    static final String VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
+    static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
+	
+    //private static final String AUDIO_LIBRARY = "C:\\recognition-puzzles\\";
 	private static final String AUDIO_LIBRARY = "recognition-puzzles/";
 	private static final String FOLDER_PREFIX = "note-recognition-";
 	static Map<String, File> allNoteAudios;
 	
-	private static final AudioPlayer audioPlayer= new VLCPlayer( CommandExecutor.WINDOWS, VLC_EXE_LOCATION );
+	private static AudioPlayer audioPlayer= new VLCPlayer( CommandExecutor.WINDOWS, VLC_EXE_LOCATION_WINDOWS );
 
 	public static AudioPlayer audioPlayer(){
 	    return audioPlayer;
 	}
 	
-	public static void initialize() {
-		initializeWithGivenSeconds(2);
-	}
-
 	public static void initializeWithGivenSeconds(int seconds) {
 		AudioLibrary.allNoteAudios = findAllNotesAudios(seconds);
+		String os = System.getProperty("os.name");
+		if(!os.contains("Windows")){
+			audioPlayer= new VLCPlayer( CommandExecutor.WINDOWS, VLC_EXE_LOCATION_LINUX );
+		}
 	}
 
 	static void addFileIfFound(List<File> audioFiles, Playable note) {

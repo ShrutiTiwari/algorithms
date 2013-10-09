@@ -5,9 +5,9 @@ import org.junit.Test;
 import com.octopus.music.play.AudioLibrary;
 import com.octopus.music.play.SequencePlayer.AllThaat;
 
-public class ArohiAvrohiTest
+public class SequencePuzzlesTest
 {
-    public ArohiAvrohiTest() {
+    public SequencePuzzlesTest() {
         AudioLibrary.initializeWithGivenSeconds( 1 );
     }
 
