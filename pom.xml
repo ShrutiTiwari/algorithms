@@ -3,9 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<groupId>com.aqua</groupId>
 	<artifactId>octopus</artifactId>
-	<version>1.0.-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<modelVersion>4.0.0</modelVersion>
+	<name>octopus</name>
 
 	<dependencies>
 		<dependency>
@@ -91,18 +92,18 @@
 			</plugin>
 		</plugins>
 	</build>
-<!-- 	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</reporting>
- -->
+	<!-- <reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-surefire-report-plugin</artifactId> </plugin> </plugins> 
+		</reporting> -->
 	<scm>
 		<connection>scm:svn:https://github.com/ShrutiTiwari/octopus</connection>
 		<developerConnection>scm:svn:https://github.com/ShrutiTiwari/octopus</developerConnection>
 	</scm>
-	<name>octopus</name>
+
+
+	<modules>
+		<module>music</module>
+		<module>algorithms</module>
+	</modules>
+
 </project>
