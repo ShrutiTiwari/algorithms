@@ -80,16 +80,16 @@ public interface SequencePlayer
 
         private final Playable[] ascendNotes;
         private final Playable[] descendNotes;
-        private final AudioFileEnquere audioFilesEnqueuer;
+        private final AudioFileAssembler audioFilesEnqueuer;
 
         private AllThaat( Playable... ascendNotes ) {
             this.ascendNotes = ascendNotes;
             this.descendNotes = Util.reverse( ascendNotes );
-            audioFilesEnqueuer = new AudioFileEnquere.ThaatEnqueuer( this );
+            audioFilesEnqueuer = new AudioFileAssembler.ThaatEnqueuer( this );
         }
 
         public void playAscend() {
-            AudioLibrary.audioPlayer().playList( new AudioFileEnquere.StartEndEnquer( SA, HIGH_SA, ascendNotes ).collectedAudioFiles() );
+            AudioLibrary.audioPlayer().playList( new AudioFileAssembler.StartEndEnquer( SA, HIGH_SA, ascendNotes ).collectedAudioFiles() );
         }
 
         public void playAscendAndDescend() {
@@ -98,7 +98,7 @@ public interface SequencePlayer
         }
 
         public void playDescend() {
-            AudioLibrary.audioPlayer().playList( new AudioFileEnquere.StartEndEnquer( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
+            AudioLibrary.audioPlayer().playList( new AudioFileAssembler.StartEndEnquer( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
         }
 
         public void playSequence( String sequence ) {

@@ -3,12 +3,11 @@ package com.aqua.music.play;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import com.aqua.music.play.Playable.BaseNotes;
 import com.aqua.music.play.SequencePlayer.AllThaat;
 
-public interface AudioFileEnquere
+public interface AudioFileAssembler
 {
     boolean NO_COMMA = false;
 
@@ -16,39 +15,7 @@ public interface AudioFileEnquere
 
     String printableAudios();
 
-    static class FileEnquer
-    {
-        Map<String, File> allAudios = AudioLibrary.allAudios;
-        Collection<File> collectedAudioFiles = new ArrayList<File>();
-        StringBuffer printableAudios = new StringBuffer();
-
-        public void addFileIfFound( Playable start ) {
-            addFileIfFound( start, true );
-        }
-
-        public void printAdd( String string ) {
-            printableAudios.append( " |||  " );
-        }
-
-        void addFileIfFound( Playable note, boolean appendComma ) {
-            String code = note.code();
-            File audioFile = allAudios.get( code );
-            if( audioFile == null ) {
-                System.out.println( "No audio found for [" + note + "] in the list of files[" + allAudios.keySet() + "]" );
-            } else {
-                collectedAudioFiles.add( audioFile );
-                printableAudios.append( (appendComma ? ", " : "") + code );
-            }
-        }
-
-        void addFilesIfFound( Playable[] notes ) {
-            for( Playable each : notes ) {
-                addFileIfFound( each );
-            }
-        }
-    }
-
-    public static class MultipleThaatEnqueuer implements AudioFileEnquere
+    public static class MultipleThaatEnqueuer implements AudioFileAssembler
     {
         final Collection<File> collectedAudioFiles = new ArrayList<File>();
         final StringBuffer printableAudios = new StringBuffer();
@@ -68,18 +35,18 @@ public interface AudioFileEnquere
         }
 
         private void processThaat( AllThaat thaat ) {
-            FileEnquer enquer = ThaatEnqueuer.createEnquereWith( thaat );
+            AudioFileAssemblerUtil enquer = ThaatEnqueuer.createEnquereWith( thaat );
             collectedAudioFiles.addAll( enquer.collectedAudioFiles );
             printableAudios.append( "\n" + enquer.printableAudios );
         }
     }
 
-    public static class StartEndEnquer implements AudioFileEnquere
+    public static class StartEndEnquer implements AudioFileAssembler
     {
-        private FileEnquer enquer;
+        private AudioFileAssemblerUtil enquer;
 
         public StartEndEnquer( Playable start, Playable end, Playable[] middleNotes ) {
-            this.enquer = new FileEnquer();
+            this.enquer = new AudioFileAssemblerUtil();
             enquer.addFileIfFound( start );
             enquer.addFilesIfFound( middleNotes );
             enquer.addFileIfFound( end );
@@ -95,17 +62,17 @@ public interface AudioFileEnquere
         }
     }
 
-    public static class ThaatEnqueuer implements AudioFileEnquere
+    public static class ThaatEnqueuer implements AudioFileAssembler
     {
-        private FileEnquer enquer;
+        private AudioFileAssemblerUtil enquer;
 
         public ThaatEnqueuer( AllThaat thaat ) {
             this.enquer = createEnquereWith( thaat );
         }
 
-        private static FileEnquer createEnquereWith( AllThaat thaat ) {
+        private static AudioFileAssemblerUtil createEnquereWith( AllThaat thaat ) {
             // enqueue ascend sequence
-            FileEnquer enquer = new FileEnquer();
+            AudioFileAssemblerUtil enquer = new AudioFileAssemblerUtil();
             enquer.addFileIfFound( BaseNotes.SA, NO_COMMA );
             enquer.addFilesIfFound( thaat.ascendNotes() );
             enquer.addFileIfFound( BaseNotes.HIGH_SA );

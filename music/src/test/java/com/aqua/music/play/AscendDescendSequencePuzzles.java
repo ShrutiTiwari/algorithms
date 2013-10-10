@@ -15,7 +15,7 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playMultipleThaats() {
-        AudioFileEnquere.MultipleThaatEnqueuer multipleThaatEnqueuer = new AudioFileEnquere.MultipleThaatEnqueuer( new AllThaat[] { AllThaat.BILAWAL, AllThaat.ASAVARI } );
+        AudioFileAssembler.MultipleThaatEnqueuer multipleThaatEnqueuer = new AudioFileAssembler.MultipleThaatEnqueuer( new AllThaat[] { AllThaat.BILAWAL, AllThaat.ASAVARI } );
         System.out.println(multipleThaatEnqueuer.printableAudios());
         AudioLibrary.audioPlayer().playList(multipleThaatEnqueuer.collectedAudioFiles);
     }
