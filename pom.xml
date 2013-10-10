@@ -104,6 +104,7 @@
 	<modules>
 		<module>music</module>
 		<module>algorithms</module>
+		<module>webapps</module>
 	</modules>
 
 </project>

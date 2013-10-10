@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.aqua.music.play.AudioLibrary.*;
 
-public class NotePlayer {
+public class PlayEnqueuedAudioFiles {
 	public static void play(List<Playable> notes) {
 		List<File> audioFiles = new ArrayList<File>();
 		StringBuffer printPlaylist = new StringBuffer();
@@ -29,31 +29,6 @@ public class NotePlayer {
 		addFileIfFound(audioFiles, end);
 		printPlaylist.append(", " + end);
 		System.out.print("playing	[" + printPlaylist.toString() + "]");
-		AudioLibrary.audioPlayer().playList( audioFiles);
-	}
-
-	public static void play(Playable start, Playable[] arohiNotes, Playable end, Playable[] avrohiNotes) {
-		StringBuffer printPlaylist = new StringBuffer();
-		List<File> audioFiles = new ArrayList<File>();
-		addFileIfFound(audioFiles, start);
-		printPlaylist.append(start);
-		for (Playable each : arohiNotes) {
-			addFileIfFound(audioFiles, each);
-			printPlaylist.append(", " + each);
-		}
-		addFileIfFound(audioFiles, end);
-		addFileIfFound(audioFiles, end);
-		printPlaylist.append(", " + end + " |||  " + end);
-
-		for (Playable each : avrohiNotes) {
-			addFileIfFound(audioFiles, each);
-			printPlaylist.append(", " + each);
-		}
-
-		addFileIfFound(audioFiles, start);
-		printPlaylist.append(", " + start);
-
-		System.out.print("\t[" + printPlaylist.toString() + "]");
 		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 

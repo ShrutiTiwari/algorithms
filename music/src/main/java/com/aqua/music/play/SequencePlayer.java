@@ -1,229 +1,286 @@
 package com.aqua.music.play;
 
-import static com.aqua.music.play.Playable.BaseNotes.*;
+import static com.aqua.music.play.Playable.BaseNotes.DHA;
+import static com.aqua.music.play.Playable.BaseNotes.DHA_;
+import static com.aqua.music.play.Playable.BaseNotes.GA;
+import static com.aqua.music.play.Playable.BaseNotes.GA_;
+import static com.aqua.music.play.Playable.BaseNotes.HIGH_SA;
+import static com.aqua.music.play.Playable.BaseNotes.MA;
+import static com.aqua.music.play.Playable.BaseNotes.MA_;
+import static com.aqua.music.play.Playable.BaseNotes.NI;
+import static com.aqua.music.play.Playable.BaseNotes.NI_;
+import static com.aqua.music.play.Playable.BaseNotes.PA;
+import static com.aqua.music.play.Playable.BaseNotes.RE;
+import static com.aqua.music.play.Playable.BaseNotes.RE_;
+import static com.aqua.music.play.Playable.BaseNotes.SA;
 
-public interface SequencePlayer {
-	public String name();
+import java.io.File;
+import java.util.Collection;
 
-	public void playAscend();
+import com.aqua.music.play.Playable.BaseNotes;
 
-	public void playAscendAndDescend();
+public interface SequencePlayer
+{
+    public String name();
 
-	public void playDescend();
+    public void playAscend();
 
-	public void playSequence(String sequence);
+    public void playAscendAndDescend();
 
-	public String type();
+    public void playDescend();
 
-	public enum AllThaat implements SequencePlayer {
-		BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
-		PURVI(RE_, GA, MA_, PA, DHA_, NI),
-		MARWA(RE_, GA, MA_, PA, DHA, NI),
-		KALYAN(RE, GA, MA_, PA, DHA, NI),
-		BILAWAL(RE, GA, MA, PA, DHA, NI),
-		KHAMAJ(RE, GA, MA, PA, DHA, NI_),
-		KAFI(RE, GA_, MA, PA, DHA, NI_),
-		ASAVARI(RE, GA_, MA, PA, DHA_, NI_),
-		BHAIRAVI(RE_, GA_, MA, PA, DHA_, NI_),
-		TODI(RE_, GA_, MA_, PA, DHA_, NI);
+    public void playSequence( String sequence );
 
-		private final Playable[] ascendNotes;
-		private final Playable[] descendNotes;
+    public String type();
 
-		private AllThaat(Playable... ascendNotes) {
-			this.ascendNotes = ascendNotes;
-			this.descendNotes = Util.reverse(ascendNotes);
-		}
+    public class SimplePlayer implements SequencePlayer
+    {
+        private final NoteCombinations noteCombinations;
 
-		public void playAscend() {
-			Util.play(SA, ascendNotes, HIGH_SA);
-		}
+        SimplePlayer( NoteCombinations noteCombinations ) {
+            this.noteCombinations = noteCombinations;
+        }
 
-		public void playAscendAndDescend() {
-			Util.play(SA, ascendNotes, HIGH_SA, descendNotes);
-		}
+        @Override
+        public String name() {
+            return null;
+        }
 
-		public void playDescend() {
-			Util.play(HIGH_SA, descendNotes, SA);
-		}
+        @Override
+        public void playAscend() {}
 
-		public void playSequence(String sequence) {
-			new Sequence(sequence).playSequence();
-		}
+        @Override
+        public void playAscendAndDescend() {}
 
-		public String type() {
-			return "THAAT";
-		}
+        @Override
+        public void playDescend() {}
 
-		public class Sequence {
-			private final String delim="-";
+        @Override
+        public void playSequence( String sequence ) {}
 
-			private Playable[] ascSequ;
-			private Playable[] descSequ;
+        @Override
+        public String type() {
+            return null;
+        }
 
-			private Sequence(String expression) {
-				createPattern(expression);
-			}
+    }
 
-			void playSequence(){
-				NotePlayer.playArray(ascSequ, descSequ);
-			}
+    public enum AllThaat implements SequencePlayer, NoteCombinations
+    {
+        BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
+        PURVI(RE_, GA, MA_, PA, DHA_, NI),
+        MARWA(RE_, GA, MA_, PA, DHA, NI),
+        KALYAN(RE, GA, MA_, PA, DHA, NI),
+        BILAWAL(RE, GA, MA, PA, DHA, NI),
+        KHAMAJ(RE, GA, MA, PA, DHA, NI_),
+        KAFI(RE, GA_, MA, PA, DHA, NI_),
+        ASAVARI(RE, GA_, MA, PA, DHA_, NI_),
+        BHAIRAVI(RE_, GA_, MA, PA, DHA_, NI_),
+        TODI(RE_, GA_, MA_, PA, DHA_, NI);
 
-			private void createPattern(String expression) {
-				String[] splitExp=expression.split(delim);
-				int numOfNotesInPattern= splitExp.length;
-				System.out.println(numOfNotesInPattern);
-				ascSequ=createSequence(SA, HIGH_SA, ascendNotes, numOfNotesInPattern);
-				descSequ=createSequence( HIGH_SA, SA, descendNotes, numOfNotesInPattern);
-			}
+        private final Playable[] ascendNotes;
+        private final Playable[] descendNotes;
+        private final AudioFileEnquere audioFilesEnqueuer;
 
-			private Playable[] createSequence(BaseNotes firstNote, BaseNotes lastNote, Playable[] seqNotes, int numOfNotesInPattern) {
-				int numOfDistinctNotes = ascendNotes.length+2;
-				int totalNotesInSeq= (numOfDistinctNotes-numOfNotesInPattern)*numOfNotesInPattern+2;
-				System.out.println(totalNotesInSeq);
+        private AllThaat( Playable... ascendNotes ) {
+            this.ascendNotes = ascendNotes;
+            this.descendNotes = Util.reverse( ascendNotes );
+            audioFilesEnqueuer = new AudioFileEnquere.ThaatEnqueuer( this );
+        }
 
-				Playable[] resultSequence=new Playable[totalNotesInSeq];
+        public void playAscend() {
+            AudioLibrary.audioPlayer().playList( new AudioFileEnquere.StartEndEnquer( SA, HIGH_SA, ascendNotes ).collectedAudioFiles() );
+        }
 
-				/*resultSequence[0]=firstNote;
-				resultSequence[1]=seqNotes[0];
-				 */
+        public void playAscendAndDescend() {
+            System.out.print( "\t[" + audioFilesEnqueuer.printableAudios() + "]" );
+            AudioLibrary.audioPlayer().playList( audioFilesEnqueuer.collectedAudioFiles() );
+        }
 
-				int k=0;
-				for (int i=0; i<numOfDistinctNotes-1;i++){
-					for(int j=0; j<numOfNotesInPattern;j++){
-						if(i==0){
-							if(j==0){
-								resultSequence[k++]=firstNote;
-							}else{
-								resultSequence[k++]=seqNotes[j-1];
-							}
-						}else{
-							try{
-								resultSequence[k++]=seqNotes[i+j];
-							}catch (Exception e) {
+        public void playDescend() {
+            AudioLibrary.audioPlayer().playList( new AudioFileEnquere.StartEndEnquer( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
+        }
 
-								resultSequence[k-1]=lastNote;
-							}
-						}
-						System.out.println((k-1)+"."+resultSequence[k-1]);
-					}
-				}
-				return resultSequence;
-			}
-		}
-	}
+        public void playSequence( String sequence ) {
+            new Sequence( sequence ).playSequence();
+        }
 
-	public enum Pattern implements SequencePlayer {
-		Khamaj(  NI_),
-		Bilawal(  NI),
-		Dha(DHA);
-		private final Playable[] ascendNotes;
-		private final Playable[] descendNotes;
+        public String type() {
+            return "THAAT";
+        }
 
-		private Pattern(Playable... ascendNotes) {
-			this.ascendNotes = ascendNotes;
-			this.descendNotes = Util.reverse(ascendNotes);
-		}
+        public class Sequence
+        {
+            private final String delim = "-";
 
-		
-		public void playAscend() {
-			Util.play(PA, ascendNotes, HIGH_SA);
-		}
+            private Playable[] ascSequ;
+            private Playable[] descSequ;
 
-		
-		public void playAscendAndDescend() {
-			playAscend();
-			playDescend();
-		}
-		
-		public void playDescend() {
-			Util.play(HIGH_SA, descendNotes, PA);
-		}
+            private Sequence( String expression ) {
+                createPattern( expression );
+            }
 
-		
-		public void playSequence(String sequence) {
-			// TODO Auto-generated method stub
+            void playSequence() {
+                PlayEnqueuedAudioFiles.playArray( ascSequ, descSequ );
+            }
 
-		}
+            private void createPattern( String expression ) {
+                String[] splitExp = expression.split( delim );
+                int numOfNotesInPattern = splitExp.length;
+                System.out.println( numOfNotesInPattern );
+                ascSequ = createSequence( SA, HIGH_SA, ascendNotes, numOfNotesInPattern );
+                descSequ = createSequence( HIGH_SA, SA, descendNotes, numOfNotesInPattern );
+            }
 
-		
-		public String type() {
-			return "PATTERN";
-		}
-	}
+            private Playable[] createSequence( BaseNotes firstNote, BaseNotes lastNote, Playable[] seqNotes, int numOfNotesInPattern ) {
+                int numOfDistinctNotes = ascendNotes.length + 2;
+                int totalNotesInSeq = (numOfDistinctNotes - numOfNotesInPattern) * numOfNotesInPattern + 2;
+                System.out.println( totalNotesInSeq );
 
-	public enum SecondYearRaag implements SequencePlayer {
-		GUJARI_TODI(RE_, GA_, MA_, DHA_, NI),
-		BAIRAGI(RE_, MA, PA, NI_),
-		SHUDH_SARANG(sequence(RE, MA_, PA, NI), sequence(NI, DHA, PA, MA_, PA, MA, RE)),
-		YAMAN(sequence(RE, GA, MA_, DHA, NI), sequence(NI, DHA, PA, MA_, GA, RE)),
-		PURYA_KALYAN(sequence(RE_, GA, MA_, PA, MA_, DHA, NI), sequence(NI, DHA, PA, DHA, MA_, PA, GA, MA_, RE_, GA, RE_)),
-		MULTANI(sequence(GA_, MA_, PA, NI), sequence(NI, DHA_, PA, MA_, GA_, RE_));
+                Playable[] resultSequence = new Playable[totalNotesInSeq];
 
-		private final Playable[] ascendNotes;
-		private final Playable[] descendNotes;
+                /*
+                 * resultSequence[0]=firstNote; resultSequence[1]=seqNotes[0];
+                 */
 
-		private SecondYearRaag(Playable... ascendNotes) {
-			this.ascendNotes = ascendNotes;
-			this.descendNotes = Util.reverse(ascendNotes);
-		}
+                int k = 0;
+                for( int i = 0; i < numOfDistinctNotes - 1; i++ ) {
+                    for( int j = 0; j < numOfNotesInPattern; j++ ) {
+                        if( i == 0 ) {
+                            if( j == 0 ) {
+                                resultSequence[k++] = firstNote;
+                            } else {
+                                resultSequence[k++] = seqNotes[j - 1];
+                            }
+                        } else {
+                            try {
+                                resultSequence[k++] = seqNotes[i + j];
+                            } catch( Exception e ) {
 
-		private SecondYearRaag(Playable[] ascendNotes, Playable[] descendNotes) {
-			this.ascendNotes = ascendNotes;
-			this.descendNotes = descendNotes;
-		}
+                                resultSequence[k - 1] = lastNote;
+                            }
+                        }
+                        System.out.println( (k - 1) + "." + resultSequence[k - 1] );
+                    }
+                }
+                return resultSequence;
+            }
+        }
 
-		private static Playable[] sequence(Playable... notes) {
-			return notes;
-		}
+        @Override
+        public Playable[] ascendNotes() {
+            return ascendNotes;
+        }
 
-		
-		public void playAscend() {
-			Util.play(SA, ascendNotes, HIGH_SA);
-		}
+        @Override
+        public Playable[] descendNotes() {
+            // TODO Auto-generated method stub
+            return descendNotes;
+        }
+    }
 
-		
-		public void playAscendAndDescend() {
-			playAscend();
-			playDescend();
-		}
-		
-		public void playDescend() {
-			Util.play(HIGH_SA, descendNotes, SA);
-		}
+    public enum Pattern implements SequencePlayer
+    {
+        Khamaj(NI_),
+        Bilawal(NI),
+        Dha(DHA);
+        private final Playable[] ascendNotes;
+        private final Playable[] descendNotes;
 
-		
-		public void playSequence(String sequence) {
-			// TODO Auto-generated method stub
+        private Pattern( Playable... ascendNotes ) {
+            this.ascendNotes = ascendNotes;
+            this.descendNotes = Util.reverse( ascendNotes );
+        }
 
-		}
+        public void playAscend() {
+            Util.play( PA, ascendNotes, HIGH_SA );
+        }
 
-		
-		public String type() {
-			return "RAAG";
-		}
-	}
+        public void playAscendAndDescend() {
+            playAscend();
+            playDescend();
+        }
 
-	static abstract class Util {
-		static void play(Playable start, Playable[] middleNotes, Playable end) {
-			NotePlayer.play(start,middleNotes,end);
-		}
+        public void playDescend() {
+            Util.play( HIGH_SA, descendNotes, PA );
+        }
 
-		static void play(Playable start, Playable[] ascendNotes, Playable end, Playable[] descendNotes) {
-			NotePlayer.play(start,ascendNotes,end, descendNotes);
-		}
+        public void playSequence( String sequence ) {
+            // TODO Auto-generated method stub
 
-		static Playable[] reverse(Playable... ascendNotes) {
-			int count = ascendNotes.length;
-			Playable[] dscendNotes = new Playable[count];
-			for (int i = 0; i < count; i++) {
-				dscendNotes[i] = ascendNotes[count - i - 1];
-			}
-			return dscendNotes;
-		}
+        }
 
-		static Playable[] sequence(Playable... notes) {
-			return notes;
-		}
-	}
+        public String type() {
+            return "PATTERN";
+        }
+    }
+
+    public enum SecondYearRaag implements SequencePlayer
+    {
+        GUJARI_TODI(RE_, GA_, MA_, DHA_, NI),
+        BAIRAGI(RE_, MA, PA, NI_),
+        SHUDH_SARANG(sequence( RE, MA_, PA, NI ), sequence( NI, DHA, PA, MA_, PA, MA, RE )),
+        YAMAN(sequence( RE, GA, MA_, DHA, NI ), sequence( NI, DHA, PA, MA_, GA, RE )),
+        PURYA_KALYAN(sequence( RE_, GA, MA_, PA, MA_, DHA, NI ), sequence( NI, DHA, PA, DHA, MA_, PA, GA, MA_, RE_, GA, RE_ )),
+        MULTANI(sequence( GA_, MA_, PA, NI ), sequence( NI, DHA_, PA, MA_, GA_, RE_ ));
+
+        private final Playable[] ascendNotes;
+        private final Playable[] descendNotes;
+
+        private SecondYearRaag( Playable... ascendNotes ) {
+            this.ascendNotes = ascendNotes;
+            this.descendNotes = Util.reverse( ascendNotes );
+        }
+
+        private SecondYearRaag( Playable[] ascendNotes, Playable[] descendNotes ) {
+            this.ascendNotes = ascendNotes;
+            this.descendNotes = descendNotes;
+        }
+
+        private static Playable[] sequence( Playable... notes ) {
+            return notes;
+        }
+
+        public void playAscend() {
+            Util.play( SA, ascendNotes, HIGH_SA );
+        }
+
+        public void playAscendAndDescend() {
+            playAscend();
+            playDescend();
+        }
+
+        public void playDescend() {
+            Util.play( HIGH_SA, descendNotes, SA );
+        }
+
+        public void playSequence( String sequence ) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public String type() {
+            return "RAAG";
+        }
+    }
+
+    static abstract class Util
+    {
+        static void play( Playable start, Playable[] middleNotes, Playable end ) {
+            PlayEnqueuedAudioFiles.play( start, middleNotes, end );
+        }
+
+        static Playable[] reverse( Playable... ascendNotes ) {
+            int count = ascendNotes.length;
+            Playable[] dscendNotes = new Playable[count];
+            for( int i = 0; i < count; i++ ) {
+                dscendNotes[i] = ascendNotes[count - i - 1];
+            }
+            return dscendNotes;
+        }
+
+        static Playable[] sequence( Playable... notes ) {
+            return notes;
+        }
+    }
 }

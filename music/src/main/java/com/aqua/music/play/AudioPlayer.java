@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.util.Collection;
 
 public interface AudioPlayer {
 	static final String VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
 	static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
 
-	void playList(List<File> audioFiles);
+	void playList(Collection<File> audioFiles);
 
 	public class VLCPlayer implements AudioPlayer {
 		private static final String vlcOption = "--play-and-exit";
@@ -20,7 +20,7 @@ public interface AudioPlayer {
 			this.vlcExeLoc = findAudioPlayerBasedOnOS();
 		}
 
-		public void playList(List<File> audioFiles) {
+		public void playList(Collection<File> audioFiles) {
 			play(audioFiles.toArray(new File[audioFiles.size()]));
 		}
 
@@ -48,7 +48,7 @@ public interface AudioPlayer {
 		public void executeCommand(String[] command) {
 			try {
 				for (String each : command) {
-					System.out.println(each);
+					//System.out.println(each);
 				}
 
 				Process p = runtime.exec(command);

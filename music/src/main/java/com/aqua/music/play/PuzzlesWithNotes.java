@@ -27,12 +27,12 @@ public class PuzzlesWithNotes {
 			playNotes.add(iterator1.next());
 			playNotes.add(iterator2.next());
 		}
-		NotePlayer.play(playNotes);
+		PlayEnqueuedAudioFiles.play(playNotes);
 		playNotes=new ArrayList<Playable>();
 		for (int index = paToHighSa.size(); index < saTopa.size(); index++) {
 			playNotes.add(iterator1.next());
 		}
-		NotePlayer.play(playNotes);
+		PlayEnqueuedAudioFiles.play(playNotes);
 	}
 
 	private static void initialize() {
@@ -49,7 +49,7 @@ public class PuzzlesWithNotes {
 				playNotes.add(each);
 			}
 		}
-		NotePlayer.play(playNotes);
+		PlayEnqueuedAudioFiles.play(playNotes);
 	}
 
 	private static void populateNotes(HashSet<Playable> agreegatator, Playable... notes) {

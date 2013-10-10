@@ -10,7 +10,7 @@ import com.aqua.music.play.AudioPlayer.VLCPlayer;
 public class AudioLibrary {
 	private static final String AUDIO_LIBRARY = "recognition-puzzles/";
 	private static final String FOLDER_PREFIX = "note-recognition-";
-	private static Map<String, File> allNoteAudios;
+	static Map<String, File> allAudios;
 	private static AudioPlayer audioPlayer= new VLCPlayer( );
 
 	public static AudioPlayer audioPlayer(){
@@ -18,13 +18,13 @@ public class AudioLibrary {
 	}
 	
 	public static void initializeWithGivenSeconds(int seconds) {
-		AudioLibrary.allNoteAudios = findAllNotesAudios(seconds);
+		AudioLibrary.allAudios = findAllNotesAudios(seconds);
 	}
 
 	static void addFileIfFound(List<File> audioFiles, Playable note) {
-		File audioFile = allNoteAudios.get(note.code());
+		File audioFile = allAudios.get(note.code());
 		if (audioFile == null) {
-			System.out.println("No audio found for [" + note + "] in the list of files[" + allNoteAudios.keySet() + "]");
+			System.out.println("No audio found for [" + note + "] in the list of files[" + allAudios.keySet() + "]");
 		} else {
 			audioFiles.add(audioFile);
 
