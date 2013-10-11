@@ -3,6 +3,7 @@ package com.aqua.music.play;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import com.aqua.music.play.Playable.BaseNotes;
 import com.aqua.music.play.SequencePlayer.AllThaat;
@@ -50,6 +51,27 @@ public interface AudioFileAssembler
             enquer.addFileIfFound( start );
             enquer.addFilesIfFound( middleNotes );
             enquer.addFileIfFound( end );
+        }
+
+        public Collection<File> collectedAudioFiles() {
+            return enquer.collectedAudioFiles;
+        }
+
+        @Override
+        public String printableAudios() {
+            return enquer.printableAudios.toString();
+        }
+    }
+
+    public static class SimpleEnquer implements AudioFileAssembler
+    {
+        private AudioFileAssemblerUtil enquer;
+
+        public SimpleEnquer( List<Playable> allNotes ) {
+            this.enquer = new AudioFileAssemblerUtil();
+            for( Playable each : allNotes ) {
+                enquer.addFileIfFound( each );
+            }
         }
 
         public Collection<File> collectedAudioFiles() {

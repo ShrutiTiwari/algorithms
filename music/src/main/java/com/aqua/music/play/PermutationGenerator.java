@@ -1,40 +1,37 @@
 package com.aqua.music.play;
 
-import static com.aqua.music.play.Playable.BaseNotes.DHA;
-import static com.aqua.music.play.Playable.BaseNotes.DHA_;
-import static com.aqua.music.play.Playable.BaseNotes.GA;
-import static com.aqua.music.play.Playable.BaseNotes.GA_;
-import static com.aqua.music.play.Playable.BaseNotes.MA;
-import static com.aqua.music.play.Playable.BaseNotes.MA_;
-import static com.aqua.music.play.Playable.BaseNotes.NI;
-import static com.aqua.music.play.Playable.BaseNotes.NI_;
-import static com.aqua.music.play.Playable.BaseNotes.PA;
-import static com.aqua.music.play.Playable.BaseNotes.RE;
-import static com.aqua.music.play.Playable.BaseNotes.RE_;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PermutationGenerator<T> {
 	private int[] pattern;
 	private T[] input;
-
+	private List<T> ascendSequence;
+	private List<T> descendSequence;
+	
 	public PermutationGenerator(int[] pattern, T[] input) {
 		this.pattern = pattern;
 		this.input = input;
 	}
 
-	void playAscendAndDescend() {
+	void generateAscendAndDescendSequences() {
 		List<T> inputList = new ArrayList<T>();
 		for (T each : input) {
 			inputList.add(each);
 		}
-		sequenceForGiven(inputList);
-		sequenceForGiven(reverse(input));
+		this.ascendSequence = sequenceForGiven(inputList);
+		this.descendSequence = sequenceForGiven(reverse(input));
 	}
+	
+	List<T> ascendSequence(){
+	    return ascendSequence;
+	}
+	
+	List<T> descendSequence(){
+        return descendSequence;
+    }
 
-	List<T> sequenceForGiven(List<T> input) {
+	private List<T> sequenceForGiven(List<T> input) {
 		List<T> result = new ArrayList<T>();
 		for (int index = 0; index < input.size(); index++) {
 			List<T> subResult = patternAt(input, index);
@@ -45,7 +42,6 @@ public class PermutationGenerator<T> {
 				result.add(each1);
 			}
 		}
-		printPattern(result);
 		return result;
 	}
 
@@ -86,27 +82,4 @@ public class PermutationGenerator<T> {
 		}
 		return reverseData;
 	}
-    public enum AllThaat1 
-    {
-        BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
-        PURVI(RE_, GA, MA_, PA, DHA_, NI),
-        MARWA(RE_, GA, MA_, PA, DHA, NI),
-        KALYAN(RE, GA, MA_, PA, DHA, NI),
-        BILAWAL(RE, GA, MA, PA, DHA, NI),
-        KHAMAJ(RE, GA, MA, PA, DHA, NI_),
-        KAFI(RE, GA_, MA, PA, DHA, NI_),
-        ASAVARI(RE, GA_, MA, PA, DHA_, NI_),
-        BHAIRAVI(RE_, GA_, MA, PA, DHA_, NI_),
-        TODI(RE_, GA_, MA_, PA, DHA_, NI);
-        private final Playable[] ascendNotes;
-        
-        private AllThaat1( Playable... ascendNotes ) {
-        this.ascendNotes=ascendNotes;	
-        }
-
-		public Playable[] ascendNotes() {
-			return ascendNotes;
-		}
-    }
-
 }

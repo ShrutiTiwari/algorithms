@@ -19,12 +19,6 @@ public class SequencePuzzlesTest
 
     //@Test
     public void testKafiSequence() {
-        AscendDescendSequencePuzzles puzzleBuilder = new AscendDescendSequencePuzzles();
         AllThaat.KAFI.playAscendAndDescend();
-        for( int i = 0; i < 2; i++ ) {
-            String PATTERN12 = "1-2";
-            String PATTERN123 = "1-2-3";
-            AllThaat.KAFI.playSequence( PATTERN12 );
-        }
     }
 }

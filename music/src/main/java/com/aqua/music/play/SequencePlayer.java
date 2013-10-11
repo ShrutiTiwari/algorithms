@@ -14,9 +14,6 @@ import static com.aqua.music.play.Playable.BaseNotes.RE;
 import static com.aqua.music.play.Playable.BaseNotes.RE_;
 import static com.aqua.music.play.Playable.BaseNotes.SA;
 
-import java.io.File;
-import java.util.Collection;
-
 import com.aqua.music.play.Playable.BaseNotes;
 
 public interface SequencePlayer
@@ -29,41 +26,7 @@ public interface SequencePlayer
 
     public void playDescend();
 
-    public void playSequence( String sequence );
-
     public String type();
-
-    public class SimplePlayer implements SequencePlayer
-    {
-        private final NoteCombinations noteCombinations;
-
-        SimplePlayer( NoteCombinations noteCombinations ) {
-            this.noteCombinations = noteCombinations;
-        }
-
-        @Override
-        public String name() {
-            return null;
-        }
-
-        @Override
-        public void playAscend() {}
-
-        @Override
-        public void playAscendAndDescend() {}
-
-        @Override
-        public void playDescend() {}
-
-        @Override
-        public void playSequence( String sequence ) {}
-
-        @Override
-        public String type() {
-            return null;
-        }
-
-    }
 
     public enum AllThaat implements SequencePlayer, NoteCombinations
     {
@@ -101,10 +64,6 @@ public interface SequencePlayer
             AudioLibrary.audioPlayer().playList( new AudioFileAssembler.StartEndEnquer( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
         }
 
-        public void playSequence( String sequence ) {
-            new Sequence( sequence ).playSequence();
-        }
-
         public String type() {
             return "THAAT";
         }
@@ -118,10 +77,6 @@ public interface SequencePlayer
 
             private Sequence( String expression ) {
                 createPattern( expression );
-            }
-
-            void playSequence() {
-                PlayEnqueuedAudioFiles.playArray( ascSequ, descSequ );
             }
 
             private void createPattern( String expression ) {
@@ -205,11 +160,6 @@ public interface SequencePlayer
             Util.play( HIGH_SA, descendNotes, PA );
         }
 
-        public void playSequence( String sequence ) {
-            // TODO Auto-generated method stub
-
-        }
-
         public String type() {
             return "PATTERN";
         }
@@ -252,11 +202,6 @@ public interface SequencePlayer
 
         public void playDescend() {
             Util.play( HIGH_SA, descendNotes, SA );
-        }
-
-        public void playSequence( String sequence ) {
-            // TODO Auto-generated method stub
-
         }
 
         public String type() {
