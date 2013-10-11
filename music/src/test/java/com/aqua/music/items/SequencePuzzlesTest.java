@@ -1,9 +1,10 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
 import org.junit.Test;
 
+import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.play.AscendDescendSequencePuzzles;
 import com.aqua.music.play.AudioLibrary;
-import com.aqua.music.play.SequencePlayer.AllThaat;
 
 public class SequencePuzzlesTest
 {

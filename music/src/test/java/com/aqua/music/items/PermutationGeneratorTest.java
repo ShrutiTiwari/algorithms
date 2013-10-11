@@ -1,17 +1,20 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
 import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.play.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.model.Playable;
+import com.aqua.music.play.AudioFileListMaker;
+import com.aqua.music.play.AudioLibrary;
 
 public class PermutationGeneratorTest {
 
 	private static String[] input = new String[] { "Sa", "Re", "Ga", "Ma",
 			"Pa", "Dha", "Ni", "Hsa" };
 	
-	private static int[] pattern = new int[] { 1, 2, 3 };
+	private static int[] pattern = new int[] { 1, 4, 3 };
 
 	//@Test
 	public void testSequenceGeneration() {
@@ -39,6 +42,6 @@ public class PermutationGeneratorTest {
 	}
 
     private void play( List<Playable> notesSequence ) {
-        AudioLibrary.audioPlayer().playList( new AudioFileAssembler.SimpleEnquer(notesSequence).collectedAudioFiles() );
+        AudioLibrary.audioPlayer().playList( new AudioFileListMaker.SimpleListMaker(notesSequence).collectedAudioFiles() );
     }
 }

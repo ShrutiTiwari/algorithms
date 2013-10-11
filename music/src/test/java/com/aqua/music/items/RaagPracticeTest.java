@@ -1,8 +1,8 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
 import org.junit.Test;
 
-import com.aqua.music.play.SequencePlayer;
+import com.aqua.music.items.SequencePlayer;
 import com.aqua.music.play.AudioLibrary;
 
 public class RaagPracticeTest

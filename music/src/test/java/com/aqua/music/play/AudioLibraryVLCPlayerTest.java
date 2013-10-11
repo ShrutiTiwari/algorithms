@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.play.AudioLibrary;
-import com.aqua.music.play.Playable.BaseNotes;
+import com.aqua.music.model.Playable;
 
 public class AudioLibraryVLCPlayerTest
 {
@@ -15,7 +14,7 @@ public class AudioLibraryVLCPlayerTest
     public void playNoteUsingVlcPlayer() {
         AudioLibrary.initializeWithGivenSeconds(1);
         List<File> audioFiles = new ArrayList<File>();
-        AudioLibrary.addFileIfFound( audioFiles, BaseNotes.DHA );
+        AudioLibrary.addFileIfFound( audioFiles, Playable.BaseNotes.DHA );
         AudioLibrary.audioPlayer().playList( audioFiles);
     }
 }

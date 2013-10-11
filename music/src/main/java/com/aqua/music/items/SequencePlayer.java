@@ -1,21 +1,12 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
-import static com.aqua.music.play.Playable.BaseNotes.DHA;
-import static com.aqua.music.play.Playable.BaseNotes.DHA_;
-import static com.aqua.music.play.Playable.BaseNotes.GA;
-import static com.aqua.music.play.Playable.BaseNotes.GA_;
-import static com.aqua.music.play.Playable.BaseNotes.HIGH_SA;
-import static com.aqua.music.play.Playable.BaseNotes.MA;
-import static com.aqua.music.play.Playable.BaseNotes.MA_;
-import static com.aqua.music.play.Playable.BaseNotes.NI;
-import static com.aqua.music.play.Playable.BaseNotes.NI_;
-import static com.aqua.music.play.Playable.BaseNotes.PA;
-import static com.aqua.music.play.Playable.BaseNotes.RE;
-import static com.aqua.music.play.Playable.BaseNotes.RE_;
-import static com.aqua.music.play.Playable.BaseNotes.SA;
+import com.aqua.music.model.Playable;
+import com.aqua.music.play.AudioFileListMaker;
+import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.model.Playable.BaseNotes;
 
-import com.aqua.music.play.Playable.BaseNotes;
 
+import static com.aqua.music.model.Playable.BaseNotes.*;
 public interface SequencePlayer
 {
     public String name();
@@ -28,7 +19,7 @@ public interface SequencePlayer
 
     public String type();
 
-    public enum AllThaat implements SequencePlayer, NoteCombinations
+    public enum AllThaat implements SequencePlayer
     {
         BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
         PURVI(RE_, GA, MA_, PA, DHA_, NI),
@@ -43,16 +34,16 @@ public interface SequencePlayer
 
         private final Playable[] ascendNotes;
         private final Playable[] descendNotes;
-        private final AudioFileAssembler audioFilesEnqueuer;
+        private final AudioFileListMaker audioFilesEnqueuer;
 
         private AllThaat( Playable... ascendNotes ) {
             this.ascendNotes = ascendNotes;
             this.descendNotes = Util.reverse( ascendNotes );
-            audioFilesEnqueuer = new AudioFileAssembler.ThaatEnqueuer( this );
+            audioFilesEnqueuer = new AudioFileListMaker.ThaatEnqueueListMaker( this );
         }
 
         public void playAscend() {
-            AudioLibrary.audioPlayer().playList( new AudioFileAssembler.StartEndEnquer( SA, HIGH_SA, ascendNotes ).collectedAudioFiles() );
+            AudioLibrary.audioPlayer().playList( new AudioFileListMaker.MiddleNoteWithStartEndListMaker( SA, HIGH_SA, ascendNotes ).collectedAudioFiles() );
         }
 
         public void playAscendAndDescend() {
@@ -61,7 +52,7 @@ public interface SequencePlayer
         }
 
         public void playDescend() {
-            AudioLibrary.audioPlayer().playList( new AudioFileAssembler.StartEndEnquer( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
+            AudioLibrary.audioPlayer().playList( new AudioFileListMaker.MiddleNoteWithStartEndListMaker( HIGH_SA, SA, descendNotes ).collectedAudioFiles() );
         }
 
         public String type() {
@@ -122,14 +113,11 @@ public interface SequencePlayer
             }
         }
 
-        @Override
         public Playable[] ascendNotes() {
             return ascendNotes;
         }
 
-        @Override
         public Playable[] descendNotes() {
-            // TODO Auto-generated method stub
             return descendNotes;
         }
     }

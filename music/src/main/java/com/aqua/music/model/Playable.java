@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.model;
 
 public interface Playable {
 	public String code();

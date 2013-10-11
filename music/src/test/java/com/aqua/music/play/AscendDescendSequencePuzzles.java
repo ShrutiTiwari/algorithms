@@ -2,7 +2,8 @@ package com.aqua.music.play;
 
 import java.util.HashSet;
 
-import com.aqua.music.play.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer;
+import com.aqua.music.items.SequencePlayer.AllThaat;
 
 public class AscendDescendSequencePuzzles
 {
@@ -15,7 +16,7 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playMultipleThaats() {
-        AudioFileAssembler.MultipleThaatEnqueuer multipleThaatEnqueuer = new AudioFileAssembler.MultipleThaatEnqueuer( new AllThaat[] { AllThaat.BILAWAL, AllThaat.ASAVARI } );
+        AudioFileListMaker.MultipleThaatListMaker multipleThaatEnqueuer = new AudioFileListMaker.MultipleThaatListMaker( new AllThaat[] { AllThaat.BILAWAL, AllThaat.ASAVARI } );
         System.out.println(multipleThaatEnqueuer.printableAudios());
         AudioLibrary.audioPlayer().playList(multipleThaatEnqueuer.collectedAudioFiles);
     }

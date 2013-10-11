@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
 
 import java.util.ArrayList;
@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.aqua.music.play.Playable.BaseNotes.*
-;
+import com.aqua.music.model.Playable;
+import com.aqua.music.play.AudioLibrary;
+
+import static com.aqua.music.model.Playable.BaseNotes.*;
 public class PuzzlesWithNotes {
 
 	static HashSet<Playable> saTopa = new HashSet<Playable>();

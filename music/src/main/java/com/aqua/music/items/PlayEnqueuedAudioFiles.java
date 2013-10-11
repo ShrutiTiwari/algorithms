@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.items;
 
 import static com.aqua.music.play.AudioLibrary.addFileIfFound;
 
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aqua.music.model.Playable;
+import com.aqua.music.play.AudioLibrary;
 
 public class PlayEnqueuedAudioFiles {
 	public static void play(List<Playable> notes) {

@@ -1,6 +1,6 @@
 package com.aqua.music.thaat.ipi;
 
-import com.aqua.music.play.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.AllThaat;
 
 public class PlaySelectedThaats
 {
