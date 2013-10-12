@@ -34,7 +34,7 @@ public class RaagsPrinterWithSortAbility
     private static RaagProp forInterface( Raag each, Class<? extends RaagProp> class1 ) {
         if( class1 == RaagProperties.Time.class ) {
             return each.raagProperties.time();
-        }else if( class1 == RaagProperties.Thaat.class ) {
+        }else if( class1 == RaagProperties.WriteableThaat.class ) {
             return each.raagProperties.thaat();
         }
         return null;

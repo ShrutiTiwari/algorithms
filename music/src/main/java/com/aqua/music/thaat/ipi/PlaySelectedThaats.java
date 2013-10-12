@@ -1,6 +1,6 @@
 package com.aqua.music.thaat.ipi;
 
-import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.Thaat;
 
 public class PlaySelectedThaats
 {
@@ -12,7 +12,7 @@ public class PlaySelectedThaats
 
     void execute() {
         for( String each : thaatsName ) {
-            AllThaat eachThaat = AllThaat.valueOf( each );
+            Thaat eachThaat = Thaat.valueOf( each );
             eachThaat.playAscendAndDescend();
         }
     }

@@ -19,7 +19,7 @@ public class RaagProperties
     private final static String propertiesHeader = header();
     private Map<String, String> myProperties = new LinkedHashMap<String, String>();
 
-    RaagProperties( String raagName, KeyNotes keyNotes, Time time, Thaat thaat, String jaati ) {
+    RaagProperties( String raagName, KeyNotes keyNotes, Time time, WriteableThaat thaat, String jaati ) {
         myProperties.put( KEY_NAME, raagName );
         myProperties.put( KEY_THAAT, thaat.name() );
         myProperties.put( KEY_TIME, time.name() );
@@ -52,8 +52,8 @@ public class RaagProperties
     }
     
     
-    public Thaat thaat() {
-        return Thaat.valueOf(myProperties.get( KEY_THAAT ));
+    public WriteableThaat thaat() {
+        return WriteableThaat.valueOf(myProperties.get( KEY_THAAT ));
     }
     
     public Time time() {
@@ -75,7 +75,7 @@ public class RaagProperties
     
     interface RaagProp{}
 
-    public enum Thaat implements RaagProp{
+    public enum WriteableThaat implements RaagProp{
         Bhairav, Bhairavi ,Bilawal, Kafi, Khamaj, Marva, Purvi, Kalyan, Asavari, Todi;  
     }
     

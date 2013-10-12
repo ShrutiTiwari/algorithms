@@ -1,6 +1,6 @@
 package com.aqua.music.thaat.ipi;
 
-import com.aqua.music.print.RaagProperties.Thaat;
+import com.aqua.music.print.RaagProperties.WriteableThaat;
 
 public class GetList
 {
@@ -8,9 +8,9 @@ public class GetList
 
     void execute() {
         int i = 0;
-        Thaat[] allThaats = Thaat.values();
+        WriteableThaat[] allThaats = WriteableThaat.values();
         result = new String[allThaats.length];
-        for( Thaat each : allThaats ) {
+        for( WriteableThaat each : allThaats ) {
             result[i++] = each.name();
         }
     }

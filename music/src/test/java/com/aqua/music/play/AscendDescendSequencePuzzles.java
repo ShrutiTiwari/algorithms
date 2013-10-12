@@ -3,7 +3,7 @@ package com.aqua.music.play;
 import java.util.HashSet;
 
 import com.aqua.music.items.SequencePlayer;
-import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.Thaat;
 
 public class AscendDescendSequencePuzzles
 {
@@ -12,11 +12,11 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playThaat() {
-        AllThaat.BILAWAL.playAscendAndDescend();
+        Thaat.BILAWAL.playAscendAndDescend();
     }
 
     public void playMultipleThaats() {
-        AudioFileListMaker.MultipleThaatListMaker multipleThaatEnqueuer = new AudioFileListMaker.MultipleThaatListMaker( new AllThaat[] { AllThaat.BILAWAL, AllThaat.ASAVARI } );
+        AudioFileListMaker.MultipleThaatListMaker multipleThaatEnqueuer = new AudioFileListMaker.MultipleThaatListMaker( new Thaat[] { Thaat.BILAWAL, Thaat.ASAVARI } );
         System.out.println(multipleThaatEnqueuer.printableAudios());
         AudioLibrary.audioPlayer().playList(multipleThaatEnqueuer.collectedAudioFiles);
     }
@@ -26,13 +26,13 @@ public class AscendDescendSequencePuzzles
         System.out.println( "Repeating each item[" + repeatCount + "] \n" );
         for( int i = 0; i < 3; i++ ) {
             // puzzleBuilder.playArohiAvrohi(repeatCount, SecondYearRaag.values());
-            playAscendAndDescend( repeatCount, SequencePlayer.AllThaat.values() );
+            playAscendAndDescend( repeatCount, SequencePlayer.Thaat.values() );
             System.out.println( "round[" + i + "] done \n" );
         }
     }
 
     private void playAscendAndDescend( int count, SequencePlayer... raags ) {
-        AllThaat.BILAWAL.playAscendAndDescend();
+        Thaat.BILAWAL.playAscendAndDescend();
         System.out.println( "\n Played [BILAWAL]" );
         HashSet<SequencePlayer> hasheddata = randomize( raags );
         for( SequencePlayer each : hasheddata ) {

@@ -2,7 +2,7 @@ package com.aqua.music.items;
 
 import org.junit.Test;
 
-import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.Thaat;
 import com.aqua.music.play.AscendDescendSequencePuzzles;
 import com.aqua.music.play.AudioLibrary;
 
@@ -20,6 +20,6 @@ public class SequencePuzzlesTest
 
     //@Test
     public void testKafiSequence() {
-        AllThaat.KAFI.playAscendAndDescend();
+        Thaat.KAFI.playAscendAndDescend();
     }
 }

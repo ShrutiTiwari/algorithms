@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.Thaat;
 import com.aqua.music.model.Playable;
 import com.aqua.music.play.AudioLibrary.AudioFileAssembler;
 import com.aqua.music.model.Playable.BaseNotes;
@@ -20,8 +20,8 @@ public interface AudioFileListMaker
         final Collection<File> collectedAudioFiles = new ArrayList<File>();
         final StringBuffer printableAudios = new StringBuffer();
 
-        public MultipleThaatListMaker( AllThaat[] thaats ) {
-            for( AllThaat each : thaats ) {
+        public MultipleThaatListMaker( Thaat[] thaats ) {
+            for( Thaat each : thaats ) {
                 processThaat( each );
             }
         }
@@ -34,7 +34,7 @@ public interface AudioFileListMaker
             return printableAudios.toString();
         }
 
-        private void processThaat( AllThaat thaat ) {
+        private void processThaat( Thaat thaat ) {
             AudioFileAssembler enquer = ThaatEnqueueListMaker.createEnquereWith( thaat );
             collectedAudioFiles.addAll( enquer.collectedAudioFiles );
             printableAudios.append( "\n" + enquer.printableAudios );
@@ -87,11 +87,11 @@ public interface AudioFileListMaker
     {
         private AudioFileAssembler assembler;
 
-        public ThaatEnqueueListMaker( AllThaat thaat ) {
+        public ThaatEnqueueListMaker( Thaat thaat ) {
             this.assembler = createEnquereWith( thaat );
         }
 
-        private static AudioFileAssembler createEnquereWith( AllThaat thaat ) {
+        private static AudioFileAssembler createEnquereWith( Thaat thaat ) {
             // enqueue ascend sequence
             AudioFileAssembler assembler = new AudioFileAssembler();
             assembler.addIfFileFound( BaseNotes.SA, NO_COMMA );

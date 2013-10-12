@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.items.SequencePlayer.AllThaat;
+import com.aqua.music.items.SequencePlayer.Thaat;
 import com.aqua.music.model.Playable;
 import com.aqua.music.play.AudioFileListMaker;
 import com.aqua.music.play.AudioLibrary;
@@ -23,7 +23,7 @@ public class PermutationGeneratorTest {
 	
 	@Test
 	public void testSequenceGenerationForThaat() {
-		Playable[] middleNotes = AllThaat.KAFI.ascendNotes();
+		Playable[] middleNotes = Thaat.KAFI.ascendNotes();
 		Playable[] input= new Playable[middleNotes.length+2];
 		input[0]=Playable.BaseNotes.SA;
 		input[input.length-1]=Playable.BaseNotes.HIGH_SA;

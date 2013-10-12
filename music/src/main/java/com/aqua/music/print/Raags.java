@@ -3,10 +3,10 @@ package com.aqua.music.print;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import com.aqua.music.print.RaagProperties.Thaat;
+import com.aqua.music.print.RaagProperties.WriteableThaat;
 import com.aqua.music.print.RaagProperties.Time;
 
-import static com.aqua.music.print.RaagProperties.Thaat.*;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.*;
 import static com.aqua.music.print.RaagProperties.Time.*;
 import static com.aqua.music.print.RaagTypes.*;
 
@@ -36,14 +36,14 @@ public class Raags
     public static void main( String[] args ) {
         Raags.populate();
         RaagsPrinterWithSortAbility.printSortByCriterio( raags, RaagProperties.Time.class );
-        RaagsPrinterWithSortAbility.printSortByCriterio( raags, RaagProperties.Thaat.class );
+        RaagsPrinterWithSortAbility.printSortByCriterio( raags, RaagProperties.WriteableThaat.class );
     }
 
     static class Raag
     {
         final RaagProperties raagProperties;
 
-        Raag( String raagName, KeyNotes keyNotes, Time time, Thaat thaat, String jaati ) {
+        Raag( String raagName, KeyNotes keyNotes, Time time, WriteableThaat thaat, String jaati ) {
             this.raagProperties = new RaagProperties( raagName, keyNotes, time, thaat, jaati );
         }
 

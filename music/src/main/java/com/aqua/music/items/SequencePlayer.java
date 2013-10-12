@@ -19,7 +19,7 @@ public interface SequencePlayer
 
     public String type();
 
-    public enum AllThaat implements SequencePlayer
+    public enum Thaat implements SequencePlayer
     {
         BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
         PURVI(RE_, GA, MA_, PA, DHA_, NI),
@@ -36,7 +36,7 @@ public interface SequencePlayer
         private final Playable[] descendNotes;
         private final AudioFileListMaker audioFilesEnqueuer;
 
-        private AllThaat( Playable... ascendNotes ) {
+        private Thaat( Playable... ascendNotes ) {
             this.ascendNotes = ascendNotes;
             this.descendNotes = Util.reverse( ascendNotes );
             audioFilesEnqueuer = new AudioFileListMaker.ThaatEnqueueListMaker( this );
