@@ -1,35 +1,46 @@
-package com.aqua.music.items;
+package com.aqua.music.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PermutationGenerator<T> {
-	private int[] pattern;
-	private T[] input;
+public class CommonAscDescPattern<T> implements PatternApplier<T> {
+	private final int[] commonAscDescPattern;
 	private List<T> ascendSequence;
 	private List<T> descendSequence;
-	
-	public PermutationGenerator(int[] pattern, T[] input) {
-		this.pattern = pattern;
-		this.input = input;
+
+	public CommonAscDescPattern(int[] commonAscDescPattern) {
+		this.commonAscDescPattern = commonAscDescPattern;
 	}
 
-	void generateAscendAndDescendSequences() {
+	public void generateAscendAndDescendSequences(T[] commonAscDescInput) {
 		List<T> inputList = new ArrayList<T>();
-		for (T each : input) {
+		for (T each : commonAscDescInput) {
 			inputList.add(each);
 		}
 		this.ascendSequence = sequenceForGiven(inputList);
-		this.descendSequence = sequenceForGiven(reverse(input));
+		this.descendSequence = sequenceForGiven(reverse(commonAscDescInput));
+	}
+
+	
+	public List<T> allNotes() {
+		List<T> allNotes = new ArrayList<T>();
+		allNotes.addAll(ascendSequence);
+		allNotes.addAll(descendSequence);
+		return allNotes;
+	}
+
+	public void printAscDescPattern(){
+		printPattern(ascendSequence);
+		printPattern(descendSequence);
 	}
 	
-	List<T> ascendSequence(){
-	    return ascendSequence;
+	public List<T> ascendSequence() {
+		return ascendSequence;
 	}
-	
-	List<T> descendSequence(){
-        return descendSequence;
-    }
+
+	public List<T> descendSequence() {
+		return descendSequence;
+	}
 
 	private List<T> sequenceForGiven(List<T> input) {
 		List<T> result = new ArrayList<T>();
@@ -49,7 +60,7 @@ public class PermutationGenerator<T> {
 		List<T> result = new ArrayList<T>();
 		try {
 			int k = 0;
-			for (int i : pattern) {
+			for (int i : commonAscDescPattern) {
 				T noteForPattern = input.get(index + (i - 1));
 				result.add(noteForPattern);
 			}
@@ -63,7 +74,7 @@ public class PermutationGenerator<T> {
 		StringBuffer buffer = new StringBuffer();
 		int i = 1;
 		for (T each : result) {
-			if (i == pattern.length) {
+			if (i == commonAscDescPattern.length) {
 				i = 1;
 				buffer.append(each + ", ");
 			} else {

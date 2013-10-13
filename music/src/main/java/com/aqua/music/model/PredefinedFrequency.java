@@ -1,9 +1,9 @@
 package com.aqua.music.model;
 
-public interface Playable {
+public interface PredefinedFrequency {
 	public String code();
 
-	enum BaseNotes implements Playable {
+	enum FundamentalNote implements PredefinedFrequency {
 		SA("Sa"),
 		RE_("Re_"),
 		RE("Re"),
@@ -20,7 +20,7 @@ public interface Playable {
 
 		private final String code;
 
-		private BaseNotes(String code) {
+		private FundamentalNote(String code) {
 			this.code = code;
 		}
 

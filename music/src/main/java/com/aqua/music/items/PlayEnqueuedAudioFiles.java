@@ -6,14 +6,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aqua.music.model.Playable;
+import com.aqua.music.model.PredefinedFrequency;
 import com.aqua.music.play.AudioLibrary;
 
 public class PlayEnqueuedAudioFiles {
-	public static void play(List<Playable> notes) {
+	public static void play(List<PredefinedFrequency> notes) {
 		List<File> audioFiles = new ArrayList<File>();
 		StringBuffer printPlaylist = new StringBuffer();
-		for (Playable each : notes) {
+		for (PredefinedFrequency each : notes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
@@ -21,12 +21,12 @@ public class PlayEnqueuedAudioFiles {
 		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
-	public static void play(Playable start, Playable[] middleNotes, Playable end) {
+	public static void play(PredefinedFrequency start, PredefinedFrequency[] middleNotes, PredefinedFrequency end) {
 		StringBuffer printPlaylist = new StringBuffer();
 		List<File> audioFiles = new ArrayList<File>();
 		addFileIfFound(audioFiles, start);
 		printPlaylist.append(start);
-		for (Playable each : middleNotes) {
+		for (PredefinedFrequency each : middleNotes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
@@ -36,14 +36,14 @@ public class PlayEnqueuedAudioFiles {
 		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
-	public static void playArray(Playable[] ascNotes, Playable[] descNotes) {
+	public static void playArray(PredefinedFrequency[] ascNotes, PredefinedFrequency[] descNotes) {
 		StringBuffer printPlaylist = new StringBuffer();
 		List<File> audioFiles = new ArrayList<File>();
-		for (Playable each : ascNotes) {
+		for (PredefinedFrequency each : ascNotes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
-		for (Playable each : descNotes) {
+		for (PredefinedFrequency each : descNotes) {
 			AudioLibrary.addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}

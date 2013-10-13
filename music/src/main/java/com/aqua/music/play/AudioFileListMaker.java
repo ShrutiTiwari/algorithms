@@ -5,114 +5,115 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.aqua.music.items.SequencePlayer.Thaat;
-import com.aqua.music.model.Playable;
+import com.aqua.music.model.CommonAscDescPattern;
+import com.aqua.music.model.PatternApplier;
+import com.aqua.music.model.PredefinedFrequency;
+import com.aqua.music.model.PredefinedFrequency.FundamentalNote;
+import com.aqua.music.model.PredefinedFrequencySet.Thaat;
 import com.aqua.music.play.AudioLibrary.AudioFileAssembler;
-import com.aqua.music.model.Playable.BaseNotes;
-public interface AudioFileListMaker
-{
-    boolean NO_COMMA = false;
-    Collection<File> collectedAudioFiles();
-    String printableAudios();
 
-    public static class MultipleThaatListMaker implements AudioFileListMaker
-    {
-        final Collection<File> collectedAudioFiles = new ArrayList<File>();
-        final StringBuffer printableAudios = new StringBuffer();
+public interface AudioFileListMaker {
+	boolean NO_COMMA = false;
+	boolean WITH_COMMA = true;
 
-        public MultipleThaatListMaker( Thaat[] thaats ) {
-            for( Thaat each : thaats ) {
-                processThaat( each );
-            }
-        }
+	Collection<File> collectedAudioFiles();
 
-        public Collection<File> collectedAudioFiles() {
-            return collectedAudioFiles;
-        }
+	String printableAudios();
 
-        public String printableAudios() {
-            return printableAudios.toString();
-        }
+	public static class MultipleThaatListMaker implements AudioFileListMaker {
+		final Collection<File> collectedAudioFiles = new ArrayList<File>();
+		final StringBuffer printableAudios = new StringBuffer();
 
-        private void processThaat( Thaat thaat ) {
-            AudioFileAssembler enquer = ThaatEnqueueListMaker.createEnquereWith( thaat );
-            collectedAudioFiles.addAll( enquer.collectedAudioFiles );
-            printableAudios.append( "\n" + enquer.printableAudios );
-        }
-    }
+		public MultipleThaatListMaker(Thaat[] thaats) {
+			for (Thaat each : thaats) {
+				processThaat(each);
+			}
+		}
 
-    public static class MiddleNoteWithStartEndListMaker implements AudioFileListMaker
-    {
-        private AudioFileAssembler assembler;
+		public Collection<File> collectedAudioFiles() {
+			return collectedAudioFiles;
+		}
 
-        public MiddleNoteWithStartEndListMaker( Playable start, Playable end, Playable[] middleNotes ) {
-            this.assembler = new AudioFileAssembler();
-            assembler.addIfFileFound( start );
-            assembler.addIfFilesFound( middleNotes );
-            assembler.addIfFileFound( end );
-        }
+		public String printableAudios() {
+			return printableAudios.toString();
+		}
 
-        public Collection<File> collectedAudioFiles() {
-            return assembler.collectedAudioFiles;
-        }
+		private void processThaat(Thaat thaat) {
+			AudioFileAssembler enquer = ThaatEnqueueListMaker.createEnquereWith(thaat);
+			collectedAudioFiles.addAll(enquer.collectedAudioFiles);
+			printableAudios.append("\n" + enquer.printableAudios);
+		}
+	}
 
-        @Override
-        public String printableAudios() {
-            return assembler.printableAudios.toString();
-        }
-    }
+	public static class MiddleNoteWithStartEndListMaker implements AudioFileListMaker {
+		private AudioFileAssembler assembler;
 
-    public static class SimpleListMaker implements AudioFileListMaker
-    {
-        private AudioFileAssembler assembler;
+		public MiddleNoteWithStartEndListMaker(PredefinedFrequency start, PredefinedFrequency end, PredefinedFrequency[] middleNotes) {
+			this.assembler = new AudioFileAssembler();
+			assembler.addIfFileFound(start);
+			assembler.addIfFilesFound(middleNotes);
+			assembler.addIfFileFound(end);
+		}
 
-        public SimpleListMaker( List<Playable> allNotes ) {
-            this.assembler = new AudioFileAssembler();
-            for( Playable each : allNotes ) {
-                assembler.addIfFileFound( each );
-            }
-        }
+		public Collection<File> collectedAudioFiles() {
+			return assembler.collectedAudioFiles;
+		}
 
-        public Collection<File> collectedAudioFiles() {
-            return assembler.collectedAudioFiles;
-        }
+		@Override
+		public String printableAudios() {
+			return assembler.printableAudios.toString();
+		}
+	}
 
-        @Override
-        public String printableAudios() {
-            return assembler.printableAudios.toString();
-        }
-    }
+	public static class SimpleListMaker implements AudioFileListMaker {
+		private AudioFileAssembler assembler;
 
-    public static class ThaatEnqueueListMaker implements AudioFileListMaker
-    {
-        private AudioFileAssembler assembler;
+		public SimpleListMaker(List<PredefinedFrequency> allNotes) {
+			this.assembler = new AudioFileAssembler();
+			for (PredefinedFrequency each : allNotes) {
+				assembler.addIfFileFound(each);
+			}
+		}
 
-        public ThaatEnqueueListMaker( Thaat thaat ) {
-            this.assembler = createEnquereWith( thaat );
-        }
+		public Collection<File> collectedAudioFiles() {
+			return assembler.collectedAudioFiles;
+		}
 
-        private static AudioFileAssembler createEnquereWith( Thaat thaat ) {
-            // enqueue ascend sequence
-            AudioFileAssembler assembler = new AudioFileAssembler();
-            assembler.addIfFileFound( BaseNotes.SA, NO_COMMA );
-            assembler.addIfFilesFound( thaat.ascendNotes() );
-            assembler.addIfFileFound( BaseNotes.HIGH_SA );
+		@Override
+		public String printableAudios() {
+			return assembler.printableAudios.toString();
+		}
+	}
 
-            assembler.printAdd( " |||  " );
+	public static class ThaatEnqueueListMaker implements AudioFileListMaker {
+		private AudioFileAssembler assembler;
 
-            // enqueue descend sequence
-            assembler.addIfFileFound( BaseNotes.HIGH_SA, NO_COMMA );
-            assembler.addIfFilesFound( thaat.descendNotes() );
-            assembler.addIfFileFound( BaseNotes.SA );
-            return assembler;
-        }
+		public ThaatEnqueueListMaker(Thaat thaat) {
+			this.assembler = createEnquereWith(thaat);
+		}
 
-        public Collection<File> collectedAudioFiles() {
-            return assembler.collectedAudioFiles;
-        }
+		private static AudioFileAssembler createEnquereWith(Thaat thaat) {
+			// enqueue ascend sequence
+			AudioFileAssembler assembler = new AudioFileAssembler();
+			assembler.addToAscendIfFileFound(FundamentalNote.SA, NO_COMMA);
+			assembler.addToAscendIfFileFound(thaat.ascendNotes());
+			assembler.addToAscendIfFileFound(FundamentalNote.HIGH_SA, WITH_COMMA);
 
-        public String printableAudios() {
-            return assembler.printableAudios.toString();
-        }
-    }
+			assembler.printAdd(" |||  ");
+
+			// enqueue descend sequence
+			assembler.addToDescendIfFileFound(FundamentalNote.HIGH_SA, NO_COMMA);
+			assembler.addToDescendIfFileFound(thaat.descendNotes());
+			assembler.addToDescendIfFileFound(FundamentalNote.SA, WITH_COMMA);
+			return assembler;
+		}
+
+		public Collection<File> collectedAudioFiles() {
+			return assembler.collectedAudioFiles;
+		}
+
+		public String printableAudios() {
+			return assembler.printableAudios.toString();
+		}
+	}
 }

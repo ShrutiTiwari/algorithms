@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.items.SequencePlayer.Thaat;
+import com.aqua.music.model.PredefinedFrequencySet.Thaat;
 
 class SwingGUIMaker {
 	/**

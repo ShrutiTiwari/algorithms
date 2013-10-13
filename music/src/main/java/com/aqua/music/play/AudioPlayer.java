@@ -6,13 +6,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 
+import com.aqua.music.model.PlayableItem;
+
 public interface AudioPlayer {
 	static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
 	static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
 	static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
 
 	void playList(Collection<File> audioFiles);
-
+	
+	void play(PlayableItem item);
+	
 	public class VLCPlayer implements AudioPlayer {
 		private static final String vlcOption = "--play-and-exit";
 		private final String vlcExeLoc;
@@ -44,6 +48,11 @@ public interface AudioPlayer {
 
 		private String findWindowsLocation() {
 			return new File(HOME_VLC_EXE_LOCATION_WINDOWS).exists()?HOME_VLC_EXE_LOCATION_WINDOWS:OFFICE_VLC_EXE_LOCATION_WINDOWS;
+		}
+
+		@Override
+		public void play(PlayableItem item) {
+			playList(item.getPlayList());
 		}
 	}
 

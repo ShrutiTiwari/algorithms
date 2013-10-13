@@ -1,6 +1,6 @@
 package com.aqua.music.thaat.ipi;
 
-import com.aqua.music.items.SequencePlayer.Thaat;
+import com.aqua.music.model.PredefinedFrequencySet.Thaat;
 
 public class PlaySelectedThaats
 {

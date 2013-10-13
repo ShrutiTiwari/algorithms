@@ -2,7 +2,7 @@ package com.aqua.music.items;
 
 import org.junit.Test;
 
-import com.aqua.music.items.SequencePlayer;
+import com.aqua.music.model.PredefinedFrequencySet;
 import com.aqua.music.play.AudioLibrary;
 
 public class RaagPracticeTest
@@ -17,9 +17,9 @@ public class RaagPracticeTest
         // puzzleBuilder.playRaags(GUJARI_TODI);
     }
 
-    private void playRaags( int count, SequencePlayer... raag ) {
+    private void playRaags( int count, PredefinedFrequencySet... raag ) {
         int item = 1;
-        for( SequencePlayer each : raag ) {
+        for( PredefinedFrequencySet each : raag ) {
             System.out.println( "\n Playing " + count + "times  [" + each.name() + "_" + each.type() + "]=[" + item + " of "
                     + raag.length + " items]" );
             for( int i = 0; i < count; i++ ) {
