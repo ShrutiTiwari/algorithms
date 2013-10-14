@@ -20,8 +20,7 @@ public class SymmetricalSetTest
     @Test
     public void testKafiWithPattern() {
         SymmetricalSet.THAAT_KAFI.playAscendAndDescend();
-    	SymmetricalPatternApplicator<FundamentalFrequency> pattern = new SymmetricalPatternApplicator<FundamentalFrequency>(new int[] { 1, 4, 3 });
-    	SymmetricalSet.THAAT_KAFI.playAscendAndDescend(pattern);
+    	SymmetricalSet.THAAT_KAFI.playAscendAndDescend(new SymmetricalPatternApplicator<FundamentalFrequency>(new int[] { 1, 4, 3 }));
     }
     
 }

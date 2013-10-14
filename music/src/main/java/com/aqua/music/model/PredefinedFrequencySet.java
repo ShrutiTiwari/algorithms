@@ -67,7 +67,9 @@ public interface PredefinedFrequencySet
         }
 
         public void playAscendAndDescend( PatternApplicator pattern ) {
-            AudioLibrary.audioPlayer().play( SymmetricalPlayableItem.forSet( this ).andPattern( pattern ) );
+            SymmetricalPlayableItem patternApplicator = SymmetricalPlayableItem.forSet( this ).andPattern( pattern );
+            System.out.println(pattern.prettyPrintTextForAscDesc());
+            AudioLibrary.audioPlayer().play( patternApplicator );
         }
 
         public String type() {

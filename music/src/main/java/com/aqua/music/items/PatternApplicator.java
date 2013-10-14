@@ -6,7 +6,7 @@ import java.util.List;
 public interface PatternApplicator<T>
 {
     static final String SEP = " |||| ";
-    
+
     List<T> ascendSequence();
 
     List<T> descendSequence();
@@ -34,7 +34,9 @@ public interface PatternApplicator<T>
         }
 
         @Override
-        public String prettyPrintTextForAscDesc() {return "";}
+        public String prettyPrintTextForAscDesc() {
+            return "";
+        }
 
         @Override
         public void generateAscendAndDescendSequences( Object[] commonAscDescInput ) {}

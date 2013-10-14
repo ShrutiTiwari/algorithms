@@ -8,7 +8,6 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
     private final int[] pattern;
     private List<T> ascendSequence;
     private List<T> descendSequence;
-    
 
     public SymmetricalPatternApplicator( int[] pattern ) {
         this.pattern = pattern;
@@ -31,7 +30,19 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
     }
 
     public String prettyPrintTextForAscDesc() {
-        return groupItemsForPrettyPrint( ascendSequence ) + SEP + groupItemsForPrettyPrint( descendSequence );
+        return patternCode() + groupItemsForPrettyPrint( ascendSequence ) + SEP + groupItemsForPrettyPrint( descendSequence );
+    }
+
+    private String patternCode() {
+        StringBuffer buf = new StringBuffer();
+        buf.append( "[" );
+        int i = 1;
+        for( int each : pattern ) {
+            buf.append( each + ((i != pattern.length) ? "-" : "") );
+            i++;
+        }
+        buf.append( "]==>" );
+        return buf.toString();
     }
 
     public List<T> ascendSequence() {
@@ -77,12 +88,12 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
 
     private StringBuffer insertComma( List<T> itemSequence, int numberItemsToBeGrouped ) {
         StringBuffer buffer = new StringBuffer();
-        int processedItems=0;
+        int processedItems = 0;
         int i = 1;
         for( T eachItem : itemSequence ) {
-            if( i == numberItemsToBeGrouped) {
+            if( i == numberItemsToBeGrouped ) {
                 i = 1;
-                buffer.append( eachItem + (processedItems!=itemSequence.size()-1?", ":"" ));
+                buffer.append( eachItem + (processedItems != itemSequence.size() - 1 ? ", " : "") );
             } else {
                 buffer.append( eachItem );
                 i++;
