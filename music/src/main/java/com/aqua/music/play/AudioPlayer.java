@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 
-import com.aqua.music.model.PlayableItem;
+import com.aqua.music.items.PlayableItem;
 
 public interface AudioPlayer {
 	static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";

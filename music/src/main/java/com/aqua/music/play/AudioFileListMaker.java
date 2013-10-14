@@ -8,110 +8,110 @@ import java.util.List;
 import com.aqua.music.model.FundamentalFrequency;
 import com.aqua.music.model.FundamentalFrequency.ClassicalNote;
 import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
-import com.aqua.music.play.AudioLibrary.AudioFileAssembler;
+import com.aqua.music.play.AudioLibrary.AudioFilesList;
 
 public interface AudioFileListMaker {
 	boolean NO_COMMA = false;
 	boolean WITH_COMMA = true;
 
-	Collection<File> collectedAudioFiles();
+	Collection<File> allAudioFiles();
 
-	String printableAudios();
+	String prettyPrintText();
 
-	public static class MultipleThaatListMaker implements AudioFileListMaker {
-		final Collection<File> collectedAudioFiles = new ArrayList<File>();
-		final StringBuffer printableAudios = new StringBuffer();
+	public static class ListMakerForSymmetricalSet implements AudioFileListMaker {
+		private AudioFilesList audioFilesList;
 
-		public MultipleThaatListMaker(SymmetricalSet[] thaats) {
-			for (SymmetricalSet each : thaats) {
-				processThaat(each);
-			}
+		public ListMakerForSymmetricalSet(SymmetricalSet symmetricalSet) {
+			this.audioFilesList = createWith(symmetricalSet);
 		}
 
-		public Collection<File> collectedAudioFiles() {
-			return collectedAudioFiles;
+		private static AudioFilesList createWith(SymmetricalSet symmetricalSet) {
+			// enqueue ascend sequence
+			AudioFilesList audioFilesList = new AudioFilesList();
+			audioFilesList.addIfFileFound(ClassicalNote.SA, NO_COMMA);
+			audioFilesList.addIfFileFound(symmetricalSet.ascendNotes());
+			audioFilesList.addIfFileFound(ClassicalNote.HIGH_SA, WITH_COMMA);
+
+			audioFilesList.addText(" |||  ");
+
+			// enqueue descend sequence
+			audioFilesList.addIfFileFound(ClassicalNote.HIGH_SA, NO_COMMA);
+			audioFilesList.addIfFileFound(symmetricalSet.descendNotes());
+			audioFilesList.addIfFileFound(ClassicalNote.SA, WITH_COMMA);
+			return audioFilesList;
 		}
 
-		public String printableAudios() {
-			return printableAudios.toString();
+		public Collection<File> allAudioFiles() {
+			return audioFilesList.allAudioFiles;
 		}
 
-		private void processThaat(SymmetricalSet thaat) {
-			AudioFileAssembler enquer = SymmetricalSetEnqueueListMaker.createEnquereWith(thaat);
-			collectedAudioFiles.addAll(enquer.collectedAudioFiles);
-			printableAudios.append("\n" + enquer.printableAudios);
+		public String prettyPrintText() {
+			return audioFilesList.prettyPrintText.toString();
 		}
 	}
 
-	public static class MiddleNoteWithStartEndListMaker implements AudioFileListMaker {
-		private AudioFileAssembler assembler;
+	public static class ListMakerWithMiddleNotesAndStartEndNotes implements AudioFileListMaker {
+		private AudioFilesList audioFilesList;
 
-		public MiddleNoteWithStartEndListMaker(FundamentalFrequency start, FundamentalFrequency end, FundamentalFrequency[] middleNotes) {
-			this.assembler = new AudioFileAssembler();
-			assembler.addIfFileFound(start);
-			assembler.addIfFileFound(middleNotes);
-			assembler.addIfFileFound(end);
+		public ListMakerWithMiddleNotesAndStartEndNotes(FundamentalFrequency[] middleNotes, FundamentalFrequency start, FundamentalFrequency end) {
+			this.audioFilesList = new AudioFilesList();
+			audioFilesList.addIfFileFound(start);
+			audioFilesList.addIfFileFound(middleNotes);
+			audioFilesList.addIfFileFound(end);
 		}
 
-		public Collection<File> collectedAudioFiles() {
-			return assembler.collectedAudioFiles;
+		public Collection<File> allAudioFiles() {
+			return audioFilesList.allAudioFiles;
 		}
 
 		@Override
-		public String printableAudios() {
-			return assembler.printableAudios.toString();
+		public String prettyPrintText() {
+			return audioFilesList.prettyPrintText.toString();
+		}
+	}
+
+	public static class ListMakerForMultipleSymmetricalSets implements AudioFileListMaker {
+		final Collection<File> collectedAudioFiles = new ArrayList<File>();
+		final StringBuffer printableAudios = new StringBuffer();
+
+		public ListMakerForMultipleSymmetricalSets(SymmetricalSet[] multipleSets) {
+			for (SymmetricalSet each : multipleSets) {
+				processEach(each);
+			}
+		}
+
+		public Collection<File> allAudioFiles() {
+			return collectedAudioFiles;
+		}
+
+		public String prettyPrintText() {
+			return printableAudios.toString();
+		}
+
+		private void processEach(SymmetricalSet set) {
+			AudioFilesList listMaker = ListMakerForSymmetricalSet.createWith(set);
+			collectedAudioFiles.addAll(listMaker.allAudioFiles);
+			printableAudios.append("\n" + listMaker.prettyPrintText);
 		}
 	}
 
 	public static class SimpleListMaker implements AudioFileListMaker {
-		private AudioFileAssembler assembler;
+		private AudioFilesList audioFilesList;
 
 		public SimpleListMaker(List<FundamentalFrequency> allNotes) {
-			this.assembler = new AudioFileAssembler();
+			this.audioFilesList = new AudioFilesList();
 			for (FundamentalFrequency each : allNotes) {
-				assembler.addIfFileFound(each);
+				audioFilesList.addIfFileFound(each);
 			}
 		}
 
-		public Collection<File> collectedAudioFiles() {
-			return assembler.collectedAudioFiles;
+		public Collection<File> allAudioFiles() {
+			return audioFilesList.allAudioFiles;
 		}
 
 		@Override
-		public String printableAudios() {
-			return assembler.printableAudios.toString();
-		}
-	}
-
-	public static class SymmetricalSetEnqueueListMaker implements AudioFileListMaker {
-		private AudioFileAssembler assembler;
-
-		public SymmetricalSetEnqueueListMaker(SymmetricalSet symmetricalSet) {
-			this.assembler = createEnquereWith(symmetricalSet);
-		}
-
-		private static AudioFileAssembler createEnquereWith(SymmetricalSet symmetricalSet) {
-			// enqueue ascend sequence
-			AudioFileAssembler assembler = new AudioFileAssembler();
-			assembler.addIfFileFound(ClassicalNote.SA, NO_COMMA);
-			assembler.addIfFileFound(symmetricalSet.ascendNotes());
-			assembler.addIfFileFound(ClassicalNote.HIGH_SA, WITH_COMMA);
-
-			assembler.printAdd(" |||  ");
-
-			// enqueue descend sequence
-			assembler.addIfFileFound(ClassicalNote.HIGH_SA, NO_COMMA);
-			assembler.addIfFileFound(symmetricalSet.descendNotes());
-			assembler.addIfFileFound(ClassicalNote.SA, WITH_COMMA);
-			return assembler;
-		}
-
-		public Collection<File> collectedAudioFiles() {
-			return assembler.collectedAudioFiles;
-		}
-
-		public String printableAudios() {
-			return assembler.printableAudios.toString();
+		public String prettyPrintText() {
+			return audioFilesList.prettyPrintText.toString();
 		}
 	}
 }

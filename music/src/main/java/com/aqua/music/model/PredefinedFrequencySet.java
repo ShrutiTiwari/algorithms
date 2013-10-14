@@ -14,7 +14,8 @@ import static com.aqua.music.model.FundamentalFrequency.ClassicalNote.RE;
 import static com.aqua.music.model.FundamentalFrequency.ClassicalNote.RE_;
 import static com.aqua.music.model.FundamentalFrequency.ClassicalNote.SA;
 
-import com.aqua.music.model.FundamentalFrequency;
+import com.aqua.music.items.PatternApplicator;
+import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
 import com.aqua.music.play.AudioFileListMaker;
 import com.aqua.music.play.AudioLibrary;
 
@@ -30,7 +31,7 @@ public interface PredefinedFrequencySet
 
     public void playAscendAndDescend();
 
-    public void playAscendAndDescend( PatternApplier pattern );
+    public void playAscendAndDescend( PatternApplicator pattern );
 
     /**
      * 
@@ -65,7 +66,7 @@ public interface PredefinedFrequencySet
             AudioLibrary.audioPlayer().play( SymmetricalPlayableItem.forSet( this ) );
         }
 
-        public void playAscendAndDescend( PatternApplier pattern ) {
+        public void playAscendAndDescend( PatternApplicator pattern ) {
             AudioLibrary.audioPlayer().play( SymmetricalPlayableItem.forSet( this ).andPattern( pattern ) );
         }
 
@@ -131,8 +132,7 @@ public interface PredefinedFrequencySet
         }
 
         @Override
-        public void playAscendAndDescend( PatternApplier pattern ) {
-            // TODO Auto-generated method stub
+        public void playAscendAndDescend( PatternApplicator pattern ) {
 
         }
     }
@@ -141,7 +141,7 @@ public interface PredefinedFrequencySet
     {
         static void play( FundamentalFrequency start, FundamentalFrequency[] middleNotes, FundamentalFrequency end ) {
             AudioLibrary.audioPlayer().playList(
-                    new AudioFileListMaker.MiddleNoteWithStartEndListMaker( start, end, middleNotes ).collectedAudioFiles() );
+                    new AudioFileListMaker.ListMakerWithMiddleNotesAndStartEndNotes( middleNotes, start, end ).allAudioFiles() );
         }
 
         static FundamentalFrequency[] reverse( FundamentalFrequency... ascendNotes ) {
@@ -151,10 +151,6 @@ public interface PredefinedFrequencySet
                 dscendNotes[i] = ascendNotes[count - i - 1];
             }
             return dscendNotes;
-        }
-
-        static FundamentalFrequency[] sequence( FundamentalFrequency... notes ) {
-            return notes;
         }
     }
 }

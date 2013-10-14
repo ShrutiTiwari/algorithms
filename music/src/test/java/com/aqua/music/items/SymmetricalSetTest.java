@@ -2,7 +2,6 @@ package com.aqua.music.items;
 
 import org.junit.Test;
 
-import com.aqua.music.model.SymmetricalPattern;
 import com.aqua.music.model.FundamentalFrequency;
 import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary;
@@ -19,9 +18,9 @@ public class SymmetricalSetTest
     }
     
     @Test
-    public void testKafiWithPatter() {
+    public void testKafiWithPattern() {
         SymmetricalSet.THAAT_KAFI.playAscendAndDescend();
-    	SymmetricalPattern<FundamentalFrequency> pattern = new SymmetricalPattern<FundamentalFrequency>(new int[] { 1, 4, 3 });
+    	SymmetricalPatternApplicator<FundamentalFrequency> pattern = new SymmetricalPatternApplicator<FundamentalFrequency>(new int[] { 1, 4, 3 });
     	SymmetricalSet.THAAT_KAFI.playAscendAndDescend(pattern);
     }
     

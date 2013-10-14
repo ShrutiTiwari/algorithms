@@ -1,14 +1,14 @@
-package com.aqua.music.model;
+package com.aqua.music.items;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SymmetricalPattern<T> implements PatternApplier<T> {
+public class SymmetricalPatternApplicator<T> implements PatternApplicator<T> {
 	private final int[] commonAscDescPattern;
 	private List<T> ascendSequence;
 	private List<T> descendSequence;
 
-	public SymmetricalPattern(int[] commonAscDescPattern) {
+	public SymmetricalPatternApplicator(int[] commonAscDescPattern) {
 		this.commonAscDescPattern = commonAscDescPattern;
 	}
 

@@ -13,24 +13,9 @@ import com.aqua.music.play.AudioPlayer.VLCPlayer;
 public class AudioLibrary
 {
     private static Map<String, File> allAudios;
-    private static AudioPlayer audioPlayer = new VLCPlayer();
     private static final String AUDIO_LIBRARY = "recognition-puzzles/";
+    private static AudioPlayer audioPlayer = new VLCPlayer();
     private static final String FOLDER_PREFIX = "note-recognition-";
-
-    public static Map<String, File> allAudios() {
-    	initializeAudioIfNotAlready();
-        return allAudios;
-    }
-
-    public static AudioPlayer audioPlayer() {
-    	initializeAudioIfNotAlready();
-        return audioPlayer;
-    }
-    
-    public static void initializeWithGivenSeconds( int seconds ) {
-        allAudios = findAllNotesAudios( seconds );
-        System.out.println( "initializaed with [" + allAudios + "]" );
-    }
 
     public static void addFileIfFound( List<File> audioFiles, FundamentalFrequency note ) {
         File audioFile = allAudios.get( note.code() );
@@ -38,8 +23,22 @@ public class AudioLibrary
             System.out.println( "No audio found for [" + note + "] in the list of files[" + allAudios.keySet() + "]" );
         } else {
             audioFiles.add( audioFile );
-
         }
+    }
+
+    public static Map<String, File> allAudios() {
+    	initializeAudioIfNotAlready();
+        return allAudios;
+    }
+    
+    public static AudioPlayer audioPlayer() {
+    	initializeAudioIfNotAlready();
+        return audioPlayer;
+    }
+
+    public static void initializeWithGivenSeconds( int seconds ) {
+        allAudios = findAllNotesAudios( seconds );
+        System.out.println( "initializaed with [" + allAudios + "]" );
     }
 
     private static String directoryName( int duration ) {
@@ -64,9 +63,9 @@ public class AudioLibrary
 			initializeWithGivenSeconds(1);
 		}
 	}
-    public static class AudioFileAssembler {
-    	Collection<File> collectedAudioFiles = new ArrayList<File>();
-    	StringBuffer printableAudios = new StringBuffer();
+    public static class AudioFilesList {
+    	Collection<File> allAudioFiles = new ArrayList<File>();
+    	StringBuffer prettyPrintText = new StringBuffer();
 
     	public void addIfFileFound(FundamentalFrequency singleNote) {
     		addIfFileFound(singleNote, true);
@@ -80,8 +79,8 @@ public class AudioLibrary
     			System.out.println("No audio found for [" + singleNote
     					+ "] in the list of files[" + allAudios.keySet() + "]");
     		} else {
-    			collectedAudioFiles.add(audioFile);
-    			printableAudios.append((appendComma ? ", " : "") + code);
+    			allAudioFiles.add(audioFile);
+    			prettyPrintText.append((appendComma ? ", " : "") + code);
     		}
     	}
     	
@@ -91,8 +90,8 @@ public class AudioLibrary
     		}
     	}
     	
-    	public void printAdd(String value) {
-    		printableAudios.append(value);
+    	public void addText(String value) {
+    		prettyPrintText.append(value);
     	}
     }
 
