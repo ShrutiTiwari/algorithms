@@ -5,13 +5,15 @@ import java.util.List;
 
 public interface PatternApplicator<T>
 {
+    static final String SEP = " |||| ";
+    
     List<T> ascendSequence();
 
     List<T> descendSequence();
 
     List<T> allNotes();
 
-    void printAscDescPattern();
+    String prettyPrintTextForAscDesc();
 
     void generateAscendAndDescendSequences( T[] commonAscDescInput );
 
@@ -32,7 +34,7 @@ public interface PatternApplicator<T>
         }
 
         @Override
-        public void printAscDescPattern() {}
+        public String prettyPrintTextForAscDesc() {return "";}
 
         @Override
         public void generateAscendAndDescendSequences( Object[] commonAscDescInput ) {}

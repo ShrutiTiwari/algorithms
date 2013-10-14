@@ -52,7 +52,7 @@ public interface PlayableItem {
 
 	        patternApplier.generateAscendAndDescendSequences(input);
 	        AudioFileListMaker audioFilesEnqueuer = new AudioFileListMaker.SimpleListMaker(patternApplier.allNotes());
-	        patternApplier.printAscDescPattern();
+	        System.out.println(patternApplier.prettyPrintTextForAscDesc());
 	        return audioFilesEnqueuer.allAudioFiles();
         }
 
