@@ -7,14 +7,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.model.FundamentalFrequency;
-import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
+import com.aqua.music.model.Frequency;
+import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class PatternGeneratorTest
 {
     @Test
     public void testPair() {
-        FundamentalFrequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
+        Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
         System.out.println( "==>" + input.length );
         List<int[]> result = PatternGenerator.PAIR.generatePatterns( input );
         assertNotNull( result );
@@ -22,12 +22,12 @@ public class PatternGeneratorTest
         assertEquals( "12,21,13,31,14,41,15,51,16,61,17,71,", toStringForComparison( result ) );
     }
 
-    @Test
+    //@Test
     public void playPairOfNotes() {
-        FundamentalFrequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
+        Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
         List<int[]> result = PatternGenerator.PAIR.generatePatterns( input );
         for(int[] each: result){
-            SymmetricalSet.THAAT_KAFI.playAscendAndDescend(new SymmetricalPatternApplicator<FundamentalFrequency>(each));
+            SymmetricalSet.THAAT_KAFI.playAscendAndDescend(new SymmetricalPatternApplicator<Frequency>(each));
         }
     }
     

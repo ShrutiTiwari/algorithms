@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
+import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 class SwingGUIMaker {
 	/**
@@ -74,23 +74,23 @@ class SwingGUIMaker {
 	}
 
 	private class ThaatButton extends JButton {
-		private SymmetricalSet specificThaat;
+		private SymmetricalSet selectedSet;
 		private final int THAAT_BUTTON_WIDTH = 200;
 		private int index;
 
 		ThaatButton(SymmetricalSet specificThaat, int index) {
-			this.specificThaat = specificThaat;
+			this.selectedSet = specificThaat;
 			this.index = index;
 		}
 
 		JButton get() {
-			JButton specificButton = new JButton("Play " + specificThaat.name());
+			JButton specificButton = new JButton("Play " + selectedSet.name());
 			specificButton.setBounds(HORIZONAL_COORIDNATE, (10 + (index * BUTTON_HEIGHT) + 50), THAAT_BUTTON_WIDTH, BUTTON_HEIGHT);
 			specificButton.setToolTipText("Click this to play Kafi!");
 			specificButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					specificThaat.playAscendAndDescend();
+					selectedSet.nonblockingPlayAscendAndDescend();
 				}
 			});
 			return specificButton;

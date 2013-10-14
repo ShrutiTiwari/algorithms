@@ -1,9 +1,9 @@
 package com.aqua.music.model;
 
-public interface FundamentalFrequency {
+public interface Frequency {
 	public String code();
 
-	enum ClassicalNote implements FundamentalFrequency {
+	enum ClassicalNote implements Frequency {
 		SA("Sa"),
 		RE_("Re_"),
 		RE("Re"),

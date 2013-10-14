@@ -1,6 +1,6 @@
 package com.aqua.music.symmetrical.set.ipi;
 
-import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
+import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class PlaySelectedSymmetricalSet
 {

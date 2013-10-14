@@ -6,86 +6,114 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 
-import com.aqua.music.items.PlayableItem;
+public interface AudioPlayer
+{
+    static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
+    static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
+    static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
 
-public interface AudioPlayer {
-	static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
-	static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
-	static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
+    void playList( Collection<File> audioFiles );
 
-	void playList(Collection<File> audioFiles);
-	
-	void play(PlayableItem item);
-	
-	public class VLCPlayer implements AudioPlayer {
-		private static final String vlcOption = "--play-and-exit";
-		private final String vlcExeLoc;
+    class CommandExecutor
+    {
+        private final Runtime runtime = Runtime.getRuntime();
 
-		VLCPlayer() {
-			this.vlcExeLoc = findAudioPlayerBasedOnOS();
-		}
+        public Process executeCommand( String[] command ) {
+            try {
+                Process nativeProcess = runtime.exec( command );
+                int success = nativeProcess.waitFor();
+                if( success != 0 ) {
+                    printError( nativeProcess );
+                }
+                return nativeProcess;
+            } catch( Exception e ) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
-		public void playList(Collection<File> audioFiles) {
-			play(audioFiles.toArray(new File[audioFiles.size()]));
-		}
+        private void printError( Process p ) throws IOException {
+            System.out.println( "process execution failed " + p.exitValue() );
+            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( p.getErrorStream() ) );
+            String s = null;
+            while( (s = bufferedReader.readLine()) != null ) {
+                System.out.println( s );
+            }
+        }
+        
+        class NomWaitingCommandExecutor
+        {
+            private final Runtime runtime = Runtime.getRuntime();
 
-		private void play(File... audioFiles) {
-			String[] command = new String[2 + audioFiles.length];
-			command[0] = vlcExeLoc;
-			command[1] = vlcOption;
-			int i = 0;
-			for (File each : audioFiles) {
-				command[i++ + 2] = each.getAbsolutePath();
-			}
-			new CommandExecutor().executeCommand(command);
-		}
-		
-		private String findAudioPlayerBasedOnOS() {
-			String os = System.getProperty("os.name");
-			return (!os.contains("Windows")) ? VLC_EXE_LOCATION_LINUX
-					: findWindowsLocation();
-		}
+            public Process executeCommand( String[] command ) {
+                try {
+                    return runtime.exec( command );
+                } catch( Exception e ) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+    }
 
-		private String findWindowsLocation() {
-			return new File(HOME_VLC_EXE_LOCATION_WINDOWS).exists()?HOME_VLC_EXE_LOCATION_WINDOWS:OFFICE_VLC_EXE_LOCATION_WINDOWS;
-		}
+    public class VLCPlayer implements AudioPlayer
+    {
+        static Process lastRunningProcess = null;
+        private static final String vlcOption = "--play-and-exit";
+        private final String vlcExeLoc;
 
-		@Override
-		public void play(PlayableItem item) {
-			playList(item.getPlayList());
-		}
-	}
+        VLCPlayer() {
+            this.vlcExeLoc = findAudioPlayerBasedOnOS();
+        }
 
-	class CommandExecutor {
-		private final Runtime runtime = Runtime.getRuntime();
+        public void playList( Collection<File> audioFiles ) {
+            play( audioFiles.toArray( new File[audioFiles.size()] ) );
+        }
 
-		public void executeCommand(String[] command) {
-			try {
-				for (String each : command) {
-					//System.out.println(each);
-				}
+        private void destroy() {
+            if( lastRunningProcess == null )
+                return;
+            try {
+                lastRunningProcess.getOutputStream().close();
+            } catch( Exception ignored ) {
+                // nop
+            }
+            try {
+                lastRunningProcess.destroy();
+            } catch( Exception e ) {} finally {}
+            lastRunningProcess=null;
+        }
 
-				Process p = runtime.exec(command);
-				int success = p.waitFor();
-				if (success != 0) {
-					printError(p);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+        private String findAudioPlayerBasedOnOS() {
+            String os = System.getProperty( "os.name" );
+            return (!os.contains( "Windows" )) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
+        }
 
-		private void printError(Process p) throws IOException {
-			System.out.println("process execution failed " + p.exitValue());
-			BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(p.getErrorStream()));
-			String s = null;
-			while ((s = bufferedReader.readLine()) != null) {
-				System.out.println(s);
-			}
-		}
-	}
-	
+        private String findWindowsLocation() {
+            return new File( HOME_VLC_EXE_LOCATION_WINDOWS ).exists() ? HOME_VLC_EXE_LOCATION_WINDOWS
+                    : OFFICE_VLC_EXE_LOCATION_WINDOWS;
+        }
+
+        private void play( File... audioFiles ) {
+            if(lastRunningProcess!=null){
+                destroy();
+            }
+            String[] command = new String[2 + audioFiles.length];
+            command[0] = vlcExeLoc;
+            command[1] = vlcOption;
+            int i = 0;
+            for( File each : audioFiles ) {
+                command[i++ + 2] = each.getAbsolutePath();
+            }
+            lastRunningProcess = new CommandExecutor().executeCommand( command );
+        }
+
+        @Override
+        public void nonblockingPlay(Collection<File> allAudioFiles  ) {
+            
+        }
+    }
+
+    void nonblockingPlay( Collection<File> allAudioFiles );
+
 }

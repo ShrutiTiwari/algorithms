@@ -3,13 +3,13 @@ package com.aqua.music.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aqua.music.model.FundamentalFrequency;
+import com.aqua.music.model.Frequency;
 
 public enum PatternGenerator
 {
     PAIR {
         @Override
-        List<int[]> generatePatterns( FundamentalFrequency[] frequencySet ) {
+        List<int[]> generatePatterns( Frequency[] frequencySet ) {
             List<int[]> patternsList = new ArrayList<int[]>();
 
             int startIndex = 1;
@@ -23,6 +23,6 @@ public enum PatternGenerator
             return patternsList;
         }
     };
-    abstract List<int[]> generatePatterns( FundamentalFrequency[] input );
+    abstract List<int[]> generatePatterns( Frequency[] input );
 
 }
