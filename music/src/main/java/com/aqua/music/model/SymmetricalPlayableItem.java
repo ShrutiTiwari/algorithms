@@ -3,36 +3,36 @@ package com.aqua.music.model;
 import java.io.File;
 import java.util.Collection;
 
-import com.aqua.music.model.PredefinedFrequencySet.Thaat;
+import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioFileListMaker;
 import com.aqua.music.play.AudioLibrary;
 
-public class ThaatPlayableItem implements PlayableItem {
+public class SymmetricalPlayableItem implements PlayableItem {
 	private int duration = 1;
 	private PatternApplier patternApplier = PatternApplier.NONE;
 
-	private Thaat thaat;
+	private SymmetricalSet symmetricalSet;
 
-	public static ThaatPlayableItem forThaat(Thaat thaat) {
-		ThaatPlayableItem result = new ThaatPlayableItem();
-		result.thaat = thaat;
+	public static SymmetricalPlayableItem forSet(SymmetricalSet symmetricalSet) {
+		SymmetricalPlayableItem result = new SymmetricalPlayableItem();
+		result.symmetricalSet = symmetricalSet;
 		return result;
 	}
 
 	public Collection<File> getPlayList() {
 		AudioLibrary.initializeWithGivenSeconds(duration);
 		if (patternApplier == PatternApplier.NONE) {
-			AudioFileListMaker audioFilesEnqueuer = new AudioFileListMaker.ThaatEnqueueListMaker(thaat);
+			AudioFileListMaker audioFilesEnqueuer = new AudioFileListMaker.SymmetricalSetEnqueueListMaker(symmetricalSet);
 			System.out.print("\t[" + audioFilesEnqueuer.printableAudios() + "]");
 			return audioFilesEnqueuer.collectedAudioFiles();
 		}
 
-		PredefinedFrequency[] middleNotes = thaat.ascendNotes();
-		PredefinedFrequency[] input = new PredefinedFrequency[middleNotes.length + 2];
-		input[0] = PredefinedFrequency.FundamentalNote.SA;
-		input[input.length - 1] = PredefinedFrequency.FundamentalNote.HIGH_SA;
+		FundamentalFrequency[] middleNotes = symmetricalSet.ascendNotes();
+		FundamentalFrequency[] input = new FundamentalFrequency[middleNotes.length + 2];
+		input[0] = FundamentalFrequency.ClassicalNote.SA;
+		input[input.length - 1] = FundamentalFrequency.ClassicalNote.HIGH_SA;
 		int i = 1;
-		for (PredefinedFrequency each : middleNotes) {
+		for (FundamentalFrequency each : middleNotes) {
 			input[i++] = each;
 		}
 
@@ -43,12 +43,12 @@ public class ThaatPlayableItem implements PlayableItem {
 
 	}
 
-	ThaatPlayableItem andPattern(PatternApplier pattern) {
+	SymmetricalPlayableItem andPattern(PatternApplier pattern) {
 		this.patternApplier = pattern;
 		return this;
 	}
 
-	ThaatPlayableItem forDuration(int duration) {
+	SymmetricalPlayableItem forDuration(int duration) {
 		this.duration = duration;
 		return this;
 	}

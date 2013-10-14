@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.model.CommonAscDescPattern;
-import com.aqua.music.model.PredefinedFrequency;
-import com.aqua.music.model.PredefinedFrequencySet.Thaat;
+import com.aqua.music.model.SymmetricalPattern;
+import com.aqua.music.model.FundamentalFrequency;
+import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioFileListMaker;
 import com.aqua.music.play.AudioLibrary;
 
@@ -19,30 +19,30 @@ public class PatternApplierTest {
 
 	//@Test
 	public void testSequenceGeneration() {
-		new CommonAscDescPattern<String>(pattern).generateAscendAndDescendSequences(input);
+		new SymmetricalPattern<String>(pattern).generateAscendAndDescendSequences(input);
 	}
 	
 	@Test
 	public void testSequenceGenerationForThaat() {
-		PredefinedFrequency[] middleNotes = Thaat.KAFI.ascendNotes();
-		PredefinedFrequency[] input= new PredefinedFrequency[middleNotes.length+2];
-		input[0]=PredefinedFrequency.FundamentalNote.SA;
-		input[input.length-1]=PredefinedFrequency.FundamentalNote.HIGH_SA;
+		FundamentalFrequency[] middleNotes = SymmetricalSet.THAAT_KAFI.ascendNotes();
+		FundamentalFrequency[] input= new FundamentalFrequency[middleNotes.length+2];
+		input[0]=FundamentalFrequency.ClassicalNote.SA;
+		input[input.length-1]=FundamentalFrequency.ClassicalNote.HIGH_SA;
 		int i=1;
-		for(PredefinedFrequency each:middleNotes){
+		for(FundamentalFrequency each:middleNotes){
 			input[i++]=each;
 		}
-		CommonAscDescPattern<PredefinedFrequency> permutationGenerator = new CommonAscDescPattern<PredefinedFrequency>(pattern);
+		SymmetricalPattern<FundamentalFrequency> permutationGenerator = new SymmetricalPattern<FundamentalFrequency>(pattern);
         permutationGenerator.generateAscendAndDescendSequences(input);
-        List<PredefinedFrequency> ascendSequence = permutationGenerator.ascendSequence();
+        List<FundamentalFrequency> ascendSequence = permutationGenerator.ascendSequence();
         permutationGenerator.printPattern( ascendSequence );
         play( ascendSequence );
-        List<PredefinedFrequency> descendSequence = permutationGenerator.descendSequence();
+        List<FundamentalFrequency> descendSequence = permutationGenerator.descendSequence();
         permutationGenerator.printPattern( descendSequence );
         play( descendSequence );
 	}
 
-    private void play( List<PredefinedFrequency> notesSequence ) {
+    private void play( List<FundamentalFrequency> notesSequence ) {
         AudioLibrary.audioPlayer().playList( new AudioFileListMaker.SimpleListMaker(notesSequence).collectedAudioFiles() );
     }
 }

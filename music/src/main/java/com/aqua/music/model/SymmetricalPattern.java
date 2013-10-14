@@ -3,12 +3,12 @@ package com.aqua.music.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonAscDescPattern<T> implements PatternApplier<T> {
+public class SymmetricalPattern<T> implements PatternApplier<T> {
 	private final int[] commonAscDescPattern;
 	private List<T> ascendSequence;
 	private List<T> descendSequence;
 
-	public CommonAscDescPattern(int[] commonAscDescPattern) {
+	public SymmetricalPattern(int[] commonAscDescPattern) {
 		this.commonAscDescPattern = commonAscDescPattern;
 	}
 

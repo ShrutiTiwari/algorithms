@@ -6,14 +6,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import com.aqua.music.model.PredefinedFrequency;
+import com.aqua.music.model.FundamentalFrequency;
 import com.aqua.music.play.AudioLibrary;
 
-import static com.aqua.music.model.PredefinedFrequency.FundamentalNote.*;
+import static com.aqua.music.model.FundamentalFrequency.ClassicalNote.*;
 public class PuzzlesWithNotes {
 
-	static HashSet<PredefinedFrequency> saTopa = new HashSet<PredefinedFrequency>();
-	static HashSet<PredefinedFrequency> paToHighSa = new HashSet<PredefinedFrequency>();
+	static HashSet<FundamentalFrequency> saTopa = new HashSet<FundamentalFrequency>();
+	static HashSet<FundamentalFrequency> paToHighSa = new HashSet<FundamentalFrequency>();
 	static int REPEAT_COUNT = 6;
 	public static void main(String[] args) {
 		initialize();
@@ -21,16 +21,16 @@ public class PuzzlesWithNotes {
 		sequentialPay();
 	}
 
-	private static void alternatePlay(HashSet<PredefinedFrequency>... saTopa2) {
-		Iterator<PredefinedFrequency> iterator1 = saTopa.iterator();
-		Iterator<PredefinedFrequency> iterator2 = paToHighSa.iterator();
-		List<PredefinedFrequency> playNotes=new ArrayList<PredefinedFrequency>();
+	private static void alternatePlay(HashSet<FundamentalFrequency>... saTopa2) {
+		Iterator<FundamentalFrequency> iterator1 = saTopa.iterator();
+		Iterator<FundamentalFrequency> iterator2 = paToHighSa.iterator();
+		List<FundamentalFrequency> playNotes=new ArrayList<FundamentalFrequency>();
 		for (int index = 0; index < paToHighSa.size(); index++) {
 			playNotes.add(iterator1.next());
 			playNotes.add(iterator2.next());
 		}
 		PlayEnqueuedAudioFiles.play(playNotes);
-		playNotes=new ArrayList<PredefinedFrequency>();
+		playNotes=new ArrayList<FundamentalFrequency>();
 		for (int index = paToHighSa.size(); index < saTopa.size(); index++) {
 			playNotes.add(iterator1.next());
 		}
@@ -43,19 +43,19 @@ public class PuzzlesWithNotes {
 		populateNotes(paToHighSa, DHA, DHA_, NI, NI_);
 	}
 
-	private static void play(HashSet<PredefinedFrequency> saTopa2) {
-		List<PredefinedFrequency> playNotes=new ArrayList<PredefinedFrequency>();
+	private static void play(HashSet<FundamentalFrequency> saTopa2) {
+		List<FundamentalFrequency> playNotes=new ArrayList<FundamentalFrequency>();
 		for (int i = 0; i < REPEAT_COUNT; i++) {
 			System.out.println("\n");
-			for (PredefinedFrequency each : saTopa2) {
+			for (FundamentalFrequency each : saTopa2) {
 				playNotes.add(each);
 			}
 		}
 		PlayEnqueuedAudioFiles.play(playNotes);
 	}
 
-	private static void populateNotes(HashSet<PredefinedFrequency> agreegatator, PredefinedFrequency... notes) {
-		for (PredefinedFrequency each : notes) {
+	private static void populateNotes(HashSet<FundamentalFrequency> agreegatator, FundamentalFrequency... notes) {
+		for (FundamentalFrequency each : notes) {
 			agreegatator.add(each);
 		}
 	}

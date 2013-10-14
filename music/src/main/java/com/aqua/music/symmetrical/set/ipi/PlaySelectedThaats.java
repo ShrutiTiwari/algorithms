@@ -1,6 +1,6 @@
-package com.aqua.music.thaat.ipi;
+package com.aqua.music.symmetrical.set.ipi;
 
-import com.aqua.music.model.PredefinedFrequencySet.Thaat;
+import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 
 public class PlaySelectedThaats
 {
@@ -12,7 +12,7 @@ public class PlaySelectedThaats
 
     void execute() {
         for( String each : thaatsName ) {
-            Thaat eachThaat = Thaat.valueOf( each );
+            SymmetricalSet eachThaat = SymmetricalSet.valueOf( each );
             eachThaat.playAscendAndDescend();
         }
     }

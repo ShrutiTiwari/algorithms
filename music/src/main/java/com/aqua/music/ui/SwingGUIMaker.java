@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.model.PredefinedFrequencySet.Thaat;
+import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 
 class SwingGUIMaker {
 	/**
@@ -52,7 +52,7 @@ class SwingGUIMaker {
 		thaatPanel.setLayout(null);
 		thaatPanel.setPreferredSize(new Dimension(400, 400));
 		int i = 0;
-		for (Thaat each : Thaat.values()) {
+		for (SymmetricalSet each : SymmetricalSet.values()) {
 			thaatPanel.add(new ThaatButton(each, i++).get());
 		}
 		thaatPanel.add(quitButton(400));
@@ -74,11 +74,11 @@ class SwingGUIMaker {
 	}
 
 	private class ThaatButton extends JButton {
-		private Thaat specificThaat;
+		private SymmetricalSet specificThaat;
 		private final int THAAT_BUTTON_WIDTH = 200;
 		private int index;
 
-		ThaatButton(Thaat specificThaat, int index) {
+		ThaatButton(SymmetricalSet specificThaat, int index) {
 			this.specificThaat = specificThaat;
 			this.index = index;
 		}

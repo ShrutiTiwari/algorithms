@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.aqua.music.model.PredefinedFrequency;
+import com.aqua.music.model.FundamentalFrequency;
 import com.aqua.music.play.AudioPlayer.VLCPlayer;
 
 public class AudioLibrary
@@ -32,7 +32,7 @@ public class AudioLibrary
         System.out.println( "initializaed with [" + allAudios + "]" );
     }
 
-    public static void addFileIfFound( List<File> audioFiles, PredefinedFrequency note ) {
+    public static void addFileIfFound( List<File> audioFiles, FundamentalFrequency note ) {
         File audioFile = allAudios.get( note.code() );
         if( audioFile == null ) {
             System.out.println( "No audio found for [" + note + "] in the list of files[" + allAudios.keySet() + "]" );
@@ -68,23 +68,11 @@ public class AudioLibrary
     	Collection<File> collectedAudioFiles = new ArrayList<File>();
     	StringBuffer printableAudios = new StringBuffer();
 
-    	Collection<File> collectedAscendFiles = new ArrayList<File>();
-    	Collection<File> collectedDescendFiles = new ArrayList<File>();
-    	
-    	public void addIfFileFound(PredefinedFrequency singleNote) {
+    	public void addIfFileFound(FundamentalFrequency singleNote) {
     		addIfFileFound(singleNote, true);
     	}
     	
-    	public void addToAscendIfFileFound(PredefinedFrequency singleNote, boolean appendComma) {
-    		addToGivenCollectionIfFileFound(collectedAscendFiles, singleNote, appendComma);	
-    	}
-    	
-    	public void addToDescendIfFileFound(PredefinedFrequency singleNote, boolean appendComma) {
-    		addToGivenCollectionIfFileFound(collectedDescendFiles, singleNote, appendComma);	
-    	}
-    	
-
-    	public void addIfFileFound(PredefinedFrequency singleNote, boolean appendComma) {
+    	public void addIfFileFound(FundamentalFrequency singleNote, boolean appendComma) {
     		initializeAudioIfNotAlready();
     		String code = singleNote.code();
     		File audioFile = allAudios.get(code);
@@ -97,37 +85,12 @@ public class AudioLibrary
     		}
     	}
     	
-    	private void addToGivenCollectionIfFileFound(Collection<File> givenCollection, PredefinedFrequency singleNote, boolean appendComma ) {
-    		initializeAudioIfNotAlready();
-    		String code = singleNote.code();
-    		File audioFile = allAudios.get(code);
-    		if (audioFile == null) {
-    			System.out.println("No audio found for [" + singleNote
-    					+ "] in the list of files[" + allAudios.keySet() + "]");
-    		} else {
-    			givenCollection.add(audioFile);
-    			printableAudios.append((appendComma ? ", " : "") + code);
-    		}
-    	}
-
-    	public void addIfFilesFound(PredefinedFrequency[] notes) {
-    		for (PredefinedFrequency each : notes) {
+    	public void addIfFileFound(FundamentalFrequency[] notes) {
+    		for (FundamentalFrequency each : notes) {
     			addIfFileFound(each);
     		}
     	}
     	
-    	public void addToAscendIfFileFound(PredefinedFrequency[] notes) {
-    		for (PredefinedFrequency each : notes) {
-    			addToAscendIfFileFound(each, true);
-    		}
-    	}
-    	
-    	public void addToDescendIfFileFound(PredefinedFrequency[] notes) {
-    		for (PredefinedFrequency each : notes) {
-    			addToDescendIfFileFound(each, true);
-    		}
-    	}
-
     	public void printAdd(String value) {
     		printableAudios.append(value);
     	}

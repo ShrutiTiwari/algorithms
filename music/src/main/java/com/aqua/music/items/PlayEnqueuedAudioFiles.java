@@ -6,14 +6,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aqua.music.model.PredefinedFrequency;
+import com.aqua.music.model.FundamentalFrequency;
 import com.aqua.music.play.AudioLibrary;
 
 public class PlayEnqueuedAudioFiles {
-	public static void play(List<PredefinedFrequency> notes) {
+	public static void play(List<FundamentalFrequency> notes) {
 		List<File> audioFiles = new ArrayList<File>();
 		StringBuffer printPlaylist = new StringBuffer();
-		for (PredefinedFrequency each : notes) {
+		for (FundamentalFrequency each : notes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
@@ -21,12 +21,12 @@ public class PlayEnqueuedAudioFiles {
 		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
-	public static void play(PredefinedFrequency start, PredefinedFrequency[] middleNotes, PredefinedFrequency end) {
+	public static void play(FundamentalFrequency start, FundamentalFrequency[] middleNotes, FundamentalFrequency end) {
 		StringBuffer printPlaylist = new StringBuffer();
 		List<File> audioFiles = new ArrayList<File>();
 		addFileIfFound(audioFiles, start);
 		printPlaylist.append(start);
-		for (PredefinedFrequency each : middleNotes) {
+		for (FundamentalFrequency each : middleNotes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
@@ -36,14 +36,14 @@ public class PlayEnqueuedAudioFiles {
 		AudioLibrary.audioPlayer().playList( audioFiles);
 	}
 
-	public static void playArray(PredefinedFrequency[] ascNotes, PredefinedFrequency[] descNotes) {
+	public static void playArray(FundamentalFrequency[] ascNotes, FundamentalFrequency[] descNotes) {
 		StringBuffer printPlaylist = new StringBuffer();
 		List<File> audioFiles = new ArrayList<File>();
-		for (PredefinedFrequency each : ascNotes) {
+		for (FundamentalFrequency each : ascNotes) {
 			addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}
-		for (PredefinedFrequency each : descNotes) {
+		for (FundamentalFrequency each : descNotes) {
 			AudioLibrary.addFileIfFound(audioFiles, each);
 			printPlaylist.append(", " + each);
 		}

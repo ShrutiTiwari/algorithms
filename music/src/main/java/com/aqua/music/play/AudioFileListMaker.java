@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.aqua.music.model.CommonAscDescPattern;
-import com.aqua.music.model.PatternApplier;
-import com.aqua.music.model.PredefinedFrequency;
-import com.aqua.music.model.PredefinedFrequency.FundamentalNote;
-import com.aqua.music.model.PredefinedFrequencySet.Thaat;
+import com.aqua.music.model.FundamentalFrequency;
+import com.aqua.music.model.FundamentalFrequency.ClassicalNote;
+import com.aqua.music.model.PredefinedFrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary.AudioFileAssembler;
 
 public interface AudioFileListMaker {
@@ -24,8 +22,8 @@ public interface AudioFileListMaker {
 		final Collection<File> collectedAudioFiles = new ArrayList<File>();
 		final StringBuffer printableAudios = new StringBuffer();
 
-		public MultipleThaatListMaker(Thaat[] thaats) {
-			for (Thaat each : thaats) {
+		public MultipleThaatListMaker(SymmetricalSet[] thaats) {
+			for (SymmetricalSet each : thaats) {
 				processThaat(each);
 			}
 		}
@@ -38,8 +36,8 @@ public interface AudioFileListMaker {
 			return printableAudios.toString();
 		}
 
-		private void processThaat(Thaat thaat) {
-			AudioFileAssembler enquer = ThaatEnqueueListMaker.createEnquereWith(thaat);
+		private void processThaat(SymmetricalSet thaat) {
+			AudioFileAssembler enquer = SymmetricalSetEnqueueListMaker.createEnquereWith(thaat);
 			collectedAudioFiles.addAll(enquer.collectedAudioFiles);
 			printableAudios.append("\n" + enquer.printableAudios);
 		}
@@ -48,10 +46,10 @@ public interface AudioFileListMaker {
 	public static class MiddleNoteWithStartEndListMaker implements AudioFileListMaker {
 		private AudioFileAssembler assembler;
 
-		public MiddleNoteWithStartEndListMaker(PredefinedFrequency start, PredefinedFrequency end, PredefinedFrequency[] middleNotes) {
+		public MiddleNoteWithStartEndListMaker(FundamentalFrequency start, FundamentalFrequency end, FundamentalFrequency[] middleNotes) {
 			this.assembler = new AudioFileAssembler();
 			assembler.addIfFileFound(start);
-			assembler.addIfFilesFound(middleNotes);
+			assembler.addIfFileFound(middleNotes);
 			assembler.addIfFileFound(end);
 		}
 
@@ -68,9 +66,9 @@ public interface AudioFileListMaker {
 	public static class SimpleListMaker implements AudioFileListMaker {
 		private AudioFileAssembler assembler;
 
-		public SimpleListMaker(List<PredefinedFrequency> allNotes) {
+		public SimpleListMaker(List<FundamentalFrequency> allNotes) {
 			this.assembler = new AudioFileAssembler();
-			for (PredefinedFrequency each : allNotes) {
+			for (FundamentalFrequency each : allNotes) {
 				assembler.addIfFileFound(each);
 			}
 		}
@@ -85,26 +83,26 @@ public interface AudioFileListMaker {
 		}
 	}
 
-	public static class ThaatEnqueueListMaker implements AudioFileListMaker {
+	public static class SymmetricalSetEnqueueListMaker implements AudioFileListMaker {
 		private AudioFileAssembler assembler;
 
-		public ThaatEnqueueListMaker(Thaat thaat) {
-			this.assembler = createEnquereWith(thaat);
+		public SymmetricalSetEnqueueListMaker(SymmetricalSet symmetricalSet) {
+			this.assembler = createEnquereWith(symmetricalSet);
 		}
 
-		private static AudioFileAssembler createEnquereWith(Thaat thaat) {
+		private static AudioFileAssembler createEnquereWith(SymmetricalSet symmetricalSet) {
 			// enqueue ascend sequence
 			AudioFileAssembler assembler = new AudioFileAssembler();
-			assembler.addToAscendIfFileFound(FundamentalNote.SA, NO_COMMA);
-			assembler.addToAscendIfFileFound(thaat.ascendNotes());
-			assembler.addToAscendIfFileFound(FundamentalNote.HIGH_SA, WITH_COMMA);
+			assembler.addIfFileFound(ClassicalNote.SA, NO_COMMA);
+			assembler.addIfFileFound(symmetricalSet.ascendNotes());
+			assembler.addIfFileFound(ClassicalNote.HIGH_SA, WITH_COMMA);
 
 			assembler.printAdd(" |||  ");
 
 			// enqueue descend sequence
-			assembler.addToDescendIfFileFound(FundamentalNote.HIGH_SA, NO_COMMA);
-			assembler.addToDescendIfFileFound(thaat.descendNotes());
-			assembler.addToDescendIfFileFound(FundamentalNote.SA, WITH_COMMA);
+			assembler.addIfFileFound(ClassicalNote.HIGH_SA, NO_COMMA);
+			assembler.addIfFileFound(symmetricalSet.descendNotes());
+			assembler.addIfFileFound(ClassicalNote.SA, WITH_COMMA);
 			return assembler;
 		}
 

@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.aqua.music.model.PredefinedFrequencySet;
 import com.aqua.music.play.AudioLibrary;
 
-public class RaagPracticeTest
+public class AsymmetricalSetTest
 {
 
     @Test

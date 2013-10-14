@@ -1,4 +1,4 @@
-package com.aqua.music.thaat.ipi;
+package com.aqua.music.symmetrical.set.ipi;
 
 import com.aqua.music.print.RaagProperties.WriteableThaat;
 
