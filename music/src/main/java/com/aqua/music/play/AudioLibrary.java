@@ -6,18 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.aqua.music.model.Frequency;
-import com.aqua.music.play.AudioPlayer.VLCPlayer;
 
 public class AudioLibrary
 {
     private static Map<String, File> library = Duration.ONE_SEC.library;
 
     private static final String AUDIO_LIBRARY = "recognition-puzzles/";
-    private static AudioPlayer audioPlayer = new VLCPlayer();
     private static final String FOLDER_PREFIX = "note-recognition-";
 
     public static void addFileIfFound( List<File> audioFiles, Frequency note ) {
-        File audioFile = library.get( note.code() );
+        File audioFile = library.get( note.fileCode() );
         if( audioFile == null ) {
             System.out.println( "No audio found for [" + note + "] in the list of files[" + library.keySet() + "]" );
         } else {
@@ -27,10 +25,6 @@ public class AudioLibrary
 
     public static Map<String, File> library() {
         return library;
-    }
-
-    public static AudioPlayer audioPlayer() {
-        return audioPlayer;
     }
 
     public static void initializeWithGivenSeconds( int seconds ) {

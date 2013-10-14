@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 class SwingGUIMaker {
@@ -90,7 +91,7 @@ class SwingGUIMaker {
 			specificButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					selectedSet.nonblockingPlayAscendAndDescend();
+				    SymmetricalPlayableItem.forSet( selectedSet ).playWithoutBlocking();
 				}
 			});
 			return specificButton;

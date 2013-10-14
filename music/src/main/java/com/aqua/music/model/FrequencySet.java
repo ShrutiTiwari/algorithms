@@ -26,10 +26,6 @@ public interface FrequencySet
 
     public Frequency[] descendNotes();
 
-    public void playAscendAndDescend();
-
-    public void playAscendAndDescend( PatternApplicator pattern );
-
     /**
      * 
      * This set uses same set of notes in ascend and descend
@@ -60,14 +56,6 @@ public interface FrequencySet
             this.descendNotes = Util.reverse( ascendNotes );
         }
 
-        public void playAscendAndDescend() {
-            SymmetricalPlayableItem.forSet( this ).play();
-        }
-
-        public void playAscendAndDescend( PatternApplicator pattern ) {
-            SymmetricalPlayableItem.forSet( this ).andPattern( pattern ).play();
-        }
-
         public String type() {
             return "THAAT";
         }
@@ -79,12 +67,7 @@ public interface FrequencySet
         public Frequency[] descendNotes() {
             return descendNotes;
         }
-
-        public void nonblockingPlayAscendAndDescend() {
-            SymmetricalPlayableItem.forSet( this ).nonblockingPlay();
-        }
     }
-
     /**
      * This set uses different set of notes in ascend and descend
      * 
@@ -115,7 +98,7 @@ public interface FrequencySet
             return notes;
         }
 
-        public void playAscendAndDescend() {
+        public void play() {
             AsymmetricalPlayableItem.forSet( this ).play();
         }
 
@@ -131,11 +114,6 @@ public interface FrequencySet
         @Override
         public Frequency[] descendNotes() {
             return descendNotes;
-        }
-
-        @Override
-        public void playAscendAndDescend( PatternApplicator pattern ) {
-
         }
     }
 

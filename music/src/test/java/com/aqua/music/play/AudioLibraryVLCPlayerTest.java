@@ -15,6 +15,6 @@ public class AudioLibraryVLCPlayerTest
         AudioLibrary.initializeWithGivenSeconds(1);
         List<File> audioFiles = new ArrayList<File>();
         AudioLibrary.addFileIfFound( audioFiles, Frequency.ClassicalNote.DHA );
-        AudioLibrary.audioPlayer().playList( audioFiles);
+        AudioPlayer.BLOCKING_VLC_PLAYER.playList( audioFiles);
     }
 }

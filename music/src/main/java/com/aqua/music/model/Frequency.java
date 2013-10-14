@@ -1,7 +1,7 @@
 package com.aqua.music.model;
 
 public interface Frequency {
-	public String code();
+	public String fileCode();
 
 	enum ClassicalNote implements Frequency {
 		SA("Sa"),
@@ -18,14 +18,14 @@ public interface Frequency {
 		NI("Ni"),
 		HIGH_SA("Sa-High");
 
-		private final String code;
+		private final String fileCode;
 
-		private ClassicalNote(String code) {
-			this.code = code;
+		private ClassicalNote(String fileCode) {
+			this.fileCode = fileCode;
 		}
 
-		public String code() {
-			return code;
+		public String fileCode() {
+			return fileCode;
 		}
 	}
 }

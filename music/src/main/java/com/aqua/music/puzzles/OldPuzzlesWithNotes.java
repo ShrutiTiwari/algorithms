@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.aqua.music.model.Frequency;
 import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.play.AudioPlayer;
 
 public class OldPuzzlesWithNotes
 {
@@ -88,6 +89,6 @@ public class OldPuzzlesWithNotes
             printPlaylist.append( ", " + each );
         }
         System.out.println( "playing [" + printPlaylist.toString() + "]" );
-        AudioLibrary.audioPlayer().playList( audioFiles );
+        AudioPlayer.BLOCKING_VLC_PLAYER.playList( audioFiles );
     }
 }

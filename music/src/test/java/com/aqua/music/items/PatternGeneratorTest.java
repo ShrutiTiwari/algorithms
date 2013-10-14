@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
@@ -22,15 +23,16 @@ public class PatternGeneratorTest
         assertEquals( "12,21,13,31,14,41,15,51,16,61,17,71,", toStringForComparison( result ) );
     }
 
-    //@Test
+    // @Test
     public void playPairOfNotes() {
         Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
         List<int[]> result = PatternGenerator.PAIR.generatePatterns( input );
-        for(int[] each: result){
-            SymmetricalSet.THAAT_KAFI.playAscendAndDescend(new SymmetricalPatternApplicator<Frequency>(each));
+        for( int[] each : result ) {
+            SymmetricalPatternApplicator<Frequency> pattern = new SymmetricalPatternApplicator<Frequency>( each );
+            SymmetricalPlayableItem.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( pattern ).play();
         }
     }
-    
+
     private String toStringForComparison( List<int[]> result ) {
         StringBuffer buf = new StringBuffer();
         for( int[] each : result ) {

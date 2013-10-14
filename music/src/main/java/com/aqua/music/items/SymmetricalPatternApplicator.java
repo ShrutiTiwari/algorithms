@@ -13,13 +13,17 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
         this.pattern = pattern;
     }
 
-    public void generateAscendAndDescendSequences( T[] symmetricInput ) {
+    public void initializeWith( T[] symmetricInput ) {
+        this.ascendSequence = sequenceForGiven( convertToList( symmetricInput ) );
+        this.descendSequence = sequenceForGiven( reverse( symmetricInput ) );
+    }
+
+    private List<T> convertToList( T[] symmetricInput ) {
         List<T> inputList = new ArrayList<T>();
         for( T each : symmetricInput ) {
             inputList.add( each );
         }
-        this.ascendSequence = sequenceForGiven( inputList );
-        this.descendSequence = sequenceForGiven( reverse( symmetricInput ) );
+        return inputList;
     }
 
     public List<T> allNotes() {
@@ -43,14 +47,6 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
         }
         buf.append( "]==>" );
         return buf.toString();
-    }
-
-    public List<T> ascendSequence() {
-        return ascendSequence;
-    }
-
-    public List<T> descendSequence() {
-        return descendSequence;
     }
 
     private List<T> sequenceForGiven( List<T> input ) {

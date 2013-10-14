@@ -13,6 +13,19 @@ public interface AudioPlayer
     static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
 
     void playList( Collection<File> audioFiles );
+    
+    /**
+     * Used by Junit tests/ or normal java run.
+     */
+    public static final VLCPlayer BLOCKING_VLC_PLAYER = new VLCPlayer( true );
+    /**
+     * Used by swing-app
+     * 
+     * @param blockingPlay
+     */
+    public static final VLCPlayer NON_BLOCKING_VLC_PLAYER = new VLCPlayer( false );
+    
+    
 
     class CommandExecutor
     {
@@ -40,34 +53,49 @@ public interface AudioPlayer
                 System.out.println( s );
             }
         }
-        
-        class NomWaitingCommandExecutor
-        {
-            private final Runtime runtime = Runtime.getRuntime();
-
-            public Process executeCommand( String[] command ) {
-                try {
-                    return runtime.exec( command );
-                } catch( Exception e ) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }
     }
 
     public class VLCPlayer implements AudioPlayer
     {
         static Process lastRunningProcess = null;
+        private final static String os = System.getProperty( "os.name" );
         private static final String vlcOption = "--play-and-exit";
+
+        private final boolean blockingPlay;
+
         private final String vlcExeLoc;
 
-        VLCPlayer() {
-            this.vlcExeLoc = findAudioPlayerBasedOnOS();
+        VLCPlayer( boolean blockingPlay ) {
+            this.vlcExeLoc = (!os.contains( "Windows" )) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
+            this.blockingPlay = blockingPlay;
         }
 
         public void playList( Collection<File> audioFiles ) {
-            play( audioFiles.toArray( new File[audioFiles.size()] ) );
+            File[] audioFilesArray = audioFiles.toArray( new File[audioFiles.size()] );
+            if( blockingPlay ) {
+                play( audioFilesArray );
+            } else {
+                playWithoutBlocking( audioFilesArray );
+            }
+        }
+
+        public void playWithoutBlocking( File... audioFiles ) {
+            if( lastRunningProcess != null ) {
+                destroy();
+            }
+            String[] command = new String[2 + audioFiles.length];
+            command[0] = vlcExeLoc;
+            command[1] = vlcOption;
+            int i = 0;
+            for( File each : audioFiles ) {
+                command[i++ + 2] = each.getAbsolutePath();
+            }
+
+            try {
+                lastRunningProcess = Runtime.getRuntime().exec( command );
+            } catch( Exception e ) {
+                e.printStackTrace();
+            }
         }
 
         private void destroy() {
@@ -81,12 +109,7 @@ public interface AudioPlayer
             try {
                 lastRunningProcess.destroy();
             } catch( Exception e ) {} finally {}
-            lastRunningProcess=null;
-        }
-
-        private String findAudioPlayerBasedOnOS() {
-            String os = System.getProperty( "os.name" );
-            return (!os.contains( "Windows" )) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
+            lastRunningProcess = null;
         }
 
         private String findWindowsLocation() {
@@ -95,9 +118,6 @@ public interface AudioPlayer
         }
 
         private void play( File... audioFiles ) {
-            if(lastRunningProcess!=null){
-                destroy();
-            }
             String[] command = new String[2 + audioFiles.length];
             command[0] = vlcExeLoc;
             command[1] = vlcOption;
@@ -105,15 +125,7 @@ public interface AudioPlayer
             for( File each : audioFiles ) {
                 command[i++ + 2] = each.getAbsolutePath();
             }
-            lastRunningProcess = new CommandExecutor().executeCommand( command );
-        }
-
-        @Override
-        public void nonblockingPlay(Collection<File> allAudioFiles  ) {
-            
+            new CommandExecutor().executeCommand( command );
         }
     }
-
-    void nonblockingPlay( Collection<File> allAudioFiles );
-
 }

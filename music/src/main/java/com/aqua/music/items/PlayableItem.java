@@ -11,10 +11,11 @@ import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.AssymmericalSet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary;
+import com.aqua.music.play.AudioPlayer;
 
 public interface PlayableItem
 {
-    public void nonblockingPlay();
+    public void playWithoutBlocking();
 
     public void play();
 
@@ -24,8 +25,7 @@ public interface PlayableItem
          * caution: this variable shouldn't be used until initialised, properly.
          */
         private Collection<File> allAudioFiles = null;
-        
-        
+
         private int duration = 1;
         private PatternApplicator patternApplicator = PatternApplicator.NONE;
         private final SymmetricalSet symmetricalSet;
@@ -44,13 +44,13 @@ public interface PlayableItem
             return this;
         }
 
-        public void nonblockingPlay() {
-            AudioLibrary.audioPlayer().nonblockingPlay( this.playList() );
+        public void playWithoutBlocking() {
+            AudioPlayer.NON_BLOCKING_VLC_PLAYER.playList( this.playList() );
         }
 
         public void play() {
             System.out.println( patternApplicator.prettyPrintTextForAscDesc() );
-            AudioLibrary.audioPlayer().playList( this.playList() );
+            AudioPlayer.BLOCKING_VLC_PLAYER.playList( this.playList() );
         }
 
         SymmetricalPlayableItem forDuration( int duration ) {
@@ -77,7 +77,7 @@ public interface PlayableItem
                 input[i++] = each;
             }
 
-            patternApplicator.generateAscendAndDescendSequences( input );
+            patternApplicator.initializeWith( input );
             AudioFileListBuilder audioFileListMaker = new AudioFileListBuilder.SimpleListBuilder( patternApplicator.allNotes() );
             this.allAudioFiles = audioFileListMaker.allAudioFiles();
         }
@@ -106,13 +106,13 @@ public interface PlayableItem
         }
 
         @Override
-        public void nonblockingPlay() {}
+        public void playWithoutBlocking() {}
 
         @Override
         public void play() {
             createAudioList( SA, frequencySet.ascendNotes(), HIGH_SA );
             createAudioList( HIGH_SA, frequencySet.descendNotes(), SA );
-            AudioLibrary.audioPlayer().playList( allAudioFiles );
+            AudioPlayer.BLOCKING_VLC_PLAYER.playList( allAudioFiles );
         }
 
         void createAudioList( Frequency start, Frequency[] middleNotes, Frequency end ) {

@@ -127,7 +127,7 @@ public interface AudioFileListBuilder {
         }
 
         public void addIfFileFound( Frequency singleNote, boolean appendComma ) {
-            String code = singleNote.code();
+            String code = singleNote.fileCode();
             File audioFile = audioLib.get( code );
             if( audioFile == null ) {
                 System.out.println( "No audio found for [" + singleNote + "] in the list of files[" +audioLib.keySet() + "]" );
