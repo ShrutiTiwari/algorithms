@@ -7,7 +7,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-class SwingGuiLauncher
+public class SwingGuiLauncher
 {
 	private static final String frameTitle = "Music";
 	private static final String frameLabel = "Have some fun with Indian Classical Music!!";
@@ -24,10 +24,10 @@ class SwingGuiLauncher
 		} );
 	}
 
-	void createAndShowGUI() {
+	public JFrame createAndShowGUI() {
 		// Create and set up the window.
 		JFrame frame = new JFrame( frameTitle );
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		//frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 
 		frame.setLocationRelativeTo( null );
 
@@ -39,5 +39,6 @@ class SwingGuiLauncher
 		
 		frame.getContentPane().setPreferredSize( preferredSizeForMainPane );
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		return frame;
 	}
 }
