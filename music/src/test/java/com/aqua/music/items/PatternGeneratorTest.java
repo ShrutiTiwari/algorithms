@@ -29,7 +29,7 @@ public class PatternGeneratorTest
         List<int[]> result = PatternGenerator.PAIR.generatePatterns( input );
         for( int[] each : result ) {
             SymmetricalPatternApplicator<Frequency> pattern = new SymmetricalPatternApplicator<Frequency>( each );
-            SymmetricalPlayableItem.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( pattern ).play();
+            PlayableItem.factory.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( pattern ).play();
         }
     }
 

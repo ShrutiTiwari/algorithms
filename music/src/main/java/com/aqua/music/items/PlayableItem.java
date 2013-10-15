@@ -8,122 +8,134 @@ import java.util.Collection;
 
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
-import com.aqua.music.model.FrequencySet.AssymmericalSet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary;
 import com.aqua.music.play.AudioPlayer;
 
 public interface PlayableItem
 {
-    public void playWithoutBlocking();
+	public PlayableItem andPattern( PatternApplicator patternApplicator );
 
-    public void play();
+	public void playWithoutBlocking();
 
-    public class SymmetricalPlayableItem implements PlayableItem
-    {
-        /**
-         * caution: this variable shouldn't be used until initialised, properly.
-         */
-        private Collection<File> allAudioFiles = null;
+	public void play();
 
-        private int duration = 1;
-        private PatternApplicator patternApplicator = PatternApplicator.NONE;
-        private final SymmetricalSet symmetricalSet;
+	PlayableItemFactory factory = new PlayableItemFactory();
 
-        public SymmetricalPlayableItem( SymmetricalSet symmetricalSet ) {
-            this.symmetricalSet = symmetricalSet;
-        }
+	static class PlayableItemFactory
+	{
+		public static PlayableItem forSet( FrequencySet frequencySet ) {
+			if( frequencySet instanceof SymmetricalSet ) {
+				return new SymmetricalPlayableItem( frequencySet );
+			}
+			return new AsymmetricalPlayableItem( frequencySet );
+		}
+	}
 
-        public static SymmetricalPlayableItem forSet( SymmetricalSet symmetricalSet ) {
-            return new SymmetricalPlayableItem( symmetricalSet );
-        }
+	public class SymmetricalPlayableItem implements PlayableItem
+	{
+		/**
+		 * caution: this variable shouldn't be used until initialised, properly.
+		 */
+		private Collection<File> allAudioFiles = null;
 
-        public SymmetricalPlayableItem andPattern( PatternApplicator patternApplicator ) {
-            this.patternApplicator = patternApplicator;
-            intializePlayList();
-            return this;
-        }
+		private int duration = 1;
+		private PatternApplicator patternApplicator = PatternApplicator.NONE;
+		private final FrequencySet frequencySet;
 
-        public void playWithoutBlocking() {
-            AudioPlayer.NON_BLOCKING_VLC_PLAYER.playList( this.playList() );
-        }
+		private SymmetricalPlayableItem( FrequencySet frequencySet ) {
+			this.frequencySet = frequencySet;
+		}
 
-        public void play() {
-            System.out.println( patternApplicator.prettyPrintTextForAscDesc() );
-            AudioPlayer.BLOCKING_VLC_PLAYER.playList( this.playList() );
-        }
+		public SymmetricalPlayableItem andPattern( PatternApplicator patternApplicator ) {
+			this.patternApplicator = patternApplicator;
+			intializePlayList();
+			return this;
+		}
 
-        SymmetricalPlayableItem forDuration( int duration ) {
-            this.duration = duration;
-            return this;
-        }
+		public void playWithoutBlocking() {
+			AudioPlayer.NON_BLOCKING_VLC_PLAYER.playList( this.playList() );
+		}
 
-        private void intializePlayList() {
-            AudioLibrary.initializeWithGivenSeconds( duration );
-            if( patternApplicator == PatternApplicator.NONE ) {
-                plainAscendDescend();
-            } else {
-                patternedAscendDescend();
-            }
-        }
+		public void play() {
+			System.out.println( patternApplicator.prettyPrintTextForAscDesc() );
+			AudioPlayer.BLOCKING_VLC_PLAYER.playList( this.playList() );
+		}
 
-        private void patternedAscendDescend() {
-            Frequency[] middleNotes = symmetricalSet.ascendNotes();
-            Frequency[] input = new Frequency[middleNotes.length + 2];
-            input[0] = Frequency.ClassicalNote.SA;
-            input[input.length - 1] = Frequency.ClassicalNote.HIGH_SA;
-            int i = 1;
-            for( Frequency each : middleNotes ) {
-                input[i++] = each;
-            }
+		SymmetricalPlayableItem forDuration( int duration ) {
+			this.duration = duration;
+			return this;
+		}
 
-            patternApplicator.initializeWith( input );
-            AudioFileListBuilder audioFileListMaker = new AudioFileListBuilder.SimpleListBuilder( patternApplicator.allNotes() );
-            this.allAudioFiles = audioFileListMaker.allAudioFiles();
-        }
+		private void intializePlayList() {
+			AudioLibrary.initializeWithGivenSeconds( duration );
+			if( patternApplicator == PatternApplicator.NONE ) {
+				plainAscendDescend();
+			} else {
+				patternedAscendDescend();
+			}
+		}
 
-        private void plainAscendDescend() {
-            AudioFileListBuilder audioFileListBuilder = new AudioFileListBuilder.BuilderForSymmetricalSet( symmetricalSet );
-            System.out.print( "\t[ Plain ascend-descend:: " + audioFileListBuilder.prettyPrintText() + "]" );
-            this.allAudioFiles = audioFileListBuilder.allAudioFiles();
-        }
+		private void patternedAscendDescend() {
+			Frequency[] middleNotes = frequencySet.ascendNotes();
+			Frequency[] input = new Frequency[middleNotes.length + 2];
+			input[0] = Frequency.ClassicalNote.SA;
+			input[input.length - 1] = Frequency.ClassicalNote.HIGH_SA;
+			int i = 1;
+			for( Frequency each : middleNotes ) {
+				input[i++] = each;
+			}
 
-        private Collection<File> playList() {
-            if( allAudioFiles == null ) {
-                intializePlayList();
-            }
-            return allAudioFiles;
-        }
-    }
+			patternApplicator.initializeWith( input );
+			AudioFileListBuilder audioFileListMaker = new AudioFileListBuilder.SimpleListBuilder(
+					patternApplicator.allNotes() );
+			this.allAudioFiles = audioFileListMaker.allAudioFiles();
+		}
 
-    public class AsymmetricalPlayableItem implements PlayableItem
-    {
-        private final FrequencySet frequencySet;
-        private Collection<File> allAudioFiles = null;
+		private void plainAscendDescend() {
+			AudioFileListBuilder audioFileListBuilder = new AudioFileListBuilder.BuilderForSymmetricalSet( frequencySet );
+			System.out.print( "\t[ Plain ascend-descend:: " + audioFileListBuilder.prettyPrintText() + "]" );
+			this.allAudioFiles = audioFileListBuilder.allAudioFiles();
+		}
 
-        private AsymmetricalPlayableItem( FrequencySet frequencySet ) {
-            this.frequencySet = frequencySet;
-        }
+		private Collection<File> playList() {
+			if( allAudioFiles == null ) {
+				intializePlayList();
+			}
+			return allAudioFiles;
+		}
+	}
 
-        @Override
-        public void playWithoutBlocking() {}
+	public class AsymmetricalPlayableItem implements PlayableItem
+	{
+		private final FrequencySet frequencySet;
+		private Collection<File> allAudioFiles = null;
 
-        @Override
-        public void play() {
-            createAudioList( SA, frequencySet.ascendNotes(), HIGH_SA );
-            createAudioList( HIGH_SA, frequencySet.descendNotes(), SA );
-            AudioPlayer.BLOCKING_VLC_PLAYER.playList( allAudioFiles );
-        }
+		private AsymmetricalPlayableItem( FrequencySet frequencySet ) {
+			this.frequencySet = frequencySet;
+		}
 
-        void createAudioList( Frequency start, Frequency[] middleNotes, Frequency end ) {
-            AudioFileListBuilder.WithMiddleNotesAndStartEndNotes audioFileListBuilder = new AudioFileListBuilder.WithMiddleNotesAndStartEndNotes(
-                    middleNotes, start, end );
-            allAudioFiles.addAll( audioFileListBuilder.allAudioFiles() );
-            audioFileListBuilder.allAudioFiles();
-        }
+		@Override
+		public void playWithoutBlocking() {
+		}
 
-        public static AsymmetricalPlayableItem forSet( AssymmericalSet frequencySet ) {
-            return new AsymmetricalPlayableItem( frequencySet );
-        }
-    }
+		@Override
+		public void play() {
+			createAudioList( SA, frequencySet.ascendNotes(), HIGH_SA );
+			createAudioList( HIGH_SA, frequencySet.descendNotes(), SA );
+			AudioPlayer.BLOCKING_VLC_PLAYER.playList( allAudioFiles );
+		}
+
+		void createAudioList( Frequency start, Frequency[] middleNotes, Frequency end ) {
+			AudioFileListBuilder.WithMiddleNotesAndStartEndNotes audioFileListBuilder = new AudioFileListBuilder.WithMiddleNotesAndStartEndNotes(
+					middleNotes, start, end );
+			allAudioFiles.addAll( audioFileListBuilder.allAudioFiles() );
+			audioFileListBuilder.allAudioFiles();
+		}
+
+		@Override
+		public PlayableItem andPattern( PatternApplicator patternApplicator ) {
+			return this;
+		}
+	}
 }

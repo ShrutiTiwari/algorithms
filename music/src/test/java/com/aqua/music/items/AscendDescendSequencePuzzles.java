@@ -2,7 +2,6 @@ package com.aqua.music.items;
 
 import java.util.HashSet;
 
-import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary;
@@ -15,7 +14,7 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playThaat() {
-        SymmetricalPlayableItem.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	PlayableItem.factory.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
     }
 
     public void playMultipleThaats() {
@@ -35,13 +34,13 @@ public class AscendDescendSequencePuzzles
     }
 
     private void playAscendAndDescend( int count, SymmetricalSet... raags ) {
-        SymmetricalPlayableItem.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	PlayableItem.factory.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
         System.out.println( "\n Played [BILAWAL]" );
         HashSet<SymmetricalSet> hasheddata = randomize( raags );
         for( SymmetricalSet each : hasheddata ) {
             
             for( int i = 0; i < count; i++ ) {
-                SymmetricalPlayableItem.forSet( each ).play();
+            	PlayableItem.factory.forSet( each ).play();
                 System.out.println( "\nPlayed [" + each.name() + "] ." + i );
                 System.out.println( "\n" );
             }

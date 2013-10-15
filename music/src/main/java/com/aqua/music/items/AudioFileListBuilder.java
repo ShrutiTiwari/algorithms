@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.Frequency.ClassicalNote;
+import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 import com.aqua.music.play.AudioLibrary;
 
@@ -22,22 +23,22 @@ public interface AudioFileListBuilder {
 	public static class BuilderForSymmetricalSet implements AudioFileListBuilder {
 		private AudioFilesList audioFilesList;
 
-		public BuilderForSymmetricalSet(SymmetricalSet symmetricalSet) {
-			this.audioFilesList = createWith(symmetricalSet);
+		public BuilderForSymmetricalSet(FrequencySet frequencySet) {
+			this.audioFilesList = createWith(frequencySet);
 		}
 
-		private static AudioFilesList createWith(SymmetricalSet symmetricalSet) {
+		private static AudioFilesList createWith(FrequencySet frequencySet) {
 			// enqueue ascend sequence
 			AudioFilesList audioFilesList = new AudioFilesList();
 			audioFilesList.addIfFileFound(ClassicalNote.SA, NO_COMMA);
-			audioFilesList.addIfFileFound(symmetricalSet.ascendNotes());
+			audioFilesList.addIfFileFound(frequencySet.ascendNotes());
 			audioFilesList.addIfFileFound(ClassicalNote.HIGH_SA, WITH_COMMA);
 
 			audioFilesList.addText(" |||  ");
 
 			// enqueue descend sequence
 			audioFilesList.addIfFileFound(ClassicalNote.HIGH_SA, NO_COMMA);
-			audioFilesList.addIfFileFound(symmetricalSet.descendNotes());
+			audioFilesList.addIfFileFound(frequencySet.descendNotes());
 			audioFilesList.addIfFileFound(ClassicalNote.SA, WITH_COMMA);
 			return audioFilesList;
 		}
