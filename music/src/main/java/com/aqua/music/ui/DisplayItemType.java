@@ -14,8 +14,9 @@ public enum DisplayItemType {
 	QUIT("Quit", "Click this to quit!", 400) {
 		@Override
 		public JButton createInstanceWith(Object arg) {
-			staticButton.addActionListener(new DisplayItemFactory.ActionListenerBuilder(null)
-			.actionListener(this));
+			staticButton
+					.addActionListener(new DisplayItemFactory.ActionListenerBuilder(
+							null).actionListener(this));
 			return this.staticButton;
 		}
 	};
@@ -43,15 +44,14 @@ public enum DisplayItemType {
 				replaceName));
 		resultButton
 				.setToolTipText(itemType.tooltip.replace("$$", replaceName));
-		resultButton.addActionListener(new DisplayItemFactory.ActionListenerBuilder(arg)
-				.actionListener(itemType));
+		resultButton
+				.addActionListener(new DisplayItemFactory.ActionListenerBuilder(
+						arg).actionListener(itemType));
 		return resultButton;
 	}
 
 	public int width() {
 		return displayWidth;
 	}
-
-
 
 }

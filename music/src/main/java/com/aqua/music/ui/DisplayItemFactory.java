@@ -20,8 +20,16 @@ public class DisplayItemFactory {
 
 	JButton createWith(DisplayItemType buttonType, Object arg) {
 		JButton displayItem = buttonType.createInstanceWith(arg);
+
+		//set listener
+		ActionListener actionListener = new DisplayItemFactory.ActionListenerBuilder(
+				null).actionListener(buttonType);
+		displayItem.addActionListener(actionListener);
+
+		// set bounds
 		displayItem.setBounds(HORIZONAL_COORIDNATE, verticalIndex(),
 				buttonType.width(), BUTTON_HEIGHT);
+		
 		return displayItem;
 	}
 
@@ -29,7 +37,7 @@ public class DisplayItemFactory {
 		verticalIndex += (BUTTON_HEIGHT) + 10;
 		return verticalIndex;
 	}
-	
+
 	static class ActionListenerBuilder {
 		private final Object arg;
 
