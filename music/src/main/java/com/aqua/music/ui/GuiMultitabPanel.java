@@ -15,7 +15,7 @@ import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class GuiMultitabPanel extends JPanel
 {
-	GuiMultitabPanel() {
+	public GuiMultitabPanel() {
 		super( new GridLayout( 1, 1 ) );
 
 		JTabbedPane tabbedPane = new JTabbedPane();
