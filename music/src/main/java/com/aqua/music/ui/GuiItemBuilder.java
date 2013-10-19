@@ -54,7 +54,9 @@ public class GuiItemBuilder
 				return new ActionListener() {
 					@Override
 					public void actionPerformed( ActionEvent arg0 ) {
-						PlayableItem.factory.forSet( (FrequencySet) arg[0] ).playWithoutBlocking();
+						FrequencySet freqSet = (FrequencySet) arg[0];
+						System.out.println("Playing::" + freqSet.name());
+						PlayableItem.factory.forSet( freqSet ).playWithoutBlocking();
 					}
 				};
 			case QUIT:
@@ -71,7 +73,8 @@ public class GuiItemBuilder
 						FrequencySet freqSet = (FrequencySet) arg[0];
 						SymmetricalPatternApplicator<Frequency> pattern = new SymmetricalPatternApplicator<Frequency>(
 								(int[]) arg[1] );
-						PlayableItem.factory.forSet( (FrequencySet) freqSet ).andPattern( pattern )
+						System.out.println("Playing::" + freqSet.name());
+						PlayableItem.factory.forSet( freqSet ).andPattern( pattern )
 								.playWithoutBlocking();
 					}
 				};

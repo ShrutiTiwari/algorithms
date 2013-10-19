@@ -18,9 +18,9 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playMultipleThaats() {
-        AudioFileListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new AudioFileListBuilder.BuilderForMultipleSymmetricalSets( new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI } );
+        AudioListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new AudioListBuilder.BuilderForMultipleSymmetricalSets( new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI } );
         System.out.println(multipleThaatEnqueuer.prettyPrintText());
-        AudioPlayer.BLOCKING_VLC_PLAYER.playList(multipleThaatEnqueuer.collectedAudioFiles);
+        AudioPlayer.BLOCKING_VLC_PLAYER.play(multipleThaatEnqueuer.collectedFrequencies);
     }
 
     public void playAllThats() {

@@ -3,7 +3,6 @@ package com.aqua.music.ui;
 import static com.aqua.music.ui.GuiItemBuilder.preferredSizeForMainPane;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
