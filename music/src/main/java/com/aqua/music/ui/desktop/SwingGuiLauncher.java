@@ -1,6 +1,6 @@
-package com.aqua.music.ui;
+package com.aqua.music.ui.desktop;
 
-import static com.aqua.music.ui.GuiItemBuilder.preferredSizeForMainPane;
+import static com.aqua.music.ui.desktop.GuiItemBuilder.preferredSizeForMainPane;
 
 import java.awt.BorderLayout;
 

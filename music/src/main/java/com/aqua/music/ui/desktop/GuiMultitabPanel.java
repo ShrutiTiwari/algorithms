@@ -1,6 +1,6 @@
-package com.aqua.music.ui;
+package com.aqua.music.ui.desktop;
 
-import static com.aqua.music.ui.GuiItemBuilder.preferredSizeForThaatPanel;
+import static com.aqua.music.ui.desktop.GuiItemBuilder.preferredSizeForThaatPanel;
 
 import java.awt.Component;
 import java.awt.GridLayout;

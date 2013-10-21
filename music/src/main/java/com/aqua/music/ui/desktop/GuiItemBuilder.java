@@ -1,4 +1,4 @@
-package com.aqua.music.ui;
+package com.aqua.music.ui.desktop;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
