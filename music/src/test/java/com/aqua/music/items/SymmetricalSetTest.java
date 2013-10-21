@@ -2,10 +2,10 @@ package com.aqua.music.items;
 
 import org.junit.Test;
 
-import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
+import com.aqua.music.audio.player.AudioLibrary;
+import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
-import com.aqua.music.play.AudioLibrary;
 
 public class SymmetricalSetTest
 {
@@ -13,14 +13,14 @@ public class SymmetricalSetTest
         AudioLibrary.initializeWithGivenSeconds( 1 );
     }
 
-    @Test
+    //@Test
     public void testKafi() {
-    	PlayableItem.factory.forSet( SymmetricalSet.THAAT_KAFI ).play();
+        PlayableItem.factory.configureAudioPlayerType( AudioPlayerType.VLC_BASED ).forSet( SymmetricalSet.THAAT_KAFI ).play();
     }
 
-    // @Test
+     @Test
     public void testKafiWithPattern() {
-    	PlayableItem.factory.forSet( SymmetricalSet.THAAT_KAFI ).play();
+        PlayableItem.factory.configureAudioPlayerType( AudioPlayerType.FREQUENCY_BASED ).forSet( SymmetricalSet.THAAT_KAFI ).play();
         SymmetricalPatternApplicator<Frequency> patternApplicator = new SymmetricalPatternApplicator<Frequency>( new int[] { 1, 4,
                 3 } );
         PlayableItem.factory.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( patternApplicator ).play();

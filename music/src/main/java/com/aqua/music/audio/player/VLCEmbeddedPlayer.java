@@ -1,3 +1,4 @@
+package com.aqua.music.audio.player;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -6,7 +7,6 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
-import com.aqua.music.play.AudioLibrary;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 

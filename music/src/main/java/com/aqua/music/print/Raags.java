@@ -1,14 +1,20 @@
 package com.aqua.music.print;
 
+import static com.aqua.music.print.RaagProperties.Time.Afternoon;
+import static com.aqua.music.print.RaagProperties.Time.Evening;
+import static com.aqua.music.print.RaagProperties.Time.Morning;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Bhairav;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Kafi;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Kalyan;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Khamaj;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Marva;
+import static com.aqua.music.print.RaagProperties.WriteableThaat.Todi;
+
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import com.aqua.music.print.RaagProperties.WriteableThaat;
 import com.aqua.music.print.RaagProperties.Time;
-
-import static com.aqua.music.print.RaagProperties.WriteableThaat.*;
-import static com.aqua.music.print.RaagProperties.Time.*;
-import static com.aqua.music.print.RaagTypes.*;
+import com.aqua.music.print.RaagProperties.WriteableThaat;
 
 public class Raags
 {

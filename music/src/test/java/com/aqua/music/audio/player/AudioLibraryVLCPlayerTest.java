@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.audio.player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 
 public class AudioLibraryVLCPlayerTest
@@ -15,6 +16,6 @@ public class AudioLibraryVLCPlayerTest
         AudioLibrary.initializeWithGivenSeconds(1);
         List<File> audioFiles = new ArrayList<File>();
         AudioLibrary.addFileIfFound( audioFiles, Frequency.ClassicalNote.DHA );
-        AudioPlayer.BLOCKING_VLC_PLAYER.playList( audioFiles);
+        AudioPlayerType.VLC_BASED.blockingPlayer().playList( audioFiles);
     }
 }

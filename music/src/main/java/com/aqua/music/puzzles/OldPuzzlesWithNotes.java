@@ -1,5 +1,6 @@
 package com.aqua.music.puzzles;
 
+import static com.aqua.music.audio.player.AudioLibrary.addFileIfFound;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA_;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
@@ -10,7 +11,6 @@ import static com.aqua.music.model.Frequency.ClassicalNote.NI;
 import static com.aqua.music.model.Frequency.ClassicalNote.NI_;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
-import static com.aqua.music.play.AudioLibrary.addFileIfFound;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +18,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import com.aqua.music.audio.player.AudioLibrary;
+import com.aqua.music.audio.player.AudioPlayer;
+import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
-import com.aqua.music.play.AudioLibrary;
-import com.aqua.music.play.AudioPlayer;
 
 public class OldPuzzlesWithNotes
 {
@@ -89,6 +90,6 @@ public class OldPuzzlesWithNotes
             printPlaylist.append( ", " + each );
         }
         System.out.println( "playing [" + printPlaylist.toString() + "]" );
-        AudioPlayer.BLOCKING_VLC_PLAYER.playList( audioFiles );
+        AudioPlayerType.VLC_BASED.blockingPlayer().playList( audioFiles );
     }
 }

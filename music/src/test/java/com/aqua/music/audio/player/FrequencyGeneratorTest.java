@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.audio.player;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
 import static com.aqua.music.model.Frequency.ClassicalNote.HIGH_SA;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
+import com.aqua.music.audio.player.AudioPlayerBasedOnFrequencyList;
 import com.aqua.music.model.Frequency;
 
 public class FrequencyGeneratorTest {
@@ -21,7 +22,7 @@ public class FrequencyGeneratorTest {
 				NI, HIGH_SA };
 		int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		new FrequencyPlayer().setDurationAndVolume(durationInMilliSec, 0.8).play(asList);
+		new AudioPlayerBasedOnFrequencyList().setDurationAndVolume(durationInMilliSec, 0.8).play(asList);
 
 	}
 }

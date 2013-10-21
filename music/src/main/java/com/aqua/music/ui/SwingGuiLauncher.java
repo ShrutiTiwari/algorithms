@@ -24,10 +24,7 @@ public class SwingGuiLauncher
 	}
 
 	public JFrame createAndShowGUI() {
-		// Create and set up the window.
 		JFrame frame = new JFrame( frameTitle );
-		//frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-
 		frame.setLocationRelativeTo( null );
 
 		frame.add( new GuiMultitabPanel(), BorderLayout.CENTER );

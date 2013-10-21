@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.items.PlayableItem.SymmetricalPlayableItem;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 

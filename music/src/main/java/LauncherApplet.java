@@ -1,5 +1,3 @@
-import java.awt.BorderLayout;
-
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

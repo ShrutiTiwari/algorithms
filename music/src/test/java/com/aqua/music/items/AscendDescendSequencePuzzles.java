@@ -2,10 +2,11 @@ package com.aqua.music.items;
 
 import java.util.HashSet;
 
+import com.aqua.music.audio.player.AudioLibrary;
+import com.aqua.music.audio.player.AudioPlayer;
+import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
-import com.aqua.music.play.AudioLibrary;
-import com.aqua.music.play.AudioPlayer;
 
 public class AscendDescendSequencePuzzles
 {
@@ -18,9 +19,9 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playMultipleThaats() {
-        AudioListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new AudioListBuilder.BuilderForMultipleSymmetricalSets( new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI } );
+        FrequencyListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new FrequencyListBuilder.BuilderForMultipleSymmetricalSets( new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI } );
         System.out.println(multipleThaatEnqueuer.prettyPrintText());
-        AudioPlayer.BLOCKING_VLC_PLAYER.play(multipleThaatEnqueuer.collectedFrequencies);
+        AudioPlayerType.VLC_BASED.blockingPlayer().play(multipleThaatEnqueuer.collectedFrequencies);
     }
 
     public void playAllThats() {

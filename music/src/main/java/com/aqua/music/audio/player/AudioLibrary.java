@@ -1,4 +1,4 @@
-package com.aqua.music.play;
+package com.aqua.music.audio.player;
 
 import java.io.File;
 import java.util.LinkedHashMap;

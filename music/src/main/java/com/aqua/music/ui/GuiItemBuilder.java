@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.items.SymmetricalPatternApplicator;
 import com.aqua.music.model.Frequency;
@@ -44,8 +45,13 @@ public class GuiItemBuilder
 	{
 		private final Object[] arg;
 
+		static{
+		    PlayableItem.factory.configureAudioPlayerType( AudioPlayerType.FREQUENCY_BASED ).andNonBlocking();
+		}
+		
 		ActionListenerBuilder( Object[] arg ) {
 			this.arg = arg;
+			
 		}
 
 		ActionListener actionListener( GuiItemType displayItemType ) {
@@ -56,7 +62,7 @@ public class GuiItemBuilder
 					public void actionPerformed( ActionEvent arg0 ) {
 						FrequencySet freqSet = (FrequencySet) arg[0];
 						System.out.println("Playing::" + freqSet.name());
-						PlayableItem.factory.forSet( freqSet ).playWithoutBlocking();
+						PlayableItem.factory.forSet( freqSet ).play();
 					}
 				};
 			case QUIT:
@@ -75,7 +81,7 @@ public class GuiItemBuilder
 								(int[]) arg[1] );
 						System.out.println("Playing::" + freqSet.name());
 						PlayableItem.factory.forSet( freqSet ).andPattern( pattern )
-								.playWithoutBlocking();
+								.play();
 					}
 				};
 			}
