@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
+import com.sun.awt.AWTUtilities;
+
 public class SwingGuiLauncher
 {
 	private static final String frameTitle = "Music";
@@ -29,12 +31,15 @@ public class SwingGuiLauncher
 
 		frame.add( new GuiMultitabPanel(), BorderLayout.CENTER );
 
+		//frame.setUndecorated( true );
+		//AWTUtilities.setWindowOpacity(frame, 0.7f);
+		
 		// Display the window.
 		frame.pack();
 		frame.setVisible( true );
 		
 		frame.getContentPane().setPreferredSize( preferredSizeForMainPane );
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		return frame;
 	}
 }

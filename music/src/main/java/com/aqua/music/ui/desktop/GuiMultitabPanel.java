@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import com.aqua.music.items.PatternGenerator;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
+import com.sun.awt.AWTUtilities;
 
 public class GuiMultitabPanel extends JPanel
 {
@@ -22,6 +23,8 @@ public class GuiMultitabPanel extends JPanel
 		tabbedPane.addTab( "Rehearse plain items", plainReahearseTab() );
 		tabbedPane.addTab( "Rehearse kafi with pattern", rehearseWithPatternsTab() );
 
+		tabbedPane.setOpaque( true );
+		
 		add( tabbedPane );
 	}
 
@@ -40,6 +43,8 @@ public class GuiMultitabPanel extends JPanel
 
 		// add quit button
 		playablePanel.add( displayItemFactory.createWith( GuiItemType.QUIT, null ) );
+		
+		playablePanel.setOpaque( true );
 		return playablePanel;
 	}
 

@@ -29,7 +29,7 @@ public class GuiItemBuilder
 		ActionListener actionListener = new GuiItemBuilder.ActionListenerBuilder( arg )
 				.actionListener( buttonType );
 		displayItem.addActionListener( actionListener );
-
+		displayItem.setOpaque( true );
 		// set bounds
 		displayItem.setBounds( HORIZONAL_COORIDNATE, verticalIndex(), buttonType.width(), BUTTON_HEIGHT );
 

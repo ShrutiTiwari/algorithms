@@ -105,6 +105,7 @@
 		<module>music</module>
 		<module>algorithms</module>
 		<module>webapps</module>
+		<module>artifacto</module>
 	</modules>
 
 </project>
