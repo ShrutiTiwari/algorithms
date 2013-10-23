@@ -106,6 +106,7 @@
 		<module>algorithms</module>
 		<module>webapps</module>
 		<module>artifacto</module>
+		<module>publicdatafeed</module>
 	</modules>
 
 </project>
