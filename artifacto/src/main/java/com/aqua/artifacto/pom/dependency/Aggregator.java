@@ -1,8 +1,10 @@
 package com.aqua.artifacto.pom.dependency;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -10,9 +12,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import com.aqua.artifacto.FileOperations;
-import com.aqua.artifacto.FileOperations.StringDataCollater;
 
 public interface Aggregator
 {
@@ -96,10 +95,38 @@ public interface Aggregator
         }
 
         public static String collateInputStreamAsSting( InputStream sourceInputStream ) throws IOException {
-            StringDataCollater stringDataCollater = new StringDataCollater();
-            FileOperations.collateContentsOfStreamWith( sourceInputStream, stringDataCollater );
+            DataCollater stringDataCollater = new DataCollater.StringDataCollater();
+            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( sourceInputStream ) );
+            String s = null;
+            while( (s = bufferedReader.readLine()) != null ) {
+                stringDataCollater.collectData( s );
+            }
+            
             String fileData = stringDataCollater.data();
             return fileData;
         }
+        
+    }
+    
+    public interface DataCollater
+    {
+        void collectData( String s );
+        String data();
+        
+        public static class StringDataCollater implements DataCollater
+        {
+            private final StringBuilder data = new StringBuilder();
+
+            public void collectData( String s ) {
+                if( s != null ) {
+                    data.append( "\n" + s );
+                }
+            }
+
+            public String data() {
+                return data.toString();
+            }
+        }
+
     }
 }
