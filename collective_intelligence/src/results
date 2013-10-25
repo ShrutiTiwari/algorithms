@@ -1,0 +1,224 @@
+               (overview)    ==>     A Project is a collaborative
+effort to produce a specific artifact, which may be a body of code,
+or documentation, or some other material. A Project must be
+sponsored by one or more Groups. A Project
+may have web content, one or more file repositories, and one or
+more mailing lists.--The Bylaws define several ways for the
+Community to expand via Projects. A step-by-step guide is provided
+here for the following common cases:
+             Audio Engine    ==>     The current midi synthesizer implementation is a part of
+licenced library and has the following disadvantages:--This project has temporary nature and will be open until all
+major objectives are acomplished. The project could be implemented
+incrementally (initially some basic functionality could be
+implemented and then it can be enhanced with additianal
+features).
+     Build Infrastructure    ==>     This Project is sponsored by the Build
+Group.--The primary goals of this project is a complete rewrite of the
+OpenJDK makefiles so that we:
+             Caciocavallo    ==>     The goal of this Project is to improve the internal interfaces
+of the OpenJDK AWT and 2D subsystems in order to make it easier to
+port AWT to new platforms.--This Project is sponsored by the Porters Group.
+                 Closures    ==>     This goal of this Project is to produce a feature-complete
+prototype of the Java bytecode compiler (javac) for the draft
+BGGA Closures
+specification.--This Project is sponsored by the OpenJDK Compiler Group.
+               Code Tools    ==>     The goal of this Project is to provide tools of use to
+developers who work on the OpenJDK code base. Such tools currently
+include test tools and Mercurial extensions; it is envisaged that
+additional tools will be added over time, after discussion on the
+Project's main
+mailing list and subject to the Project Lead's approval.--This Project is sponsored by the Compiler Group.
+                     Coin    ==>     The goal of Project Coin is to determine what set of small
+language changes should be added to JDK 7. That list is:--Strings in switch
+      Common VM Interface    ==>     The goal of this Project is to provide a documented VM interface
+for OpenJDK which will significantly lower the barrier for entry
+for both existing Classpath VMs and any other VMs that may wish to
+use OpenJDK in the future.--This Project is sponsored by the HotSpot Group.
+         Compiler Grammar    ==>     The goal of this Project is to develop an experimental version
+of the javac compiler based upon a grammar
+written in ANTLR.--The parser that is currently in the javac compiler is a
+hand-written LALR parser. It is somewhat fragile, and is not always
+easy to extend when working on potential new language features. In
+addition, it is not well-suited for analysis, such as comparison
+against the grammar rules in the Java Language Specification
+(JLS).
+              Font Scaler    ==>     At this time, the project is essentially complete, as
+freetype has been implemented as a replacement. Soon we will remove
+this project and transfer bugs and improvements into the scope of
+the 2D group.--Java 2D incorporates technology that converts scalable outline
+fonts to a specified size and fits this outline to a pixel grid to
+produce a raster for subsequent blitting. Hence the terms font
+scaling and rasterization.
+<a href="/projects/fbtoolkit">Framebuffer Toolkit</a>
+                    Graal    ==>     The aim of this project is to expose VM functionality via
+Java
+APIs. Namely, we want to make it feasible to write in Java a
+dynamic compiler and interpreter for a language runtime. These
+components will seamlessly integrate and leverage existing VM
+infrastructure (e.g., HotSpot).--The design of the dynamic compiler uses features of Java that
+make it highly extensible such that adding extra IR nodes and/or
+transformations is straightforward. At the same time, it should
+produce excellent code quality without compromising compile time
+and memory usage by the JVM.
+      Graphics Rasterizer    ==>     Due to encumbrances in the 2D source code (see the 2D Graphics page for more), some of the
+implementation of the Java 2D API requires open source
+replacements.--This project encompasses the JDK code that
+                  IcedTea    ==>     IcedTea aims to make it easier for users to build and deploy
+OpenJDK, especially when using Free tools.
+IcedTea is the variant of OpenJDK currently distributed with
+GNU/Linux distributions such as Fedora, Gentoo and Debian, and our primary focus is to
+continue to support OpenJDK on GNU/Linux across multiple
+architectures. However, we do welcome patches that add support for
+other operating systems, provided such support will be
+maintained.--In due time, we hope that many of the enhancements provided by
+IcedTea will appear in the main OpenJDK7 development tree. In the
+meantime, this project will act as a staging ground for migrating
+work from the external IcedTea repositories to a true OpenJDK
+forest, thus easing the process of keeping up with OpenJDK
+development and simplifying the process of contributing our work
+back to OpenJDK7. All patches in IcedTea7 for which the author has
+signed the OCA will now
+be hosted here as part of the Mercurial forest rather than as
+individual patches in the external IcedTea7 tree.
+                    JDK 6    ==>     OpenJDK 6 is an implementation of the Java SE 6
+specification valuing stability, compatibility, and security.
+Various binaries derived from OpenJDK 6 sources have passed the
+Java SE 6 Test Compatibility Kit (TCK) suite, including packages
+for Fedora 9
+and 
+Ubuntu 9.04.--As an implementation of the Java SE 6 specification, all changes
+to OpenJDK 6 must be allowable within that specification. This
+requirement precludes many API changes. Acceptable API changes
+include those permitted by the endorsed
+standards mechanism, such as upgrading to a newer version of a
+standalone technology, like a component JSR. One example of such an
+API change was the upgrade of JAX-WS from
+2.0 to 2.1 in OpenJDK 6 build b06.
+<a href="/projects/jdk7">JDK 7</a>
+            JDK 7 Updates    ==>     The goal of this Project is to develop updates to JDK 7.--This Project is sponsored by the Build
+Group.
+<a href="/projects/jdk8">JDK 8</a>
+<a href="/projects/jdk8/spec">Java??SE??8</a>
+<a href="/projects/jigsaw">Jigsaw</a>
+<a href="/projects/lambda">Lambda</a>
+       Locale Enhancement    ==>     The goal of this Project is to enhance the java.util.Locale
+class in order to bring the Java platform into conformance with
+IETF BCP47 and UTR35(CLDR/LDML). A detailed proposal may be found
+here.--This Project is sponsored by the Internationalization Group.
+                  Modules    ==>     This page covers the implementation of the modularity
+specifications defined by JSR 277 and JSR 294 as well as the
+related work in the JDK. It is targeted for inclusion in JDK 7.--Superpackages are a new language construct for information
+hiding that is being defined by JSR 294, and it defines the
+linguistic unit of modularity in the Java programming language. The
+Java Module System defined by JSR 277 builds on top of that by
+defining the deployment unit of modularity; it adds the versioning
+scheme, distribution format, repository and the comprehensive
+runtime architecture for the deployment of module-based
+applications and libraries. In addition to the specifications
+defined by JSR 277 and JSR 294, other parts of the JDK will be
+updated to take advantage of the new features, for example the Java
+launcher program (bin/java), the
+java.util.ResourceBundle API, the java.util.ServiceLoader API,
+etc.
+<a href="/projects/mlvm">Multi-Language VM</a>
+                  Nashorn    ==>     Nashorn's goal is to implement a lightweight high-performance
+JavaScript runtime in Java with a native JVM. This Project intends
+to enable Java developers embedding of JavaScript in Java
+applications via JSR-223 and to develop
+free standing JavaScript applications using the 
+jrunscript command-line tool.--This Project is designed to take full advantage of newer
+technologies for native JVMs that have been made since the original
+development of JVM-based JavaScript which was started in 1997 by
+Netscape and maintained by Mozilla. This Project will be an
+entirely new code base, focused on these newer technologies. In
+particular the project will utilize the 
+MethodHandles and 
+InvokeDynamic APIs described in JSR-292.
+<a href="/projects/nio">New I/O</a>
+                  OpenJFX    ==>     OpenJFX is the open source home of JavaFX development. The goal
+of OpenJFX is to build the next-generation Java client toolkit. The
+project intends to file a JSR in the Java SE 9 timeframe and hopes
+to eventually be part of the JDK proper.--This Project is sponsored by the Swing
+Group.
+                  Penrose    ==>     The goal of this Project is to explore and implement
+interoperability between the Jigsaw Project and OSGi.--This Project is sponsored by the Core Libraries Group.
+            Port: AArch64    ==>     The goal of this Project is to provide a full-featured and
+certified version of OpenJDK on the Linux/AArch64 platform which
+can be integrated into JDK 8. AArch64 is the
+64-bit mode of ARMv8;
+it is a completely new architecture, and is not compatible with the
+32-bit ARM instruction set. It is hoped that this project will
+eventually be able to support operating systems other than
+GNU/Linux, and welcomes contributors with the necessary
+expertise.--http://hg.openjdk.java.net/aarch64-port/jdk8
+<a href="/projects/bsd-port">Port: BSD</a>
+              Port: Haiku    ==>     The Haiku port project is sponsored by the OpenJDK Porters Group, with the bulk of contributors
+belonging also to the Haiku Java Team.--This project will deliver a complete OpenJDK port to the Haiku
+operating system. We're still working on the details, including a
+road-map, tasks, etc.
+<a href="/projects/macosx-port">Port: Mac OS X</a>
+               Port: MIPS    ==>     This project is sponsored by the OpenJDK Porters Group.--The purpose of this Project is to adapt and support OpenJDK on
+the MIPS family of architectures. Specific goals include:
+        Port: PowerPC/AIX    ==>     The goal of this project is to provide a full-featured and
+certifiable version of OpenJDK on the Linux/PowerPC and AIX/PowerPC
+platforms which can be ultimately integrated into the main OpenJDK
+development branches.--Besides the very fact that this project will enrich the OpenJDK
+platform coverage with two new platforms we see two more main
+benefits. By supporting the PowerPC architecture we will add the
+first weak memory architecture to OpenJDK. As we already know from
+past experience, this will unveil all kinds of intricate memory
+ordering problems. Moreover, adding AIX as a new Unix flavor to the
+set of supported operating systems will uncover numerous implicit
+assumptions and shortcuts inside the code base which only hold true
+for Linux and Solaris. We strongly believe that fixing these issues
+will considerably increase the robustness and further portability
+of OpenJDK.
+                     SCTP    ==>     The goal of this Project is to develop an API for the Stream
+Control Transport Protocol (SCTP) and a corresponding OpenJDK
+prototype.--The main RFE for this work is 4927640 -
+Implementation of the sctp protocol.
+                  Sumatra    ==>     This primary goal of this project is to enable Java applications
+to take advantage of graphics processing units (GPUs) and
+accelerated processing units (APUs)--whether they are discrete
+devices or integrated with a CPU--to improve performance.--We expect the initial focus to be on the Hotspot JVM, enabling
+code generation, runtime support and garbage collection on GPUs.
+Once basic capabilities are in place in the JVM, we will also
+examine how to best expose GPU support to application and/or
+library developers, initially leveraging the new Java 8 Lambda
+language and library features. As the project progress, we may
+identify challenges with the Java API and constructs which may lead
+to new language, JVM or library extensions that will need
+standardization under the JCP process. While the Java language is
+an obvious focus, we also anticipate that this project will provide
+guidance for other JVM-hosted languages such as JavaScript/Nashorn,
+Scala and JRuby.
+                 ThreeTen    ==>     The goal of this Project is to integrate the JSR 310 Date and Time API
+Reference Implementation (RI) into JDK
+8. This project is sponsored by the Core Libraries Group.--The repository for Threeten integration into JDK 8 is via the TL
+repository http://hg.openjdk.java.net/jdk8/tl/jdk.
+JSR 310 is hosted 
+on SourceForge.
+         Type Annotations    ==>     JSR 308,
+Annotations on Java Types lays the foundations for
+stronger typing in Java by extending the language to allow
+annotations on essentially any use of a type. JSR 308 is part of
+JSR 337, Java SE
+8 Release Contents.--The Type Annotations Project is sponsored by the
+Compiler
+Group to host the Reference Implementation of JSR 308. This
+Reference Implementation is planned for inclusion in JDK 8, the Reference
+Implementation of Java SE 8.
+         XRender Pipeline    ==>     The goal of this Project is to create a new Java2D graphics
+pipeline based upon the X11 XRender extension.--This Project is sponsored by the 2D Graphics Group.
+                 VisualVM    ==>     The goal of this Project is to continue the development of the
+VisualVM tool originally created in the java.net project of the same
+name.--This Project is sponsored by the JMX
+Group.
+                     Zero    ==>     Zero is a port of OpenJDK that uses no assembler and therefore
+can trivially be built on any system. The goal of this project is
+be to be able to build a TCK-compliant OpenJDK of reasonable
+performance on any platform with no additional porting work.--The interpreter part of Zero is known to work on PowerPC (32-
+and 64-bit), x86-64, IA-64, ARM and zSeries. Zero is currently
+Linux- and GCC-specific, but supporting other operating systems and
+compilers is one area in which contributions are particularly
+welcome.
