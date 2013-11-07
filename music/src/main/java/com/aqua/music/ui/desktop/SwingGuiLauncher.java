@@ -6,8 +6,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import com.sun.awt.AWTUtilities;
-
 public class SwingGuiLauncher
 {
 	private static final String frameTitle = "Music";

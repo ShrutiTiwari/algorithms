@@ -12,7 +12,6 @@ import javax.swing.JTabbedPane;
 import com.aqua.music.items.PatternGenerator;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
-import com.sun.awt.AWTUtilities;
 
 public class GuiMultitabPanel extends JPanel
 {
@@ -43,6 +42,8 @@ public class GuiMultitabPanel extends JPanel
 
 		// add quit button
 		playablePanel.add( displayItemFactory.createWith( GuiItemType.QUIT, null ) );
+		
+		playablePanel.add( displayItemFactory.createWith( GuiItemType.PLAY_ALL_TO_INFINITY,  SymmetricalSet.values()  ) );
 		
 		playablePanel.setOpaque( true );
 		return playablePanel;

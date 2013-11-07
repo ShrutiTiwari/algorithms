@@ -19,6 +19,12 @@ public enum GuiItemType
 			return staticButton(this);
 		}
 	},
+	PLAY_ALL_TO_INFINITY("PLAY_TO_INFINITY", "Click this to play all!", 400) {
+		@Override
+		public JButton createInstanceWith( Object Object[] ) {
+			return staticButton(this);
+		}
+	},
 	PLAYABLE_PATTERN("Play $$", "Click this to play $$", 200) {
 		@Override
 		public JButton createInstanceWith( Object[] arg ) {
