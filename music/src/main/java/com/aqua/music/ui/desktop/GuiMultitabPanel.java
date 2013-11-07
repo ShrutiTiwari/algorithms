@@ -23,8 +23,6 @@ class GuiMultitabPanel extends JPanel {
 		final JPanel plainTab = createPlainTab();
 		final JPanel patternTab = createPatternsTab();
 
-		addQuitButton(plainTab, patternTab);
-
 		tabbedPane.addTab("Rehearse plain items", plainTab);
 		tabbedPane.addTab("Rehearse kafi with pattern", patternTab);
 
@@ -39,6 +37,7 @@ class GuiMultitabPanel extends JPanel {
 	}
 
 	private JPanel createPlainTab() {
+		uiComponents.reset();
 		final JPanel plainTab = createTab();
 
 		// add individual frequency-set buttons
@@ -48,11 +47,14 @@ class GuiMultitabPanel extends JPanel {
 		// add play all button
 		plainTab.add(uiComponents.buttonInstance(GuiItemType.PLAY_ALL_TO_INFINITY, SymmetricalSet.values()));
 
+		addQuitButton(plainTab);
+		
 		plainTab.setOpaque(true);
 		return plainTab;
 	}
 
 	private JPanel createPatternsTab() {
+		uiComponents.reset();
 		JPanel patternTab = createTab();
 
 		FrequencySet frequencySet = SymmetricalSet.THAAT_KAFI;
@@ -62,6 +64,8 @@ class GuiMultitabPanel extends JPanel {
 		for (int[] eachPattern : pairPaterrns) {
 			patternTab.add(uiComponents.buttonInstance(GuiItemType.PLAYABLE_PATTERN, new Object[] { frequencySet, eachPattern }));
 		}
+		
+		addQuitButton(patternTab);
 		return patternTab;
 	}
 

@@ -1,68 +1,41 @@
 package com.aqua.music.audio.player;
 
 import java.io.File;
+
+import static com.aqua.music.audio.player.FrequencyListPlayerBasedOnMathSinAngle.PlayMode;
 import java.util.Collection;
 
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.model.Frequency;
+public class AudioPlayerBasedOnFrequencyList implements AudioPlayer {
+	private final FrequencyListPlayerBasedOnMathSinAngle frequencyListPlayer;
+	private final PlayMode playMode;
 
-public class AudioPlayerBasedOnFrequencyList implements Runnable, AudioPlayer
-{
-    
-    private final boolean blockingPlay;
-    private final FrequencyListPlayerBasedOnMathSinAngle frequencyListPlayer = new FrequencyListPlayerBasedOnMathSinAngle();
+	AudioPlayerBasedOnFrequencyList() {
+		this(true);
+	}
 
-    private Collection<Frequency> frequencyList;
-    
-    AudioPlayerBasedOnFrequencyList() {
-        this( true );
-    }
+	AudioPlayerBasedOnFrequencyList(boolean blockingPlay) {
+		this(new FrequencyListPlayerBasedOnMathSinAngle(), blockingPlay);
+	}
 
-    AudioPlayerBasedOnFrequencyList( boolean blockingPlay ) {
-        this.blockingPlay = blockingPlay;
-        System.out.println( "Configured to have blockingPlay[" + blockingPlay + "]" );
-    }
+	AudioPlayerBasedOnFrequencyList(FrequencyListPlayerBasedOnMathSinAngle player, boolean blockingPlay) {
+		this.playMode = blockingPlay ? PlayMode.Synchronous : PlayMode.Asynchornous;
+		this.frequencyListPlayer = player;
+		System.out.println("Configured player[" + playMode + "]");
+	}
 
-    public void play( Collection<Frequency> frequencyList ) {
-        this.frequencyList = frequencyList;
-        if( blockingPlay ) {
-            run();
-        } else {
-            asyncPlay();
-        }
-    }
+	public void play(final Collection<Frequency> frequencyList) {
+		playMode.play(frequencyList, frequencyListPlayer);
+	}
 
-    @Override
-    public void play(PlayableItem playableItem) {
-        Collection<Frequency> frequencyList = playableItem.frequencyList();
-        play(frequencyList);
-    }
+	@Override
+	public void play(PlayableItem playableItem) {
+		playMode.play(playableItem.frequencyList(), frequencyListPlayer);
+	}
 
-    @Override
-    public void playList(Collection<File> audioFiles) {
+	@Override
+	public void playList(Collection<File> audioFiles) {
 
-    }
-
-    public void run() {
-        float[] fhz = new float[frequencyList.size()];
-        int i = 0;
-        for( Frequency each : frequencyList ) {
-            fhz[i++] = each.frequencyInHz();
-        }
-        frequencyListPlayer.startPlaying(fhz );
-    }
-    
-    public AudioPlayerBasedOnFrequencyList setDurationAndVolume( int durationInMsec, double vol ) {
-        frequencyListPlayer.setDurationAndVolume( durationInMsec, vol );
-        return this;
-    }
-    
-    private void asyncPlay() {
-        System.out.println( "\n Ordered to play async" );
-        frequencyListPlayer.terminate();
-        System.out.println( "Playing new list!!" );
-        Thread asyncThread = new Thread( this, "PlayerThread" );
-        asyncThread.setDaemon( true );
-        asyncThread.start();
-    }
+	}
 }

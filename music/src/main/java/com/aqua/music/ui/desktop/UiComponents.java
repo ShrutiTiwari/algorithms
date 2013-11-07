@@ -28,6 +28,10 @@ class UiComponents {
 	//mutated variable
 	private int verticalIndex = 10;
 
+	void reset(){
+		this.verticalIndex = 10;
+	}
+	
 	JButton buttonInstance(GuiItemType buttonType, Object[] arg) {
 		JButton buttonItem = buttonType.createInstanceWith(arg);
 
