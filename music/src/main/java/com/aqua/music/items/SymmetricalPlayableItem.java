@@ -16,7 +16,7 @@ public class SymmetricalPlayableItem implements PlayableItem {
 	private final FrequencySet frequencySet;
 	private final AudioPlayer audioPlayer;
 
-	SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayer audioPlayer) {
+	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayer audioPlayer) {
 		this.frequencySet = frequencySet;
 		this.audioPlayer = audioPlayer;
 	}

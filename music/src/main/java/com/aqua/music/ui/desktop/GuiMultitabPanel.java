@@ -32,7 +32,7 @@ class GuiMultitabPanel extends JPanel {
 
 	private void addQuitButton(JPanel... panels) {
 		for (JPanel each : panels) {
-			each.add(uiComponents.buttonInstance(GuiItemType.QUIT, null));
+			each.add(uiComponents.buttonInstance(GuiButtons.QUIT, null));
 		}
 	}
 
@@ -42,10 +42,10 @@ class GuiMultitabPanel extends JPanel {
 
 		// add individual frequency-set buttons
 		for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
-			plainTab.add(uiComponents.buttonInstance(GuiItemType.PLAYABLE, new Object[] { eachFrequencySet }));
+			plainTab.add(uiComponents.buttonInstance(GuiButtons.PLAYABLE, new Object[] { eachFrequencySet }));
 		}
 		// add play all button
-		plainTab.add(uiComponents.buttonInstance(GuiItemType.PLAY_ALL_TO_INFINITY, SymmetricalSet.values()));
+		plainTab.add(uiComponents.buttonInstance(GuiButtons.PLAY_ALL_TO_INFINITY, SymmetricalSet.values()));
 
 		addQuitButton(plainTab);
 		
@@ -62,7 +62,7 @@ class GuiMultitabPanel extends JPanel {
 
 		// add individual pattern button for each set
 		for (int[] eachPattern : pairPaterrns) {
-			patternTab.add(uiComponents.buttonInstance(GuiItemType.PLAYABLE_PATTERN, new Object[] { frequencySet, eachPattern }));
+			patternTab.add(uiComponents.buttonInstance(GuiButtons.PLAYABLE_PATTERN, new Object[] { frequencySet, eachPattern }));
 		}
 		
 		addQuitButton(patternTab);

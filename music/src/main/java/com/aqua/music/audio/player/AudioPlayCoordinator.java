@@ -6,35 +6,35 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.aqua.music.model.Frequency;
 
-class AudioPlayCoordinator implements DualModePlayer{
-	private final Semaphore permitToPlay= new Semaphore(1);
+class AudioPlayCoordinator implements DualModePlayer {
+	private final Semaphore permitToPlay = new Semaphore(1);
 	private final AtomicBoolean stopCurrentPlay = new AtomicBoolean(false);
-	private final AudioGenerator audioGenerator; 
+	private final AudioGenerator audioGenerator;
 	private final PlayMode playMode;
-	
+
 	AudioPlayCoordinator(PlayMode playMode) {
-		this.playMode=playMode;
-		this.audioGenerator=new AudioGeneratorBasedOnMathSinAngle();
+		this.playMode = playMode;
+		this.audioGenerator = new AudioGeneratorBasedOnMathSinAngle();
 	}
 
 	AudioPlayCoordinator(PlayMode playMode, int durationInMsec, double vol) {
-		this.playMode=playMode;
-		this.audioGenerator =new AudioGeneratorBasedOnMathSinAngle( durationInMsec,vol);
+		this.playMode = playMode;
+		this.audioGenerator = new AudioGeneratorBasedOnMathSinAngle(durationInMsec, vol);
 	}
 
 	public AudioPlayCoordinator(boolean blockingPlay) {
 		this(PlayMode.findFor(blockingPlay));
 	}
 
-	public void play(final Collection<Frequency> frequencyList){
-		playMode.play(this, frequencyList);	
+	public void play(final Collection<Frequency> frequencyList) {
+		playMode.play(this, frequencyList);
 	}
 
 	public void playAsynchronously(Collection<Frequency> frequencyList) {
 		audioGenerator.setCoordinator(this);
 		int availablePermits = permitToPlay.availablePermits();
-		System.out.println("\n availablePermits="+availablePermits);
-		if (availablePermits<=0) {
+		System.out.println("\n availablePermits=" + availablePermits);
+		if (availablePermits <= 0) {
 			System.out.println("Play is ongoing!! Issuing stop");
 			stopCurrentPlay.set(true);
 			audioGenerator.stop();
@@ -45,19 +45,28 @@ class AudioPlayCoordinator implements DualModePlayer{
 
 	public void playSynchronously(Collection<Frequency> frequencyList) {
 		audioGenerator.setCoordinator(this);
-		playTask(frequencyList).run();		
+		playTask(frequencyList).run();
 	}
-	
+
 	void acquireRightToPlay() throws InterruptedException {
+		if(playMode == PlayMode.Synchronous){
+			return;
+		}
 		permitToPlay.acquire();
 		stopCurrentPlay.set(false);
 	}
 
 	boolean continuePlaying() {
+		if(playMode == PlayMode.Synchronous){
+			return true;
+		}
 		return !stopCurrentPlay.get();
 	}
 
 	void releaseRightToPlay() {
+		if(playMode == PlayMode.Synchronous){
+			return;
+		}
 		System.out.println("releasing right to play");
 		permitToPlay.release();
 	}
@@ -65,7 +74,7 @@ class AudioPlayCoordinator implements DualModePlayer{
 	AudioPlayCoordinator setDurationAndVolume(int durationInMsec, double vol) {
 		return new AudioPlayCoordinator(this.playMode, durationInMsec, vol);
 	}
-	
+
 	private final Runnable playTask(final Collection<Frequency> frequencyList) {
 		Runnable task = new Runnable() {
 			@Override
@@ -75,7 +84,7 @@ class AudioPlayCoordinator implements DualModePlayer{
 		};
 		return task;
 	}
-	
+
 	enum PlayMode {
 		Synchronous {
 			@Override
@@ -90,8 +99,8 @@ class AudioPlayCoordinator implements DualModePlayer{
 			}
 		};
 		abstract public void play(DualModePlayer dualModePlayer, final Collection<Frequency> frequencyList);
-		
-		static PlayMode findFor(boolean blockingPlay){
+
+		static PlayMode findFor(boolean blockingPlay) {
 			return blockingPlay ? Synchronous : Asynchornous;
 		}
 	}

@@ -23,6 +23,10 @@ public interface PlayableItem {
 	public static class AudioPlayerConfiguration {
 		// blocking play is useful for programmatic or automatic play.
 		private final AudioPlayer audioPlayer;
+		
+		public AudioPlayer audioPlayer(){
+			return audioPlayer;
+		}
 
 		private AudioPlayerConfiguration() {
 			this(true, AudioPlayerType.VLC_BASED);

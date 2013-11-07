@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.model.Frequency;
@@ -26,6 +24,7 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer
     private final boolean blockingPlay;
 
     private final String vlcExeLoc;
+	private AudioPlayCoordinator audioPlayCoordinator;
 
     AudioPlayerBasedOnVLC( boolean blockingPlay ) {
         this.vlcExeLoc = (!os.contains( "Windows" )) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
@@ -95,7 +94,9 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer
         }
 
     }
-
+    public void setCoordinator(AudioPlayCoordinator audioPlayCoordinator2) {
+		this.audioPlayCoordinator=audioPlayCoordinator2;
+	}
     @Override
     public void play( Collection<Frequency> collectedFrequencies ) {
 
