@@ -22,7 +22,7 @@ public class FrequencyGeneratorTest {
 				NI, HIGH_SA };
 		int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		new AudioPlayerBasedOnFrequencyList(new FrequencyListPlayerBasedOnMathSinAngle(durationInMilliSec, 0.8),false).play(asList);
+		new AudioPlayerBasedOnFrequencyList(new AudioPlayCoordinator(AudioPlayCoordinator.PlayMode.Asynchornous,durationInMilliSec, 0.8)).play(asList);
 
 	}
 }
