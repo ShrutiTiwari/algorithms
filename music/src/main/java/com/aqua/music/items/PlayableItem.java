@@ -3,8 +3,7 @@ package com.aqua.music.items;
 import java.util.Collection;
 
 import com.aqua.music.audio.player.AudioPlayCoordinator;
-import com.aqua.music.audio.player.AudioPlayer;
-import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
+import com.aqua.music.audio.player.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;

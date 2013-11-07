@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 
 public class AudioLibraryVLCPlayerTest

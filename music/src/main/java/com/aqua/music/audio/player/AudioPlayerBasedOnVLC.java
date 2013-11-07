@@ -11,7 +11,7 @@ import java.util.Map;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.model.Frequency;
 
-public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
+public class AudioPlayerBasedOnVLC implements AudioPlayer {
 	private static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
 	private static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
 	private static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
@@ -20,34 +20,21 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
 
 	private final String vlcExeLoc;
 	private AudioPlayCoordinator audioPlayCoordinator;
-	private final ProcessHandler processHandler= new ProcessHandler();
+	private final ProcessHandler processHandler = new ProcessHandler();
 
-	AudioPlayerBasedOnVLC(boolean blockingPlay) {
+	AudioPlayerBasedOnVLC() {
 		this.vlcExeLoc = (!os.contains("Windows")) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
-	}
-
-	@Override
-	public void play(Collection<Frequency> collectedFrequencies) {
-
 	}
 
 	public void play(PlayableItem playableItem) {
 		audioPlayCoordinator.play(playableItem.frequencyList());
-/*		Collection<File> playlist = new AudioFilesList(playableItem.frequencyList()).allAudioFiles();
-		playList(playlist);
-*/	}
-
-	@Override
-	public void playList(Collection<File> playlist) {
-		File[] audioFilesArray = playlist.toArray(new File[playlist.size()]);
-		play(audioFilesArray);
 	}
 
 	@Override
-	public Runnable playTask(final Object arg) {
-		Collection<File> playlist = new AudioFilesList((Collection<Frequency>) arg).allAudioFiles();
+	public Runnable playTask(final Collection<Frequency> frequencyList) {
+		Collection<File> playlist = new AudioFilesList(frequencyList).allAudioFiles();
 		final File[] audioFilesArray = playlist.toArray(new File[playlist.size()]);
-		
+
 		return new Runnable() {
 			@Override
 			public void run() {
@@ -56,27 +43,13 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
 		};
 	}
 
-/*	public void playWithoutBlocking(File... audioFiles) {
-		try {
-			audioPlayCoordinator.acquireRightToPlay();
-			processHandler.stopVlcIfRunning();
-			processHandler.startVlcWith(audioFiles);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			audioPlayCoordinator.releaseRightToPlay();
-		}
-	}
-*/
 	public void setCoordinator(AudioPlayCoordinator audioPlayCoordinator2) {
 		this.audioPlayCoordinator = audioPlayCoordinator2;
 	}
 
-	public void stop(){
+	public void stop() {
 		processHandler.stopVlcIfRunning();
 	}
-
-	
 
 	private String findWindowsLocation() {
 		return new File(HOME_VLC_EXE_LOCATION_WINDOWS).exists() ? HOME_VLC_EXE_LOCATION_WINDOWS : OFFICE_VLC_EXE_LOCATION_WINDOWS;
@@ -142,20 +115,20 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
 		public void startVlcWith(File[] audioFiles) {
 			String[] command = buildCommand(audioFiles);
 			try {
-				lastRunningVlcProcess=runtime.exec(command);
+				lastRunningVlcProcess = runtime.exec(command);
 				int success = lastRunningVlcProcess.waitFor();
 				if (success != 0) {
 					printError(lastRunningVlcProcess);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}finally{
+			} finally {
 				lastRunningVlcProcess.destroy();
-				lastRunningVlcProcess=null;
+				lastRunningVlcProcess = null;
 			}
 		}
 
-		public void stopVlcIfRunning(){
+		public void stopVlcIfRunning() {
 			if (lastRunningVlcProcess == null)
 				return;
 
@@ -173,7 +146,7 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
 				lastRunningVlcProcess = null;
 			}
 		}
-		
+
 		private void printError(Process p) throws IOException {
 			System.out.println("process execution failed " + p.exitValue());
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
@@ -182,7 +155,7 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer, AudioPlayUnit {
 				System.out.println(s);
 			}
 		}
-		
+
 		private String[] buildCommand(File... audioFiles) {
 			String[] command = new String[2 + audioFiles.length];
 			command[0] = vlcExeLoc;

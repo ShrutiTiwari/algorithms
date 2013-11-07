@@ -8,7 +8,7 @@ import javax.sound.sampled.SourceDataLine;
 
 import com.aqua.music.model.Frequency;
 
-class AudioGeneratorBasedOnMathSinAngle implements AudioPlayUnit{
+class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 	private static final int DEFAULT_MSEC = 1000;
 	private static final double DEFAULT_VOL = 0.8;
 	private static final float SAMPLE_RATE = 8000f;
@@ -28,8 +28,7 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayUnit{
 		this.msecs = msecs;
 		this.vol = vol;
 	}
-	public final Runnable playTask(Object arg) {
-		final Collection<Frequency> frequencyList=(Collection<Frequency>)arg;
+	public final Runnable playTask(final Collection<Frequency> frequencyList) {
 		Runnable task = new Runnable() {
 			@Override
 			public void run() {

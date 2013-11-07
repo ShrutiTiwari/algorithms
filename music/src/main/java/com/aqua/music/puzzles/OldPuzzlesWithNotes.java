@@ -19,8 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.aqua.music.audio.player.AudioLibrary;
-import com.aqua.music.audio.player.AudioPlayer;
-import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 
 public class OldPuzzlesWithNotes
