@@ -2,41 +2,42 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
+import com.aqua.music.audio.player.AudioPlayer;
 import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
-public interface PlayableItem
-{
-    public PlayableItem andPattern( PatternApplicator patternApplicator );
+public interface PlayableItem {
+	public PlayableItem andPattern(PatternApplicator patternApplicator);
 
-    public void play();
+	public void play();
 
-    public Collection<Frequency> frequencyList();
+	public Collection<Frequency> frequencyList();
 
-    PlayableItemFactory factory = new PlayableItemFactory();
+	AudioPlayerConfiguration blocking = new AudioPlayerConfiguration();
 
-    public static class PlayableItemFactory
-    {
-        private AudioPlayerType audioPlayerType;
-        private boolean blocking = true;
+	AudioPlayerConfiguration blockingFrequencyPlayerConfig = new AudioPlayerConfiguration(true, AudioPlayerType.FREQUENCY_BASED);
+	AudioPlayerConfiguration nonBlockingFrequencyPlayerConfig = new AudioPlayerConfiguration(false, AudioPlayerType.FREQUENCY_BASED);
 
-        public void andNonBlocking() {
-            this.blocking = false;
-        }
+	public static class AudioPlayerConfiguration {
+		// blocking play is useful for programmatic or automatic play.
+		private final AudioPlayer audioPlayer;
 
-        public PlayableItemFactory configureAudioPlayerType( AudioPlayerType audioPlayerType ) {
-            this.audioPlayerType = audioPlayerType;
-            return this;
-        }
+		private AudioPlayerConfiguration() {
+			this(true, AudioPlayerType.VLC_BASED);
+		}
 
-        public PlayableItem forSet( FrequencySet frequencySet ) {
-            if( frequencySet instanceof SymmetricalSet ) {
-                return new SymmetricalPlayableItem( frequencySet, audioPlayerType, blocking );
-            }
-            return new AsymmetricalPlayableItem( frequencySet, audioPlayerType, blocking );
-        }
+		private AudioPlayerConfiguration(boolean blocking, AudioPlayerType audioPlayerType) {
+			this.audioPlayer = blocking? audioPlayerType.blockingPlayer():
+	            audioPlayerType.nonBlockingPlayer();
+		}
 
-    }
+		public PlayableItem forSet(FrequencySet frequencySet) {
+			if (frequencySet instanceof SymmetricalSet) {
+				return new SymmetricalPlayableItem(frequencySet, audioPlayer);
+			}
+			return new AsymmetricalPlayableItem(frequencySet, audioPlayer);
+		}
+	}
 }

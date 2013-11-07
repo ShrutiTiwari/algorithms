@@ -1,6 +1,6 @@
 package com.aqua.music.ui.desktop;
 
-import static com.aqua.music.ui.desktop.GuiItemBuilder.preferredSizeForMainPane;
+import static com.aqua.music.ui.desktop.UiComponents.preferredSizeForMainPane;
 
 import java.awt.BorderLayout;
 
@@ -10,7 +10,7 @@ public class SwingGuiLauncher
 {
 	private static final String frameTitle = "Music";
 	private static final String frameLabel = "Have some fun with Indian Classical Music!!";
-
+	
 	/**
 	 * Create the GUI and show it. For thread safety, this method should be invoked from the event-dispatching thread.
 	 */
@@ -24,7 +24,7 @@ public class SwingGuiLauncher
 	}
 
 	public JFrame createAndShowGUI() {
-		JFrame frame = new JFrame( frameTitle );
+		final JFrame frame = new JFrame( frameTitle );
 		frame.setLocationRelativeTo( null );
 
 		frame.add( new GuiMultitabPanel(), BorderLayout.CENTER );
@@ -37,7 +37,7 @@ public class SwingGuiLauncher
 		frame.setVisible( true );
 		
 		frame.getContentPane().setPreferredSize( preferredSizeForMainPane );
-		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		return frame;
 	}
 }

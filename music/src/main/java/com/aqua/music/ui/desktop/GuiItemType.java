@@ -4,25 +4,25 @@ import javax.swing.JButton;
 
 import com.aqua.music.model.FrequencySet;
 
-public enum GuiItemType
+enum GuiItemType
 {
 	PLAYABLE("Play $$", "Click this to play $$", 200) {
 		@Override
 		public JButton createInstanceWith( Object[] arg ) {
-			JButton dynamicButton = dynamicButton( this, ((FrequencySet) arg[0]).name() );
+			JButton dynamicButton = configurableNamedButton( this, ((FrequencySet) arg[0]).name() );
 			return dynamicButton;
 		}
 	},
 	QUIT("Quit", "Click this to quit!", 400) {
 		@Override
 		public JButton createInstanceWith( Object Object[] ) {
-			return staticButton(this);
+			return fixedNameButton(this);
 		}
 	},
 	PLAY_ALL_TO_INFINITY("PLAY_TO_INFINITY", "Click this to play all!", 400) {
 		@Override
 		public JButton createInstanceWith( Object Object[] ) {
-			return staticButton(this);
+			return fixedNameButton(this);
 		}
 	},
 	PLAYABLE_PATTERN("Play $$", "Click this to play $$", 200) {
@@ -30,7 +30,7 @@ public enum GuiItemType
 		public JButton createInstanceWith( Object[] arg ) {
 			String freqSet =  ((FrequencySet)arg[0]).name();
 			String pattern= displayText( (int[])arg[1]);
-			return dynamicButton( this, freqSet + "  ==>  " + pattern );
+			return configurableNamedButton( this, freqSet + "  ==>  " + pattern );
 		}
 	};
 
@@ -38,28 +38,16 @@ public enum GuiItemType
 	private final String tooltip;
 	private final int displayWidth;
 
-	GuiItemType( String text, String tooltip, int buttonWidth ) {
+	private GuiItemType( String text, String tooltip, int buttonWidth ) {
 		this.text = text;
 		this.tooltip = tooltip;
 		this.displayWidth = buttonWidth;
 	}
 
-	public abstract JButton createInstanceWith( Object[] arg );
-
-	private static JButton staticButton( GuiItemType itemType) {
-		JButton resultButton = new JButton( itemType.text) ;
-		resultButton.setToolTipText( itemType.tooltip);
-		return resultButton;
-	}
-	
-	private static JButton dynamicButton( GuiItemType itemType, String replaceName ) {
+	private static JButton configurableNamedButton( GuiItemType itemType, String replaceName ) {
 		JButton resultButton = new JButton( itemType.text.replace( "$$", replaceName ) );
 		resultButton.setToolTipText( itemType.tooltip.replace( "$$", replaceName ) );
 		return resultButton;
-	}
-
-	public int width() {
-		return displayWidth;
 	}
 
 	private static String displayText(int[] result) {
@@ -71,5 +59,17 @@ public enum GuiItemType
 			}
 		}
 		return displayName;
+	}
+	
+	private static JButton fixedNameButton( GuiItemType itemType) {
+		JButton resultButton = new JButton( itemType.text) ;
+		resultButton.setToolTipText( itemType.tooltip);
+		return resultButton;
+	}
+
+	public abstract JButton createInstanceWith( Object[] arg );
+
+	public int width() {
+		return displayWidth;
 	}
 }

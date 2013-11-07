@@ -19,12 +19,12 @@ public interface AudioPlayer
         FREQUENCY_BASED {
             @Override
             public AudioPlayer blockingPlayer() {
-                return audioPlayerFactory.blockingDynamicPlayer();
+                return audioPlayerFactory.blockingFrequencyPlayer();
             }
 
             @Override
             public AudioPlayer nonBlockingPlayer() {
-                return audioPlayerFactory.nonBlockingDynamicPlayer();
+                return audioPlayerFactory.nonBlockingFrequencyPlayer();
             }
         },
         VLC_BASED {
@@ -48,17 +48,17 @@ public interface AudioPlayer
         
         private static class AudioPlayerFactory
         {
-            AudioPlayer blockingDynamicPlayer;
+            AudioPlayer blockingFrequencyPlayer;
             AudioPlayer blockingVlcPlayer;
-            AudioPlayer nonBlockingDynamicPlayer;
+            AudioPlayer nonBlockingFrequencyPlayer;
             AudioPlayer nonBlockingVlcPlayer;
             
             
-            AudioPlayer blockingDynamicPlayer() {
-                if(blockingDynamicPlayer==null){
-                    blockingDynamicPlayer=new AudioPlayerBasedOnFrequencyList();
+            AudioPlayer blockingFrequencyPlayer() {
+                if(blockingFrequencyPlayer==null){
+                    blockingFrequencyPlayer=new AudioPlayerBasedOnFrequencyList();
                 }
-                return blockingDynamicPlayer;
+                return blockingFrequencyPlayer;
             }
 
             AudioPlayer blockingVlcPlayer() {
@@ -69,11 +69,11 @@ public interface AudioPlayer
                 return blockingVlcPlayer;
             }
 
-            AudioPlayer nonBlockingDynamicPlayer() {
-                if(nonBlockingDynamicPlayer==null){
-                    nonBlockingDynamicPlayer=new AudioPlayerBasedOnFrequencyList(false);
+            AudioPlayer nonBlockingFrequencyPlayer() {
+                if(nonBlockingFrequencyPlayer==null){
+                    nonBlockingFrequencyPlayer=new AudioPlayerBasedOnFrequencyList(false);
                 }
-                return nonBlockingDynamicPlayer;
+                return nonBlockingFrequencyPlayer;
             }
 
             AudioPlayer nonBlockingVlcPlayer() {

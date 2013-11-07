@@ -8,10 +8,12 @@ import com.aqua.music.model.Frequency;
 
 public class AudioPlayerBasedOnFrequencyList implements Runnable, AudioPlayer
 {
-    Collection<Frequency> frequencyList;
+    
     private final boolean blockingPlay;
     private final FrequencyListPlayerBasedOnMathSinAngle frequencyListPlayer = new FrequencyListPlayerBasedOnMathSinAngle();
 
+    private Collection<Frequency> frequencyList;
+    
     AudioPlayerBasedOnFrequencyList() {
         this( true );
     }

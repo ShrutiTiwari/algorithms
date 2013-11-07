@@ -13,7 +13,7 @@ public class PlaySelectedSymmetricalSet
 
     void execute() {
         for( String eachSetName : multipleSets ) {
-        	PlayableItem.factory.forSet( SymmetricalSet.valueOf( eachSetName )).play();
+        	PlayableItem.blocking.forSet( SymmetricalSet.valueOf( eachSetName )).play();
         }
     }
 

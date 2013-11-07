@@ -99,7 +99,7 @@ public interface FrequencySet
 		}
 
 		public void play() {
-			PlayableItem.factory.forSet( this ).play();
+			PlayableItem.blocking.forSet( this ).play();
 		}
 
 		public String type() {

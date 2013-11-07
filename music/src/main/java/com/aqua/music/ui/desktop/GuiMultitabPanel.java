@@ -1,8 +1,7 @@
 package com.aqua.music.ui.desktop;
 
-import static com.aqua.music.ui.desktop.GuiItemBuilder.preferredSizeForThaatPanel;
+import static com.aqua.music.ui.desktop.UiComponents.preferredSizeForThaatPanel;
 
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.List;
 
@@ -13,60 +12,63 @@ import com.aqua.music.items.PatternGenerator;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
-public class GuiMultitabPanel extends JPanel
-{
+class GuiMultitabPanel extends JPanel {
+	private final UiComponents uiComponents = new UiComponents();
+
 	public GuiMultitabPanel() {
-		super( new GridLayout( 1, 1 ) );
+		super(new GridLayout(1, 1));
 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab( "Rehearse plain items", plainReahearseTab() );
-		tabbedPane.addTab( "Rehearse kafi with pattern", rehearseWithPatternsTab() );
 
-		tabbedPane.setOpaque( true );
-		
-		add( tabbedPane );
+		final JPanel plainTab = createPlainTab();
+		final JPanel patternTab = createPatternsTab();
+
+		addQuitButton(plainTab, patternTab);
+
+		tabbedPane.addTab("Rehearse plain items", plainTab);
+		tabbedPane.addTab("Rehearse kafi with pattern", patternTab);
+
+		tabbedPane.setOpaque(true);
+		add(tabbedPane);
 	}
 
-	private Component plainReahearseTab() {
-		GuiItemBuilder displayItemFactory = new GuiItemBuilder();
+	private void addQuitButton(JPanel... panels) {
+		for (JPanel each : panels) {
+			each.add(uiComponents.buttonInstance(GuiItemType.QUIT, null));
+		}
+	}
 
-		JPanel playablePanel = new JPanel();
-		playablePanel.setLayout( null );
-		playablePanel.setPreferredSize( preferredSizeForThaatPanel );
+	private JPanel createPlainTab() {
+		final JPanel plainTab = createTab();
 
 		// add individual frequency-set buttons
-		for( FrequencySet eachFrequencySet : SymmetricalSet.values() ) {
-			playablePanel
-					.add( displayItemFactory.createWith( GuiItemType.PLAYABLE, new Object[] { eachFrequencySet } ) );
+		for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
+			plainTab.add(uiComponents.buttonInstance(GuiItemType.PLAYABLE, new Object[] { eachFrequencySet }));
 		}
+		// add play all button
+		plainTab.add(uiComponents.buttonInstance(GuiItemType.PLAY_ALL_TO_INFINITY, SymmetricalSet.values()));
 
-		// add quit button
-		playablePanel.add( displayItemFactory.createWith( GuiItemType.QUIT, null ) );
-		
-		playablePanel.add( displayItemFactory.createWith( GuiItemType.PLAY_ALL_TO_INFINITY,  SymmetricalSet.values()  ) );
-		
-		playablePanel.setOpaque( true );
-		return playablePanel;
+		plainTab.setOpaque(true);
+		return plainTab;
 	}
 
-	private Component rehearseWithPatternsTab() {
-		GuiItemBuilder displayItemFactory = new GuiItemBuilder();
+	private JPanel createPatternsTab() {
+		JPanel patternTab = createTab();
 
 		FrequencySet frequencySet = SymmetricalSet.THAAT_KAFI;
-		List<int[]> pairPaterrns = PatternGenerator.PAIR.generatePatterns( frequencySet.ascendNotes() );
-
-		JPanel playablePanel = new JPanel();
-		playablePanel.setLayout( null );
-		playablePanel.setPreferredSize( preferredSizeForThaatPanel );
+		List<int[]> pairPaterrns = PatternGenerator.PAIR.generatePatterns(frequencySet.ascendNotes());
 
 		// add individual pattern button for each set
-		for( int[] eachPattern : pairPaterrns ) {
-			playablePanel.add( displayItemFactory.createWith( GuiItemType.PLAYABLE_PATTERN, new Object[] {
-					frequencySet, eachPattern } ) );
+		for (int[] eachPattern : pairPaterrns) {
+			patternTab.add(uiComponents.buttonInstance(GuiItemType.PLAYABLE_PATTERN, new Object[] { frequencySet, eachPattern }));
 		}
+		return patternTab;
+	}
 
-		// add quit button
-		playablePanel.add( displayItemFactory.createWith( GuiItemType.QUIT, null ) );
+	private JPanel createTab() {
+		JPanel playablePanel = new JPanel();
+		playablePanel.setLayout(null);
+		playablePanel.setPreferredSize(preferredSizeForThaatPanel);
 		return playablePanel;
 	}
 }
