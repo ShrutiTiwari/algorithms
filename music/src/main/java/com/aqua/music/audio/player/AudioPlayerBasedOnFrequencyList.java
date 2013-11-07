@@ -13,7 +13,7 @@ public class AudioPlayerBasedOnFrequencyList implements AudioPlayer {
 	}
 
 	AudioPlayerBasedOnFrequencyList(boolean blockingPlay) {
-		this(new AudioPlayCoordinator(blockingPlay));
+		this(new AudioPlayCoordinator(blockingPlay, new AudioGeneratorBasedOnMathSinAngle()));
 	}
 
 	AudioPlayerBasedOnFrequencyList(AudioPlayCoordinator audioPlayCoordinator) {

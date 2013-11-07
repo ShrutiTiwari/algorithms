@@ -1,19 +1,16 @@
 package com.aqua.music.audio.player;
 
-import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.aqua.music.model.Frequency;
-
 interface DualModePlayer {
 	public final ExecutorService executor = Executors.newSingleThreadExecutor(new AudioThreadFactory());
 	
-	public void playSynchronously(Collection<Frequency> obj);
+	public void playSynchronously(Object obj);
 
-	public void playAsynchronously(Collection<Frequency> obj);
+	public void playAsynchronously(Object obj);
 
 	class AudioThreadFactory implements ThreadFactory{
 		private final String factoryName;

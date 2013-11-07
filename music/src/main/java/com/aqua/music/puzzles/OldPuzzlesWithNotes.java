@@ -90,6 +90,6 @@ public class OldPuzzlesWithNotes
             printPlaylist.append( ", " + each );
         }
         System.out.println( "playing [" + printPlaylist.toString() + "]" );
-        AudioPlayerType.VLC_BASED.blockingPlayer().playList( audioFiles );
+        //AudioPlayerType.VLC_BASED.blockingPlayer().playList( audioFiles );
     }
 }

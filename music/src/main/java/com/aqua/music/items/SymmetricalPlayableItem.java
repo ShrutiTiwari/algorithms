@@ -2,6 +2,7 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
+import com.aqua.music.audio.player.AudioPlayCoordinator;
 import com.aqua.music.audio.player.AudioPlayer;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
@@ -14,9 +15,9 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	private PatternApplicator patternApplicator = PatternApplicator.NONE;
 	private final FrequencySet frequencySet;
-	private final AudioPlayer audioPlayer;
+	private final AudioPlayCoordinator audioPlayer;
 
-	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayer audioPlayer) {
+	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayCoordinator audioPlayer) {
 		this.frequencySet = frequencySet;
 		this.audioPlayer = audioPlayer;
 	}
@@ -29,7 +30,7 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	public void play() {
 		System.out.println(patternApplicator.prettyPrintTextForAscDesc());
-		audioPlayer.play(this);
+		audioPlayer.play(this.frequencyList());
 	}
 
 	private void intializePlayList() {

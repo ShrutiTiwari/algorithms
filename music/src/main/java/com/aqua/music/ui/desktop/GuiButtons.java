@@ -7,13 +7,12 @@ import java.util.Collection;
 
 import javax.swing.JButton;
 
-import com.aqua.music.audio.player.AudioPlayer;
+import com.aqua.music.audio.player.AudioPlayCoordinator;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.items.SymmetricalPatternApplicator;
 import com.aqua.music.items.SymmetricalPlayableItem;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
-import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 enum GuiButtons
 {
@@ -63,7 +62,7 @@ enum GuiButtons
 			return new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					AudioPlayer audioPlayer = PlayableItem.nonBlockingFrequencyPlayerConfig.audioPlayer();
+					AudioPlayCoordinator audioPlayer = PlayableItem.nonBlockingFrequencyPlayerConfig.audioPlayer();
 					
 					Collection<Frequency> frequencies=new ArrayList<Frequency>();
 					for (Object each : arg) {

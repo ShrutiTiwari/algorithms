@@ -2,6 +2,7 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
+import com.aqua.music.audio.player.AudioPlayCoordinator;
 import com.aqua.music.audio.player.AudioPlayer;
 import com.aqua.music.audio.player.AudioPlayer.AudioPlayerType;
 import com.aqua.music.model.Frequency;
@@ -16,15 +17,17 @@ public interface PlayableItem {
 	public Collection<Frequency> frequencyList();
 
 	AudioPlayerConfiguration blocking = new AudioPlayerConfiguration();
+	
+	AudioPlayerConfiguration nonBlockingVlcPlayer = new AudioPlayerConfiguration(false, AudioPlayerType.VLC_BASED);
 
 	AudioPlayerConfiguration blockingFrequencyPlayerConfig = new AudioPlayerConfiguration(true, AudioPlayerType.FREQUENCY_BASED);
 	AudioPlayerConfiguration nonBlockingFrequencyPlayerConfig = new AudioPlayerConfiguration(false, AudioPlayerType.FREQUENCY_BASED);
 
 	public static class AudioPlayerConfiguration {
 		// blocking play is useful for programmatic or automatic play.
-		private final AudioPlayer audioPlayer;
+		private final AudioPlayCoordinator audioPlayer;
 		
-		public AudioPlayer audioPlayer(){
+		public AudioPlayCoordinator audioPlayer(){
 			return audioPlayer;
 		}
 

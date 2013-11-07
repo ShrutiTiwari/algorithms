@@ -18,68 +18,68 @@ public interface AudioPlayer
     {
         FREQUENCY_BASED {
             @Override
-            public AudioPlayer blockingPlayer() {
+            public AudioPlayCoordinator blockingPlayer() {
                 return audioPlayerFactory.blockingFrequencyPlayer();
             }
 
             @Override
-            public AudioPlayer nonBlockingPlayer() {
+            public AudioPlayCoordinator nonBlockingPlayer() {
                 return audioPlayerFactory.nonBlockingFrequencyPlayer();
             }
         },
         VLC_BASED {
             @Override
-            public AudioPlayer blockingPlayer() {
+            public AudioPlayCoordinator blockingPlayer() {
                 return audioPlayerFactory.blockingVlcPlayer();
             }
 
             @Override
-            public AudioPlayer nonBlockingPlayer() {
+            public AudioPlayCoordinator nonBlockingPlayer() {
                 return audioPlayerFactory.nonBlockingVlcPlayer();
             }
         };
 
         
         private static final AudioPlayerFactory audioPlayerFactory= new AudioPlayerFactory(); 
-        public abstract AudioPlayer blockingPlayer();
+        public abstract AudioPlayCoordinator blockingPlayer();
 
-        public abstract AudioPlayer nonBlockingPlayer();
+        public abstract AudioPlayCoordinator nonBlockingPlayer();
         
         
         private static class AudioPlayerFactory
         {
-            AudioPlayer blockingFrequencyPlayer;
-            AudioPlayer blockingVlcPlayer;
-            AudioPlayer nonBlockingFrequencyPlayer;
-            AudioPlayer nonBlockingVlcPlayer;
+            AudioPlayCoordinator blockingFrequencyPlayer;
+            AudioPlayCoordinator blockingVlcPlayer;
+            AudioPlayCoordinator nonBlockingFrequencyPlayer;
+            AudioPlayCoordinator nonBlockingVlcPlayer;
             
             
-            AudioPlayer blockingFrequencyPlayer() {
+            AudioPlayCoordinator blockingFrequencyPlayer() {
                 if(blockingFrequencyPlayer==null){
-                    blockingFrequencyPlayer=new AudioPlayerBasedOnFrequencyList();
+                    blockingFrequencyPlayer=new AudioPlayCoordinator(true, new AudioGeneratorBasedOnMathSinAngle());
                 }
                 return blockingFrequencyPlayer;
             }
 
-            AudioPlayer blockingVlcPlayer() {
+            AudioPlayCoordinator blockingVlcPlayer() {
                 if(blockingVlcPlayer==null){
                     AudioLibrary.initializeWithGivenSeconds( 1 );
-                    blockingVlcPlayer=new AudioPlayerBasedOnVLC( true );
+                    blockingVlcPlayer=new AudioPlayCoordinator(true, new AudioPlayerBasedOnVLC( true ));
                 }
                 return blockingVlcPlayer;
             }
 
-            AudioPlayer nonBlockingFrequencyPlayer() {
+            AudioPlayCoordinator nonBlockingFrequencyPlayer() {
                 if(nonBlockingFrequencyPlayer==null){
-                    nonBlockingFrequencyPlayer=new AudioPlayerBasedOnFrequencyList(false);
+                    nonBlockingFrequencyPlayer=new AudioPlayCoordinator(false, new AudioGeneratorBasedOnMathSinAngle());
                 }
                 return nonBlockingFrequencyPlayer;
             }
 
-            AudioPlayer nonBlockingVlcPlayer() {
+            AudioPlayCoordinator nonBlockingVlcPlayer() {
                 if(nonBlockingVlcPlayer==null){
                     AudioLibrary.initializeWithGivenSeconds( 1 );
-                    nonBlockingVlcPlayer=new AudioPlayerBasedOnVLC(false);
+                    nonBlockingVlcPlayer=new AudioPlayCoordinator(false, new AudioPlayerBasedOnVLC( false));
                 }
                 return nonBlockingVlcPlayer;
             }

@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import com.aqua.music.audio.player.AudioPlayerBasedOnFrequencyList;
 import com.aqua.music.model.Frequency;
 
 public class FrequencyGeneratorTest {
@@ -22,7 +21,6 @@ public class FrequencyGeneratorTest {
 				NI, HIGH_SA };
 		int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		new AudioPlayerBasedOnFrequencyList(new AudioPlayCoordinator(AudioPlayCoordinator.PlayMode.Asynchornous,durationInMilliSec, 0.8)).play(asList);
-
+		new AudioPlayCoordinator(AudioPlayCoordinator.PlayMode.Asynchornous,durationInMilliSec, 0.8).play(asList);
 	}
 }
