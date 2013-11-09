@@ -1,0 +1,159 @@
+package com.aqua.music.ui.swing;
+
+import java.awt.Component;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.swing.JButton;
+
+import com.aqua.music.audio.player.AudioPlayCoordinator;
+import com.aqua.music.audio.player.DualModePlayer;
+import com.aqua.music.items.PlayableItem;
+import com.aqua.music.items.SymmetricalPatternApplicator;
+import com.aqua.music.items.SymmetricalPlayableItem;
+import com.aqua.music.model.Frequency;
+import com.aqua.music.model.FrequencySet;
+
+enum UiPanelButtons {
+	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 200) {
+		@Override
+		JButton createInstanceWith(final Object[] arg) {
+			final FrequencySet freqSet = convertToFrequencySet(arg);
+			final int[] pattern = (int[]) arg[1];
+
+			JButton button = configurableNamedButton(this, freqSet.name() + "  ==>  " + displayText(pattern));
+
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					SymmetricalPatternApplicator<Frequency> freqPattern = new SymmetricalPatternApplicator<Frequency>(pattern);
+					System.out.println("Playing::" + freqSet.name());
+					PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).andPattern(freqPattern).play();
+				}
+			};
+
+			button.addActionListener(actionListener);
+			return button;
+		}
+	},
+	FREQUENCY_SET_PLAYER("Play $$", "Click this to play $$", 200) {
+		@Override
+		JButton createInstanceWith(final Object[] arg) {
+			final FrequencySet freqSet = convertToFrequencySet(arg);
+
+			JButton button = configurableNamedButton(this, freqSet.name());
+
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					System.out.println("Playing::" + freqSet.name());
+					PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).play();
+				}
+			};
+
+			button.addActionListener(actionListener);
+
+			return button;
+		}
+	},
+	PLAY_ALL("PLAY_ALL", "Click this to play all!", 400) {
+		@Override
+		JButton createInstanceWith(final Object[] arg) {
+			JButton button = fixedNameButton(this);
+
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					DualModePlayer.executor.execute(new Runnable() {
+						@Override
+						public void run() {
+							for (Object each : arg) {
+								JButton eachActionListener = (JButton) each;
+								eachActionListener.doClick();
+								AudioPlayCoordinator.awaitStop();
+							}
+						}
+					});
+				}
+			};
+
+			button.addActionListener(actionListener);
+			return button;
+		}
+	},
+	QUIT("Quit", "Click this to quit!", 400) {
+		@Override
+		JButton createInstanceWith(Object Object[]) {
+			JButton button = fixedNameButton(this);
+
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					System.exit(0);
+				}
+			};
+
+			button.addActionListener(actionListener);
+			return button;
+		}
+	};
+
+	private static final int BUTTON_HEIGHT = 30;
+	private static final int X_COORIDNATE = 30;
+	private final int displayWidth;
+	private final String text;
+	private final String tooltip;
+
+	private UiPanelButtons(String text, String tooltip, int buttonWidth) {
+		this.text = text;
+		this.tooltip = tooltip;
+		this.displayWidth = buttonWidth;
+	}
+
+	static final int HEIGHT() {
+		return BUTTON_HEIGHT;
+	}
+
+	private static JButton configurableNamedButton(UiPanelButtons itemType, String replaceName) {
+		JButton resultButton = new JButton(itemType.text.replace("$$", replaceName));
+		resultButton.setToolTipText(itemType.tooltip.replace("$$", replaceName));
+		return resultButton;
+	}
+
+	private static String displayText(int[] result) {
+		String displayName = "" + result[0];
+		int i = 0;
+		for (int each : result) {
+			if (i++ != 0) {
+				displayName += ("-" + each);
+			}
+		}
+		return displayName;
+	}
+
+	private static JButton fixedNameButton(UiPanelButtons itemType) {
+		JButton resultButton = new JButton(itemType.text);
+		resultButton.setToolTipText(itemType.tooltip);
+		return resultButton;
+	}
+
+	public JButton createButton(int yCoordinate, Object[] arg) {
+		JButton buttonItem = createInstanceWith(arg);
+		buttonItem.setOpaque(true);
+		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
+		return buttonItem;
+	}
+
+	abstract JButton createInstanceWith(Object[] arg);
+
+	static FrequencySet convertToFrequencySet(Object[] arg) {
+		return convert(FrequencySet.class, arg);
+	}
+
+	static <T> T convert(Class<T> t, Object[] arg) {
+		return (T) arg[0];
+	}
+}

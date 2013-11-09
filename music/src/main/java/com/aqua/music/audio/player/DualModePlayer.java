@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.aqua.music.model.Frequency;
 
-interface DualModePlayer {
-	public final ExecutorService executor = Executors.newSingleThreadExecutor(new AudioThreadFactory());
+public interface DualModePlayer {
+	public final ExecutorService executor = Executors.newCachedThreadPool(new AudioThreadFactory());
 	
 	public void playSynchronously(Collection<Frequency> frequencyList);
 

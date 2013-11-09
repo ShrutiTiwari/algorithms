@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import com.aqua.music.model.Frequency;
 
-
 public interface AudioPlayer {
 	void setCoordinator(AudioPlayCoordinator audioPlayCoordinator);
 

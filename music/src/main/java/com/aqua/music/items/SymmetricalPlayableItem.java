@@ -14,11 +14,11 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	private PatternApplicator patternApplicator = PatternApplicator.NONE;
 	private final FrequencySet frequencySet;
-	private final AudioPlayCoordinator audioPlayer;
+	private final AudioPlayCoordinator audioCooridnator;
 
 	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayCoordinator audioPlayer) {
 		this.frequencySet = frequencySet;
-		this.audioPlayer = audioPlayer;
+		this.audioCooridnator = audioPlayer;
 	}
 
 	public SymmetricalPlayableItem andPattern(PatternApplicator patternApplicator) {
@@ -29,7 +29,7 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	public void play() {
 		System.out.println(patternApplicator.prettyPrintTextForAscDesc());
-		audioPlayer.play(this.frequencyList());
+		audioCooridnator.play(this.frequencyList());
 	}
 
 	private void intializePlayList() {

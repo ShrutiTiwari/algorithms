@@ -67,6 +67,7 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 		} finally {
 			closeStream();
 			audioPlayCoordinator.releaseRightToPlay();
+			AudioPlayCoordinator.markPlayStopped();
 		}
 	}
 
