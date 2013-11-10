@@ -33,7 +33,7 @@ public interface FrequencyListBuilder
             frequencyList.add( frequencySet.ascendNotes() );
             frequencyList.add( ClassicalNote.HIGH_SA, WITH_COMMA );
 
-            frequencyList.addText( " |||  " );
+            frequencyList.addText( PatternApplicator.SEP );
 
             // enqueue descend sequence
             frequencyList.add( ClassicalNote.HIGH_SA, NO_COMMA );

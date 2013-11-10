@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface PatternApplicator<T>
 {
-    static final String SEP = " |||| ";
+    static final String SEP = "\n";
 
     List<T> allNotes();
 

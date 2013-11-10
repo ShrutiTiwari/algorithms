@@ -11,7 +11,7 @@ import com.aqua.music.model.FrequencySet.SymmetricalSet;
 public interface PlayableItem {
 	public PlayableItem andPattern(PatternApplicator patternApplicator);
 
-	public void play();
+	public String play();
 
 	public Collection<Frequency> frequencyList();
 
@@ -46,4 +46,6 @@ public interface PlayableItem {
 			return new AsymmetricalPlayableItem(frequencySet, audioPlayer);
 		}
 	}
+
+	public String text();
 }

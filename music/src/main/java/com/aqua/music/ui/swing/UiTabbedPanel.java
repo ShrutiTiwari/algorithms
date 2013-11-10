@@ -2,6 +2,7 @@ package com.aqua.music.ui.swing;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,33 +38,43 @@ class UiTabbedPanel extends JPanel {
 
 	private void addQuitButton(JPanel... panels) {
 		for (JPanel each : panels) {
-			each.add(UiPanelButtons.QUIT.createButton(yCoordinateTracker.yCoordinate(), null));
+			each.add(UiPanelButtons.QUIT.createButton(null, yCoordinateTracker.yCoordinate(), null));
 		}
 	}
 
 	private JPanel createPlainTab() {
 		yCoordinateTracker.reset();
 		final JPanel plainTab = createTab();
-
+		
+		TextArea textArea = createTextArea(yCoordinateTracker);
+		
 		final Collection<JButton> allButtons= new ArrayList<JButton>();
 		// add individual frequency-set buttons
 		for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
-			JButton button = UiPanelButtons.FREQUENCY_SET_PLAYER.createButton(yCoordinateTracker.yCoordinate(), new Object[] { eachFrequencySet });
+			JButton button = UiPanelButtons.FREQUENCY_SET_PLAYER.createButton(textArea, yCoordinateTracker.yCoordinate(), new Object[] { eachFrequencySet });
 			allButtons.add(button);
 			plainTab.add(button);
 		}
 		// add play all button
-		plainTab.add(UiPanelButtons.PLAY_ALL.createButton(yCoordinateTracker.yCoordinate(), allButtons.toArray()));
+		addPlayAllButton(plainTab, textArea, allButtons);
 
 		addQuitButton(plainTab);
+		
+		plainTab.add(textArea);
 		
 		plainTab.setOpaque(true);
 		return plainTab;
 	}
 
+	private void addPlayAllButton(final JPanel givenTab, TextArea textArea, final Collection<JButton> allButtons) {
+		givenTab.add(UiPanelButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.yCoordinate(), allButtons.toArray()));
+	}
+
 	private JPanel createPatternsTab() {
 		yCoordinateTracker.reset();
 		JPanel patternTab = createTab();
+		
+		TextArea textArea = createTextArea(yCoordinateTracker);
 
 		FrequencySet frequencySet = SymmetricalSet.THAAT_KAFI;
 		List<int[]> pairPaterrns = PatternGenerator.PAIR.generatePatterns(frequencySet.ascendNotes());
@@ -72,13 +83,14 @@ class UiTabbedPanel extends JPanel {
 		
 		// add individual pattern button for each set
 		for (int[] eachPattern : pairPaterrns) {
-			JButton button = UiPanelButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(yCoordinateTracker.yCoordinate(), new Object[] { frequencySet, eachPattern });
+			JButton button = UiPanelButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea, yCoordinateTracker.yCoordinate(), new Object[] { frequencySet, eachPattern });
 			allButtons.add(button);
 			patternTab.add(button);
 		}
 		
-		// add play all button
-		patternTab.add(UiPanelButtons.PLAY_ALL.createButton(yCoordinateTracker.yCoordinate(), allButtons.toArray()));
+		addPlayAllButton(patternTab, textArea, allButtons);
+		
+		patternTab.add(textArea);
 		
 		addQuitButton(patternTab);
 		return patternTab;
@@ -91,13 +103,22 @@ class UiTabbedPanel extends JPanel {
 		return playablePanel;
 	}
 	
+	
+	private TextArea createTextArea(YCoordinateTracker yCoordinateTracker2){
+		TextArea textArea = new TextArea("Hello shrutz");
+		textArea.setVisible(true);
+		textArea.setBounds(UiPanelButtons.X_COORIDNATE+600, 60, 500, 600);
+		return textArea;
+	}
+	
 	/**
 	 * Synchronisation policy: ThreadConfined - Meant for SingleThreaded use.
 	 * */
 	
 	private class YCoordinateTracker {
+		private static final int START = 10;
 		//mutated variable
-		private int yCoordinate = 10;
+		private int yCoordinate = START;
 
 		private void reset(){
 			this.yCoordinate = 10;

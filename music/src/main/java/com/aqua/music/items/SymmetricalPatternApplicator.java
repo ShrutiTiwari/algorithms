@@ -34,7 +34,7 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
     }
 
     public String prettyPrintTextForAscDesc() {
-        return patternCode() + groupItemsForPrettyPrint( ascendSequence ) + SEP + groupItemsForPrettyPrint( descendSequence );
+        return patternCode() + groupItemsForPrettyPrint( ascendSequence ) + SEP + groupItemsForPrettyPrint( descendSequence )+SEP ;
     }
 
     private String patternCode() {

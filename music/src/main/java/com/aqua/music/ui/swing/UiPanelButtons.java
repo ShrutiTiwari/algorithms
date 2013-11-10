@@ -1,11 +1,8 @@
 package com.aqua.music.ui.swing;
 
-import java.awt.Component;
-import java.awt.Event;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JButton;
 
@@ -13,14 +10,13 @@ import com.aqua.music.audio.player.AudioPlayCoordinator;
 import com.aqua.music.audio.player.DualModePlayer;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.items.SymmetricalPatternApplicator;
-import com.aqua.music.items.SymmetricalPlayableItem;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 enum UiPanelButtons {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
-		JButton createInstanceWith(final Object[] arg) {
+		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
 			final FrequencySet freqSet = convertToFrequencySet(arg);
 			final int[] pattern = (int[]) arg[1];
 
@@ -30,8 +26,10 @@ enum UiPanelButtons {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					SymmetricalPatternApplicator<Frequency> freqPattern = new SymmetricalPatternApplicator<Frequency>(pattern);
-					System.out.println("Playing::" + freqSet.name());
-					PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).andPattern(freqPattern).play();
+					PlayableItem pattern = PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).andPattern(freqPattern);
+					String text = pattern.play();
+					System.out.println(":::::::::::"+text);
+					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
 				}
 			};
 
@@ -41,7 +39,7 @@ enum UiPanelButtons {
 	},
 	FREQUENCY_SET_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
-		JButton createInstanceWith(final Object[] arg) {
+		JButton createInstanceWith(final TextArea textArea, Object[] arg) {
 			final FrequencySet freqSet = convertToFrequencySet(arg);
 
 			JButton button = configurableNamedButton(this, freqSet.name());
@@ -49,8 +47,9 @@ enum UiPanelButtons {
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					System.out.println("Playing::" + freqSet.name());
-					PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).play();
+					PlayableItem pattern = PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet);
+					String text = pattern.play();
+					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
 				}
 			};
 
@@ -61,7 +60,7 @@ enum UiPanelButtons {
 	},
 	PLAY_ALL("PLAY_ALL", "Click this to play all!", 400) {
 		@Override
-		JButton createInstanceWith(final Object[] arg) {
+		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
 			JButton button = fixedNameButton(this);
 
 			ActionListener actionListener = new ActionListener() {
@@ -70,9 +69,12 @@ enum UiPanelButtons {
 					DualModePlayer.executor.execute(new Runnable() {
 						@Override
 						public void run() {
+							textArea.setText("Playing all items:\n");
+
 							for (Object each : arg) {
-								JButton eachActionListener = (JButton) each;
-								eachActionListener.doClick();
+								JButton eachButton = (JButton) each;
+								eachButton.doClick();
+								//textArea.repaint();
 								AudioPlayCoordinator.awaitStop();
 							}
 						}
@@ -86,7 +88,7 @@ enum UiPanelButtons {
 	},
 	QUIT("Quit", "Click this to quit!", 400) {
 		@Override
-		JButton createInstanceWith(Object Object[]) {
+		JButton createInstanceWith(TextArea Object, Object[] newParam) {
 			JButton button = fixedNameButton(this);
 
 			ActionListener actionListener = new ActionListener() {
@@ -102,7 +104,7 @@ enum UiPanelButtons {
 	};
 
 	private static final int BUTTON_HEIGHT = 30;
-	private static final int X_COORIDNATE = 30;
+	static final int X_COORIDNATE = 30;
 	private final int displayWidth;
 	private final String text;
 	private final String tooltip;
@@ -140,20 +142,29 @@ enum UiPanelButtons {
 		return resultButton;
 	}
 
-	public JButton createButton(int yCoordinate, Object[] arg) {
-		JButton buttonItem = createInstanceWith(arg);
+	public JButton createButton(TextArea textArea, int yCoordinate, Object[] arg) {
+		JButton buttonItem = createInstanceWith(textArea, arg);
 		buttonItem.setOpaque(true);
 		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
 		return buttonItem;
 	}
 
-	abstract JButton createInstanceWith(Object[] arg);
+	abstract JButton createInstanceWith(TextArea textArea, Object[] arg);
 
 	static FrequencySet convertToFrequencySet(Object[] arg) {
-		return convert(FrequencySet.class, arg);
+		return convert(FrequencySet.class, arg[0]);
 	}
 
-	static <T> T convert(Class<T> t, Object[] arg) {
-		return (T) arg[0];
+	static <T> T convert(Class<T> t, Object arg) {
+		return (T) arg;
+	}
+	private static void setText(final TextArea textArea, final String name) {
+		String displayText = "\n\n Playing::" + name ;		
+		System.out.println(displayText);
+		if (AudioPlayCoordinator.playInProgress()) {
+			textArea.append(displayText);
+		} else {
+			textArea.setText(displayText);
+		}
 	}
 }

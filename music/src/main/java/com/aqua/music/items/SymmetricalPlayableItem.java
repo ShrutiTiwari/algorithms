@@ -7,14 +7,15 @@ import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 public class SymmetricalPlayableItem implements PlayableItem {
+	private final AudioPlayCoordinator audioCooridnator;
+
 	/**
 	 * caution: this variable shouldn't be used until initialised, properly.
 	 */
 	private Collection<Frequency> finalFrequencySequence = null;
-
-	private PatternApplicator patternApplicator = PatternApplicator.NONE;
 	private final FrequencySet frequencySet;
-	private final AudioPlayCoordinator audioCooridnator;
+	private PatternApplicator patternApplicator = PatternApplicator.NONE;
+	private String prettyText;
 
 	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayCoordinator audioPlayer) {
 		this.frequencySet = frequencySet;
@@ -27,9 +28,21 @@ public class SymmetricalPlayableItem implements PlayableItem {
 		return this;
 	}
 
-	public void play() {
-		System.out.println(patternApplicator.prettyPrintTextForAscDesc());
+	@Override
+	public Collection<Frequency> frequencyList() {
+		intializePlayList();
+		return finalFrequencySequence;
+	}
+
+	public String play() {
+		System.out.println(prettyText);
 		audioCooridnator.play(this.frequencyList());
+		return prettyText;
+	}
+
+	@Override
+	public String text() {
+		return prettyText;
 	}
 
 	private void intializePlayList() {
@@ -59,13 +72,8 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	private void plainAscendDescend() {
 		FrequencyListBuilder audioListBuilder = new FrequencyListBuilder.BuilderForSymmetricalSet(frequencySet);
-		System.out.print("\t[ Plain ascend-descend:: " + audioListBuilder.prettyPrintText() + "]");
+		this.prettyText=audioListBuilder.prettyPrintText();
+		System.out.print("\t Plain ascend-descend:: " + prettyText);
 		this.finalFrequencySequence = audioListBuilder.finalFrequencySequence();
-	}
-
-	@Override
-	public Collection<Frequency> frequencyList() {
-		intializePlayList();
-		return finalFrequencySequence;
 	}
 }

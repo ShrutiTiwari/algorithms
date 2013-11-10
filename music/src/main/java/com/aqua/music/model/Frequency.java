@@ -45,7 +45,8 @@ public interface Frequency {
 		ClassicalNote(String western, float frequencyInHz) {
 			this.western = western;
 			this.frequencyInHz = frequencyInHz;
-			this.fileCode = name().toLowerCase();
+			String lowerCase = name().toLowerCase();
+			this.fileCode =(""+lowerCase.charAt(0)).toUpperCase() + lowerCase.substring(1);
 		}
 
 		public String fileCode() {

@@ -11,28 +11,14 @@ import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 public class AsymmetricalPlayableItem implements PlayableItem {
-	private final FrequencySet frequencySet;
+	private final AudioPlayCoordinator audioPlayer;
 	private Collection<Frequency> frequencies = new ArrayList<Frequency>();
 
-	private final AudioPlayCoordinator audioPlayer;
+	private final FrequencySet frequencySet;
 
 	AsymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayCoordinator audioPlayer) {
 		this.frequencySet = frequencySet;
 		this.audioPlayer = audioPlayer;
-	}
-
-	@Override
-	public void play() {
-		createAudioList(SA, frequencySet.ascendNotes(), HIGH_SA);
-		createAudioList(HIGH_SA, frequencySet.descendNotes(), SA);
-		// AudioPlayer.BLOCKING_VLC_PLAYER.play( this );
-		audioPlayer.play(this.frequencyList());
-	}
-
-	private void createAudioList(Frequency start, Frequency[] middleNotes, Frequency end) {
-		FrequencyListBuilder audioFileListBuilder = new FrequencyListBuilder.WithMiddleNotesAndStartEndNotes(middleNotes, start, end);
-		this.frequencies.addAll(audioFileListBuilder.finalFrequencySequence());
-
 	}
 
 	@Override
@@ -43,5 +29,25 @@ public class AsymmetricalPlayableItem implements PlayableItem {
 	@Override
 	public Collection<Frequency> frequencyList() {
 		return frequencies;
+	}
+
+	@Override
+	public String play() {
+		createAudioList(SA, frequencySet.ascendNotes(), HIGH_SA);
+		createAudioList(HIGH_SA, frequencySet.descendNotes(), SA);
+		// AudioPlayer.BLOCKING_VLC_PLAYER.play( this );
+		audioPlayer.play(this.frequencyList());
+		return frequencySet.name();
+	}
+
+	@Override
+	public String text() {
+		return frequencySet.name();
+	}
+
+	private void createAudioList(Frequency start, Frequency[] middleNotes, Frequency end) {
+		FrequencyListBuilder audioFileListBuilder = new FrequencyListBuilder.WithMiddleNotesAndStartEndNotes(middleNotes, start, end);
+		this.frequencies.addAll(audioFileListBuilder.finalFrequencySequence());
+
 	}
 }

@@ -2,7 +2,6 @@ package com.aqua.music.audio.player;
 
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -129,4 +128,8 @@ public class AudioPlayCoordinator implements DualModePlayer {
 			permitToPlay.release();
 		}
 	}*/
+	
+	public static boolean playInProgress(){
+		return playInProgress!=null && playInProgress.getCount()==1;
+	}
 }
