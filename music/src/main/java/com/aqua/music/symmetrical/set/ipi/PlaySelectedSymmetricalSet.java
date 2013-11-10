@@ -1,6 +1,6 @@
 package com.aqua.music.symmetrical.set.ipi;
 
-import com.aqua.music.items.PlayableItem;
+import com.aqua.music.items.FilesystemPlayableItem;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class PlaySelectedSymmetricalSet
@@ -13,7 +13,7 @@ public class PlaySelectedSymmetricalSet
 
     void execute() {
         for( String eachSetName : multipleSets ) {
-        	PlayableItem.blocking.forSet( SymmetricalSet.valueOf( eachSetName )).play();
+        	FilesystemPlayableItem.blocking.forSet( SymmetricalSet.valueOf( eachSetName )).play();
         }
     }
 

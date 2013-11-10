@@ -10,7 +10,8 @@ public class AppletLauncher extends JApplet {
 				@Override
 				public void run() {
 					JFrame jframe = new UiLauncher().createAndShowUi();
-					setContentPane(new UiTabbedPanel());
+					setContentPane(new UiLauncher.UiTabbedPanel());
+					jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				}
 			});
 		} catch (Exception e) {

@@ -14,7 +14,7 @@ public class SymmetricalSetTest
 
     //@Test
     public void testKafi() {
-        PlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).play();
+        FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).play();
     }
 
      @Test
@@ -22,6 +22,6 @@ public class SymmetricalSetTest
         PlayableItem.nonBlockingFrequencyPlayerConfig.forSet( SymmetricalSet.THAAT_KAFI ).play();
         SymmetricalPatternApplicator<Frequency> patternApplicator = new SymmetricalPatternApplicator<Frequency>( new int[] { 1, 4,
                 3 } );
-        PlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( patternApplicator ).play();
+        FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( patternApplicator ).play();
     }
 }

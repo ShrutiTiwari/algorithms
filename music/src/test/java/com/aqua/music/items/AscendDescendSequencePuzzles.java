@@ -14,7 +14,7 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playThaat() {
-    	PlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
     }
 
     public void playMultipleThaats() {
@@ -34,13 +34,13 @@ public class AscendDescendSequencePuzzles
     }
 
     private void playAscendAndDescend( int count, SymmetricalSet... raags ) {
-    	PlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
         System.out.println( "\n Played [BILAWAL]" );
         HashSet<SymmetricalSet> hasheddata = randomize( raags );
         for( SymmetricalSet each : hasheddata ) {
             
             for( int i = 0; i < count; i++ ) {
-            	PlayableItem.blocking.forSet( each ).play();
+            	FilesystemPlayableItem.blocking.forSet( each ).play();
                 System.out.println( "\nPlayed [" + each.name() + "] ." + i );
                 System.out.println( "\n" );
             }

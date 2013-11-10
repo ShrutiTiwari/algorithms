@@ -12,7 +12,7 @@ import static com.aqua.music.model.Frequency.ClassicalNote.PA;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
 
-import com.aqua.music.items.PlayableItem;
+import com.aqua.music.items.FilesystemPlayableItem;
 
 public interface FrequencySet
 {
@@ -99,7 +99,7 @@ public interface FrequencySet
 		}
 
 		public void play() {
-			PlayableItem.blocking.forSet( this ).play();
+			FilesystemPlayableItem.blocking.forSet( this ).play();
 		}
 
 		public String type() {

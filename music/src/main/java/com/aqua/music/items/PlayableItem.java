@@ -15,10 +15,6 @@ public interface PlayableItem {
 
 	public Collection<Frequency> frequencyList();
 
-	AudioPlayerConfiguration blocking = new AudioPlayerConfiguration();
-	
-	AudioPlayerConfiguration nonBlockingVlcPlayer = new AudioPlayerConfiguration(false, AudioPlayerType.VLC_BASED);
-
 	AudioPlayerConfiguration blockingFrequencyPlayerConfig = new AudioPlayerConfiguration(true, AudioPlayerType.FREQUENCY_BASED);
 	AudioPlayerConfiguration nonBlockingFrequencyPlayerConfig = new AudioPlayerConfiguration(false, AudioPlayerType.FREQUENCY_BASED);
 
@@ -30,11 +26,11 @@ public interface PlayableItem {
 			return audioPlayer;
 		}
 
-		private AudioPlayerConfiguration() {
+		AudioPlayerConfiguration() {
 			this(true, AudioPlayerType.VLC_BASED);
 		}
 
-		private AudioPlayerConfiguration(boolean blocking, AudioPlayerType audioPlayerType) {
+		AudioPlayerConfiguration(boolean blocking, AudioPlayerType audioPlayerType) {
 			this.audioPlayer = blocking? audioPlayerType.blockingPlayer():
 	            audioPlayerType.nonBlockingPlayer();
 		}
