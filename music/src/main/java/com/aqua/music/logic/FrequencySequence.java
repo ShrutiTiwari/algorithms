@@ -1,16 +1,12 @@
 package com.aqua.music.logic;
 
-import java.util.Collection;
-
 import com.aqua.music.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 public interface FrequencySequence {
-	public Collection<Frequency> finalFrequencySequence();
-
 	public String name();
-
+	public String detailedSequenceText();
 	public String play(AudioPlayConfig audioPlayConfig);
 
 	enum Type {

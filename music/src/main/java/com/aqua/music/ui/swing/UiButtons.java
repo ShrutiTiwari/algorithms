@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.audio.manager.AudioPlayConfig;
 import com.aqua.music.logic.FrequencySequence;
-import com.aqua.music.model.FrequencySet;
 
 enum UiButtons {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
@@ -67,10 +66,10 @@ enum UiButtons {
 							System.out.println(arg.length);
 							for (Object each : arg) {
 								FrequencySequence frequencySequence = (FrequencySequence) each;
-								setText(textArea, frequencySequence.name() + "===>");
+								setText(textArea, frequencySequence.name() + "===>\n" + frequencySequence.detailedSequenceText());
 								String text = frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
-								//setText(textArea,  "\n" + text);
-								
+								// setText(textArea, "\n" + text);
+
 								AudioLifeCycleManager.instance.awaitStop();
 							}
 						}
@@ -136,14 +135,6 @@ enum UiButtons {
 	}
 
 	abstract JButton createInstanceWith(TextArea textArea, Object[] arg);
-
-	static FrequencySet convertToFrequencySet(Object[] arg) {
-		return convert(FrequencySet.class, arg[0]);
-	}
-
-	static <T> T convert(Class<T> t, Object arg) {
-		return (T) arg;
-	}
 
 	private static void setText(final TextArea textArea, final String name) {
 		String displayText = "\n\n Playing::" + name;

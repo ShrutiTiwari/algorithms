@@ -22,7 +22,6 @@ class FrequencySequenceWithAsymmetry implements FrequencySequence {
 		this.audioLifeCycleManager= AudioLifeCycleManager.instance;
 	}
 
-	@Override
 	public Collection<Frequency> finalFrequencySequence() {
 		return frequencies;
 	}
@@ -32,7 +31,7 @@ class FrequencySequenceWithAsymmetry implements FrequencySequence {
 		createAudioList(SA, frequencySet.ascendNotes(), HIGH_SA);
 		createAudioList(HIGH_SA, frequencySet.descendNotes(), SA);
 		// AudioPlayer.BLOCKING_VLC_PLAYER.play( this );
-		audioLifeCycleManager.play(this.finalFrequencySequence(), audioPlayConfig);
+		audioLifeCycleManager.play(this.frequencies, audioPlayConfig);
 		return frequencySet.name();
 	}
 
@@ -44,5 +43,10 @@ class FrequencySequenceWithAsymmetry implements FrequencySequence {
 	@Override
 	public String name() {
 		return frequencySet.name();
+	}
+
+	@Override
+	public String detailedSequenceText() {
+		return "";
 	}
 }

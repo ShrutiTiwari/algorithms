@@ -16,7 +16,7 @@ class FrequencySequenceWithSymmetry implements FrequencySequence {
 	private Collection<Frequency> finalFrequencySequence = null;
 	private final FrequencySet frequencySet;
 	private PermutationApplicator permutationApplicator = PermutationApplicator.NONE;
-	private String prettyText;
+	private String detailedSequenceText;
 
 	public FrequencySequenceWithSymmetry(FrequencySet frequencySet, PermutationApplicator permutationApplicator) {
 		this.frequencySet = frequencySet;
@@ -28,20 +28,18 @@ class FrequencySequenceWithSymmetry implements FrequencySequence {
 	}
 
 	@Override
-	public Collection<Frequency> finalFrequencySequence() {
-		intializePlayList();
-		return finalFrequencySequence;
-	}
-
-	@Override
 	public String name() {
 		return frequencySet.name() + ((permutationApplicator==PermutationApplicator.NONE)?"":" { " + permutationApplicator.name() + " }");
 	}
 
+	public String detailedSequenceText(){
+		return detailedSequenceText; 
+	}
+	
 	public String play(AudioPlayConfig audioPlayConfig) {
-		System.out.println(prettyText);
-		audioLifeCycleManager.play(this.finalFrequencySequence(), audioPlayConfig);
-		return prettyText;
+		System.out.println(detailedSequenceText);
+		audioLifeCycleManager.play(this.finalFrequencySequence, audioPlayConfig);
+		return detailedSequenceText;
 	}
 
 	private void intializePlayList() {
@@ -67,13 +65,13 @@ class FrequencySequenceWithSymmetry implements FrequencySequence {
 		permutationApplicator.initializeWith(input);
 
 		this.finalFrequencySequence = permutationApplicator.allNotes();
-		this.prettyText = permutationApplicator.prettyPrintTextForAscDesc();
+		this.detailedSequenceText = permutationApplicator.prettyPrintTextForAscDesc();
 	}
 
 	private void plainAscendDescend() {
 		FrequencyListBuilder audioListBuilder = new FrequencyListBuilder.BuilderForSymmetricalSet(frequencySet);
-		this.prettyText = audioListBuilder.prettyPrintText();
-		System.out.print("\n\t Plain ascend-descend:: " + prettyText);
+		this.detailedSequenceText = audioListBuilder.prettyPrintText();
+		System.out.print("\n\t Plain ascend-descend:: " + detailedSequenceText);
 		this.finalFrequencySequence = audioListBuilder.finalFrequencySequence();
 	}
 }
