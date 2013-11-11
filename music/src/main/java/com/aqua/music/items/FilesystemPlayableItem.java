@@ -1,8 +1,8 @@
 package com.aqua.music.items;
 
-import com.aqua.music.audio.player.AudioLifeCycleManager;
-import com.aqua.music.audio.player.StandardAudioLifeCycleManagers;
-
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
+import com.aqua.music.audio.manager.AudioLifeCycleManagers;
+import com.aqua.music.audio.manager.DualModeManager.PlayMode;
 /**
  * 
  * Separated the filesystem based audio player as it doesn't work in the applet
@@ -12,6 +12,6 @@ import com.aqua.music.audio.player.StandardAudioLifeCycleManagers;
  * 
  */
 public interface FilesystemPlayableItem extends PlayableItem {
-	AudioLifeCycleManager blocking = StandardAudioLifeCycleManagers.VLC_BASED.player(true);
-	AudioLifeCycleManager nonBlockingVlcPlayer = StandardAudioLifeCycleManagers.VLC_BASED.player(false);
+	AudioLifeCycleManager blocking = AudioLifeCycleManagers.VLC_BASED.player(PlayMode.Synchronous);
+	AudioLifeCycleManager nonBlockingVlcPlayer = AudioLifeCycleManagers.VLC_BASED.player(PlayMode.Asynchornous);
 }

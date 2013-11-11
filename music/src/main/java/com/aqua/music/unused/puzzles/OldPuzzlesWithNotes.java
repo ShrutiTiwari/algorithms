@@ -1,6 +1,5 @@
-package com.aqua.music.puzzles;
+package com.aqua.music.unused.puzzles;
 
-import static com.aqua.music.audio.player.AudioLibrary.addFileIfFound;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA_;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
@@ -18,7 +17,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import com.aqua.music.audio.player.AudioLibrary;
 import com.aqua.music.model.Frequency;
 
 public class OldPuzzlesWithNotes
@@ -51,7 +49,6 @@ public class OldPuzzlesWithNotes
     }
 
     private static void initialize() {
-        AudioLibrary.initializeWithGivenSeconds( 2 );
         populateNotes( saTopa, RE, RE_, GA, GA_, MA, MA_ );
         populateNotes( paToHighSa, DHA, DHA_, NI, NI_ );
     }
@@ -84,7 +81,7 @@ public class OldPuzzlesWithNotes
         List<File> audioFiles = new ArrayList<File>();
         StringBuffer printPlaylist = new StringBuffer();
         for( Frequency each : notes ) {
-            addFileIfFound( audioFiles, each );
+            //addFileIfFound( audioFiles, each );
             printPlaylist.append( ", " + each );
         }
         System.out.println( "playing [" + printPlaylist.toString() + "]" );

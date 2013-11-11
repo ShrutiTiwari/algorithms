@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.aqua.music.model.Frequency;
 
-public class AudioLibrary
+class StaticAudioLibrary
 {
     private static Map<String, File> library = Duration.ONE_SEC.library;
 

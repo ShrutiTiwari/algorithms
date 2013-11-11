@@ -1,7 +1,7 @@
-package com.aqua.music.print;
+package com.aqua.music.unused.print;
 
-import com.aqua.music.print.RaagProperties.Time;
-import com.aqua.music.print.RaagProperties.WriteableThaat;
+import com.aqua.music.unused.print.RaagProperties.Time;
+import com.aqua.music.unused.print.RaagProperties.WriteableThaat;
 
 abstract class RaagTypes
 {

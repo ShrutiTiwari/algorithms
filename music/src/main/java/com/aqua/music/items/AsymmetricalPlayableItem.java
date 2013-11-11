@@ -6,7 +6,7 @@ import static com.aqua.music.model.Frequency.ClassicalNote.SA;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aqua.music.audio.player.AudioLifeCycleManager;
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 

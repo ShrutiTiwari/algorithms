@@ -2,12 +2,12 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
-import com.aqua.music.audio.player.AudioLifeCycleManager;
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 public class SymmetricalPlayableItem implements PlayableItem {
-	private final AudioLifeCycleManager audioCooridnator;
+	private final AudioLifeCycleManager audioLifeCycleManager;
 
 	/**
 	 * caution: this variable shouldn't be used until initialised, properly.
@@ -17,9 +17,9 @@ public class SymmetricalPlayableItem implements PlayableItem {
 	private PatternApplicator patternApplicator = PatternApplicator.NONE;
 	private String prettyText;
 
-	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioLifeCycleManager audioPlayer) {
+	public SymmetricalPlayableItem(FrequencySet frequencySet, AudioLifeCycleManager audioLifeCycleManager) {
 		this.frequencySet = frequencySet;
-		this.audioCooridnator = audioPlayer;
+		this.audioLifeCycleManager = audioLifeCycleManager;
 	}
 
 	public SymmetricalPlayableItem andPattern(PatternApplicator patternApplicator) {
@@ -36,7 +36,7 @@ public class SymmetricalPlayableItem implements PlayableItem {
 
 	public String play() {
 		System.out.println(prettyText);
-		audioCooridnator.play(this.frequencyList());
+		audioLifeCycleManager.play(this.frequencyList());
 		return prettyText;
 	}
 

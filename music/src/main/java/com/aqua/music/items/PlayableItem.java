@@ -2,16 +2,17 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
-import com.aqua.music.audio.player.AudioLifeCycleManager;
-import com.aqua.music.audio.player.StandardAudioLifeCycleManagers;
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
+import com.aqua.music.audio.manager.AudioLifeCycleManagers;
+import com.aqua.music.audio.manager.DualModeManager.PlayMode;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public interface PlayableItem {
-	AudioLifeCycleManager blockingPlayer = StandardAudioLifeCycleManagers.FREQUENCY_BASED.player(true);
+	AudioLifeCycleManager blockingPlayer = AudioLifeCycleManagers.FREQUENCY_BASED.player(PlayMode.Synchronous);
 
-	AudioLifeCycleManager nonBlockingPlayer = StandardAudioLifeCycleManagers.FREQUENCY_BASED.player(false);
+	AudioLifeCycleManager nonBlockingPlayer = AudioLifeCycleManagers.FREQUENCY_BASED.player(PlayMode.Asynchornous);
 
 	public PlayableItem andPattern(PatternApplicator patternApplicator);
 

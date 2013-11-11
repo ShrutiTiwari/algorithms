@@ -1,4 +1,4 @@
-package com.aqua.music.audio.player;
+package com.aqua.music.audio.manager;
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
 import static com.aqua.music.model.Frequency.ClassicalNote.HIGH_SA;
@@ -8,19 +8,33 @@ import static com.aqua.music.model.Frequency.ClassicalNote.PA;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.SA;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
+import org.junit.Test;
+
+import com.aqua.music.audio.manager.DualModeManager.PlayMode;
 import com.aqua.music.model.Frequency;
 
-public class FrequencyGeneratorTest {
-	public static void main(String[] args) throws LineUnavailableException {
+public class AudioLifeCycleManagerTest {
+	
+	//@Test
+	public void testFrequencyPlayer() throws LineUnavailableException {
 		Frequency[] sample = new Frequency[] { SA, RE, GA, MA, PA, DHA,
 				NI, HIGH_SA };
-		int durationInMilliSec = 2000;
+		//int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		new AudioLifeCycleManager(AudioLifeCycleManager.PlayMode.Asynchornous,durationInMilliSec, 0.8).play(asList);
+		AudioLifeCycleManagers.nonBlockingFrequencyPlayer().play(asList);
 	}
+	
+    @Test
+    public void testVlcPlayer() {
+        List<Frequency> frequencyList=new ArrayList<Frequency>();
+        frequencyList.add(Frequency.ClassicalNote.DHA);
+        AudioLifeCycleManagers.VLC_BASED.player(PlayMode.Synchronous).play( frequencyList);
+    }
+
 }

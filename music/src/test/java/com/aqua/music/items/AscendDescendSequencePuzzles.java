@@ -2,16 +2,11 @@ package com.aqua.music.items;
 
 import java.util.HashSet;
 
-import com.aqua.music.audio.player.AudioLibrary;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class AscendDescendSequencePuzzles
 {
-    public AscendDescendSequencePuzzles() {
-        AudioLibrary.initializeWithGivenSeconds( 1 );
-    }
-
     public void playThaat() {
     	PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_BILAWAL).play();
     }

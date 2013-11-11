@@ -6,28 +6,32 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
+import com.aqua.music.audio.manager.AudioLifeCycleManagers;
+import com.aqua.music.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.Frequency;
 
-class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
-	private static final int DEFAULT_MSEC = 1000;
+class AudioPayerWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
+	private static final int ONE_SEC = 1000;
+	private static final int DEFAULT_MSEC = ONE_SEC;
 	private static final double DEFAULT_VOL = 0.8;
 	private static final float SAMPLE_RATE = 8000f;
-	
+
 	private final int msecs;
 	private final double vol;
-	
+
 	// handle for terminating the blocked running thread
 	private volatile SourceDataLine sdl;
-	private volatile AudioLifeCycleManager audioPlayCoordinator;
+	private volatile AudioPlayRightsManager audioPlayRightsManager;
 
-	public AudioGeneratorBasedOnMathSinAngle() {
+	AudioPayerWithDynamicSoundBasedOnMathSinAngle() {
 		this(DEFAULT_MSEC, DEFAULT_VOL);
 	}
 
-	public AudioGeneratorBasedOnMathSinAngle(int msecs, double vol) {
+	AudioPayerWithDynamicSoundBasedOnMathSinAngle(int msecs, double vol) {
 		this.msecs = msecs;
 		this.vol = vol;
 	}
+
 	public final Runnable playTask(final Collection<Frequency> frequencyList) {
 		Runnable task = new Runnable() {
 			@Override
@@ -37,22 +41,22 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 		};
 		return task;
 	}
-	
+
 	public void playFrequencies(final Collection<Frequency> frequencyList) {
 		final float[] frequenciesInHz = new float[frequencyList.size()];
 		int i = 0;
 		for (Frequency each : frequencyList) {
 			frequenciesInHz[i++] = each.frequencyInHz();
 		}
-		
+
 		try {
-			audioPlayCoordinator.acquireRightToPlay();
+			audioPlayRightsManager.acquireRightToPlay();
 			AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
 			this.sdl = AudioSystem.getSourceDataLine(af);
 			sdl.open(af);
 			sdl.start();
 			for (float eachFrequency : frequenciesInHz) {
-				if (audioPlayCoordinator.continuePlaying()) {
+				if (audioPlayRightsManager.continuePlaying()) {
 					throwExceptionForInsaneInput(eachFrequency, msecs, vol);
 					byte[] buf = constructBufferForFrequency(eachFrequency);
 					sdl.write(buf, 0, buf.length);
@@ -61,20 +65,20 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 					break;
 				}
 			}
-			//sdl.drain();
+			// sdl.drain();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeStream();
-			audioPlayCoordinator.releaseRightToPlay();
-			AudioLifeCycleManager.issueStop();
+			audioPlayRightsManager.releaseRightToPlay();
+			AudioLifeCycleManagers.nonBlockingFrequencyPlayer().issueStop();
 		}
 	}
 
-	public void setCoordinator(AudioLifeCycleManager audioPlayCoordinator2) {
-		this.audioPlayCoordinator=audioPlayCoordinator2;
+	public void setAudioPlayRigthsManager(AudioPlayRightsManager audioPlayRightsManager) {
+		this.audioPlayRightsManager = audioPlayRightsManager;
 	}
-	
+
 	public void stop() {
 		if (sdl != null) {
 			try {
@@ -83,9 +87,9 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 			} finally {
 				closeStream();
 			}
-		}			
+		}
 	}
-	
+
 	private void closeStream() {
 		try {
 			sdl.close();

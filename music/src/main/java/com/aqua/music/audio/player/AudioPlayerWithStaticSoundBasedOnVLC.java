@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import com.aqua.music.items.PlayableItem;
+import com.aqua.music.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.Frequency;
 
-public class AudioPlayerBasedOnVLC implements AudioPlayer {
+class AudioPlayerWithStaticSoundBasedOnVLC implements AudioPlayer {
 	private static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
 	private static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
 	private static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
@@ -19,15 +19,11 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer {
 	private static final String vlcOption = "--play-and-exit";
 
 	private final String vlcExeLoc;
-	private AudioLifeCycleManager audioPlayCoordinator;
+	private AudioPlayRightsManager audioPlayRightsManager;
 	private final ProcessHandler processHandler = new ProcessHandler();
 
-	AudioPlayerBasedOnVLC() {
+	AudioPlayerWithStaticSoundBasedOnVLC() {
 		this.vlcExeLoc = (!os.contains("Windows")) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
-	}
-
-	public void play(PlayableItem playableItem) {
-		audioPlayCoordinator.play(playableItem.frequencyList());
 	}
 
 	@Override
@@ -43,8 +39,8 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer {
 		};
 	}
 
-	public void setCoordinator(AudioLifeCycleManager audioPlayCoordinator2) {
-		this.audioPlayCoordinator = audioPlayCoordinator2;
+	public void setAudioPlayRigthsManager(AudioPlayRightsManager audioPlayRightsManager) {
+		this.audioPlayRightsManager = audioPlayRightsManager;
 	}
 
 	public void stop() {
@@ -57,19 +53,19 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer {
 
 	private void play(File... audioFiles) {
 		try {
-			audioPlayCoordinator.acquireRightToPlay();
+			audioPlayRightsManager.acquireRightToPlay();
 			processHandler.startVlcWith(audioFiles);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			audioPlayCoordinator.releaseRightToPlay();
+			audioPlayRightsManager.releaseRightToPlay();
 		}
 	}
 
 	public static class AudioFilesList {
 		Collection<File> allAudioFiles = new ArrayList<File>();
 		StringBuffer prettyPrintText = new StringBuffer();
-		Map<String, File> audioLib = AudioLibrary.library();
+		Map<String, File> audioLib = StaticAudioLibrary.library();
 
 		public AudioFilesList(Collection<Frequency> allNotes) {
 			for (Frequency each : allNotes) {

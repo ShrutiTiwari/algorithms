@@ -6,15 +6,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.aqua.music.audio.player.AudioLifeCycleManager;
-import com.aqua.music.audio.player.DualModePlayer;
+import com.aqua.music.audio.manager.AudioLifeCycleManagers;
+import com.aqua.music.audio.manager.DualModeManager;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.items.SymmetricalPatternApplicator;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 enum UiPanelButtons {
-	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 200) {
+	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
 			final FrequencySet freqSet = convertToFrequencySet(arg);
@@ -66,7 +66,7 @@ enum UiPanelButtons {
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					DualModePlayer.executor.execute(new Runnable() {
+					DualModeManager.executor.execute(new Runnable() {
 						@Override
 						public void run() {
 							textArea.setText("Playing all items:\n");
@@ -75,7 +75,7 @@ enum UiPanelButtons {
 								JButton eachButton = (JButton) each;
 								eachButton.doClick();
 								//textArea.repaint();
-								AudioLifeCycleManager.awaitStop();
+								AudioLifeCycleManagers.nonBlockingFrequencyPlayer().awaitStop();
 							}
 						}
 					});
@@ -161,7 +161,7 @@ enum UiPanelButtons {
 	private static void setText(final TextArea textArea, final String name) {
 		String displayText = "\n\n Playing::" + name ;		
 		System.out.println(displayText);
-		if (AudioLifeCycleManager.isPlayInProgress()) {
+		if (AudioLifeCycleManagers.nonBlockingFrequencyPlayer().isPlayInProgress()) {
 			textArea.append(displayText);
 		} else {
 			textArea.setText(displayText);
