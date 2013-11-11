@@ -3,33 +3,29 @@ package com.aqua.music.ui.swing;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.JButton;
 
-import com.aqua.music.audio.manager.AudioLifeCycleManagers;
-import com.aqua.music.audio.manager.DualModeManager;
-import com.aqua.music.items.PlayableItem;
-import com.aqua.music.items.SymmetricalPatternApplicator;
-import com.aqua.music.model.Frequency;
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
+import com.aqua.music.audio.manager.AudioPlayConfig;
+import com.aqua.music.logic.FrequencySequence;
 import com.aqua.music.model.FrequencySet;
 
 enum UiPanelButtons {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
-			final FrequencySet freqSet = convertToFrequencySet(arg);
-			final int[] pattern = (int[]) arg[1];
-
-			JButton button = configurableNamedButton(this, freqSet.name() + "  ==>  " + displayText(pattern));
+			final FrequencySequence frequencySequence = (FrequencySequence) arg[0];
+			final String buttonTitle = frequencySequence.name();
+			JButton button = configurableNamedButton(this, buttonTitle);
 
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					SymmetricalPatternApplicator<Frequency> freqPattern = new SymmetricalPatternApplicator<Frequency>(pattern);
-					PlayableItem pattern = PlayableItem.Factory.forPlayerAndSet(PlayableItem.nonBlockingPlayer,freqSet).andPattern(freqPattern);
-					String text = pattern.play();
-					System.out.println(":::::::::::"+text);
-					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
+					String text = frequencySequence.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+					System.out.println(":::::::::::" + text);
+					setText(textArea, buttonTitle + "===>" + "\n" + text);
 				}
 			};
 
@@ -40,16 +36,15 @@ enum UiPanelButtons {
 	FREQUENCY_SET_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, Object[] arg) {
-			final FrequencySet freqSet = convertToFrequencySet(arg);
-
-			JButton button = configurableNamedButton(this, freqSet.name());
+			final FrequencySequence frequencySequence = (FrequencySequence) arg[0];
+			final String buttonTitle = frequencySequence.name();
+			JButton button = configurableNamedButton(this, buttonTitle);
 
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					PlayableItem pattern = PlayableItem.Factory.forPlayerAndSet(PlayableItem.nonBlockingPlayer,freqSet);
-					String text = pattern.play();
-					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
+					String text = frequencySequence.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+					setText(textArea, buttonTitle + "===>" + "\n" + text);
 				}
 			};
 
@@ -66,19 +61,22 @@ enum UiPanelButtons {
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					DualModeManager.executor.execute(new Runnable() {
+					Runnable audioTask = new Runnable() {
 						@Override
 						public void run() {
 							textArea.setText("Playing all items:\n");
-
+							System.out.println(arg.length);
 							for (Object each : arg) {
-								JButton eachButton = (JButton) each;
-								eachButton.doClick();
-								//textArea.repaint();
-								AudioLifeCycleManagers.nonBlockingFrequencyPlayer().awaitStop();
+								FrequencySequence frequencySequence = (FrequencySequence) each;
+								
+								String text = frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+								setText(textArea, frequencySequence.name() + "===>" + "\n" + text);
+								
+								AudioLifeCycleManager.instance.awaitStop();
 							}
 						}
-					});
+					};
+					AudioLifeCycleManager.instance.execute(audioTask);
 				}
 			};
 
@@ -125,17 +123,6 @@ enum UiPanelButtons {
 		return resultButton;
 	}
 
-	private static String displayText(int[] result) {
-		String displayName = "" + result[0];
-		int i = 0;
-		for (int each : result) {
-			if (i++ != 0) {
-				displayName += ("-" + each);
-			}
-		}
-		return displayName;
-	}
-
 	private static JButton fixedNameButton(UiPanelButtons itemType) {
 		JButton resultButton = new JButton(itemType.text);
 		resultButton.setToolTipText(itemType.tooltip);
@@ -158,10 +145,11 @@ enum UiPanelButtons {
 	static <T> T convert(Class<T> t, Object arg) {
 		return (T) arg;
 	}
+
 	private static void setText(final TextArea textArea, final String name) {
-		String displayText = "\n\n Playing::" + name ;		
+		String displayText = "\n\n Playing::" + name;
 		System.out.println(displayText);
-		if (AudioLifeCycleManagers.nonBlockingFrequencyPlayer().isPlayInProgress()) {
+		if (AudioLifeCycleManager.instance.isPlayInProgress()) {
 			textArea.append(displayText);
 		} else {
 			textArea.setText(displayText);

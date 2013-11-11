@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.aqua.music.model.FrequencySet.SymmetricalSet;
-
 public class UiLauncher {
 	private static final String frameTitle = "Music";
 	private static final String frameLabel = "Have fun with Indian Classical Music!!";
@@ -56,8 +54,7 @@ public class UiLauncher {
 
 			RehearseTabs reharseTabFactory = new RehearseTabs(tabbedPane);
 			tabbedPane.addTab("Thaat rehearse", reharseTabFactory.plainTab());
-			reharseTabFactory.addPatternTab(SymmetricalSet.THAAT_KAFI);
-			
+			reharseTabFactory.addPatternTab();
 
 			tabbedPane.setOpaque(true);
 			return tabbedPane;

@@ -11,7 +11,7 @@ import java.util.Map;
 import com.aqua.music.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.Frequency;
 
-class AudioPlayerWithStaticSoundBasedOnVLC implements AudioPlayer {
+class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	private static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
 	private static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";
 	private static final String VLC_EXE_LOCATION_LINUX = "/usr/bin/vlc-wrapper";
@@ -22,7 +22,7 @@ class AudioPlayerWithStaticSoundBasedOnVLC implements AudioPlayer {
 	private AudioPlayRightsManager audioPlayRightsManager;
 	private final ProcessHandler processHandler = new ProcessHandler();
 
-	AudioPlayerWithStaticSoundBasedOnVLC() {
+	AudioPlayerImplWithStaticSoundBasedOnVLC() {
 		this.vlcExeLoc = (!os.contains("Windows")) ? VLC_EXE_LOCATION_LINUX : findWindowsLocation();
 	}
 
@@ -78,7 +78,7 @@ class AudioPlayerWithStaticSoundBasedOnVLC implements AudioPlayer {
 		}
 
 		public void addIfFileFound(Frequency singleNote, boolean appendComma) {
-			String code = singleNote.fileCode().toLowerCase();
+			String code = singleNote.fileCode();
 			File audioFile = audioLib.get(code);
 			if (audioFile == null) {
 				System.out.println("No audio found for [" + singleNote + "] in the list of files[" + audioLib.keySet() + "]");

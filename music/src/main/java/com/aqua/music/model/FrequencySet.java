@@ -12,8 +12,7 @@ import static com.aqua.music.model.Frequency.ClassicalNote.PA;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
 
-public interface FrequencySet
-{
+public interface FrequencySet {
 	public String name();
 
 	public String type();
@@ -29,8 +28,7 @@ public interface FrequencySet
 	 * @author shruti.tiwari
 	 * 
 	 */
-	public enum SymmetricalSet implements FrequencySet
-	{
+	public enum SymmetricalSet implements FrequencySet {
 		THAAT_BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
 		THAAT_PURVI(RE_, GA, MA_, PA, DHA_, NI),
 		THAAT_MARWA(RE_, GA, MA_, PA, DHA, NI),
@@ -47,9 +45,9 @@ public interface FrequencySet
 		private final Frequency[] ascendNotes;
 		private final Frequency[] descendNotes;
 
-		private SymmetricalSet( Frequency... ascendNotes ) {
+		private SymmetricalSet(Frequency... ascendNotes) {
 			this.ascendNotes = ascendNotes;
-			this.descendNotes = Util.reverse( ascendNotes );
+			this.descendNotes = Util.reverse(ascendNotes);
 		}
 
 		public String type() {
@@ -71,28 +69,26 @@ public interface FrequencySet
 	 * @author shruti.tiwari
 	 * 
 	 */
-	public enum AssymmericalSet implements FrequencySet
-	{
-		RAAG2_SHUDH_SARANG(sequence( RE, MA_, PA, NI ), sequence( NI, DHA, PA, MA_, PA, MA, RE )),
-		RAAG2_YAMAN(sequence( RE, GA, MA_, DHA, NI ), sequence( NI, DHA, PA, MA_, GA, RE )),
-		RAAG2_PURYA_KALYAN(sequence( RE_, GA, MA_, PA, MA_, DHA, NI ), sequence( NI, DHA, PA, DHA, MA_, PA, GA, MA_,
-				RE_, GA, RE_ )),
-		RAAG2_MULTANI(sequence( GA_, MA_, PA, NI ), sequence( NI, DHA_, PA, MA_, GA_, RE_ ));
+	public enum AssymmericalSet implements FrequencySet {
+		RAAG2_SHUDH_SARANG(sequence(RE, MA_, PA, NI), sequence(NI, DHA, PA, MA_, PA, MA, RE)),
+		RAAG2_YAMAN(sequence(RE, GA, MA_, DHA, NI), sequence(NI, DHA, PA, MA_, GA, RE)),
+		RAAG2_PURYA_KALYAN(sequence(RE_, GA, MA_, PA, MA_, DHA, NI), sequence(NI, DHA, PA, DHA, MA_, PA, GA, MA_, RE_, GA, RE_)),
+		RAAG2_MULTANI(sequence(GA_, MA_, PA, NI), sequence(NI, DHA_, PA, MA_, GA_, RE_));
 
 		private final Frequency[] ascendNotes;
 		private final Frequency[] descendNotes;
 
-		private AssymmericalSet( Frequency... ascendNotes ) {
+		private AssymmericalSet(Frequency... ascendNotes) {
 			this.ascendNotes = ascendNotes;
-			this.descendNotes = Util.reverse( ascendNotes );
+			this.descendNotes = Util.reverse(ascendNotes);
 		}
 
-		private AssymmericalSet( Frequency[] ascendNotes, Frequency[] descendNotes ) {
+		private AssymmericalSet(Frequency[] ascendNotes, Frequency[] descendNotes) {
 			this.ascendNotes = ascendNotes;
 			this.descendNotes = descendNotes;
 		}
 
-		private static Frequency[] sequence( Frequency... notes ) {
+		private static Frequency[] sequence(Frequency... notes) {
 			return notes;
 		}
 
@@ -111,12 +107,11 @@ public interface FrequencySet
 		}
 	}
 
-	static abstract class Util
-	{
-		static Frequency[] reverse( Frequency... ascendNotes ) {
+	static abstract class Util {
+		static Frequency[] reverse(Frequency... ascendNotes) {
 			int count = ascendNotes.length;
 			Frequency[] dscendNotes = new Frequency[count];
-			for( int i = 0; i < count; i++ ) {
+			for (int i = 0; i < count; i++) {
 				dscendNotes[i] = ascendNotes[count - i - 1];
 			}
 			return dscendNotes;

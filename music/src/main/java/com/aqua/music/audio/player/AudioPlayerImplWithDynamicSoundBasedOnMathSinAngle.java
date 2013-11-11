@@ -6,11 +6,11 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
-import com.aqua.music.audio.manager.AudioLifeCycleManagers;
+import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.Frequency;
 
-class AudioPayerWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
+class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
 	private static final int ONE_SEC = 1000;
 	private static final int DEFAULT_MSEC = ONE_SEC;
 	private static final double DEFAULT_VOL = 0.8;
@@ -23,11 +23,11 @@ class AudioPayerWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
 	private volatile SourceDataLine sdl;
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
 
-	AudioPayerWithDynamicSoundBasedOnMathSinAngle() {
+	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle() {
 		this(DEFAULT_MSEC, DEFAULT_VOL);
 	}
 
-	AudioPayerWithDynamicSoundBasedOnMathSinAngle(int msecs, double vol) {
+	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(int msecs, double vol) {
 		this.msecs = msecs;
 		this.vol = vol;
 	}
@@ -71,7 +71,7 @@ class AudioPayerWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
 		} finally {
 			closeStream();
 			audioPlayRightsManager.releaseRightToPlay();
-			AudioLifeCycleManagers.nonBlockingFrequencyPlayer().issueStop();
+			AudioLifeCycleManager.instance.issueStop();
 		}
 	}
 

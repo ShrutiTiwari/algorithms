@@ -1,4 +1,5 @@
 package com.aqua.music.ui.swing;
+
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

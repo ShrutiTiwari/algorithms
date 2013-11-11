@@ -13,8 +13,8 @@ public interface AudioPlayer {
 	Runnable playTask(final Collection<Frequency> frequencyList);
 
 	enum Factory {
-		DYNAMIC_AUDIO(AudioPayerWithDynamicSoundBasedOnMathSinAngle.class),
-		STATIC_AUDIO(AudioPlayerWithStaticSoundBasedOnVLC.class);
+		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle.class),
+		STATIC_AUDIO(AudioPlayerImplWithStaticSoundBasedOnVLC.class);
 
 		private final Class<? extends AudioPlayer> audioPlayerClass;
 		private boolean initialized = false;
@@ -23,7 +23,7 @@ public interface AudioPlayer {
 			this.audioPlayerClass = audioPlayerClass;
 		}
 
-		public AudioPlayer instance() {
+		public AudioPlayer fetchInstance() {
 			try {
 				if (!initialized) {
 					lazyInitialize();
@@ -42,8 +42,9 @@ public interface AudioPlayer {
 				initialized = true;
 			}
 		}
-		public static AudioPlayer customizedDymanic(int durationInMsec, double vol){
-			return new AudioPayerWithDynamicSoundBasedOnMathSinAngle(durationInMsec, vol);
+
+		public static AudioPlayer customizedDymanic(int durationInMsec, double vol) {
+			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(durationInMsec, vol);
 		}
 	}
 }

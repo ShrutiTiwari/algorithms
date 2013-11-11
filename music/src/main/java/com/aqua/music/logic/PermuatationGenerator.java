@@ -1,14 +1,14 @@
-package com.aqua.music.items;
+package com.aqua.music.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aqua.music.model.Frequency;
 
-public enum PatternGenerator {
+public enum PermuatationGenerator {
 	PAIR {
 		@Override
-		public List<int[]> generatePatterns(Frequency[] frequencySet) {
+		public List<int[]> generatePermutations(Frequency[] frequencySet) {
 			List<int[]> patternsList = new ArrayList<int[]>();
 
 			int startIndex = 1;
@@ -22,6 +22,5 @@ public enum PatternGenerator {
 			return patternsList;
 		}
 	};
-	public abstract List<int[]> generatePatterns(Frequency[] input);
-
+	public abstract List<int[]> generatePermutations(Frequency[] input);
 }
