@@ -15,7 +15,7 @@ public class AudioLibrary
     private static final String FOLDER_PREFIX = "note-recognition-";
 
     public static void addFileIfFound( List<File> audioFiles, Frequency note ) {
-        File audioFile = library.get( note.fileCode() );
+        File audioFile = library.get( note.fileCode().toLowerCase() );
         if( audioFile == null ) {
             System.out.println( "No audio found for [" + note + "] in the list of files[" + library.keySet() + "]" );
         } else {

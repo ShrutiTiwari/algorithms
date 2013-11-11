@@ -2,12 +2,16 @@ package com.aqua.music.ui.swing;
 
 import java.awt.Dimension;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import com.aqua.music.items.PatternGenerator;
 import com.aqua.music.model.FrequencySet;
@@ -15,12 +19,28 @@ import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 class RehearseTabs {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
+	
+	private final JTabbedPane tabbedPane;
+	private JPanel rehearseWithPatternsPanel ;
+	
+	public RehearseTabs(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
+	public final void addPatternTab(SymmetricalSet selectedThaat) {
+		this.rehearseWithPatternsPanel = patternTabFor(selectedThaat);
+		tabbedPane.addTab("Rehearse with pattern", rehearseWithPatternsPanel);		
+	}
+
 	JPanel patternTabFor(final FrequencySet frequencySet) {
-		RehearseTab rehearseTab = new RehearseTab() {
+		RehearsePanel rehearsePanel = new RehearsePanel() {
+			
 			@Override
 			protected Collection<JButton> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 					YCoordinateTracker yCoordinateTracker) {
-
+				
+				mainTab.add(createThaatDropdown(yCoordinateTracker));
+				
 				final Collection<JButton> allSpecificButtons = new ArrayList<JButton>();
 
 				List<int[]> pairPaterrns = PatternGenerator.PAIR.generatePatterns(frequencySet.ascendNotes());
@@ -35,12 +55,31 @@ class RehearseTabs {
 
 				return allSpecificButtons;
 			}
+
+			private JComboBox createThaatDropdown(YCoordinateTracker yCoordinateTracker) {
+				final JComboBox box=new JComboBox(FrequencySet.SymmetricalSet.values());
+				box.setSelectedItem(frequencySet);
+				box.setBounds(UiPanelButtons.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiPanelButtons.HEIGHT());
+				box.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JComboBox cbox=(JComboBox)arg0.getSource();
+						FrequencySet selectedThaat= (FrequencySet) cbox.getSelectedItem();
+						System.out.println(selectedThaat);
+						tabbedPane.remove(rehearseWithPatternsPanel);
+						addPatternTab((SymmetricalSet)selectedThaat);
+						rehearseWithPatternsPanel.requestFocusInWindow();
+						tabbedPane.setSelectedComponent(rehearseWithPatternsPanel);
+					}
+				});
+				return box;
+			}
 		};
-		return rehearseTab.getTab();
+		return rehearsePanel.getPanel();
 	}
 
 	JPanel plainTab() {
-		RehearseTab rehearseTab = new RehearseTab() {
+		RehearsePanel rehearseTab = new RehearsePanel() {
 			@Override
 			protected Collection<JButton> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 					final YCoordinateTracker yCoordinateTracker) {
@@ -56,36 +95,36 @@ class RehearseTabs {
 				return allSpecificButtons;
 			}
 		};
-		return rehearseTab.getTab();
+		return rehearseTab.getPanel();
 	}
 
-	private abstract class RehearseTab {
-		private final JPanel mainTab;
+	private abstract class RehearsePanel {
+		private final JPanel panel;
 		private final TextArea textArea;
 		private final YCoordinateTracker yCoordinateTracker;
 
-		RehearseTab() {
+		RehearsePanel() {
 			this.yCoordinateTracker = new YCoordinateTracker();
 			this.textArea = createTextArea();
-			this.mainTab = createBlankMainTab();
-			Collection<JButton> allSpecificButtons = addSpecificButtons(mainTab, textArea, yCoordinateTracker);
+			this.panel = createBlankMainTab();
+			Collection<JButton> allSpecificButtons = addSpecificButtons(panel, textArea, yCoordinateTracker);
 			addCommonComponents(allSpecificButtons);
 		}
 
 		protected abstract Collection<JButton> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 				final YCoordinateTracker yCoordinateTracker);
 
-		JPanel getTab() {
-			return mainTab;
+		JPanel getPanel() {
+			return panel;
 		}
 
 		private void addCommonComponents(Collection<JButton> allSpecificButtons) {
 			// add play all button
-			mainTab.add(UiPanelButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
+			panel.add(UiPanelButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
 					allSpecificButtons.toArray()));
-			mainTab.add(UiPanelButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
-			mainTab.add(textArea);
-			mainTab.setOpaque(true);
+			panel.add(UiPanelButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
+			panel.add(textArea);
+			panel.setOpaque(true);
 		}
 
 		private JPanel createBlankMainTab() {
@@ -113,13 +152,13 @@ class RehearseTabs {
 		// mutated variable
 		private int yCoordinate = START;
 
-		private void reset() {
-			this.yCoordinate = 10;
-		}
-
 		private int buttonYcoordinate() {
 			yCoordinate += (UiPanelButtons.HEIGHT()) + 10;
 			return yCoordinate;
+		}
+
+		private void reset() {
+			this.yCoordinate = 10;
 		}
 	}
 }

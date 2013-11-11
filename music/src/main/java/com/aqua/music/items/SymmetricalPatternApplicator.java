@@ -3,6 +3,8 @@ package com.aqua.music.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aqua.music.model.Frequency;
+
 public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
 {
     private final int[] pattern;
@@ -87,11 +89,13 @@ public class SymmetricalPatternApplicator<T> implements PatternApplicator<T>
         int processedItems = 0;
         int i = 1;
         for( T eachItem : itemSequence ) {
+        	String appendText=eachItem instanceof Frequency ?((Frequency)eachItem).fileCode(): eachItem.toString();
+        	
             if( i == numberItemsToBeGrouped ) {
                 i = 1;
-                buffer.append( eachItem + (processedItems != itemSequence.size() - 1 ? ", " : "") );
+                buffer.append( appendText + (processedItems != itemSequence.size() - 1 ? ", " : "") );
             } else {
-                buffer.append( eachItem );
+                buffer.append( appendText );
                 i++;
             }
             processedItems++;

@@ -54,9 +54,10 @@ public class UiLauncher {
 		private JTabbedPane createTabbedPan() {
 			JTabbedPane tabbedPane = new JTabbedPane();
 
-			RehearseTabs reharseTabFactory = new RehearseTabs();
+			RehearseTabs reharseTabFactory = new RehearseTabs(tabbedPane);
 			tabbedPane.addTab("Thaat rehearse", reharseTabFactory.plainTab());
-			tabbedPane.addTab("Kafi thaat rehearse with pattern", reharseTabFactory.patternTabFor(SymmetricalSet.THAAT_KAFI));
+			reharseTabFactory.addPatternTab(SymmetricalSet.THAAT_KAFI);
+			
 
 			tabbedPane.setOpaque(true);
 			return tabbedPane;

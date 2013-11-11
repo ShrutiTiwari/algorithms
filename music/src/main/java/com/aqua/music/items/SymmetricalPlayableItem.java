@@ -63,6 +63,7 @@ public class SymmetricalPlayableItem implements PlayableItem {
 		patternApplicator.initializeWith(input);
 
 		this.finalFrequencySequence = patternApplicator.allNotes();
+		this.prettyText=patternApplicator.prettyPrintTextForAscDesc();
 	}
 
 	private void plainAscendDescend() {
