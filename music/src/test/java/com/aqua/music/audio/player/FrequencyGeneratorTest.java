@@ -21,6 +21,6 @@ public class FrequencyGeneratorTest {
 				NI, HIGH_SA };
 		int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		new AudioPlayCoordinator(AudioPlayCoordinator.PlayMode.Asynchornous,durationInMilliSec, 0.8).play(asList);
+		new AudioLifeCycleManager(AudioLifeCycleManager.PlayMode.Asynchornous,durationInMilliSec, 0.8).play(asList);
 	}
 }

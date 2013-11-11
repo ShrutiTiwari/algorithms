@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.aqua.music.model.Frequency;
 
 public interface AudioPlayer {
-	void setCoordinator(AudioPlayCoordinator audioPlayCoordinator);
+	void setCoordinator(AudioLifeCycleManager audioPlayCoordinator);
 
 	void stop();
 

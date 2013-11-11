@@ -2,46 +2,29 @@ package com.aqua.music.items;
 
 import java.util.Collection;
 
-import com.aqua.music.audio.player.AudioPlayCoordinator;
-import com.aqua.music.audio.player.AudioPlayerType;
+import com.aqua.music.audio.player.AudioLifeCycleManager;
+import com.aqua.music.audio.player.StandardAudioLifeCycleManagers;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public interface PlayableItem {
-	public PlayableItem andPattern(PatternApplicator patternApplicator);
+	AudioLifeCycleManager blockingPlayer = StandardAudioLifeCycleManagers.FREQUENCY_BASED.player(true);
 
-	public String play();
+	AudioLifeCycleManager nonBlockingPlayer = StandardAudioLifeCycleManagers.FREQUENCY_BASED.player(false);
+
+	public PlayableItem andPattern(PatternApplicator patternApplicator);
 
 	public Collection<Frequency> frequencyList();
 
-	AudioPlayerConfiguration blockingFrequencyPlayerConfig = new AudioPlayerConfiguration(true, AudioPlayerType.FREQUENCY_BASED);
-	AudioPlayerConfiguration nonBlockingFrequencyPlayerConfig = new AudioPlayerConfiguration(false, AudioPlayerType.FREQUENCY_BASED);
+	public String play();
 
-	public static class AudioPlayerConfiguration {
-		// blocking play is useful for programmatic or automatic play.
-		private final AudioPlayCoordinator audioPlayer;
-		
-		public AudioPlayCoordinator audioPlayer(){
-			return audioPlayer;
-		}
-
-		AudioPlayerConfiguration() {
-			this(true, AudioPlayerType.VLC_BASED);
-		}
-
-		AudioPlayerConfiguration(boolean blocking, AudioPlayerType audioPlayerType) {
-			this.audioPlayer = blocking? audioPlayerType.blockingPlayer():
-	            audioPlayerType.nonBlockingPlayer();
-		}
-
-		public PlayableItem forSet(FrequencySet frequencySet) {
+	static class Factory {
+		public static PlayableItem forPlayerAndSet(AudioLifeCycleManager audioManager, FrequencySet frequencySet) {
 			if (frequencySet instanceof SymmetricalSet) {
-				return new SymmetricalPlayableItem(frequencySet, audioPlayer);
+				return new SymmetricalPlayableItem(frequencySet, audioManager);
 			}
-			return new AsymmetricalPlayableItem(frequencySet, audioPlayer);
+			return new AsymmetricalPlayableItem(frequencySet, audioManager);
 		}
 	}
-
-	public String text();
 }

@@ -1,17 +1,17 @@
 package com.aqua.music.items;
 
-import com.aqua.music.audio.player.AudioPlayerType;
-import com.aqua.music.items.PlayableItem.AudioPlayerConfiguration;
+import com.aqua.music.audio.player.AudioLifeCycleManager;
+import com.aqua.music.audio.player.StandardAudioLifeCycleManagers;
 
 /**
  * 
- * Seperated the filesystem based audio player as it doesnt work in the applet
+ * Separated the filesystem based audio player as it doesn't work in the applet
  * and causes other workflows to also not work in its presence.
  * 
  * @author "Shruti Tiwari"
  * 
  */
 public interface FilesystemPlayableItem extends PlayableItem {
-	AudioPlayerConfiguration blocking = new AudioPlayerConfiguration();
-	AudioPlayerConfiguration nonBlockingVlcPlayer = new AudioPlayerConfiguration(false, AudioPlayerType.VLC_BASED);
+	AudioLifeCycleManager blocking = StandardAudioLifeCycleManagers.VLC_BASED.player(true);
+	AudioLifeCycleManager nonBlockingVlcPlayer = StandardAudioLifeCycleManagers.VLC_BASED.player(false);
 }

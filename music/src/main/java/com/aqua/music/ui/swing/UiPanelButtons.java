@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.aqua.music.audio.player.AudioPlayCoordinator;
+import com.aqua.music.audio.player.AudioLifeCycleManager;
 import com.aqua.music.audio.player.DualModePlayer;
 import com.aqua.music.items.PlayableItem;
 import com.aqua.music.items.SymmetricalPatternApplicator;
@@ -26,7 +26,7 @@ enum UiPanelButtons {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					SymmetricalPatternApplicator<Frequency> freqPattern = new SymmetricalPatternApplicator<Frequency>(pattern);
-					PlayableItem pattern = PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet).andPattern(freqPattern);
+					PlayableItem pattern = PlayableItem.Factory.forPlayerAndSet(PlayableItem.nonBlockingPlayer,freqSet).andPattern(freqPattern);
 					String text = pattern.play();
 					System.out.println(":::::::::::"+text);
 					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
@@ -47,7 +47,7 @@ enum UiPanelButtons {
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					PlayableItem pattern = PlayableItem.nonBlockingFrequencyPlayerConfig.forSet(freqSet);
+					PlayableItem pattern = PlayableItem.Factory.forPlayerAndSet(PlayableItem.nonBlockingPlayer,freqSet);
 					String text = pattern.play();
 					setText(textArea, freqSet.name() + "===>" +"\n"+ text);
 				}
@@ -75,7 +75,7 @@ enum UiPanelButtons {
 								JButton eachButton = (JButton) each;
 								eachButton.doClick();
 								//textArea.repaint();
-								AudioPlayCoordinator.awaitStop();
+								AudioLifeCycleManager.awaitStop();
 							}
 						}
 					});
@@ -161,7 +161,7 @@ enum UiPanelButtons {
 	private static void setText(final TextArea textArea, final String name) {
 		String displayText = "\n\n Playing::" + name ;		
 		System.out.println(displayText);
-		if (AudioPlayCoordinator.playInProgress()) {
+		if (AudioLifeCycleManager.isPlayInProgress()) {
 			textArea.append(displayText);
 		} else {
 			textArea.setText(displayText);

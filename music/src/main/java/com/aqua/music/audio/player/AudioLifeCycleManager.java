@@ -5,9 +5,14 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.aqua.music.items.AsymmetricalPlayableItem;
+import com.aqua.music.items.PlayableItem;
+import com.aqua.music.items.SymmetricalPlayableItem;
 import com.aqua.music.model.Frequency;
+import com.aqua.music.model.FrequencySet;
+import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
-public class AudioPlayCoordinator implements DualModePlayer {
+public class AudioLifeCycleManager implements DualModePlayer {
 	private static final Semaphore permitToPlay = new Semaphore(1);
 	private static final AtomicBoolean stopCurrentPlay = new AtomicBoolean(false);
 	
@@ -16,16 +21,16 @@ public class AudioPlayCoordinator implements DualModePlayer {
 	private final AudioPlayer audioPlayUnit;
 	private final PlayMode playMode;
 
-	public AudioPlayCoordinator(boolean blockingPlay, AudioPlayer audioPlayUnit) {
+	public AudioLifeCycleManager(boolean blockingPlay, AudioPlayer audioPlayUnit) {
 		this(PlayMode.findFor(blockingPlay), audioPlayUnit);
 	}
 
-	AudioPlayCoordinator(PlayMode playMode, int durationInMsec, double vol) {
+	AudioLifeCycleManager(PlayMode playMode, int durationInMsec, double vol) {
 		this.playMode = playMode;
 		this.audioPlayUnit = new AudioGeneratorBasedOnMathSinAngle(durationInMsec, vol);
 	}
 
-	private AudioPlayCoordinator(PlayMode playMode, AudioPlayer audioPlayUnit) {
+	private AudioLifeCycleManager(PlayMode playMode, AudioPlayer audioPlayUnit) {
 		this.playMode = playMode;
 		this.audioPlayUnit = audioPlayUnit;
 	}
@@ -76,8 +81,8 @@ public class AudioPlayCoordinator implements DualModePlayer {
 		permitToPlay.release();
 	}
 
-	AudioPlayCoordinator setDurationAndVolume(int durationInMsec, double vol) {
-		return new AudioPlayCoordinator(this.playMode, durationInMsec, vol);
+	AudioLifeCycleManager setDurationAndVolume(int durationInMsec, double vol) {
+		return new AudioLifeCycleManager(this.playMode, durationInMsec, vol);
 	}
 
 	enum PlayMode {
@@ -100,7 +105,7 @@ public class AudioPlayCoordinator implements DualModePlayer {
 		abstract public void play(DualModePlayer dualModePlayer, final Collection<Frequency> frequencyList);
 	}
 
-	public static void markPlayStopped() {
+	public static void issueStop() {
 		if(playInProgress!=null){
 			playInProgress.countDown();
 		}
@@ -129,7 +134,7 @@ public class AudioPlayCoordinator implements DualModePlayer {
 		}
 	}*/
 	
-	public static boolean playInProgress(){
+	public static boolean isPlayInProgress(){
 		return playInProgress!=null && playInProgress.getCount()==1;
 	}
 }

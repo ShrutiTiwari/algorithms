@@ -18,7 +18,7 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 	
 	// handle for terminating the blocked running thread
 	private volatile SourceDataLine sdl;
-	private volatile AudioPlayCoordinator audioPlayCoordinator;
+	private volatile AudioLifeCycleManager audioPlayCoordinator;
 
 	public AudioGeneratorBasedOnMathSinAngle() {
 		this(DEFAULT_MSEC, DEFAULT_VOL);
@@ -67,11 +67,11 @@ class AudioGeneratorBasedOnMathSinAngle implements AudioPlayer{
 		} finally {
 			closeStream();
 			audioPlayCoordinator.releaseRightToPlay();
-			AudioPlayCoordinator.markPlayStopped();
+			AudioLifeCycleManager.issueStop();
 		}
 	}
 
-	public void setCoordinator(AudioPlayCoordinator audioPlayCoordinator2) {
+	public void setCoordinator(AudioLifeCycleManager audioPlayCoordinator2) {
 		this.audioPlayCoordinator=audioPlayCoordinator2;
 	}
 	

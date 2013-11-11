@@ -18,6 +18,6 @@ public class AudioLibraryVLCPlayerTest
         
         List<Frequency> frequencyList=new ArrayList<Frequency>();
         frequencyList.add(Frequency.ClassicalNote.DHA);
-        AudioPlayerType.VLC_BASED.blockingPlayer().play( frequencyList);
+        StandardAudioLifeCycleManagers.VLC_BASED.player(true).play( frequencyList);
     }
 }

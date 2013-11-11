@@ -3,7 +3,6 @@ package com.aqua.music.items;
 import java.util.HashSet;
 
 import com.aqua.music.audio.player.AudioLibrary;
-import com.aqua.music.audio.player.AudioPlayerType;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
@@ -14,13 +13,13 @@ public class AscendDescendSequencePuzzles
     }
 
     public void playThaat() {
-    	FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_BILAWAL).play();
     }
 
     public void playMultipleThaats() {
         FrequencyListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new FrequencyListBuilder.BuilderForMultipleSymmetricalSets( new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI } );
         System.out.println(multipleThaatEnqueuer.prettyPrintText());
-        AudioPlayerType.VLC_BASED.blockingPlayer().play(multipleThaatEnqueuer.collectedFrequencies);
+        FilesystemPlayableItem.blocking.play(multipleThaatEnqueuer.collectedFrequencies);
     }
 
     public void playAllThats() {
@@ -34,13 +33,13 @@ public class AscendDescendSequencePuzzles
     }
 
     private void playAscendAndDescend( int count, SymmetricalSet... raags ) {
-    	FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_BILAWAL ).play();
+    	PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_BILAWAL).play();
         System.out.println( "\n Played [BILAWAL]" );
         HashSet<SymmetricalSet> hasheddata = randomize( raags );
         for( SymmetricalSet each : hasheddata ) {
             
             for( int i = 0; i < count; i++ ) {
-            	FilesystemPlayableItem.blocking.forSet( each ).play();
+            	PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,each).play();
                 System.out.println( "\nPlayed [" + each.name() + "] ." + i );
                 System.out.println( "\n" );
             }

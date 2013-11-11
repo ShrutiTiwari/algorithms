@@ -98,10 +98,6 @@ public interface FrequencySet
 			return notes;
 		}
 
-		public void play() {
-			FilesystemPlayableItem.blocking.forSet( this ).play();
-		}
-
 		public String type() {
 			return "RAAG";
 		}

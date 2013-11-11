@@ -28,7 +28,7 @@ public class PatternGeneratorTest
         List<int[]> result = PatternGenerator.PAIR.generatePatterns( input );
         for( int[] each : result ) {
             SymmetricalPatternApplicator<Frequency> pattern = new SymmetricalPatternApplicator<Frequency>( each );
-            FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( pattern ).play();
+            PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_KAFI).andPattern( pattern ).play();
         }
     }
 

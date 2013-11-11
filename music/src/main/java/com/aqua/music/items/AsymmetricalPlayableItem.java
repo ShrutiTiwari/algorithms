@@ -6,17 +6,17 @@ import static com.aqua.music.model.Frequency.ClassicalNote.SA;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aqua.music.audio.player.AudioPlayCoordinator;
+import com.aqua.music.audio.player.AudioLifeCycleManager;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;
 
 public class AsymmetricalPlayableItem implements PlayableItem {
-	private final AudioPlayCoordinator audioPlayer;
+	private final AudioLifeCycleManager audioPlayer;
 	private Collection<Frequency> frequencies = new ArrayList<Frequency>();
 
 	private final FrequencySet frequencySet;
 
-	AsymmetricalPlayableItem(FrequencySet frequencySet, AudioPlayCoordinator audioPlayer) {
+	public AsymmetricalPlayableItem(FrequencySet frequencySet, AudioLifeCycleManager audioPlayer) {
 		this.frequencySet = frequencySet;
 		this.audioPlayer = audioPlayer;
 	}
@@ -37,11 +37,6 @@ public class AsymmetricalPlayableItem implements PlayableItem {
 		createAudioList(HIGH_SA, frequencySet.descendNotes(), SA);
 		// AudioPlayer.BLOCKING_VLC_PLAYER.play( this );
 		audioPlayer.play(this.frequencyList());
-		return frequencySet.name();
-	}
-
-	@Override
-	public String text() {
 		return frequencySet.name();
 	}
 

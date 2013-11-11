@@ -14,14 +14,14 @@ public class SymmetricalSetTest
 
     //@Test
     public void testKafi() {
-        FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).play();
+        PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_KAFI).play();
     }
 
      @Test
     public void testKafiWithPattern() {
-        PlayableItem.nonBlockingFrequencyPlayerConfig.forSet( SymmetricalSet.THAAT_KAFI ).play();
+        PlayableItem.Factory.forPlayerAndSet(PlayableItem.nonBlockingPlayer,SymmetricalSet.THAAT_KAFI).play();
         SymmetricalPatternApplicator<Frequency> patternApplicator = new SymmetricalPatternApplicator<Frequency>( new int[] { 1, 4,
                 3 } );
-        FilesystemPlayableItem.blocking.forSet( SymmetricalSet.THAAT_KAFI ).andPattern( patternApplicator ).play();
+        PlayableItem.Factory.forPlayerAndSet(FilesystemPlayableItem.blocking,SymmetricalSet.THAAT_KAFI).andPattern( patternApplicator ).play();
     }
 }

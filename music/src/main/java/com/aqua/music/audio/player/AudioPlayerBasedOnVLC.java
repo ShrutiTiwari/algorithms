@@ -19,7 +19,7 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer {
 	private static final String vlcOption = "--play-and-exit";
 
 	private final String vlcExeLoc;
-	private AudioPlayCoordinator audioPlayCoordinator;
+	private AudioLifeCycleManager audioPlayCoordinator;
 	private final ProcessHandler processHandler = new ProcessHandler();
 
 	AudioPlayerBasedOnVLC() {
@@ -43,7 +43,7 @@ public class AudioPlayerBasedOnVLC implements AudioPlayer {
 		};
 	}
 
-	public void setCoordinator(AudioPlayCoordinator audioPlayCoordinator2) {
+	public void setCoordinator(AudioLifeCycleManager audioPlayCoordinator2) {
 		this.audioPlayCoordinator = audioPlayCoordinator2;
 	}
 
