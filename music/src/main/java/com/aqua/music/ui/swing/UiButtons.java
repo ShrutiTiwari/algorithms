@@ -3,7 +3,6 @@ package com.aqua.music.ui.swing;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
 
 import javax.swing.JButton;
 
@@ -12,7 +11,7 @@ import com.aqua.music.audio.manager.AudioPlayConfig;
 import com.aqua.music.logic.FrequencySequence;
 import com.aqua.music.model.FrequencySet;
 
-enum UiPanelButtons {
+enum UiButtons {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
@@ -68,9 +67,9 @@ enum UiPanelButtons {
 							System.out.println(arg.length);
 							for (Object each : arg) {
 								FrequencySequence frequencySequence = (FrequencySequence) each;
-								
+								setText(textArea, frequencySequence.name() + "===>");
 								String text = frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
-								setText(textArea, frequencySequence.name() + "===>" + "\n" + text);
+								//setText(textArea,  "\n" + text);
 								
 								AudioLifeCycleManager.instance.awaitStop();
 							}
@@ -107,7 +106,7 @@ enum UiPanelButtons {
 	private final String text;
 	private final String tooltip;
 
-	private UiPanelButtons(String text, String tooltip, int buttonWidth) {
+	private UiButtons(String text, String tooltip, int buttonWidth) {
 		this.text = text;
 		this.tooltip = tooltip;
 		this.displayWidth = buttonWidth;
@@ -117,13 +116,13 @@ enum UiPanelButtons {
 		return BUTTON_HEIGHT;
 	}
 
-	private static JButton configurableNamedButton(UiPanelButtons itemType, String replaceName) {
+	private static JButton configurableNamedButton(UiButtons itemType, String replaceName) {
 		JButton resultButton = new JButton(itemType.text.replace("$$", replaceName));
 		resultButton.setToolTipText(itemType.tooltip.replace("$$", replaceName));
 		return resultButton;
 	}
 
-	private static JButton fixedNameButton(UiPanelButtons itemType) {
+	private static JButton fixedNameButton(UiButtons itemType) {
 		JButton resultButton = new JButton(itemType.text);
 		resultButton.setToolTipText(itemType.tooltip);
 		return resultButton;

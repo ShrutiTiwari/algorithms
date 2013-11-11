@@ -34,7 +34,7 @@ class PermutationApplicatorForSymmetricalSet<T> implements PermutationApplicator
 	}
 
 	public String prettyPrintTextForAscDesc() {
-		return patternCode() + groupItemsForPrettyPrint(ascendSequence) + SEP + groupItemsForPrettyPrint(descendSequence) + SEP;
+		return groupItemsForPrettyPrint(ascendSequence) + SEP + groupItemsForPrettyPrint(descendSequence) + SEP;
 	}
 
 	private List<T> convertToList(T[] symmetricInput) {

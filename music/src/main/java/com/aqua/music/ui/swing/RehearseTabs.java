@@ -53,7 +53,7 @@ class RehearseTabs {
 				// add individual pattern button for each set
 				for (int[] eachPermutation : allPermutations) {
 					FrequencySequence frequencySequence = FrequencySequence.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet, eachPermutation);
-					JButton button = UiPanelButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea,
+					JButton button = UiButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea,
 							yCoordinateTracker.buttonYcoordinate(), new Object[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
@@ -65,7 +65,7 @@ class RehearseTabs {
 			private JComboBox createThaatDropdown(YCoordinateTracker yCoordinateTracker) {
 				final JComboBox box = new JComboBox(FrequencySet.SymmetricalSet.values());
 				box.setSelectedItem(frequencySet);
-				box.setBounds(UiPanelButtons.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiPanelButtons.HEIGHT());
+				box.setBounds(UiButtons.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiButtons.HEIGHT());
 				box.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -95,7 +95,7 @@ class RehearseTabs {
 				for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
 					FrequencySequence frequencySequence = FrequencySequence.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
 					
-					JButton button = UiPanelButtons.FREQUENCY_SET_PLAYER.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
+					JButton button = UiButtons.FREQUENCY_SET_PLAYER.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
 							new Object[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
@@ -128,8 +128,8 @@ class RehearseTabs {
 
 		private void addCommonComponents(Collection<FrequencySequence> allFrequencySequences) {
 			// add play all button
-			panel.add(UiPanelButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), allFrequencySequences.toArray()));
-			panel.add(UiPanelButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
+			panel.add(UiButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), allFrequencySequences.toArray()));
+			panel.add(UiButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
 			panel.add(textArea);
 			panel.setOpaque(true);
 		}
@@ -144,7 +144,7 @@ class RehearseTabs {
 		private TextArea createTextArea() {
 			TextArea textArea = new TextArea("Hello shrutz");
 			textArea.setVisible(true);
-			textArea.setBounds(UiPanelButtons.X_COORIDNATE + 600, 60, 500, 600);
+			textArea.setBounds(UiButtons.X_COORIDNATE + 600, 60, 500, 600);
 			return textArea;
 		}
 	}
@@ -159,7 +159,7 @@ class RehearseTabs {
 		private int yCoordinate = START;
 
 		private int buttonYcoordinate() {
-			yCoordinate += (UiPanelButtons.HEIGHT()) + 10;
+			yCoordinate += (UiButtons.HEIGHT()) + 10;
 			return yCoordinate;
 		}
 

@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public interface AudioExecutor {
+interface AudioExecutor {
 	public final ExecutorService executor = Executors.newCachedThreadPool(new AudioThreadFactory());
 	class AudioThreadFactory implements ThreadFactory {
 		private final AtomicInteger counter = new AtomicInteger();

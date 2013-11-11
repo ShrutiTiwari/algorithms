@@ -35,7 +35,7 @@ class FrequencySequenceWithSymmetry implements FrequencySequence {
 
 	@Override
 	public String name() {
-		return frequencySet.name() + ((permutationApplicator==PermutationApplicator.NONE)?"":"  ==>  " + permutationApplicator.name());
+		return frequencySet.name() + ((permutationApplicator==PermutationApplicator.NONE)?"":" { " + permutationApplicator.name() + " }");
 	}
 
 	public String play(AudioPlayConfig audioPlayConfig) {
@@ -73,7 +73,7 @@ class FrequencySequenceWithSymmetry implements FrequencySequence {
 	private void plainAscendDescend() {
 		FrequencyListBuilder audioListBuilder = new FrequencyListBuilder.BuilderForSymmetricalSet(frequencySet);
 		this.prettyText = audioListBuilder.prettyPrintText();
-		System.out.print("\t Plain ascend-descend:: " + prettyText);
+		System.out.print("\n\t Plain ascend-descend:: " + prettyText);
 		this.finalFrequencySequence = audioListBuilder.finalFrequencySequence();
 	}
 }
