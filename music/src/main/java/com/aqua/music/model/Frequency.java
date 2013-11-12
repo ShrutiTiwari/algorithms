@@ -1,5 +1,9 @@
 package com.aqua.music.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 public interface Frequency {
 	public String fileCode();
 
@@ -9,11 +13,13 @@ public interface Frequency {
 
 	public String western();
 
+	public FrequencyRelation freqRel= new FrequencyRelation();
+	
 	enum ClassicalNote implements Frequency {
 		DHA("F#4", 369.99F),
 		DHA_("F4", 349.23F),
 		DHA1_("F3", 174.61F),
-		DHA3("F#3", 185.00F),
+		DHA1("F#3", 185.00F),
 		GA("C#4", 277.18F),
 		GA_("C4", 261.63F),
 		GA1("C#3", 138.59F),
@@ -38,7 +44,7 @@ public interface Frequency {
 		RE3("B4", 493.88F),
 		RE3_("A#4", 466.16F),
 		SA("A3", 220F),
-		SA3("A4", 440F);
+		SA3("A4", 440F), RE1_("A#2",0F), RE1("B2",0F);
 
 		private final String fileCode;
 		private final float frequencyInHz;
@@ -73,6 +79,31 @@ public interface Frequency {
 			String lowerCase = name().toLowerCase();
 			String camelCase = ("" + lowerCase.charAt(0)).toUpperCase() + lowerCase.substring(1);
 			return camelCase;
+		}
+	}
+	
+	class FrequencyRelation{
+		private final Map<ClassicalNote, ClassicalNote[]> baseNotes= new HashMap<ClassicalNote, ClassicalNote[]>();
+		
+		private FrequencyRelation(){
+			baseNotes.put(ClassicalNote.NI, new ClassicalNote[]{ClassicalNote.NI1});
+			baseNotes.put(ClassicalNote.NI_, new ClassicalNote[]{ClassicalNote.NI1_});
+			baseNotes.put(ClassicalNote.DHA_, new ClassicalNote[]{ClassicalNote.DHA1_});
+			baseNotes.put(ClassicalNote.DHA, new ClassicalNote[]{ClassicalNote.DHA1});
+			baseNotes.put(ClassicalNote.PA, new ClassicalNote[]{ClassicalNote.PA1, ClassicalNote.PA3});
+			baseNotes.put(ClassicalNote.MA, new ClassicalNote[]{ClassicalNote.MA1, ClassicalNote.MA3});
+			baseNotes.put(ClassicalNote.MA_, new ClassicalNote[]{ClassicalNote.MA1_, ClassicalNote.MA3_});
+			baseNotes.put(ClassicalNote.GA, new ClassicalNote[]{ClassicalNote.GA1, ClassicalNote.GA3});
+			baseNotes.put(ClassicalNote.GA_, new ClassicalNote[]{ClassicalNote.GA1_, ClassicalNote.GA3_});
+			baseNotes.put(ClassicalNote.RE, new ClassicalNote[]{ClassicalNote.RE1, ClassicalNote.RE3});
+			baseNotes.put(ClassicalNote.RE_, new ClassicalNote[]{ClassicalNote.RE1_, ClassicalNote.RE3_});
+		}
+		
+		public ClassicalNote lower(ClassicalNote refNote){
+			return baseNotes.get(refNote)[0];
+		}
+		public ClassicalNote higher(ClassicalNote refNote){
+			return baseNotes.get(refNote)[1];
 		}
 	}
 }

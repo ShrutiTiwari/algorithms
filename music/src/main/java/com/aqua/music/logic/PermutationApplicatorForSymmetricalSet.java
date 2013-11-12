@@ -16,8 +16,8 @@ class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
 	}
 
 	public CyclicSequence initializeWith(Frequency[] symmetricInput) {
-		List<Frequency> ascendSeq = sequenceForGiven(convertToList(symmetricInput));
-		List<Frequency> descendSeq = sequenceForGiven(reverse(symmetricInput));
+		List<Frequency> ascendSeq = sequenceForGiven(convertToList(symmetricInput),false);
+		List<Frequency> descendSeq = sequenceForGiven(reverse(symmetricInput), true);
 		return new CyclicSequence(ascendSeq, descendSeq, permutation.length);
 	}
 
@@ -65,10 +65,35 @@ class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
 		for (int i = 0; i < dataLength; i++) {
 			reverseData.add(inputData[(dataLength - 1) - i]);
 		}
+
+		if (permutation != null & permutation.length > 1) {
+			int extraRange = extraRange(permutation);
+			if (extraRange < 0) {
+				int abs = Math.abs(extraRange);
+				for (int j = 1; abs != 0; j++, abs--) {
+					reverseData.add(Frequency.freqRel.lower((Frequency.ClassicalNote) reverseData.get(j)));
+				}
+			}
+		}
 		return reverseData;
 	}
 
-	private List<Frequency> sequenceForGiven(List<Frequency> input) {
+	private int extraRange(int[] permutation) {
+		int minIndex = 0;
+		int maxIndex = 0;
+		for (int index=0; index<permutation.length;index++) {
+			if(permutation[maxIndex]<permutation[index]){
+				maxIndex=index;
+			}
+			if(permutation[minIndex]>permutation[index]){
+				minIndex=index;
+			}					
+		}
+		int diff = permutation[maxIndex] - permutation[minIndex];
+		return (minIndex <maxIndex)? diff: -diff;
+	}
+
+	private List<Frequency> sequenceForGiven(List<Frequency> input, boolean descend) {
 		List<Frequency> result = new ArrayList<Frequency>();
 		for (int index = 0; index < input.size(); index++) {
 			List<Frequency> subResult = patternAt(input, index);
@@ -78,7 +103,14 @@ class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
 			for (Frequency each1 : subResult) {
 				result.add(each1);
 			}
+			if(descend && lastIndexIsSa(subResult)){
+				break;
+			}
 		}
 		return result;
+	}
+
+	private boolean lastIndexIsSa(List<Frequency> subResult) {
+		return subResult.get(subResult.size()-1) == Frequency.ClassicalNote.SA;
 	}
 }
