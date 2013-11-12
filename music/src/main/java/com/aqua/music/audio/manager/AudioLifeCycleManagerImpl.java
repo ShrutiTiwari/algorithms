@@ -3,9 +3,10 @@ package com.aqua.music.audio.manager;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.aqua.music.audio.manager.PlayMode.DualModeManager;
 import com.aqua.music.audio.player.AudioPlayer;
@@ -13,16 +14,16 @@ import com.aqua.music.model.Frequency;
 
 class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManager, AudioPlayRightsManager {
 	private final Set<AudioPlayer> audioPlayerInstances = new HashSet<AudioPlayer>();
-
 	private AudioPlayer currentAudioPlayer;
-	private PlayMode currentPlayMode;
 
-	private final Semaphore permitToPlay;
-	private volatile CountDownLatch playInProgress = null;
+	private PlayMode currentPlayMode;
+	private final ExecutorService executor = AudioExecutor.executor;
+
+	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
 
 	AudioLifeCycleManagerImpl() {
-		this.permitToPlay = new Semaphore(1);
+		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
 	}
 
@@ -32,43 +33,41 @@ class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManage
 
 	@Override
 	public void acquireRightToPlay() throws InterruptedException {
-		permitToPlay.acquire();
-		stopCurrentPlay.set(false);
-	}
-
-	@Override
-	public void awaitStop() {
-		if (playInProgress != null) {
-			try {
-				playInProgress.await();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		synchronized (stopCurrentPlay) {
+			boolean acquired = permitToPlay.tryLock();
+			if (!acquired) {
+				System.out.println("Play is ongoing!! Issuing stop");
+				stopCurrentPlay.set(true);
+				currentAudioPlayer.stop();
+				permitToPlay.lock();
+				stopCurrentPlay.set(false);
 			}
-		} else {
-			System.out.println("nothing to wait for");
 		}
 	}
 
 	@Override
-	public boolean continuePlaying() {
-		return !stopCurrentPlay.get();
-	}
+	public <T> void execute(final AudioTask<T> audioTask) {
+		Runnable audioTaskRunnable = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					acquireRightToPlay();
+					audioTask.beforeForLoop();
 
-	@Override
-	public void execute(Runnable audioTask) {
-		AudioExecutor.executor.execute(audioTask);
-	}
-
-	@Override
-	public boolean isPlayInProgress() {
-		return playInProgress != null && playInProgress.getCount() == 1;
-	}
-
-	@Override
-	public void issueStop() {
-		if (playInProgress != null) {
-			playInProgress.countDown();
-		}
+					for (T e : audioTask.forLoopParameter()) {
+						if (stopPlaying()) {
+							break;
+						}
+						audioTask.forLoopBody(e);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					releaseRightToPlay();
+				}
+			}
+		};
+		AudioExecutor.executor.execute(audioTaskRunnable);
 	}
 
 	@Override
@@ -81,38 +80,27 @@ class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManage
 
 	@Override
 	public void playAsynchronously(Collection<Frequency> frequencyList) {
-		prepareToRunNewTask();
+		currentAudioPlayer.setAudioPlayRigthsManager(this);
 		executor.execute(currentAudioPlayer.playTask(frequencyList));
 	}
 
 	@Override
 	public void playSynchronously(Collection<Frequency> frequencyList) {
-		prepareToRunNewTask();
+		currentAudioPlayer.setAudioPlayRigthsManager(this);
 		currentAudioPlayer.playTask(frequencyList).run();
 	}
 
 	@Override
 	public void releaseRightToPlay() {
-		System.out.println("releasing right to play");
-		permitToPlay.release();
+		permitToPlay.unlock();
+	}
+
+	@Override
+	public boolean stopPlaying() {
+		return stopCurrentPlay.get();
 	}
 
 	AudioLifeCycleManagerImpl setDurationAndVolume(int durationInMsec, double vol) {
 		return new AudioLifeCycleManagerImpl(this.currentPlayMode, durationInMsec, vol);
-	}
-
-	private void killCurrentlyRunningAudio(int availablePermits) {
-		if (availablePermits <= 0) {
-			System.out.println("Play is ongoing!! Issuing stop");
-			stopCurrentPlay.set(true);
-			currentAudioPlayer.stop();
-		}
-	}
-
-	private void prepareToRunNewTask() {
-		currentAudioPlayer.setAudioPlayRigthsManager(this);
-		killCurrentlyRunningAudio(permitToPlay.availablePermits());
-		System.out.println("Playing new list in non-blocking mode...");
-		playInProgress = new CountDownLatch(1);
 	}
 }

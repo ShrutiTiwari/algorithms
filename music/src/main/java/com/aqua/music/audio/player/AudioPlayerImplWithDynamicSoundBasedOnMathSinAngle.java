@@ -6,7 +6,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
-import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.Frequency;
 
@@ -43,6 +42,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 	}
 
 	public void playFrequencies(final Collection<Frequency> frequencyList) {
+		final String currentThreadName = Thread.currentThread().getName();
 		final float[] frequenciesInHz = new float[frequencyList.size()];
 		int i = 0;
 		for (Frequency each : frequencyList) {
@@ -51,27 +51,27 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
+			System.out.println("acquired right to play [" + currentThreadName + "]");
 			AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
 			this.sdl = AudioSystem.getSourceDataLine(af);
 			sdl.open(af);
 			sdl.start();
 			for (float eachFrequency : frequenciesInHz) {
-				if (audioPlayRightsManager.continuePlaying()) {
-					throwExceptionForInsaneInput(eachFrequency, msecs, vol);
-					byte[] buf = constructBufferForFrequency(eachFrequency);
-					sdl.write(buf, 0, buf.length);
-				} else {
-					System.out.println("oops, ordered to shutdown. terminating..");
+				if (audioPlayRightsManager.stopPlaying()) {
+					System.out.println("oops, marked to stop..breaking now.");
 					break;
 				}
+				throwExceptionForInsaneInput(eachFrequency, msecs, vol);
+				byte[] buf = constructBufferForFrequency(eachFrequency);
+				sdl.write(buf, 0, buf.length);
 			}
 			// sdl.drain();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeStream();
+			System.out.println("releasing right to play [" + currentThreadName + "]");
 			audioPlayRightsManager.releaseRightToPlay();
-			AudioLifeCycleManager.instance.issueStop();
 		}
 	}
 

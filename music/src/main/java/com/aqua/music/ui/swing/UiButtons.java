@@ -8,6 +8,7 @@ import javax.swing.JButton;
 
 import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.audio.manager.AudioPlayConfig;
+import com.aqua.music.audio.manager.AudioTask;
 import com.aqua.music.logic.CyclicFrequencySet;
 
 enum UiButtons {
@@ -59,16 +60,25 @@ enum UiButtons {
 			ActionListener actionListener = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					Runnable audioTask = new Runnable() {
+					AudioTask<CyclicFrequencySet> audioTask = new AudioTask<CyclicFrequencySet>() {
 						@Override
-						public void run() {
+						public CyclicFrequencySet[] forLoopParameter() {
+							return frequencySequences;
+						}
+
+						@Override
+						public void forLoopBody(final CyclicFrequencySet frequencySequence) {
+							String text = frequencySequence.freqSetNamePermuationAsText() + "===>\n" + frequencySequence.cycleFrequenciesAsText();
+							String displayText = "\n\n Playing::" + text;
+							System.out.println(displayText);
+							textArea.append(displayText);
+							frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+						}
+
+						@Override
+						public void beforeForLoop() {
 							textArea.setText("Playing all items:\n");
 							System.out.println(frequencySequences.length);
-							for (CyclicFrequencySet frequencySequence : frequencySequences) {
-								setText(textArea, frequencySequence.freqSetNamePermuationAsText() + "===>\n" + frequencySequence.cycleFrequenciesAsText());
-								frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
-								AudioLifeCycleManager.instance.awaitStop();
-							}
 						}
 					};
 					AudioLifeCycleManager.instance.execute(audioTask);
@@ -127,11 +137,7 @@ enum UiButtons {
 	private static void setText(final TextArea textArea, final String name) {
 		String displayText = "\n\n Playing::" + name;
 		System.out.println(displayText);
-		if (AudioLifeCycleManager.instance.isPlayInProgress()) {
-			textArea.append(displayText);
-		} else {
-			textArea.setText(displayText);
-		}
+		textArea.setText(displayText);
 	}
 
 	public JButton createButton(TextArea textArea, int yCoordinate, CyclicFrequencySet[] frequencySequences) {
