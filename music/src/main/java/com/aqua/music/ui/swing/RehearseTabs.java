@@ -13,16 +13,17 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.aqua.music.logic.FrequencySequence;
-import com.aqua.music.logic.PermuatationGenerator;
+import com.aqua.music.logic.CyclicFrequencySet;
+import com.aqua.music.logic.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 class RehearseTabs {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
-
-	private JPanel rehearseWithPatternsPanel;
 	private final JTabbedPane tabbedPane;
+	
+	//mutated state
+	private JPanel rehearseWithPatternsPanel;
 
 	public RehearseTabs(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
@@ -41,20 +42,21 @@ class RehearseTabs {
 		RehearsePanel rehearsePanel = new RehearsePanel() {
 
 			@Override
-			protected Collection<FrequencySequence> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
+			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 					YCoordinateTracker yCoordinateTracker) {
 
 				mainTab.add(createThaatDropdown(yCoordinateTracker));
 
-				final Collection<FrequencySequence> allFrequencySequences = new ArrayList<FrequencySequence>();
+				final Collection<CyclicFrequencySet> allFrequencySequences = new ArrayList<CyclicFrequencySet>();
 
-				List<int[]> allPermutations = PermuatationGenerator.PAIR.generatePermutations(frequencySet.ascendNotes());
+				List<int[]> allPermutations = PermuatationsGenerator.PAIR.generatePermutations(frequencySet.ascendNotes());
 
 				// add individual pattern button for each set
 				for (int[] eachPermutation : allPermutations) {
-					FrequencySequence frequencySequence = FrequencySequence.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet, eachPermutation);
+					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet,
+							eachPermutation);
 					JButton button = UiButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea,
-							yCoordinateTracker.buttonYcoordinate(), new Object[] { frequencySequence });
+							yCoordinateTracker.buttonYcoordinate(), new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
 				}
@@ -87,16 +89,16 @@ class RehearseTabs {
 	JPanel plainTab() {
 		RehearsePanel rehearseTab = new RehearsePanel() {
 			@Override
-			protected Collection<FrequencySequence> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
+			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 					final YCoordinateTracker yCoordinateTracker) {
 
-				final Collection<FrequencySequence> allFrequencySequences = new ArrayList<FrequencySequence>();
+				final Collection<CyclicFrequencySet> allFrequencySequences = new ArrayList<CyclicFrequencySet>();
 
 				for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
-					FrequencySequence frequencySequence = FrequencySequence.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
-					
+					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
+
 					JButton button = UiButtons.FREQUENCY_SET_PLAYER.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
-							new Object[] { frequencySequence });
+							new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
 				}
@@ -115,20 +117,21 @@ class RehearseTabs {
 			this.yCoordinateTracker = new YCoordinateTracker();
 			this.textArea = createTextArea();
 			this.panel = createBlankMainTab();
-			Collection<FrequencySequence> allFrequencySequences = addSpecificButtons(panel, textArea, yCoordinateTracker);
+			Collection<CyclicFrequencySet> allFrequencySequences = addSpecificButtons(panel, textArea, yCoordinateTracker);
 			addCommonComponents(allFrequencySequences);
 		}
 
-		protected abstract Collection<FrequencySequence> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
+		protected abstract Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 				final YCoordinateTracker yCoordinateTracker);
 
 		JPanel getPanel() {
 			return panel;
 		}
 
-		private void addCommonComponents(Collection<FrequencySequence> allFrequencySequences) {
+		private void addCommonComponents(Collection<CyclicFrequencySet> allFrequencySequences) {
 			// add play all button
-			panel.add(UiButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), allFrequencySequences.toArray()));
+			CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
+			panel.add(UiButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
 			panel.add(UiButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
 			panel.add(textArea);
 			panel.setOpaque(true);

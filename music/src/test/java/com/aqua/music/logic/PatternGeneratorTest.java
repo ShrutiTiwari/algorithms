@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.aqua.music.audio.manager.AudioPlayConfig;
+import com.aqua.music.logic.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
@@ -16,7 +17,7 @@ public class PatternGeneratorTest {
 	public void testPair() {
 		Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
 		System.out.println("==>" + input.length);
-		List<int[]> result = PermuatationGenerator.PAIR.generatePermutations(input);
+		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		assertNotNull(result);
 		assertEquals(input.length * 2, result.size());
 		assertEquals("12,21,13,31,14,41,15,51,16,61,17,71,", toStringForComparison(result));
@@ -25,9 +26,9 @@ public class PatternGeneratorTest {
 	// @Test
 	public void playPairOfNotes() {
 		Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
-		List<int[]> result = PermuatationGenerator.PAIR.generatePermutations(input);
+		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		for (int[] each : result) {
-			FrequencySequence freqSeq = FrequencySequence.Type.SYMMETRICAL.forFrequencySetAndPermutation(SymmetricalSet.THAAT_KAFI,each);
+			CyclicFrequencySet freqSeq = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(SymmetricalSet.THAAT_KAFI,each);
 			freqSeq.play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 		}
 	}

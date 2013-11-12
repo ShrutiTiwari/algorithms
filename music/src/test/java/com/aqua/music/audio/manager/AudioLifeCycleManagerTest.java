@@ -2,7 +2,7 @@ package com.aqua.music.audio.manager;
 
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
-import static com.aqua.music.model.Frequency.ClassicalNote.HIGH_SA;
+import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 import static com.aqua.music.model.Frequency.ClassicalNote.MA;
 import static com.aqua.music.model.Frequency.ClassicalNote.NI;
 import static com.aqua.music.model.Frequency.ClassicalNote.PA;
@@ -23,7 +23,7 @@ public class AudioLifeCycleManagerTest {
 
 	@Test
 	public void testFrequencyPlayer() throws LineUnavailableException {
-		Frequency[] sample = new Frequency[] { SA, RE, GA, MA, PA, DHA, NI, HIGH_SA };
+		Frequency[] sample = new Frequency[] { SA, RE, GA, MA, PA, DHA, NI, SA3 };
 		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
 		AudioLifeCycleManager.instance.play(asList, AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);

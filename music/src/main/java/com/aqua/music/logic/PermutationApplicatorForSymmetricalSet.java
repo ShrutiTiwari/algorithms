@@ -3,78 +3,54 @@ package com.aqua.music.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aqua.music.logic.CyclicFrequencySet.CyclicSequence;
 import com.aqua.music.model.Frequency;
 
-class PermutationApplicatorForSymmetricalSet<T> implements PermutationApplicator<T> {
-	private List<T> ascendSequence;
-	private List<T> descendSequence;
-	private final int[] pattern;
-	private String patternName;
+class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
+	private final int[] permutation;
+	private final String permutationText;
 
-	PermutationApplicatorForSymmetricalSet(int[] pattern) {
-		this.pattern = pattern;
-		this.patternName = displayText();
+	PermutationApplicatorForSymmetricalSet(int[] permutation) {
+		this.permutation = permutation;
+		this.permutationText = displayText();
 	}
 
-	public List<T> allNotes() {
-		List<T> allNotes = new ArrayList<T>();
-		allNotes.addAll(ascendSequence);
-		allNotes.addAll(descendSequence);
-		return allNotes;
-	}
-
-	public void initializeWith(T[] symmetricInput) {
-		this.ascendSequence = sequenceForGiven(convertToList(symmetricInput));
-		this.descendSequence = sequenceForGiven(reverse(symmetricInput));
+	public CyclicSequence initializeWith(Frequency[] symmetricInput) {
+		List<Frequency> ascendSeq = sequenceForGiven(convertToList(symmetricInput));
+		List<Frequency> descendSeq = sequenceForGiven(reverse(symmetricInput));
+		return new CyclicSequence(ascendSeq, descendSeq, permutation.length);
 	}
 
 	@Override
-	public String name() {
-		return patternName;
+	public String permutationText() {
+		return permutationText;
 	}
 
-	public String prettyPrintTextForAscDesc() {
-		return groupItemsForPrettyPrint(ascendSequence) + SEP + groupItemsForPrettyPrint(descendSequence) + SEP;
-	}
-
-	private List<T> convertToList(T[] symmetricInput) {
-		List<T> inputList = new ArrayList<T>();
-		for (T each : symmetricInput) {
+	private List<Frequency> convertToList(Frequency[] symmetricInput) {
+		List<Frequency> inputList = new ArrayList<Frequency>();
+		for (Frequency each : symmetricInput) {
 			inputList.add(each);
 		}
 		return inputList;
 	}
 
-	private String groupItemsForPrettyPrint(List<T> noteSequence) {
-		int numberItemsToBeGrouped = pattern.length;
-		return insertComma(noteSequence, numberItemsToBeGrouped).toString();
-	}
-
-	private StringBuffer insertComma(List<T> itemSequence, int numberItemsToBeGrouped) {
-		StringBuffer buffer = new StringBuffer();
-		int processedItems = 0;
-		int i = 1;
-		for (T eachItem : itemSequence) {
-			String appendText = eachItem instanceof Frequency ? ((Frequency) eachItem).prettyPrint() : eachItem.toString();
-
-			if (i == numberItemsToBeGrouped) {
-				i = 1;
-				buffer.append(appendText + (processedItems != itemSequence.size() - 1 ? ", " : ""));
-			} else {
-				buffer.append(appendText);
-				i++;
+	private String displayText() {
+		String displayName = "" + permutation[0];
+		int i = 0;
+		for (int each : permutation) {
+			if (i++ != 0) {
+				displayName += ("-" + each);
 			}
-			processedItems++;
 		}
-		return buffer;
+		return " {" + displayName + " }";
 	}
 
-	private List<T> patternAt(List<T> input, int index) {
-		List<T> result = new ArrayList<T>();
+	private List<Frequency> patternAt(List<Frequency> input, int index) {
+		List<Frequency> result = new ArrayList<Frequency>();
 		try {
 			int k = 0;
-			for (int i : pattern) {
-				T noteForPattern = input.get(index + (i - 1));
+			for (int i : permutation) {
+				Frequency noteForPattern = input.get(index + (i - 1));
 				result.add(noteForPattern);
 			}
 			return result;
@@ -83,50 +59,26 @@ class PermutationApplicatorForSymmetricalSet<T> implements PermutationApplicator
 		}
 	}
 
-	private String patternCode() {
-		StringBuffer buf = new StringBuffer();
-		buf.append("[");
-		int i = 1;
-		for (int each : pattern) {
-			buf.append(each + ((i != pattern.length) ? "-" : ""));
-			i++;
-		}
-		buf.append("]==>");
-		return buf.toString();
-	}
-
-	private List<T> reverse(T[] inputData) {
+	private List<Frequency> reverse(Frequency[] inputData) {
 		int dataLength = inputData.length;
-		List<T> reverseData = new ArrayList<T>();
+		List<Frequency> reverseData = new ArrayList<Frequency>();
 		for (int i = 0; i < dataLength; i++) {
 			reverseData.add(inputData[(dataLength - 1) - i]);
 		}
 		return reverseData;
 	}
 
-	private List<T> sequenceForGiven(List<T> input) {
-		List<T> result = new ArrayList<T>();
+	private List<Frequency> sequenceForGiven(List<Frequency> input) {
+		List<Frequency> result = new ArrayList<Frequency>();
 		for (int index = 0; index < input.size(); index++) {
-			List<T> subResult = patternAt(input, index);
+			List<Frequency> subResult = patternAt(input, index);
 			if (subResult == null) {
 				break;
 			}
-			for (T each1 : subResult) {
+			for (Frequency each1 : subResult) {
 				result.add(each1);
 			}
 		}
 		return result;
 	}
-	
-	private String displayText() {
-		String displayName = "" + pattern[0];
-		int i = 0;
-		for (int each : pattern) {
-			if (i++ != 0) {
-				displayName += ("-" + each);
-			}
-		}
-		return displayName;
-	}
-
 }

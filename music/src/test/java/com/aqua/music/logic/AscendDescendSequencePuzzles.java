@@ -9,14 +9,14 @@ import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class AscendDescendSequencePuzzles {
 	public void playThaat() {
-		FrequencySequence.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 	}
 
 	public void playMultipleThaats() {
-		FrequencyListBuilder.BuilderForMultipleSymmetricalSets multipleThaatEnqueuer = new FrequencyListBuilder.BuilderForMultipleSymmetricalSets(
+		CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets multipleThaatEnqueuer = new CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets(
 				new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI });
-		System.out.println(multipleThaatEnqueuer.prettyPrintText());
-		AudioLifeCycleManager.instance.play(multipleThaatEnqueuer.finalFrequencySequence(), AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		System.out.println(multipleThaatEnqueuer.asString());
+		AudioLifeCycleManager.instance.play(multipleThaatEnqueuer.allFrequenciesInCycle(), AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 	}
 
 	public void playAllThats() {
@@ -31,13 +31,13 @@ public class AscendDescendSequencePuzzles {
 	}
 
 	private void playAscendAndDescend(int count, SymmetricalSet... raags) {
-		FrequencySequence.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 		System.out.println("\n Played [BILAWAL]");
 		HashSet<SymmetricalSet> hasheddata = randomize(raags);
 		for (SymmetricalSet each : hasheddata) {
 
 			for (int i = 0; i < count; i++) {
-				FrequencySequence.Type.SYMMETRICAL.forFrequencySet(each).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+				CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 				System.out.println("\nPlayed [" + each.name() + "] ." + i);
 				System.out.println("\n");
 			}

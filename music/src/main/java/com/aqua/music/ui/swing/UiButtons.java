@@ -8,14 +8,14 @@ import javax.swing.JButton;
 
 import com.aqua.music.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.audio.manager.AudioPlayConfig;
-import com.aqua.music.logic.FrequencySequence;
+import com.aqua.music.logic.CyclicFrequencySet;
 
 enum UiButtons {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
-			final FrequencySequence frequencySequence = (FrequencySequence) arg[0];
-			final String buttonTitle = frequencySequence.name();
+		JButton createInstanceWith(final TextArea textArea, final CyclicFrequencySet[] frequencySequences) {
+			final CyclicFrequencySet frequencySequence = frequencySequences[0];
+			final String buttonTitle = frequencySequence.freqSetNamePermuationAsText();
 			JButton button = configurableNamedButton(this, buttonTitle);
 
 			ActionListener actionListener = new ActionListener() {
@@ -33,9 +33,9 @@ enum UiButtons {
 	},
 	FREQUENCY_SET_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, Object[] arg) {
-			final FrequencySequence frequencySequence = (FrequencySequence) arg[0];
-			final String buttonTitle = frequencySequence.name();
+		JButton createInstanceWith(final TextArea textArea, CyclicFrequencySet[] frequencySequences) {
+			final CyclicFrequencySet frequencySequence = frequencySequences[0];
+			final String buttonTitle = frequencySequence.freqSetNamePermuationAsText();
 			JButton button = configurableNamedButton(this, buttonTitle);
 
 			ActionListener actionListener = new ActionListener() {
@@ -53,7 +53,7 @@ enum UiButtons {
 	},
 	PLAY_ALL("PLAY_ALL", "Click this to play all!", 400) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, final Object[] arg) {
+		JButton createInstanceWith(final TextArea textArea, final CyclicFrequencySet[] frequencySequences) {
 			JButton button = fixedNameButton(this);
 
 			ActionListener actionListener = new ActionListener() {
@@ -63,13 +63,10 @@ enum UiButtons {
 						@Override
 						public void run() {
 							textArea.setText("Playing all items:\n");
-							System.out.println(arg.length);
-							for (Object each : arg) {
-								FrequencySequence frequencySequence = (FrequencySequence) each;
-								setText(textArea, frequencySequence.name() + "===>\n" + frequencySequence.detailedSequenceText());
-								String text = frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
-								// setText(textArea, "\n" + text);
-
+							System.out.println(frequencySequences.length);
+							for (CyclicFrequencySet frequencySequence : frequencySequences) {
+								setText(textArea, frequencySequence.freqSetNamePermuationAsText() + "===>\n" + frequencySequence.cycleFrequenciesAsText());
+								frequencySequence.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
 								AudioLifeCycleManager.instance.awaitStop();
 							}
 						}
@@ -84,7 +81,7 @@ enum UiButtons {
 	},
 	QUIT("Quit", "Click this to quit!", 400) {
 		@Override
-		JButton createInstanceWith(TextArea Object, Object[] newParam) {
+		JButton createInstanceWith(TextArea Object, CyclicFrequencySet[] newParam) {
 			JButton button = fixedNameButton(this);
 
 			ActionListener actionListener = new ActionListener() {
@@ -99,8 +96,8 @@ enum UiButtons {
 		}
 	};
 
-	private static final int BUTTON_HEIGHT = 30;
 	static final int X_COORIDNATE = 30;
+	private static final int BUTTON_HEIGHT = 30;
 	private final int displayWidth;
 	private final String text;
 	private final String tooltip;
@@ -127,15 +124,6 @@ enum UiButtons {
 		return resultButton;
 	}
 
-	public JButton createButton(TextArea textArea, int yCoordinate, Object[] arg) {
-		JButton buttonItem = createInstanceWith(textArea, arg);
-		buttonItem.setOpaque(true);
-		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
-		return buttonItem;
-	}
-
-	abstract JButton createInstanceWith(TextArea textArea, Object[] arg);
-
 	private static void setText(final TextArea textArea, final String name) {
 		String displayText = "\n\n Playing::" + name;
 		System.out.println(displayText);
@@ -145,4 +133,13 @@ enum UiButtons {
 			textArea.setText(displayText);
 		}
 	}
+
+	public JButton createButton(TextArea textArea, int yCoordinate, CyclicFrequencySet[] frequencySequences) {
+		JButton buttonItem = createInstanceWith(textArea, frequencySequences);
+		buttonItem.setOpaque(true);
+		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
+		return buttonItem;
+	}
+
+	abstract JButton createInstanceWith(TextArea textArea, CyclicFrequencySet[] frequencySequences);
 }

@@ -1,37 +1,24 @@
 package com.aqua.music.logic;
 
-import java.util.Collections;
-import java.util.List;
+import com.aqua.music.logic.CyclicFrequencySet.CyclicSequence;
+import com.aqua.music.model.Frequency;
 
-interface PermutationApplicator<T> {
-	static final String SEP = "\n";
-
-	List<T> allNotes();
-
-	String name();
-	
-	String prettyPrintTextForAscDesc();
-
-	void initializeWith(T[] commonAscDescInput);
+interface PermutationApplicator {
+	static final String NEW_LINE_SEP ="\n";
 
 	PermutationApplicator NONE = new PermutationApplicator() {
 		@Override
-		public List allNotes() {
-			return Collections.EMPTY_LIST;
+		public CyclicSequence initializeWith(Frequency[] commonAscDescInput) {
+			return CyclicSequence.NONE;
 		}
 
 		@Override
-		public String prettyPrintTextForAscDesc() {
-			return "";
-		}
-
-		@Override
-		public void initializeWith(Object[] commonAscDescInput) {
-		}
-
-		@Override
-		public String name() {
+		public String permutationText() {
 			return "";
 		}
 	};
+
+	CyclicSequence initializeWith(Frequency[] commonAscDescInput);
+
+	String permutationText();
 }
