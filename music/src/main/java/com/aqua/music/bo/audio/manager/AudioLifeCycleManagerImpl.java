@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import com.aqua.music.bo.audio.manager.PlayMode.DualModeManager;
 import com.aqua.music.bo.audio.player.AudioPlayer;
-import com.aqua.music.model.Frequency;
+import com.aqua.music.model.DynamicFrequency;
 
 class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManager, AudioPlayRightsManager {
 	private final Set<AudioPlayer> audioPlayerInstances = new HashSet<AudioPlayer>();
@@ -69,21 +69,22 @@ class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManage
 	}
 
 	@Override
-	public void play(final Collection<Frequency> frequencyList, AudioPlayConfig playconfig) {
-		this.currentPlayMode = playconfig.playMode();
-		this.currentAudioPlayer = playconfig.audioPlayer();
+	public void play(Collection<? extends DynamicFrequency> frequencyList, AudioPlayConfig audioModeAndPlayerCombinations) {
+		this.currentPlayMode = audioModeAndPlayerCombinations.playMode();
+		this.currentAudioPlayer = audioModeAndPlayerCombinations.audioPlayer();
 		this.audioPlayerInstances.add(currentAudioPlayer);
 		currentPlayMode.play(this, frequencyList);
+		
 	}
 
 	@Override
-	public void playAsynchronously(Collection<Frequency> frequencyList) {
+	public void playAsynchronously(Collection<? extends DynamicFrequency> frequencyList) {
 		currentAudioPlayer.setAudioPlayRigthsManager(this);
 		executor.execute(currentAudioPlayer.playTask(frequencyList));
 	}
 
 	@Override
-	public void playSynchronously(Collection<Frequency> frequencyList) {
+	public void playSynchronously(Collection<? extends DynamicFrequency> frequencyList) {
 		currentAudioPlayer.setAudioPlayRigthsManager(this);
 		currentAudioPlayer.playTask(frequencyList).run();
 	}

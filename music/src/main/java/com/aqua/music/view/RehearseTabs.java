@@ -19,15 +19,16 @@ import org.slf4j.LoggerFactory;
 
 import com.aqua.music.controller.CyclicFrequencySet;
 import com.aqua.music.controller.CyclicFrequencySet.PermuatationsGenerator;
+import com.aqua.music.controller.songs.Song;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 class RehearseTabs {
-	private static final Logger logger = LoggerFactory.getLogger(RehearseTabs.class);	
+	private static final Logger logger = LoggerFactory.getLogger(RehearseTabs.class);
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	private final JTabbedPane tabbedPane;
-	
-	//mutated state
+
+	// mutated state
 	private JPanel rehearseWithPatternsPanel;
 
 	public RehearseTabs(JTabbedPane tabbedPane) {
@@ -37,14 +38,14 @@ class RehearseTabs {
 	void addPatternTab() {
 		addPatternTab(SymmetricalSet.THAAT_KAFI);
 	}
-
+	
 	private final void addPatternTab(SymmetricalSet selectedThaat) {
 		this.rehearseWithPatternsPanel = patternTabFor(selectedThaat);
 		tabbedPane.addTab("Rehearse with pattern", rehearseWithPatternsPanel);
 	}
 
 	JPanel patternTabFor(final FrequencySet frequencySet) {
-		RehearsePanel rehearsePanel = new RehearsePanel() {
+		RehearsePanel<CyclicFrequencySet> rehearsePanel = new RehearsePanel<CyclicFrequencySet>() {
 
 			@Override
 			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
@@ -60,7 +61,7 @@ class RehearseTabs {
 				for (int[] eachPermutation : allPermutations) {
 					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet,
 							eachPermutation);
-					JButton button = UiButtons.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea,
+					JButton button = UiButtonsForFrequencySet.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea,
 							yCoordinateTracker.buttonYcoordinate(), new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
@@ -74,13 +75,13 @@ class RehearseTabs {
 				box.setBackground(Color.RED);
 				box.setForeground(Color.GREEN);
 				box.setSelectedItem(frequencySet);
-				box.setBounds(UiButtons.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiButtons.HEIGHT());
+				box.setBounds(UiButtonsForFrequencySet.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiButtonsForFrequencySet.HEIGHT());
 				box.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						JComboBox cbox = (JComboBox) arg0.getSource();
 						FrequencySet selectedThaat = (FrequencySet) cbox.getSelectedItem();
-						logger.info("selectedThaat ["+selectedThaat.name()+"]");
+						logger.info("selectedThaat [" + selectedThaat.name() + "]");
 						tabbedPane.remove(rehearseWithPatternsPanel);
 						addPatternTab((SymmetricalSet) selectedThaat);
 						rehearseWithPatternsPanel.requestFocusInWindow();
@@ -94,7 +95,7 @@ class RehearseTabs {
 	}
 
 	JPanel plainTab() {
-		RehearsePanel rehearseTab = new RehearsePanel() {
+		RehearsePanel<CyclicFrequencySet> rehearsePanel = new RehearsePanel<CyclicFrequencySet>() {
 			@Override
 			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 					final YCoordinateTracker yCoordinateTracker) {
@@ -104,18 +105,38 @@ class RehearseTabs {
 				for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
 					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
 
-					JButton button = UiButtons.FREQUENCY_SET_PLAYER.createButton(textArea, yCoordinateTracker.buttonYcoordinate(),
-							new CyclicFrequencySet[] { frequencySequence });
+					JButton button = UiButtonsForFrequencySet.FREQUENCY_SET_PLAYER.createButton(textArea,
+							yCoordinateTracker.buttonYcoordinate(), new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
 				}
 				return allFrequencySequences;
 			}
 		};
-		return rehearseTab.getPanel();
+		return rehearsePanel.getPanel();
 	}
 
-	private abstract class RehearsePanel {
+	JPanel songTab() {
+		RehearsePanel<Song> rehearsePanel = new RehearsePanel<Song>() {
+			@Override
+			protected Collection<Song> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
+					final YCoordinateTracker yCoordinateTracker) {
+
+				final Collection<Song> allFrequencySequences = new ArrayList<Song>();
+
+				for (Song eachSong : Song.values()) {
+					JButton button = UiButtonsForSong.SONG_PLAYER.createButton(textArea,
+							yCoordinateTracker.buttonYcoordinate(), eachSong);
+					allFrequencySequences.add(eachSong);
+					mainTab.add(button);
+				}
+				return allFrequencySequences;
+			}
+		};
+		return rehearsePanel.getPanel();
+	}
+	
+	private abstract class RehearsePanel<T> {
 		private final JPanel panel;
 		private final TextArea textArea;
 		private final YCoordinateTracker yCoordinateTracker;
@@ -124,22 +145,24 @@ class RehearseTabs {
 			this.yCoordinateTracker = new YCoordinateTracker();
 			this.textArea = createTextArea();
 			this.panel = createBlankMainTab();
-			Collection<CyclicFrequencySet> allFrequencySequences = addSpecificButtons(panel, textArea, yCoordinateTracker);
+			Collection<T> allFrequencySequences = addSpecificButtons(panel, textArea, yCoordinateTracker);
 			addCommonComponents(allFrequencySequences);
 		}
 
-		protected abstract Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
+		protected abstract Collection<T> addSpecificButtons(final JPanel mainTab, final TextArea textArea,
 				final YCoordinateTracker yCoordinateTracker);
 
 		JPanel getPanel() {
 			return panel;
 		}
 
-		private void addCommonComponents(Collection<CyclicFrequencySet> allFrequencySequences) {
+		private void addCommonComponents(Collection<T> allFrequencySequences) {
 			// add play all button
-			CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
-			panel.add(UiButtons.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
-			panel.add(UiButtons.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
+			if ((allFrequencySequences.iterator().next()) instanceof CyclicFrequencySet) {
+				final CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
+				panel.add(UiButtonsForFrequencySet.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
+			}
+			panel.add(UiButtonsForFrequencySet.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
 			panel.add(textArea);
 			panel.setOpaque(true);
 		}
@@ -154,7 +177,7 @@ class RehearseTabs {
 		private TextArea createTextArea() {
 			TextArea textArea = new TextArea("Hello shrutz");
 			textArea.setVisible(true);
-			textArea.setBounds(UiButtons.X_COORIDNATE + 600, 60, 500, 600);
+			textArea.setBounds(UiButtonsForFrequencySet.X_COORIDNATE + 600, 60, 500, 600);
 			return textArea;
 		}
 	}
@@ -169,7 +192,7 @@ class RehearseTabs {
 		private int yCoordinate = START;
 
 		private int buttonYcoordinate() {
-			yCoordinate += (UiButtons.HEIGHT()) + 10;
+			yCoordinate += (UiButtonsForFrequencySet.HEIGHT()) + 10;
 			return yCoordinate;
 		}
 

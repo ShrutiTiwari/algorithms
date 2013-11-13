@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
-import com.aqua.music.model.Frequency;
+import com.aqua.music.model.DynamicFrequency;
 
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);
@@ -14,7 +14,7 @@ public interface AudioPlayer {
 
 	void stop();
 
-	Runnable playTask(final Collection<Frequency> frequencyList);
+	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList);
 
 	enum Factory {
 		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle.class),
@@ -48,7 +48,7 @@ public interface AudioPlayer {
 		}
 
 		public static AudioPlayer customizedDymanic(int durationInMsec, double vol) {
-			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(durationInMsec, vol);
+			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(vol);
 		}
 	}
 }

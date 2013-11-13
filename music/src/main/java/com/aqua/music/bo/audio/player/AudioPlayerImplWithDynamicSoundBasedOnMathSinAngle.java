@@ -7,15 +7,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
-import com.aqua.music.model.Frequency;
+import com.aqua.music.model.DynamicFrequency;
 
 class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
-	private static final int ONE_SEC = 1000;
-	private static final int DEFAULT_MSEC = ONE_SEC;
 	private static final double DEFAULT_VOL = 0.8;
 	private static final float SAMPLE_RATE = 8000f;
 
-	private final int msecs;
 	private final double vol;
 
 	// handle for terminating the blocked running thread
@@ -23,15 +20,14 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
 
 	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle() {
-		this(DEFAULT_MSEC, DEFAULT_VOL);
+		this(DEFAULT_VOL);
 	}
 
-	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(int msecs, double vol) {
-		this.msecs = msecs;
+	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(double vol) {
 		this.vol = vol;
 	}
 
-	public final Runnable playTask(final Collection<Frequency> frequencyList) {
+	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
 		Runnable task = new Runnable() {
 			@Override
 			public void run() {
@@ -41,13 +37,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 		return task;
 	}
 
-	public void playFrequencies(final Collection<Frequency> frequencyList) {
-		final float[] frequenciesInHz = new float[frequencyList.size()];
-		int i = 0;
-		for (Frequency each : frequencyList) {
-			frequenciesInHz[i++] = each.frequencyInHz();
-		}
-
+	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.info("acquired right to play");
@@ -55,13 +45,15 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			this.sdl = AudioSystem.getSourceDataLine(af);
 			sdl.open(af);
 			sdl.start();
-			for (float eachFrequency : frequenciesInHz) {
+			for (final DynamicFrequency each : frequencyList) {
 				if (audioPlayRightsManager.stopPlaying()) {
 					logger.info("oops, marked to stop..breaking now.");
 					break;
 				}
-				throwExceptionForInsaneInput(eachFrequency, msecs, vol);
-				byte[] buf = constructBufferForFrequency(eachFrequency);
+				final float frequencyInHz = each.frequencyInHz();
+				final int duration = each.duration();
+				throwExceptionForInsaneInput(frequencyInHz, duration, vol);
+				byte[] buf = constructBufferForFrequency(frequencyInHz, duration);
 				sdl.write(buf, 0, buf.length);
 			}
 			// sdl.drain();
@@ -96,8 +88,8 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 		}
 	}
 
-	private byte[] constructBufferForFrequency(float frequencyInHz) {
-		byte[] frequencyBuffer = new byte[(int) SAMPLE_RATE * msecs / 1000];
+	private byte[] constructBufferForFrequency(float frequencyInHz, int duration) {
+		byte[] frequencyBuffer = new byte[(int) SAMPLE_RATE * duration / 1000];
 
 		for (int i = 0; i < frequencyBuffer.length; i++) {
 			double angle = i / (SAMPLE_RATE / frequencyInHz) * 2.0 * Math.PI;

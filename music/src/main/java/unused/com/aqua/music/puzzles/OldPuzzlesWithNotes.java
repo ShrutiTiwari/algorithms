@@ -11,7 +11,6 @@ import static com.aqua.music.model.Frequency.ClassicalNote.NI_;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;

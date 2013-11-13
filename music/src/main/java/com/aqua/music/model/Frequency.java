@@ -3,22 +3,18 @@ package com.aqua.music.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface Frequency {
-	public String fileCode();
-
-	public float frequencyInHz();
+public interface Frequency extends DynamicFrequency{
+	public FrequencyRelation freqRel = new FrequencyRelation();
 
 	public String prettyPrint();
 
 	public String western();
 
-	public FrequencyRelation freqRel = new FrequencyRelation();
-
 	enum ClassicalNote implements Frequency {
 		DHA("F#4", 369.99F),
 		DHA_("F4", 349.23F),
-		DHA1_("F3", 174.61F),
 		DHA1("F#3", 185.00F),
+		DHA1_("F3", 174.61F),
 		GA("C#4", 277.18F),
 		GA_("C4", 261.63F),
 		GA1("C#3", 138.59F),
@@ -40,12 +36,12 @@ public interface Frequency {
 		PA3("E5", 659.26F),
 		RE("B3", 246.94F),
 		RE_("A#3", 233.08F),
+		RE1("B2", 123.47F),
+		RE1_("A#2", 116.54F),
 		RE3("B4", 493.88F),
 		RE3_("A#4", 466.16F),
 		SA("A3", 220F),
-		SA3("A4", 440F),
-		RE1_("A#2", 116.54F),
-		RE1("B2", 123.47F);
+		SA3("A4", 440F);
 
 		private final String fileCode;
 		private final float frequencyInHz;
@@ -57,6 +53,11 @@ public interface Frequency {
 			this.frequencyInHz = frequencyInHz;
 			this.fileCode = name().toLowerCase();
 			this.prettyPrintText = camelCase();
+		}
+
+		@Override
+		public int duration() {
+			return MusicPeriod.SINGLE_BEAT.durationInMilliSec();
 		}
 
 		public String fileCode() {
@@ -82,6 +83,7 @@ public interface Frequency {
 			return camelCase;
 		}
 	}
+	
 
 	class FrequencyRelation {
 		private final Map<ClassicalNote, ClassicalNote[]> baseNotes = new HashMap<ClassicalNote, ClassicalNote[]>();
@@ -100,12 +102,12 @@ public interface Frequency {
 			baseNotes.put(ClassicalNote.RE_, new ClassicalNote[] { ClassicalNote.RE1_, ClassicalNote.RE3_ });
 		}
 
-		public ClassicalNote lower(ClassicalNote refNote) {
-			return baseNotes.get(refNote)[0];
-		}
-
 		public ClassicalNote higher(ClassicalNote refNote) {
 			return baseNotes.get(refNote)[1];
+		}
+
+		public ClassicalNote lower(ClassicalNote refNote) {
+			return baseNotes.get(refNote)[0];
 		}
 	}
 }

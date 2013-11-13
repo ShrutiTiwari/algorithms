@@ -10,7 +10,6 @@ import javax.swing.JTabbedPane;
 
 public class UiLauncher {
 	private static final String frameTitle = "Music";
-	private static final String frameLabel = "Have fun with Indian Classical Music!!";
 	private static final Dimension preferredSizeForMainPane = new Dimension(450, 450);
 
 	/**
@@ -52,9 +51,10 @@ public class UiLauncher {
 		private JTabbedPane createTabbedPan() {
 			JTabbedPane tabbedPane = new JTabbedPane();
 
-			RehearseTabs reharseTabFactory = new RehearseTabs(tabbedPane);
-			tabbedPane.addTab("Thaat rehearse", reharseTabFactory.plainTab());
-			reharseTabFactory.addPatternTab();
+			RehearseTabs rehearseTabFactory = new RehearseTabs(tabbedPane);
+			tabbedPane.addTab("Thaat rehearse", rehearseTabFactory.plainTab());
+			rehearseTabFactory.addPatternTab();
+			tabbedPane.addTab("Song rehearse", rehearseTabFactory.songTab());
 
 			tabbedPane.setOpaque(true);
 			return tabbedPane;

@@ -14,7 +14,7 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.controller.CyclicFrequencySet;
 
-enum UiButtons {
+enum UiButtonsForFrequencySet {
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, final CyclicFrequencySet[] frequencySequences) {
@@ -107,14 +107,14 @@ enum UiButtons {
 			return button;
 		}
 	};
-	private static final Logger logger = LoggerFactory.getLogger(UiButtons.class);
+	private static final Logger logger = LoggerFactory.getLogger(UiButtonsForFrequencySet.class);
 	static final int X_COORIDNATE = 30;
 	private static final int BUTTON_HEIGHT = 30;
 	private final int displayWidth;
 	private final String text;
 	private final String tooltip;
 
-	private UiButtons(String text, String tooltip, int buttonWidth) {
+	private UiButtonsForFrequencySet(String text, String tooltip, int buttonWidth) {
 		this.text = text;
 		this.tooltip = tooltip;
 		this.displayWidth = buttonWidth;
@@ -124,13 +124,13 @@ enum UiButtons {
 		return BUTTON_HEIGHT;
 	}
 
-	private static JButton configurableNamedButton(UiButtons itemType, String replaceName) {
+	private static JButton configurableNamedButton(UiButtonsForFrequencySet itemType, String replaceName) {
 		JButton resultButton = new JButton(itemType.text.replace("$$", replaceName));
 		resultButton.setToolTipText(itemType.tooltip.replace("$$", replaceName));
 		return resultButton;
 	}
 
-	private static JButton fixedNameButton(UiButtons itemType) {
+	private static JButton fixedNameButton(UiButtonsForFrequencySet itemType) {
 		JButton resultButton = new JButton(itemType.text);
 		resultButton.setToolTipText(itemType.tooltip);
 		return resultButton;

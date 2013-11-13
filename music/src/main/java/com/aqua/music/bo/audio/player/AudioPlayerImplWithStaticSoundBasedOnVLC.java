@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
+import com.aqua.music.model.DynamicFrequency;
 import com.aqua.music.model.Frequency;
 
 class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
@@ -27,7 +28,7 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	}
 
 	@Override
-	public Runnable playTask(final Collection<Frequency> frequencyList) {
+	public Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
 		Collection<File> playlist = new AudioFilesList(frequencyList).allAudioFiles();
 		final File[] audioFilesArray = playlist.toArray(new File[playlist.size()]);
 
@@ -67,17 +68,17 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 		StringBuffer prettyPrintText = new StringBuffer();
 		Map<String, File> audioLib = StaticAudioLibrary.library();
 
-		public AudioFilesList(Collection<Frequency> allNotes) {
-			for (Frequency each : allNotes) {
+		public AudioFilesList(Collection<? extends DynamicFrequency> allNotes) {
+			for (DynamicFrequency each : allNotes) {
 				addIfFileFound(each);
 			}
 		}
 
-		public void addIfFileFound(Frequency singleNote) {
+		public void addIfFileFound(DynamicFrequency singleNote) {
 			addIfFileFound(singleNote, true);
 		}
 
-		public void addIfFileFound(Frequency singleNote, boolean appendComma) {
+		public void addIfFileFound(DynamicFrequency singleNote, boolean appendComma) {
 			String code = singleNote.fileCode();
 			File audioFile = audioLib.get(code);
 			if (audioFile == null) {
