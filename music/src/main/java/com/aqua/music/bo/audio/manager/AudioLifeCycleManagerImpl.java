@@ -32,16 +32,14 @@ class AudioLifeCycleManagerImpl implements DualModeManager, AudioLifeCycleManage
 	}
 
 	@Override
-	public void acquireRightToPlay() throws InterruptedException {
-		synchronized (stopCurrentPlay) {
-			boolean acquired = permitToPlay.tryLock();
-			if (!acquired) {
-				logger.info("Play is ongoing!! Issuing stop");
-				stopCurrentPlay.set(true);
-				currentAudioPlayer.stop();
-				permitToPlay.lock();
-				stopCurrentPlay.set(false);
-			}
+	public synchronized void acquireRightToPlay() throws InterruptedException {
+		boolean acquired = permitToPlay.tryLock();
+		if (!acquired) {
+			logger.info("Play is ongoing!! Issuing stop");
+			stopCurrentPlay.set(true);
+			currentAudioPlayer.stop();
+			permitToPlay.lock();
+			stopCurrentPlay.set(false);
 		}
 	}
 

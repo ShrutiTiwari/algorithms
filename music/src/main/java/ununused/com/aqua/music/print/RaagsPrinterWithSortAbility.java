@@ -58,8 +58,6 @@ public class RaagsPrinterWithSortAbility {
 		}
 
 		logger.info(criterioSet.toString());
-
-		Collection<Raag> sortedOutput = new LinkedHashSet<Raag>();
 		return raags;
 	}
 

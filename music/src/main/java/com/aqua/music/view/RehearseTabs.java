@@ -1,5 +1,6 @@
 package com.aqua.music.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -70,6 +71,8 @@ class RehearseTabs {
 
 			private JComboBox createThaatDropdown(YCoordinateTracker yCoordinateTracker) {
 				final JComboBox box = new JComboBox(FrequencySet.SymmetricalSet.values());
+				box.setBackground(Color.RED);
+				box.setForeground(Color.GREEN);
 				box.setSelectedItem(frequencySet);
 				box.setBounds(UiButtons.X_COORIDNATE, yCoordinateTracker.yCoordinate, 500, UiButtons.HEIGHT());
 				box.addActionListener(new ActionListener() {

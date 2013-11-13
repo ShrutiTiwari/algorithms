@@ -80,13 +80,10 @@ public class OldPuzzlesWithNotes {
 	}
 
 	public static void play(List<Frequency> notes) {
-		List<File> audioFiles = new ArrayList<File>();
 		StringBuffer printPlaylist = new StringBuffer();
 		for (Frequency each : notes) {
-			// addFileIfFound( audioFiles, each );
 			printPlaylist.append(", " + each);
 		}
 		logger.info("playing [" + printPlaylist.toString() + "]");
-		// AudioPlayerType.VLC_BASED.blockingPlayer().playList( audioFiles );
 	}
 }
