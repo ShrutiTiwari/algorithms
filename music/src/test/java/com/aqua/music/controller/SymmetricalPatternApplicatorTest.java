@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.controller.CyclicFrequencySet;
-import com.aqua.music.controller.PermutationApplicatorForSymmetricalSet;
 import com.aqua.music.controller.CyclicFrequencySet.CyclicSequence;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet;

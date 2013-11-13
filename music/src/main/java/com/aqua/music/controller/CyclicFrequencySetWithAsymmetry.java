@@ -1,7 +1,7 @@
 package com.aqua.music.controller;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 import static com.aqua.music.model.Frequency.ClassicalNote.SA;
+import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 
 import java.util.ArrayList;
 import java.util.Collection;

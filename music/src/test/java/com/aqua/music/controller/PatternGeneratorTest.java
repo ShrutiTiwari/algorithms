@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.controller.CyclicFrequencySet;
 import com.aqua.music.controller.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;

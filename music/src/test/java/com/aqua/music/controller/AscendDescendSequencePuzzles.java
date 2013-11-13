@@ -4,8 +4,6 @@ import java.util.HashSet;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.controller.CyclicFrequencySet;
-import com.aqua.music.controller.CyclicSequenceNonPermutating;
 import com.aqua.music.model.FrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 

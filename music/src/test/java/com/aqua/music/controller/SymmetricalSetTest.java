@@ -3,7 +3,6 @@ package com.aqua.music.controller;
 import org.junit.Test;
 
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.controller.CyclicFrequencySet;
 import com.aqua.music.model.FrequencySet.SymmetricalSet;
 
 public class SymmetricalSetTest {

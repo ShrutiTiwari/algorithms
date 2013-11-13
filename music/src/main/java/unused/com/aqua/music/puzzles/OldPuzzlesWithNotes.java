@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.model.Frequency;
-import com.aqua.music.view.LogHelloWorld;
 
 public class OldPuzzlesWithNotes {
 	private static final Logger logger = LoggerFactory.getLogger(OldPuzzlesWithNotes.class);

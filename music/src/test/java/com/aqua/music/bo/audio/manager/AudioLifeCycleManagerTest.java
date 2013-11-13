@@ -2,12 +2,12 @@ package com.aqua.music.bo.audio.manager;
 
 import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
 import static com.aqua.music.model.Frequency.ClassicalNote.GA;
-import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 import static com.aqua.music.model.Frequency.ClassicalNote.MA;
 import static com.aqua.music.model.Frequency.ClassicalNote.NI;
 import static com.aqua.music.model.Frequency.ClassicalNote.PA;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE;
 import static com.aqua.music.model.Frequency.ClassicalNote.SA;
+import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +17,6 @@ import javax.sound.sampled.LineUnavailableException;
 
 import org.junit.Test;
 
-import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.Frequency;
 
 public class AudioLifeCycleManagerTest {
