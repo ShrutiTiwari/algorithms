@@ -8,7 +8,7 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 public class SongTest {
 	//@Test
 	public void testPlayingRaagBhimpalasi() {
-		AbstractSong song = new RaagBhimpalasi();
+		AbstractSong song = new RaagBhimpalasi(4);
 		for (int i = 0; i < 2; i++) {
 			AudioLifeCycleManager.instance.play(song.frequencies(), AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
 		}

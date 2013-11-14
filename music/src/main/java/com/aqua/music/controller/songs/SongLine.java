@@ -9,7 +9,7 @@ import com.aqua.music.model.Frequency;
 import com.aqua.music.model.MusicPeriod;
 
 class SongLine {
-	private static final int COUPLE_NOTES_DURATION = MusicPeriod.HALF_BEAT.durationInMilliSec();
+	static final int COUPLE_NOTES_DURATION = MusicPeriod.HALF_BEAT.durationInMilliSec();
 
 	private final int beatDivison;
 	private final String formatLength;

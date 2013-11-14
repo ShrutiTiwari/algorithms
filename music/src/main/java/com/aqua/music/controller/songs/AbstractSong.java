@@ -1,6 +1,7 @@
 package com.aqua.music.controller.songs;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.aqua.music.model.DynamicFrequency;
@@ -15,6 +16,9 @@ abstract class AbstractSong {
 	private final SongLine sthayiFirstLine;
 	private final SongLine sthayiSecondLine;
 
+	
+	private final Collection<Taan> taans= new ArrayList<Taan>();
+	
 	AbstractSong(int beatDivison) {
 		this.beatDivison = beatDivison;
 		this.sthayiFirstLine = sthayiFirstLine();
@@ -47,5 +51,13 @@ abstract class AbstractSong {
 
 	String printSummary() {
 		return printSummary.toString();
+	}
+	
+	protected void addAll(Collection<Taan> taans) {
+		taans.addAll(taans);
+	}
+	
+	Collection<Taan> taans(){
+		return taans;
 	}
 }

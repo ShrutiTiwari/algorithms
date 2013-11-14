@@ -3,8 +3,8 @@ package com.aqua.music.controller.songs;
 import static com.aqua.music.model.Frequency.ClassicalNote.RE3;
 import static com.aqua.music.model.Frequency.ClassicalNote.*;
 
-public class RaagKaafi extends AbstractSong {
-	RaagKaafi(int beatDivison) {
+public class RaagJaunpuri extends AbstractSong {
+	RaagJaunpuri(int beatDivison) {
 		super(beatDivison);
 	}
 

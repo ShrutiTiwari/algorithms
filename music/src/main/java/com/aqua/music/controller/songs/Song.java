@@ -5,7 +5,7 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 
 public enum Song {
 	RAAG_BHIMPALASI(new RaagBhimpalasi(4)),
-	RAAG_KAFI(new RaagKaafi(4));
+	RAAG_JAUNPURI(new RaagJaunpuri(4));
 
 	private final AbstractSong song;
 
@@ -27,5 +27,15 @@ public enum Song {
 		System.out.println(song.printSummary());
 		player.play(song.frequencies(), audioPlayConfig);
 	}
+	
 
+	public void playTaan(AudioPlayConfig audioPlayConfig) {
+		for (Taan each : song.taans()) {
+			Taan playtaan = each;
+			System.out.println(playtaan.printText());
+			for (int i = 0; i < 2; i++) {
+				AudioLifeCycleManager.instance.play(playtaan.frequencies(), audioPlayConfig);
+			}
+		}
+	}
 }
