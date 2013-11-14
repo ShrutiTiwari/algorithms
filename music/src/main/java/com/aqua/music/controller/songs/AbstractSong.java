@@ -53,8 +53,8 @@ abstract class AbstractSong {
 		return printSummary.toString();
 	}
 	
-	protected void addAll(Collection<Taan> taans) {
-		taans.addAll(taans);
+	protected void addAll(Collection<Taan> myTaans) {
+		taans.addAll(myTaans);
 	}
 	
 	Collection<Taan> taans(){

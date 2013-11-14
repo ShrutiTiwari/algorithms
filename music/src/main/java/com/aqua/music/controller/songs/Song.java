@@ -1,5 +1,7 @@
 package com.aqua.music.controller.songs;
 
+import java.util.Collection;
+
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 
@@ -30,7 +32,8 @@ public enum Song {
 	
 
 	public void playTaan(AudioPlayConfig audioPlayConfig) {
-		for (Taan each : song.taans()) {
+		Collection<Taan> taans = song.taans();
+		for (Taan each : taans) {
 			Taan playtaan = each;
 			System.out.println(playtaan.printText());
 			for (int i = 0; i < 2; i++) {

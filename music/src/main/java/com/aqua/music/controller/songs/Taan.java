@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.List;
 
 import com.aqua.music.model.DynamicFrequency;
-import com.aqua.music.model.Frequency;
 import com.aqua.music.model.DynamicFrequency.CustomFreqDuration;
+import com.aqua.music.model.Frequency;
 
 public class Taan {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
