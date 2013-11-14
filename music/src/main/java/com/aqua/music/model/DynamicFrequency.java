@@ -31,7 +31,7 @@ public interface DynamicFrequency {
 		
 		@Override
 		public String toString() {
-			return frequency.toString();
+			return frequency.prettyPrint();
 		}
 	}
 }

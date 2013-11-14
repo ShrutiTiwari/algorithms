@@ -6,19 +6,23 @@ import java.util.List;
 import com.aqua.music.model.DynamicFrequency;
 
 abstract class AbstractSong {
-	private List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
-	SongLine sthayiFirstLine;
-	SongLine sthayiSecondLine;
-	SongLine antaraFirstLine;
-	SongLine antaraSecondLine;
+	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
+	private final StringBuffer printSummary = new StringBuffer();
+	final int beatDivison;
 
-	AbstractSong() {
+	private final SongLine antaraFirstLine;
+	private final SongLine antaraSecondLine;
+	private final SongLine sthayiFirstLine;
+	private final SongLine sthayiSecondLine;
+
+	AbstractSong(int beatDivison) {
+		this.beatDivison = beatDivison;
 		this.sthayiFirstLine = sthayiFirstLine();
 		this.sthayiSecondLine = sthayiSecondLine();
 		this.antaraFirstLine = antaraFirstLine();
 		this.antaraSecondLine = antaraSecondLine();
-		addLines(sthayiFirstLine, sthayiFirstLine, sthayiSecondLine, sthayiFirstLine, antaraFirstLine, antaraFirstLine, antaraSecondLine,
-				sthayiFirstLine);
+		addLines(sthayiFirstLine, sthayiFirstLine, sthayiSecondLine, sthayiSecondLine, sthayiFirstLine, antaraFirstLine, antaraFirstLine,
+				antaraSecondLine, sthayiFirstLine);
 
 	}
 
@@ -36,7 +40,12 @@ abstract class AbstractSong {
 
 	void addLines(SongLine... songLines) {
 		for (SongLine each : songLines) {
-			frequencies.addAll(each.frequencies);
+			frequencies.addAll(each.frequencies());
+			printSummary.append("\n" + each.printLine());
 		}
+	}
+
+	String printSummary() {
+		return printSummary.toString();
 	}
 }

@@ -177,7 +177,7 @@ class RehearseTabs {
 		private TextArea createTextArea() {
 			TextArea textArea = new TextArea("Hello shrutz");
 			textArea.setVisible(true);
-			textArea.setBounds(UiButtonsForFrequencySet.X_COORIDNATE + 600, 60, 500, 600);
+			textArea.setBounds(UiButtonsForFrequencySet.X_COORIDNATE + 600, 60, 600, 600);
 			return textArea;
 		}
 	}

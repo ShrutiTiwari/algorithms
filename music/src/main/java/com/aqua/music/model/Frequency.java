@@ -82,6 +82,11 @@ public interface Frequency extends DynamicFrequency{
 			String camelCase = ("" + lowerCase.charAt(0)).toUpperCase() + lowerCase.substring(1);
 			return camelCase;
 		}
+		
+		@Override
+		public String toString() {
+			return prettyPrintText;
+		}
 	}
 	
 

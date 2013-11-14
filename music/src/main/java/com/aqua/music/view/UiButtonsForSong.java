@@ -23,7 +23,7 @@ enum UiButtonsForSong {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					song.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
-					setText(textArea, buttonTitle + "===>" + "\n" + buttonTitle);
+					setText(textArea, buttonTitle + "===>" + "\n" + buttonTitle+ "\n" + song.asText());
 				}
 			};
 

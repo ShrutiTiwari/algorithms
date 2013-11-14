@@ -1,36 +1,70 @@
 package com.aqua.music.controller.songs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.aqua.music.model.DynamicFrequency;
+import com.aqua.music.model.DynamicFrequency.CustomFreqDuration;
 import com.aqua.music.model.Frequency;
 import com.aqua.music.model.MusicPeriod;
-import com.aqua.music.model.DynamicFrequency.CustomFreqDuration;
 
 class SongLine {
 	private static final int COUPLE_NOTES_DURATION = MusicPeriod.HALF_BEAT.durationInMilliSec();
 
-	List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
+	private final int beatDivison;
+	private final String formatLength;
+	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
+	private final StringBuffer lineSummary = new StringBuffer();
+	
+	private int counter = 1;
+	private StringBuffer quadrant = new StringBuffer();
 
-	SongLine() {
+	public SongLine(int beatDivison) {
+		this.beatDivison=beatDivison;
+		this.formatLength = "%-" + (beatDivison * 8)  + "s";
 	}
 
-	SongLine(DynamicFrequency... dynamicFrequenciess) {
-		frequencies.addAll(Arrays.asList(dynamicFrequenciess));
+	void addToBuffer(String text) {
+		quadrant.append(text + " ");
+		if ((counter % beatDivison) == 0) {
+			lineSummary.append(String.format(formatLength, quadrant.toString()));
+			quadrant=new StringBuffer();
+		}
+		counter++;
 	}
 
-	void addMoreFrquencies(DynamicFrequency... dynamicFrequenciess) {
-		frequencies.addAll(Arrays.asList(dynamicFrequenciess));
+	SongLine couple(Frequency... notes) {
+		for (int i = 0; i < notes.length;) {
+			Frequency note1 = notes[i++];
+			Frequency note2 = notes[i++];
+			frequencies.add(new CustomFreqDuration(note1, COUPLE_NOTES_DURATION));
+			frequencies.add(new CustomFreqDuration(note2, COUPLE_NOTES_DURATION));
+			addToBuffer(note1.toString() + note2.toString());
+		}
+		return this;
 	}
 
-	void addCoupleNotes(Frequency note1, Frequency note2) {
-		frequencies.add(new CustomFreqDuration(note1, COUPLE_NOTES_DURATION));
-		frequencies.add(new CustomFreqDuration(note2, COUPLE_NOTES_DURATION));
+	SongLine extended(Frequency note, int numOfBeats) {
+		frequencies.add(new CustomFreqDuration(note, (numOfBeats * MusicPeriod.SINGLE_BEAT.durationInMilliSec())));
+		for (int i = 0; i < numOfBeats; i++) {
+			addToBuffer(note.toString());
+		}
+		return this;
 	}
 
-	void addExtendedNotes(Frequency note1, int numOfBeats) {
-		frequencies.add(new CustomFreqDuration(note1, (numOfBeats * MusicPeriod.SINGLE_BEAT.durationInMilliSec())));
+	List<DynamicFrequency> frequencies() {
+		return frequencies;
+	}
+
+	SongLine normal(DynamicFrequency... dynamicFrequenciess) {
+		for (DynamicFrequency each : dynamicFrequenciess) {
+			frequencies.add(each);
+			addToBuffer(each.toString());
+		}
+		return this;
+	}
+
+	String printLine() {
+		return lineSummary.toString();
 	}
 }

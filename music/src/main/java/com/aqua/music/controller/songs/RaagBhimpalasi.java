@@ -13,56 +13,31 @@ import static com.aqua.music.model.Frequency.ClassicalNote.SA;
 import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
 
 class RaagBhimpalasi extends AbstractSong {
-	RaagBhimpalasi() {
-		super();
+	RaagBhimpalasi(int beatDivison) {
+		super(beatDivison);
 	}
 
+	@Override
 	protected SongLine antaraFirstLine() {
-		SongLine songLines = new SongLine();
-		songLines.addMoreFrquencies(GA_, MA, PA, NI_, PA, NI_, SA3, SA3);
-		songLines.addExtendedNotes(SA3, 2);
-		songLines.addCoupleNotes(PA, SA3);
-		songLines.addCoupleNotes(NI_, RE3);
-		songLines.addMoreFrquencies(SA3, GA3_, RE3, SA3);
-		return songLines;
+		return new SongLine(beatDivison).normal(GA_, MA, PA, NI_, PA, NI_, SA3, SA3).extended(SA3, 2).couple(PA, SA3, NI_, RE3)
+				.normal(SA3, GA3_, RE3, SA3);
 	}
 
+	@Override
 	protected SongLine antaraSecondLine() {
-		SongLine songLines = new SongLine();
-		songLines.addCoupleNotes(RE3, SA3);
-		songLines.addMoreFrquencies(NI_);
-		songLines.addExtendedNotes(DHA, 2);
-		songLines.addExtendedNotes(PA, 2);
-		songLines.addMoreFrquencies(PA, PA, MA, PA);
-		songLines.addCoupleNotes(MA, PA);
-		songLines.addMoreFrquencies(DHA, PA, GA_);
-		songLines.addCoupleNotes(SA, RE);
-		songLines.addCoupleNotes(NI1_, SA);
-		return songLines;
+		return new SongLine(beatDivison).couple(RE3, SA3).normal(NI_).extended(DHA, 2).extended(PA, 2).normal(PA, PA, MA, PA)
+				.couple(MA, PA).normal(DHA, PA, GA_).couple(SA, RE, NI1_, SA);
 	}
 
+	@Override
 	protected SongLine sthayiFirstLine() {
-		SongLine songLines = new SongLine();
-		songLines.addCoupleNotes(SA, GA_);
-		songLines.addCoupleNotes(MA, PA);
-		songLines.addMoreFrquencies(GA_, GA_, RE, RE, SA, SA);
-		songLines.addCoupleNotes(RE, SA);
-		songLines.addMoreFrquencies(NI1_, SA, MA, MA, MA);
-		songLines.addCoupleNotes(PA, MA);
-		songLines.addMoreFrquencies(GA_);
-		return songLines;
+		return new SongLine(beatDivison).couple(SA, GA_, MA, PA).normal(GA_, GA_, RE, RE, SA, SA).couple(RE, SA)
+				.normal(NI1_, SA, MA, MA, MA).couple(PA, MA).normal(GA_);
 	}
 
+	@Override
 	protected SongLine sthayiSecondLine() {
-		SongLine songLines = new SongLine();
-		songLines.addMoreFrquencies(GA_, MA, PA, SA3, NI_);
-		songLines.addExtendedNotes(DHA, 2);
-		songLines.addMoreFrquencies(PA, MA, PA);
-		songLines.addCoupleNotes(MA, PA);
-		songLines.addCoupleNotes(DHA, PA);
-		songLines.addMoreFrquencies(PA, GA_);
-		songLines.addCoupleNotes(SA, RE);
-		songLines.addCoupleNotes(NI1_, SA);
-		return songLines;
+		return new SongLine(beatDivison).normal(GA_, MA, PA, SA3, NI_).extended(DHA, 2).normal(PA, MA, PA).couple(MA, PA).couple(DHA, PA)
+				.normal(PA, GA_).couple(SA, RE).couple(NI1_, SA);
 	}
 }
