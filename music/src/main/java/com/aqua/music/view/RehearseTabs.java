@@ -161,6 +161,9 @@ class RehearseTabs {
 			if ((allFrequencySequences.iterator().next()) instanceof CyclicFrequencySet) {
 				final CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
 				panel.add(UiButtonsForFrequencySet.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
+			}else if ((allFrequencySequences.iterator().next()) instanceof Song) {
+				final Song[] songArr = allFrequencySequences.toArray(new Song[allFrequencySequences.size()]);
+				panel.add(UiButtonsForSong.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), songArr));
 			}
 			panel.add(UiButtonsForFrequencySet.QUIT.createButton(null, yCoordinateTracker.buttonYcoordinate(), null));
 			panel.add(textArea);

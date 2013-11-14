@@ -26,7 +26,7 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 		if (permutationApplicator == null || permutationApplicator == PermutationApplicator.NONE) {
 			cyclicSequence = new CyclicSequenceNonPermutating.SymmetricalFreqSet(frequencySet).cyclicSequence();
 		} else {
-			List<Frequency> s = CyclicSequence.frequencies(frequencySet.ascendNotes(), ClassicalNote.SA, ClassicalNote.SA3);
+			List<Frequency> s = CyclicSequence.frequencies(frequencySet.ascendNotes(), ClassicalNote.S, ClassicalNote.S3);
 			cyclicSequence = permutationApplicator.initializeWith(s.toArray(new Frequency[s.size()]));
 		}
 

@@ -1,15 +1,15 @@
 package unused.com.aqua.music.puzzles;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
-import static com.aqua.music.model.Frequency.ClassicalNote.DHA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.MA;
-import static com.aqua.music.model.Frequency.ClassicalNote.MA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI_;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
+import static com.aqua.music.model.Frequency.ClassicalNote.D;
+import static com.aqua.music.model.Frequency.ClassicalNote.D_;
+import static com.aqua.music.model.Frequency.ClassicalNote.G;
+import static com.aqua.music.model.Frequency.ClassicalNote.G_;
+import static com.aqua.music.model.Frequency.ClassicalNote.M;
+import static com.aqua.music.model.Frequency.ClassicalNote.M_;
+import static com.aqua.music.model.Frequency.ClassicalNote.N;
+import static com.aqua.music.model.Frequency.ClassicalNote.N_;
+import static com.aqua.music.model.Frequency.ClassicalNote.R;
+import static com.aqua.music.model.Frequency.ClassicalNote.R_;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,8 +50,8 @@ public class OldPuzzlesWithNotes {
 	}
 
 	private static void initialize() {
-		populateNotes(saTopa, RE, RE_, GA, GA_, MA, MA_);
-		populateNotes(paToHighSa, DHA, DHA_, NI, NI_);
+		populateNotes(saTopa, R, R_, G, G_, M, M_);
+		populateNotes(paToHighSa, D, D_, N, N_);
 	}
 
 	private static void play(HashSet<Frequency> saTopa2) {

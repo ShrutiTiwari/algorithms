@@ -1,16 +1,16 @@
 package com.aqua.music.model;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
-import static com.aqua.music.model.Frequency.ClassicalNote.DHA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.MA;
-import static com.aqua.music.model.Frequency.ClassicalNote.MA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI_;
-import static com.aqua.music.model.Frequency.ClassicalNote.PA;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE_;
+import static com.aqua.music.model.Frequency.ClassicalNote.D;
+import static com.aqua.music.model.Frequency.ClassicalNote.D_;
+import static com.aqua.music.model.Frequency.ClassicalNote.G;
+import static com.aqua.music.model.Frequency.ClassicalNote.G_;
+import static com.aqua.music.model.Frequency.ClassicalNote.M;
+import static com.aqua.music.model.Frequency.ClassicalNote.M_;
+import static com.aqua.music.model.Frequency.ClassicalNote.N;
+import static com.aqua.music.model.Frequency.ClassicalNote.N_;
+import static com.aqua.music.model.Frequency.ClassicalNote.P;
+import static com.aqua.music.model.Frequency.ClassicalNote.R;
+import static com.aqua.music.model.Frequency.ClassicalNote.R_;
 
 public interface FrequencySet {
 	public String name();
@@ -29,18 +29,18 @@ public interface FrequencySet {
 	 * 
 	 */
 	public enum SymmetricalSet implements FrequencySet {
-		THAAT_BHAIRAV(RE_, GA, MA, PA, DHA_, NI),
-		THAAT_PURVI(RE_, GA, MA_, PA, DHA_, NI),
-		THAAT_MARWA(RE_, GA, MA_, PA, DHA, NI),
-		THAAT_KALYAN(RE, GA, MA_, PA, DHA, NI),
-		THAAT_BILAWAL(RE, GA, MA, PA, DHA, NI),
-		THAAT_KHAMAJ(RE, GA, MA, PA, DHA, NI_),
-		THAAT_KAFI(RE, GA_, MA, PA, DHA, NI_),
-		THAAT_ASAVARI(RE, GA_, MA, PA, DHA_, NI_),
-		THAAT_BHAIRAVI(RE_, GA_, MA, PA, DHA_, NI_),
-		THAAT_TODI(RE_, GA_, MA_, PA, DHA_, NI),
-		RAAG2_BAIRAGI(RE_, MA, PA, NI_),
-		RAAG2_GUJARI_TODI(RE_, GA_, MA_, DHA_, NI);
+		THAAT_BHAIRAV(R_, G, M, P, D_, N),
+		THAAT_PURVI(R_, G, M_, P, D_, N),
+		THAAT_MARWA(R_, G, M_, P, D, N),
+		THAAT_KALYAN(R, G, M_, P, D, N),
+		THAAT_BILAWAL(R, G, M, P, D, N),
+		THAAT_KHAMAJ(R, G, M, P, D, N_),
+		THAAT_KAFI(R, G_, M, P, D, N_),
+		THAAT_ASAVARI(R, G_, M, P, D_, N_),
+		THAAT_BHAIRAVI(R_, G_, M, P, D_, N_),
+		THAAT_TODI(R_, G_, M_, P, D_, N),
+		RAAG2_BAIRAGI(R_, M, P, N_),
+		RAAG2_GUJARI_TODI(R_, G_, M_, D_, N);
 
 		private final Frequency[] ascendNotes;
 		private final Frequency[] descendNotes;
@@ -70,10 +70,10 @@ public interface FrequencySet {
 	 * 
 	 */
 	public enum AssymmericalSet implements FrequencySet {
-		RAAG2_SHUDH_SARANG(sequence(RE, MA_, PA, NI), sequence(NI, DHA, PA, MA_, PA, MA, RE)),
-		RAAG2_YAMAN(sequence(RE, GA, MA_, DHA, NI), sequence(NI, DHA, PA, MA_, GA, RE)),
-		RAAG2_PURYA_KALYAN(sequence(RE_, GA, MA_, PA, MA_, DHA, NI), sequence(NI, DHA, PA, DHA, MA_, PA, GA, MA_, RE_, GA, RE_)),
-		RAAG2_MULTANI(sequence(GA_, MA_, PA, NI), sequence(NI, DHA_, PA, MA_, GA_, RE_));
+		RAAG2_SHUDH_SARANG(sequence(R, M_, P, N), sequence(N, D, P, M_, P, M, R)),
+		RAAG2_YAMAN(sequence(R, G, M_, D, N), sequence(N, D, P, M_, G, R)),
+		RAAG2_PURYA_KALYAN(sequence(R_, G, M_, P, M_, D, N), sequence(N, D, P, D, M_, P, G, M_, R_, G, R_)),
+		RAAG2_MULTANI(sequence(G_, M_, P, N), sequence(N, D_, P, M_, G_, R_));
 
 		private final Frequency[] ascendNotes;
 		private final Frequency[] descendNotes;

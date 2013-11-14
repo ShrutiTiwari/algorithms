@@ -21,7 +21,7 @@ class SongLine {
 
 	public SongLine(int beatDivison) {
 		this.beatDivison=beatDivison;
-		this.formatLength = "%-" + (beatDivison * 8)  + "s";
+		this.formatLength = "%-" + (beatDivison * 5)  + "s";
 	}
 
 	void addToBuffer(String text) {

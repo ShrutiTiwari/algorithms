@@ -46,8 +46,8 @@ interface CyclicSequenceNonPermutating {
 		private CyclicSequence cyclicSeq;
 
 		SymmetricalFreqSet(FrequencySet frequencySet) {
-			List<Frequency> ascend = CyclicSequence.frequencies(frequencySet.ascendNotes(), ClassicalNote.SA, ClassicalNote.SA3);
-			List<Frequency> descend = CyclicSequence.frequencies(frequencySet.descendNotes(), ClassicalNote.SA3, ClassicalNote.SA);
+			List<Frequency> ascend = CyclicSequence.frequencies(frequencySet.ascendNotes(), ClassicalNote.S, ClassicalNote.S3);
+			List<Frequency> descend = CyclicSequence.frequencies(frequencySet.descendNotes(), ClassicalNote.S3, ClassicalNote.S);
 			this.cyclicSeq = new CyclicSequence(ascend, descend, 1);
 		}
 

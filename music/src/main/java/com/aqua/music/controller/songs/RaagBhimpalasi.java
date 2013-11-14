@@ -1,16 +1,16 @@
 package com.aqua.music.controller.songs;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.DHA;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA3_;
-import static com.aqua.music.model.Frequency.ClassicalNote.GA_;
-import static com.aqua.music.model.Frequency.ClassicalNote.MA;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI1_;
-import static com.aqua.music.model.Frequency.ClassicalNote.NI_;
-import static com.aqua.music.model.Frequency.ClassicalNote.PA;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE;
-import static com.aqua.music.model.Frequency.ClassicalNote.RE3;
-import static com.aqua.music.model.Frequency.ClassicalNote.SA;
-import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
+import static com.aqua.music.model.Frequency.ClassicalNote.D;
+import static com.aqua.music.model.Frequency.ClassicalNote.G3_;
+import static com.aqua.music.model.Frequency.ClassicalNote.G_;
+import static com.aqua.music.model.Frequency.ClassicalNote.M;
+import static com.aqua.music.model.Frequency.ClassicalNote.N1_;
+import static com.aqua.music.model.Frequency.ClassicalNote.N_;
+import static com.aqua.music.model.Frequency.ClassicalNote.P;
+import static com.aqua.music.model.Frequency.ClassicalNote.R;
+import static com.aqua.music.model.Frequency.ClassicalNote.R3;
+import static com.aqua.music.model.Frequency.ClassicalNote.S;
+import static com.aqua.music.model.Frequency.ClassicalNote.S3;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,26 +29,26 @@ class RaagBhimpalasi extends AbstractSong {
 
 	@Override
 	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).normal(GA_, MA, PA, NI_, PA, NI_, SA3, SA3).extended(SA3, 2).couple(PA, SA3, NI_, RE3)
-				.normal(SA3, GA3_, RE3, SA3);
+		return new SongLine(beatDivison).normal(G_, M, P, N_, P, N_, S3, S3).extended(S3, 2).couple(P, S3, N_, R3)
+				.normal(S3, G3_, R3, S3);
 	}
 
 	@Override
 	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison).couple(RE3, SA3).normal(NI_).extended(DHA, 2).extended(PA, 2).normal(PA, PA, MA, PA)
-				.couple(MA, PA).normal(DHA, PA, GA_).couple(SA, RE, NI1_, SA);
+		return new SongLine(beatDivison).couple(R3, S3).normal(N_).extended(D, 2).extended(P, 2).normal(P, P, M, P)
+				.couple(M, P).normal(D, P, G_).couple(S, R, N1_, S);
 	}
 
 	@Override
 	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).couple(SA, GA_, MA, PA).normal(GA_, GA_, RE, RE, SA, SA).couple(RE, SA)
-				.normal(NI1_, SA, MA, MA, MA).couple(PA, MA).normal(GA_);
+		return new SongLine(beatDivison).couple(S, G_, M, P).normal(G_, G_, R, R, S, S).couple(R, S)
+				.normal(N1_, S, M, M, M).couple(P, M).normal(G_);
 	}
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(GA_, MA, PA, SA3, NI_).extended(DHA, 2).normal(PA, MA, PA).couple(MA, PA).couple(DHA, PA)
-				.normal(PA, GA_).couple(SA, RE).couple(NI1_, SA);
+		return new SongLine(beatDivison).normal(G_, M, P, S3, N_).extended(D, 2).normal(P, M, P).couple(M, P).couple(D, P)
+				.normal(P, G_).couple(S, R).couple(N1_, S);
 	}
 
 }

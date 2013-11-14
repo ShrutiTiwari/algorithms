@@ -9,13 +9,17 @@ import javax.swing.JButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
+import com.aqua.music.bo.audio.manager.AudioTask;
+import com.aqua.music.controller.CyclicFrequencySet;
 import com.aqua.music.controller.songs.Song;
 
 enum UiButtonsForSong {
 	SONG_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, final Song song) {
+		JButton createInstanceWith(final TextArea textArea, final Song[] songs) {
+			final Song song = songs[0];
 			final String buttonTitle = song.name();
 			JButton button = configurableNamedButton(this, buttonTitle);
 
@@ -31,10 +35,47 @@ enum UiButtonsForSong {
 
 			return button;
 		}
+	},	PLAY_ALL("PLAY_ALL", "Click this to play all!", 400) {
+		@Override
+		JButton createInstanceWith(final TextArea textArea, final Song[] song) {
+			JButton button = fixedNameButton(this);
+
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					AudioTask<Song> audioTask = new AudioTask<Song>() {
+						@Override
+						public Song[] forLoopParameter() {
+							return song;
+						}
+
+						@Override
+						public void forLoopBody(final Song song) {
+							String text = song.name() + "===>\n" + song.asText();
+							String displayText = "\n\n Playing::" + text;
+							logger.info(displayText);
+							textArea.append(displayText);
+							song.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+						}
+
+						@Override
+						public void beforeForLoop() {
+							textArea.setText("Playing all items:\n");
+							logger.info(""+song.length);
+						}
+					};
+					AudioLifeCycleManager.instance.execute(audioTask);
+				}
+			};
+
+			button.addActionListener(actionListener);
+			return button;
+		}
 	},
+
 	QUIT("Quit", "Click this to quit!", 400) {
 		@Override
-		JButton createInstanceWith(TextArea Object, Song newParam) {
+		JButton createInstanceWith(final TextArea textArea, final Song[] songs) {
 			JButton button = fixedNameButton(this);
 
 			ActionListener actionListener = new ActionListener() {
@@ -83,12 +124,12 @@ enum UiButtonsForSong {
 		textArea.setText(displayText);
 	}
 
-	public JButton createButton(TextArea textArea, int yCoordinate, Song song) {
+	public JButton createButton(TextArea textArea, int yCoordinate, Song... song) {
 		JButton buttonItem = createInstanceWith(textArea, song);
 		buttonItem.setOpaque(true);
 		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
 		return buttonItem;
 	}
 
-	abstract JButton createInstanceWith(TextArea textArea, Song song);
+	abstract JButton createInstanceWith(TextArea textArea, Song[] song);
 }

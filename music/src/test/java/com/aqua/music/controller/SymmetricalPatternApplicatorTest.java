@@ -17,8 +17,8 @@ public class SymmetricalPatternApplicatorTest {
 	//@Test
 	public void simpleTest() {
 		PermutationApplicatorForSymmetricalSet patternApplicator = new PermutationApplicatorForSymmetricalSet(new int[] { 1, 2 });
-		CyclicSequence freqSeq = patternApplicator.initializeWith(new Frequency[] { Frequency.ClassicalNote.SA, Frequency.ClassicalNote.RE,
-				Frequency.ClassicalNote.GA });
+		CyclicSequence freqSeq = patternApplicator.initializeWith(new Frequency[] { Frequency.ClassicalNote.S, Frequency.ClassicalNote.R,
+				Frequency.ClassicalNote.G });
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
 		assertEquals("SaRe\tReGa", actual[0]);
 		assertEquals("GaRe\tReSa", actual[1]);
@@ -65,7 +65,7 @@ public class SymmetricalPatternApplicatorTest {
 
 	
 	private Frequency[] testset() {
-		List<Frequency> testFreq = CyclicFrequencySet.CyclicSequence.frequencies(FrequencySet.SymmetricalSet.RAAG2_BAIRAGI.ascendNotes(), Frequency.ClassicalNote.SA, Frequency.ClassicalNote.SA3);
+		List<Frequency> testFreq = CyclicFrequencySet.CyclicSequence.frequencies(FrequencySet.SymmetricalSet.RAAG2_BAIRAGI.ascendNotes(), Frequency.ClassicalNote.S, Frequency.ClassicalNote.S3);
 		Frequency[] result = testFreq.toArray(new Frequency[testFreq.size()]);
 		return result;
 	}

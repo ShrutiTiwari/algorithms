@@ -1,7 +1,7 @@
 package com.aqua.music.controller;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.SA;
-import static com.aqua.music.model.Frequency.ClassicalNote.SA3;
+import static com.aqua.music.model.Frequency.ClassicalNote.S;
+import static com.aqua.music.model.Frequency.ClassicalNote.S3;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,9 +19,9 @@ class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	public CyclicFrequencySetWithAsymmetry(FrequencySet frequencySet, PermutationApplicator patternApplicator) {
 		this.frequencySet = frequencySet;
 		this.audioLifeCycleManager = AudioLifeCycleManager.instance;
-		this.frequencies.addAll(new CyclicSequenceNonPermutating.WithMiddleNotesAndStartEndNotes(frequencySet.ascendNotes(), SA, SA3)
+		this.frequencies.addAll(new CyclicSequenceNonPermutating.WithMiddleNotesAndStartEndNotes(frequencySet.ascendNotes(), S, S3)
 				.allFrequenciesInCycle());
-		this.frequencies.addAll(new CyclicSequenceNonPermutating.WithMiddleNotesAndStartEndNotes(frequencySet.descendNotes(), SA3, SA)
+		this.frequencies.addAll(new CyclicSequenceNonPermutating.WithMiddleNotesAndStartEndNotes(frequencySet.descendNotes(), S3, S)
 				.allFrequenciesInCycle());
 	}
 

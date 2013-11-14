@@ -111,6 +111,6 @@ class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
 	}
 
 	private boolean lastIndexIsSa(List<Frequency> subResult) {
-		return subResult.get(subResult.size()-1) == Frequency.ClassicalNote.SA;
+		return subResult.get(subResult.size()-1) == Frequency.ClassicalNote.S;
 	}
 }
