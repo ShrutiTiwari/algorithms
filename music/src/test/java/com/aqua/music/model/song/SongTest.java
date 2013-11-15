@@ -1,4 +1,4 @@
-package com.aqua.music.model.raags;
+package com.aqua.music.model.song;
 
 import org.junit.Test;
 
@@ -8,7 +8,7 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 public class SongTest {
 	//@Test
 	public void testPlayingRaagBhimpalasi() {
-		AbstractRaag song = new RaagBhimpalasi(4);
+		AbstractSong song = new SongBhimpalasi(4);
 		for (int i = 0; i < 2; i++) {
 			AudioLifeCycleManager.instance.play(song.frequencies(), AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
 		}
@@ -17,7 +17,7 @@ public class SongTest {
 	@Test
 	public void testPlayingSong() {
 		for (int i = 0; i < 2; i++) {
-			Raags.RAAG_BHIMPALASI.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+			Song.SONG_BHIMPALASI.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
 		}
 	}
 }

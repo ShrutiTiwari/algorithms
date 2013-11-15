@@ -1,5 +1,8 @@
 package com.aqua.music.view;
 
+import static com.aqua.music.view.UiButtonsCommon.configurableNamedButton;
+import static com.aqua.music.view.UiButtonsCommon.fixedNameButton;
+
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,22 +93,6 @@ enum UiButtonsForFrequencySet implements UiButtons{
 			button.addActionListener(actionListener);
 			return button;
 		}
-	},
-	QUIT("Quit", "Click this to quit!", 400) {
-		@Override
-		JButton createInstanceWith(TextArea Object, CyclicFrequencySet[] newParam) {
-			JButton button = fixedNameButton(this);
-
-			ActionListener actionListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					System.exit(0);
-				}
-			};
-
-			button.addActionListener(actionListener);
-			return button;
-		}
 	};
 	private static final Logger logger = LoggerFactory.getLogger(UiButtonsForFrequencySet.class);
 	private final int displayWidth;
@@ -129,18 +116,6 @@ enum UiButtonsForFrequencySet implements UiButtons{
 	}
 	static final int HEIGHT() {
 		return BUTTON_HEIGHT;
-	}
-
-	static JButton configurableNamedButton(UiButtons itemType, String replaceName) {
-		JButton resultButton = new JButton(itemType.text().replace("$$", replaceName));
-		resultButton.setToolTipText(itemType.tooltip().replace("$$", replaceName));
-		return resultButton;
-	}
-
-	static JButton fixedNameButton(UiButtons itemType) {
-		JButton resultButton = new JButton(itemType.text());
-		resultButton.setToolTipText(itemType.tooltip());
-		return resultButton;
 	}
 
 	private static void setText(final TextArea textArea, final String name) {

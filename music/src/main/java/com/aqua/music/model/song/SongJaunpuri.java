@@ -1,11 +1,22 @@
-package com.aqua.music.model.raags;
+package com.aqua.music.model.song;
+
+import static com.aqua.music.model.core.ClassicalNote.D_;
+import static com.aqua.music.model.core.ClassicalNote.G3_;
+import static com.aqua.music.model.core.ClassicalNote.G_;
+import static com.aqua.music.model.core.ClassicalNote.M;
+import static com.aqua.music.model.core.ClassicalNote.N1_;
+import static com.aqua.music.model.core.ClassicalNote.N_;
+import static com.aqua.music.model.core.ClassicalNote.P;
+import static com.aqua.music.model.core.ClassicalNote.R;
+import static com.aqua.music.model.core.ClassicalNote.R3;
+import static com.aqua.music.model.core.ClassicalNote.S;
+import static com.aqua.music.model.core.ClassicalNote.S3;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import static com.aqua.music.model.core.ClassicalNote.*;
-public class RaagJaunpuri extends AbstractRaag {
-	RaagJaunpuri(int beatDivison) {
+public class SongJaunpuri extends AbstractSong {
+	SongJaunpuri(int beatDivison) {
 		super(beatDivison);
 		addAll(sthayiTaans());
 	}

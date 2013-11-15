@@ -1,4 +1,4 @@
-package com.aqua.music.model.raags;
+package com.aqua.music.model.song;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
-abstract class AbstractRaag {
+abstract class AbstractSong {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
 	private final StringBuffer printSummary = new StringBuffer();
 	final int beatDivison;
@@ -19,7 +19,7 @@ abstract class AbstractRaag {
 	
 	private final Collection<Taan> taans= new ArrayList<Taan>();
 	
-	AbstractRaag(int beatDivison) {
+	AbstractSong(int beatDivison) {
 		this.beatDivison = beatDivison;
 		this.sthayiFirstLine = sthayiFirstLine();
 		this.sthayiSecondLine = sthayiSecondLine();

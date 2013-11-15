@@ -1,5 +1,8 @@
 package com.aqua.music.model.cyclicset;
 
+import static com.aqua.music.model.core.ClassicalNote.S;
+import static com.aqua.music.model.core.ClassicalNote.S3;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -7,7 +10,6 @@ import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
-import static com.aqua.music.model.core.ClassicalNote.*;
 class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	private final AudioLifeCycleManager audioLifeCycleManager;
 	private final Collection<Frequency> frequencies = new ArrayList<Frequency>();

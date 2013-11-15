@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RandomShuffler<T> {
+class RandomShuffler<T> {
 	/**
 	 * Used for re-initialising.
 	 */

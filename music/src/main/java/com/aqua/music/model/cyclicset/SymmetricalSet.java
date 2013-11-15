@@ -1,8 +1,19 @@
 package com.aqua.music.model.cyclicset;
 
+import static com.aqua.music.model.core.ClassicalNote.D;
+import static com.aqua.music.model.core.ClassicalNote.D_;
+import static com.aqua.music.model.core.ClassicalNote.G;
+import static com.aqua.music.model.core.ClassicalNote.G_;
+import static com.aqua.music.model.core.ClassicalNote.M;
+import static com.aqua.music.model.core.ClassicalNote.M_;
+import static com.aqua.music.model.core.ClassicalNote.N;
+import static com.aqua.music.model.core.ClassicalNote.N_;
+import static com.aqua.music.model.core.ClassicalNote.P;
+import static com.aqua.music.model.core.ClassicalNote.R;
+import static com.aqua.music.model.core.ClassicalNote.R_;
+
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
-import static com.aqua.music.model.core.ClassicalNote.*;
 /**
  * 
  * This set uses same set of notes in ascend and descend

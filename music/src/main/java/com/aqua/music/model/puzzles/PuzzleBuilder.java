@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class PuzzleBuilder<T> {
+class PuzzleBuilder<T> {
 	private final Collection<List<T>> bucketedItems = new ArrayList<List<T>>();
 
 	PuzzleBuilder(T[] input, int bucketSize) {

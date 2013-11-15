@@ -38,7 +38,10 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	public String cycleFrequenciesAsText() {
 		return cycleFrequenciesAsText;
 	}
-
+	@Override
+	public String toString() {
+		return freqSetNamePermuationAsText();
+	}
 	@Override
 	public String freqSetNamePermuationAsText() {
 		return name;

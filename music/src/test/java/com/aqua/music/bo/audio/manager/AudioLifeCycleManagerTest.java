@@ -1,5 +1,14 @@
 package com.aqua.music.bo.audio.manager;
 
+import static com.aqua.music.model.core.ClassicalNote.D;
+import static com.aqua.music.model.core.ClassicalNote.G;
+import static com.aqua.music.model.core.ClassicalNote.M;
+import static com.aqua.music.model.core.ClassicalNote.N;
+import static com.aqua.music.model.core.ClassicalNote.P;
+import static com.aqua.music.model.core.ClassicalNote.R;
+import static com.aqua.music.model.core.ClassicalNote.S;
+import static com.aqua.music.model.core.ClassicalNote.S3;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +19,6 @@ import org.junit.Test;
 
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
-import static com.aqua.music.model.core.ClassicalNote.*;
 public class AudioLifeCycleManagerTest {
 
 	@Test

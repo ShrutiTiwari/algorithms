@@ -1,17 +1,17 @@
-package com.aqua.music.model.raags;
+package com.aqua.music.model.song;
 
 import java.util.Collection;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 
-public enum Raags {
-	RAAG_BHIMPALASI(new RaagBhimpalasi(4)),
-	RAAG_JAUNPURI(new RaagJaunpuri(4));
+public enum Song {
+	SONG_BHIMPALASI(new SongBhimpalasi(4)),
+	SONG_JAUNPURI(new SongJaunpuri(4));
 
-	private final AbstractRaag song;
+	private final AbstractSong song;
 
-	private Raags(AbstractRaag song) {
+	private Song(AbstractSong song) {
 		this.song = song;
 	}
 

@@ -6,14 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
 import org.slf4j.Logger;
@@ -25,90 +22,48 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
-import com.aqua.music.model.puzzles.QuizLevel.QuizSection;
-import com.aqua.music.model.raags.Raags;
+import com.aqua.music.model.song.Song;
 
-class RehearseTabs {
-	private static final Logger logger = LoggerFactory.getLogger(RehearseTabs.class);
+class UiTabsFactory {
+	private static final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
 	private final JTabbedPane tabbedPane;
 
 	// mutated state
 	private JPanel rehearseWithPatternsPanel;
 	private JPanel quizWithFrequencySetPanel;
 
-	public RehearseTabs(JTabbedPane tabbedPane) {
+	public UiTabsFactory(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
 	}
 
 	void addPatternTab() {
 		addPatternTab(SymmetricalSet.THAAT_KAFI);
 	}
-	
+
 	void addQuizSectionTab() {
-		addQuizSectionTab((QuizLevel<CyclicFrequencySet>) QuizController.FrequencySetQuiz.quizLevels().iterator().next());
+		QuizLevel<CyclicFrequencySet> firstQuizLevel = (QuizLevel<CyclicFrequencySet>) QuizController.FrequencySetQuiz.quizLevels().iterator().next();
+		addQuizSectionTab(firstQuizLevel);
 	}
 
-	private final void addQuizSectionTab(QuizLevel<CyclicFrequencySet> quizLevel) {
-		this.quizWithFrequencySetPanel = quizTabForFrequenciesQuizLevel(quizLevel);
+	final void addQuizSectionTab(QuizLevel<CyclicFrequencySet> quizLevel) {
+		this.quizWithFrequencySetPanel = new UiTabForQuizes(this, quizLevel).getPanel();
 		tabbedPane.addTab("Quiz with Frequency sets", quizWithFrequencySetPanel);
 	}
-	
+
 	private final void addPatternTab(SymmetricalSet selectedThaat) {
 		this.rehearseWithPatternsPanel = patternTabFor(selectedThaat);
 		tabbedPane.addTab("Rehearse with pattern", rehearseWithPatternsPanel);
 	}
 
-	JPanel quizTabForFrequenciesQuizLevel(final QuizLevel<CyclicFrequencySet> quizLevel) {
-		
-		RehearsePanel<CyclicFrequencySet> rehearsePanel = new RehearsePanel<CyclicFrequencySet>() {
-			@Override
-			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab,final TextArea textArea) {
-				mainTab.add(createQuizLevelDropdown());
-				final JLabel jLabel=createTextLabel();
-				mainTab.add(jLabel);
-				
-				Collection<QuizSection<CyclicFrequencySet>> quizSections = quizLevel.quizSections();
-				for( QuizSection<CyclicFrequencySet> each:quizSections){
-					for(CyclicFrequencySet each1:each.quizItems()){
-						JRadioButton radioButton= new JRadioButton(each1.freqSetNamePermuationAsText());
-						mainTab.add(radioButton);
-					}
-					JButton button = UiButtonsForQuiz.FREQUENCY_SET_QUIZ.createButton(jLabel, buttonYcoordinate(),
-							each );
-					mainTab.add(button);
-				}
-				return Collections.EMPTY_LIST;
-			}
-
-			private JComboBox createQuizLevelDropdown() {
-				Collection<QuizLevel> quizLevels = QuizController.FrequencySetQuiz.quizLevels();
-				
-				final JComboBox box = new JComboBox(quizLevels.toArray());
-				box.setBackground(Color.RED);
-				box.setForeground(Color.GREEN);
-				box.setSelectedItem(quizLevel);
-				box.setBounds(UiButtonsForFrequencySet.X_COORIDNATE, buttonYcoordinate(), 500, UiButtonsForFrequencySet.HEIGHT());
-				box.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						JComboBox cbox = (JComboBox) arg0.getSource();
-						QuizLevel selectedQuiz = (QuizLevel) cbox.getSelectedItem();
-						logger.info("selectedQuiz [" + selectedQuiz.displayText() + "]");
-						tabbedPane.remove(quizWithFrequencySetPanel);
-						addQuizSectionTab(selectedQuiz);
-						quizWithFrequencySetPanel.requestFocusInWindow();
-						tabbedPane.setSelectedComponent(quizWithFrequencySetPanel);
-					}
-				});
-				return box;
-			}
-		};
-		return rehearsePanel.getPanel();
+	void reConfigureQuizTab(QuizLevel selectedQuiz) {
+		tabbedPane.remove(quizWithFrequencySetPanel);
+		addQuizSectionTab(selectedQuiz);
+		quizWithFrequencySetPanel.requestFocusInWindow();
+		tabbedPane.setSelectedComponent(quizWithFrequencySetPanel);
 	}
 	
-	
 	JPanel patternTabFor(final FrequencySet frequencySet) {
-		RehearsePanel<CyclicFrequencySet> rehearsePanel = new RehearsePanel<CyclicFrequencySet>() {
+		AbstractRehearseTabPanels<CyclicFrequencySet> rehearsePanel = new AbstractRehearseTabPanels<CyclicFrequencySet>() {
 			@Override
 			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 
@@ -154,9 +109,9 @@ class RehearseTabs {
 		};
 		return rehearsePanel.getPanel();
 	}
-	
+
 	JPanel plainTab() {
-		RehearsePanel<CyclicFrequencySet> rehearsePanel = new RehearsePanel<CyclicFrequencySet>() {
+		AbstractRehearseTabPanels<CyclicFrequencySet> rehearsePanel = new AbstractRehearseTabPanels<CyclicFrequencySet>() {
 			@Override
 			protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 
@@ -177,13 +132,13 @@ class RehearseTabs {
 	}
 
 	JPanel songTab() {
-		RehearsePanel<Raags> rehearsePanel = new RehearsePanel<Raags>() {
+		AbstractRehearseTabPanels<Song> rehearsePanel = new AbstractRehearseTabPanels<Song>() {
 			@Override
-			protected Collection<Raags> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
+			protected Collection<Song> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 
-				final Collection<Raags> allFrequencySequences = new ArrayList<Raags>();
+				final Collection<Song> allFrequencySequences = new ArrayList<Song>();
 
-				for (Raags eachSong : Raags.values()) {
+				for (Song eachSong : Song.values()) {
 					JButton button = UiButtonsForSong.SONG_PLAYER.createButton(textArea, buttonYcoordinate(), eachSong);
 					allFrequencySequences.add(eachSong);
 					mainTab.add(button);
