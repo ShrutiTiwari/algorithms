@@ -2,7 +2,7 @@ package com.aqua.music.bo.audio.manager;
 
 import java.util.Collection;
 
-import com.aqua.music.model.DynamicFrequency;
+import com.aqua.music.model.core.DynamicFrequency;
 
 enum PlayMode {
 	Asynchronous {

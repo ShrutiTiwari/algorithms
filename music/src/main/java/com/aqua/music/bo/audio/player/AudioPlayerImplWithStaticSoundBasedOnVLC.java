@@ -9,8 +9,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
-import com.aqua.music.model.DynamicFrequency;
-import com.aqua.music.model.Frequency;
+import com.aqua.music.model.core.DynamicFrequency;
+import com.aqua.music.model.core.Frequency;
 
 class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	private static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";

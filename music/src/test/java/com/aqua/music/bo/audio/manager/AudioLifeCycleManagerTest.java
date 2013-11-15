@@ -1,14 +1,5 @@
 package com.aqua.music.bo.audio.manager;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.D;
-import static com.aqua.music.model.Frequency.ClassicalNote.G;
-import static com.aqua.music.model.Frequency.ClassicalNote.M;
-import static com.aqua.music.model.Frequency.ClassicalNote.N;
-import static com.aqua.music.model.Frequency.ClassicalNote.P;
-import static com.aqua.music.model.Frequency.ClassicalNote.R;
-import static com.aqua.music.model.Frequency.ClassicalNote.S;
-import static com.aqua.music.model.Frequency.ClassicalNote.S3;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +8,9 @@ import javax.sound.sampled.LineUnavailableException;
 
 import org.junit.Test;
 
-import com.aqua.music.model.Frequency;
-
+import com.aqua.music.model.core.ClassicalNote;
+import com.aqua.music.model.core.Frequency;
+import static com.aqua.music.model.core.ClassicalNote.*;
 public class AudioLifeCycleManagerTest {
 
 	@Test
@@ -32,7 +24,7 @@ public class AudioLifeCycleManagerTest {
 	//@Test
 	public void testVlcPlayer() {
 		List<Frequency> frequencyList = new ArrayList<Frequency>();
-		frequencyList.add(Frequency.ClassicalNote.D);
+		frequencyList.add(ClassicalNote.D);
 		AudioLifeCycleManager.instance.play(frequencyList, AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
 	}
 

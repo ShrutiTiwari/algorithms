@@ -19,14 +19,14 @@ import javax.swing.JTabbedPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.controller.CyclicFrequencySet;
-import com.aqua.music.controller.CyclicFrequencySet.PermuatationsGenerator;
-import com.aqua.music.controller.puzzles.QuizController;
-import com.aqua.music.controller.puzzles.QuizLevel;
-import com.aqua.music.controller.puzzles.QuizLevel.QuizSection;
-import com.aqua.music.controller.songs.Song;
-import com.aqua.music.model.FrequencySet;
-import com.aqua.music.model.FrequencySet.SymmetricalSet;
+import com.aqua.music.model.core.FrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
+import com.aqua.music.model.cyclicset.SymmetricalSet;
+import com.aqua.music.model.puzzles.QuizController;
+import com.aqua.music.model.puzzles.QuizLevel;
+import com.aqua.music.model.puzzles.QuizLevel.QuizSection;
+import com.aqua.music.model.raags.Raags;
 
 class RehearseTabs {
 	private static final Logger logger = LoggerFactory.getLogger(RehearseTabs.class);
@@ -132,7 +132,7 @@ class RehearseTabs {
 			}
 
 			private JComboBox createThaatDropdown() {
-				final JComboBox box = new JComboBox(FrequencySet.SymmetricalSet.values());
+				final JComboBox box = new JComboBox(SymmetricalSet.values());
 				box.setBackground(Color.RED);
 				box.setForeground(Color.GREEN);
 				box.setSelectedItem(frequencySet);
@@ -177,13 +177,13 @@ class RehearseTabs {
 	}
 
 	JPanel songTab() {
-		RehearsePanel<Song> rehearsePanel = new RehearsePanel<Song>() {
+		RehearsePanel<Raags> rehearsePanel = new RehearsePanel<Raags>() {
 			@Override
-			protected Collection<Song> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
+			protected Collection<Raags> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 
-				final Collection<Song> allFrequencySequences = new ArrayList<Song>();
+				final Collection<Raags> allFrequencySequences = new ArrayList<Raags>();
 
-				for (Song eachSong : Song.values()) {
+				for (Raags eachSong : Raags.values()) {
 					JButton button = UiButtonsForSong.SONG_PLAYER.createButton(textArea, buttonYcoordinate(), eachSong);
 					allFrequencySequences.add(eachSong);
 					mainTab.add(button);

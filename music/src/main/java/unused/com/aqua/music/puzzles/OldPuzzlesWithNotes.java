@@ -1,16 +1,5 @@
 package unused.com.aqua.music.puzzles;
 
-import static com.aqua.music.model.Frequency.ClassicalNote.D;
-import static com.aqua.music.model.Frequency.ClassicalNote.D_;
-import static com.aqua.music.model.Frequency.ClassicalNote.G;
-import static com.aqua.music.model.Frequency.ClassicalNote.G_;
-import static com.aqua.music.model.Frequency.ClassicalNote.M;
-import static com.aqua.music.model.Frequency.ClassicalNote.M_;
-import static com.aqua.music.model.Frequency.ClassicalNote.N;
-import static com.aqua.music.model.Frequency.ClassicalNote.N_;
-import static com.aqua.music.model.Frequency.ClassicalNote.R;
-import static com.aqua.music.model.Frequency.ClassicalNote.R_;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,8 +8,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.Frequency;
-
+import com.aqua.music.model.core.Frequency;
+import static com.aqua.music.model.core.ClassicalNote.*;
 public class OldPuzzlesWithNotes {
 	private static final Logger logger = LoggerFactory.getLogger(OldPuzzlesWithNotes.class);
 	static HashSet<Frequency> saTopa = new HashSet<Frequency>();

@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.DynamicFrequency;
+import com.aqua.music.model.core.DynamicFrequency;
 
 public interface AudioLifeCycleManager {
 	Logger logger = LoggerFactory.getLogger(AudioLifeCycleManager.class);

@@ -1,6 +1,5 @@
 package com.aqua.music.view;
 
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,8 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.controller.CyclicFrequencySet;
-import com.aqua.music.controller.puzzles.QuizLevel.QuizSection;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet;
+import com.aqua.music.model.puzzles.QuizLevel.QuizSection;
 
 public enum UiButtonsForQuiz implements UiButtons{
 	FREQUENCY_SET_QUIZ("Play $$", "Click this to play $$", 400) {

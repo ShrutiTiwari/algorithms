@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
-import com.aqua.music.model.DynamicFrequency;
+import com.aqua.music.model.core.DynamicFrequency;
 
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);

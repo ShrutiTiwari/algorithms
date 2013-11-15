@@ -7,7 +7,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
-import com.aqua.music.model.DynamicFrequency;
+import com.aqua.music.model.core.DynamicFrequency;
 
 class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
 	private static final double DEFAULT_VOL = 0.8;

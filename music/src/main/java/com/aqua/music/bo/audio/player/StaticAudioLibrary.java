@@ -8,7 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.Frequency;
+import com.aqua.music.model.core.Frequency;
 
 class StaticAudioLibrary {
 	private static final Logger logger = LoggerFactory.getLogger(StaticAudioLibrary.class);

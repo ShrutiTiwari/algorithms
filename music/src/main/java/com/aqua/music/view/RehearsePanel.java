@@ -7,8 +7,8 @@ import java.util.Collection;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.controller.CyclicFrequencySet;
-import com.aqua.music.controller.songs.Song;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet;
+import com.aqua.music.model.raags.Raags;
 
 abstract class RehearsePanel<T> {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
@@ -36,8 +36,8 @@ abstract class RehearsePanel<T> {
 			if ((allFrequencySequences.iterator().next()) instanceof CyclicFrequencySet) {
 				final CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
 				panel.add(UiButtonsForFrequencySet.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
-			} else if ((allFrequencySequences.iterator().next()) instanceof Song) {
-				final Song[] songArr = allFrequencySequences.toArray(new Song[allFrequencySequences.size()]);
+			} else if ((allFrequencySequences.iterator().next()) instanceof Raags) {
+				final Raags[] songArr = allFrequencySequences.toArray(new Raags[allFrequencySequences.size()]);
 				panel.add(UiButtonsForSong.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), songArr));
 			}
 			panel.add(textArea);

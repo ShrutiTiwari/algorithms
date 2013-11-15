@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.bo.audio.manager.AudioTask;
-import com.aqua.music.controller.CyclicFrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 
 enum UiButtonsForFrequencySet implements UiButtons{
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
