@@ -19,9 +19,21 @@ class SongLine {
 	private int counter = 1;
 	private StringBuffer quadrant = new StringBuffer();
 
-	public SongLine(int beatDivison) {
+	private final int repeatCount;
+
+	
+	int repeatCount(){
+		return repeatCount;
+	}
+	
+	public SongLine(int beatDivison, int repeatCount){
 		this.beatDivison=beatDivison;
+		this.repeatCount=repeatCount;
 		this.formatLength = "%-" + (beatDivison * 5)  + "s";
+	}
+	
+	public SongLine(int beatDivison) {
+		this(beatDivison,1);
 	}
 
 	void addToBuffer(String text) {

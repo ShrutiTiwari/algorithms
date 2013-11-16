@@ -1,4 +1,4 @@
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -41,7 +41,7 @@ public class UiLauncher {
 		return frame;
 	}
 
-	static class UiTabbedPanel extends JPanel {
+	public static class UiTabbedPanel extends JPanel {
 		public UiTabbedPanel() {
 			super(new GridLayout(1, 1));
 			JTabbedPane tabbedPane = createTabbedPan();

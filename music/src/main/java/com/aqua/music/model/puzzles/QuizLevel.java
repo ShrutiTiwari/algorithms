@@ -5,15 +5,15 @@ import java.util.Collection;
 import java.util.List;
 
 public class QuizLevel<T> {
-	private final Collection<QuizSection<T>> quizSections;
+	private final Collection<Quiz<T>> quizSections;
 	private final String displayText;
 
 	public QuizLevel(String displayText, int bucketSize, T[] items) {
 		this.displayText = displayText;
 		Collection<List<T>> bucketedPuzzles = new PuzzleBuilder<T>(items, bucketSize).allBuckets();
-		quizSections = new ArrayList<QuizSection<T>>(bucketedPuzzles.size());
+		quizSections = new ArrayList<Quiz<T>>(bucketedPuzzles.size());
 		for (List<T> each : bucketedPuzzles) {
-			quizSections.add(new QuizSection<T>(each, new RandomShuffler<T>(each)));
+			quizSections.add(new Quiz<T>(each, new RandomShuffler<T>(each)));
 		}
 	}
 
@@ -21,11 +21,11 @@ public class QuizLevel<T> {
 	public String toString() {
 		return displayText;
 	}
-	public static class QuizSection<T> {
+	public static class Quiz<T> {
 		private final List<T> quizItems;
 		private final RandomShuffler<T> randomShuffler;
 
-		public QuizSection(List<T> quizItems, RandomShuffler<T> randomShuffler) {
+		public Quiz(List<T> quizItems, RandomShuffler<T> randomShuffler) {
 			this.quizItems = quizItems;
 			this.randomShuffler = randomShuffler;
 		}
@@ -38,7 +38,7 @@ public class QuizLevel<T> {
 		}
 	}
 	
-	public Collection<QuizSection<T>> quizSections() {
+	public Collection<Quiz<T>> quizSections() {
 		return quizSections;
 	}
 	

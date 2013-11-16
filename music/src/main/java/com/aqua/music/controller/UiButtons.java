@@ -1,5 +1,5 @@
 
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
 public interface UiButtons {
 	int X_COORIDNATE = 30;

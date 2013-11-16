@@ -1,5 +1,6 @@
 package com.aqua.music.model.song;
 
+import static com.aqua.music.model.core.ClassicalNote.*;
 import static com.aqua.music.model.core.ClassicalNote.D;
 import static com.aqua.music.model.core.ClassicalNote.G3_;
 import static com.aqua.music.model.core.ClassicalNote.G_;
@@ -15,8 +16,9 @@ import static com.aqua.music.model.core.ClassicalNote.S3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-class SongBhimpalasi extends AbstractSong {
-	SongBhimpalasi(int beatDivison) {
+
+class SongYaman1 extends AbstractSong {
+	SongYaman1(int beatDivison) {
 		super(beatDivison);
 		addAll(sthayiTaans());
 	}
@@ -28,26 +30,23 @@ class SongBhimpalasi extends AbstractSong {
 
 	@Override
 	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).normal(G_, M, P, N_, P, N_, S3, S3).extended(S3, 2).couple(P, S3, N_, R3)
-				.normal(S3, G3_, R3, S3);
+		return new SongLine(beatDivison).normal( P, P, S3, S3).extended(S3, 2).normal(S3,S3,N,D).couple(N,R3).normal(S3).couple(N,D).normal(N,P,P);
+
 	}
 
 	@Override
 	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison,2).couple(R3, S3).normal(N_).extended(D, 2).extended(P, 2).normal(P, P, M, P)
-				.couple(M, P).normal(D, P, G_).couple(S, R, N1_, S);
+		return new SongLine(beatDivison).normal(P,G3,R3,S3).couple(N,D).normal(N,P,P).couple(M_, N).couple(D, N).extended(P, 2).normal(R, R, S, S);
 	}
 
 	@Override
 	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).couple(S, G_, M, P).normal(G_, G_, R, R, S, S).couple(R, S)
-				.normal(N1_, S, M, M, M).couple(P, M).normal(G_);
+		return new SongLine(beatDivison).couple(M_, N).couple(D, N).extended(P, 2).normal(R, R, S, S, G, R, G).extended(G, 3).normal(G, M_);
 	}
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(G_, M, P, S3, N_).extended(D, 2).normal(P, M, P).couple(M, P).couple(D, P)
-				.normal(P, G_).couple(S, R).couple(N1_, S);
+		return new SongLine(beatDivison).normal(G, M_, G, P, M_, D, M_, P, S3, N, P, P, R, R, S, S);
 	}
 
 }

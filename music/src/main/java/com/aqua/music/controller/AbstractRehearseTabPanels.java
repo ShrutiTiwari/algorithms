@@ -1,4 +1,4 @@
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
 import java.awt.Dimension;
 import java.awt.TextArea;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.song.Song;
 
-abstract class AbstractRehearseTabPanels<T> {
+public abstract class AbstractRehearseTabPanels<T> {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	private final JPanel panel;
 	private final TextArea textArea;
@@ -21,7 +21,7 @@ abstract class AbstractRehearseTabPanels<T> {
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
 
-	AbstractRehearseTabPanels() {
+	protected AbstractRehearseTabPanels() {
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.textArea = createTextArea();
 		this.panel = createBlankMainTab();
@@ -37,7 +37,7 @@ abstract class AbstractRehearseTabPanels<T> {
 
 	protected abstract Collection<T> addSpecificButtons(final JPanel mainTab, final TextArea textArea);
 
-	JPanel getPanel() {
+	public JPanel getPanel() {
 		if(!initialized){
 			initialize();
 		}
@@ -81,7 +81,7 @@ abstract class AbstractRehearseTabPanels<T> {
 		return textArea;
 	}
 
-	final int buttonYcoordinate() {
+	protected final int buttonYcoordinate() {
 		return yCoordinateTracker.buttonYcoordinate();
 	}
 

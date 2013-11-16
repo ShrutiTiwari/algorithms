@@ -1,7 +1,7 @@
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
-import static com.aqua.music.view.UiButtonsCommon.configurableNamedButton;
-import static com.aqua.music.view.UiButtonsCommon.fixedNameButton;
+import static com.aqua.music.controller.UiButtonsCommon.configurableNamedButton;
+import static com.aqua.music.controller.UiButtonsCommon.fixedNameButton;
 
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -17,7 +17,7 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 
-enum UiButtonsForFrequencySet implements UiButtons{
+public enum UiButtonsForFrequencySet implements UiButtons{
 	FREQUENCY_SET_PATTERNED_PLAYER("Play $$", "Click this to play $$", 300) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, final CyclicFrequencySet[] frequencySequences) {

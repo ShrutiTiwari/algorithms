@@ -1,20 +1,22 @@
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
 import java.awt.Color;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
-import com.aqua.music.model.puzzles.QuizLevel.QuizSection;
+import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
 public class UiTabForQuizes extends AbstractRehearseTabPanels<CyclicFrequencySet> {
 	private final QuizLevel quizLevel;
@@ -31,13 +33,14 @@ public class UiTabForQuizes extends AbstractRehearseTabPanels<CyclicFrequencySet
 
 	protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 		mainTab.add(createQuizLevelDropdown());
-		final JLabel jLabel = createTextLabel();
-		mainTab.add(jLabel);
-		jLabel.setBounds(UiButtons.X_COORIDNATE + 700, 300, 100, UiButtons.BUTTON_WIDTH);
-		
-		int i=0;
-		for (QuizSection<CyclicFrequencySet> each : (Collection<QuizSection<CyclicFrequencySet>>) quizLevel.quizSections()) {
-			UiButtonsForQuizs.FREQUENCY_SET_QUIZ.createJComponents(mainTab, buttonYcoordinate(), each, "Quiz "+i);
+
+		int i = 1;
+		List<JButton> allPlayButtons = new ArrayList<JButton>();
+		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
+			final String quizName = "Quiz " + i;
+			JButton playButton = UiButtonsForQuizs.FREQUENCY_SET_QUIZ.createPlayButtonForEachQuiz(mainTab, buttonYcoordinate(), eachQuiz,
+					quizName, allPlayButtons);
+			allPlayButtons.add(playButton);
 			i++;
 		}
 		return Collections.EMPTY_LIST;

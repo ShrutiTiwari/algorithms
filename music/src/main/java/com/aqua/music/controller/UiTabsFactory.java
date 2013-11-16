@@ -1,4 +1,4 @@
-package com.aqua.music.view;
+package com.aqua.music.controller;
 
 import java.awt.Color;
 import java.awt.TextArea;

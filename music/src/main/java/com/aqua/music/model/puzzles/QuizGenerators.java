@@ -27,8 +27,8 @@ interface QuizGenerators<T> {
 
 		private Collection<QuizLevel<CyclicFrequencySet>> generateQuizLevels() {
 			final Collection<QuizLevel<CyclicFrequencySet>> quizs = new ArrayList<QuizLevel<CyclicFrequencySet>>();
-			for (int i = 0; i < allItems.length - 2; i++) {
-				QuizLevel<CyclicFrequencySet> quizLevel = new QuizLevel<CyclicFrequencySet>("Level " + i, i + 2, allItems);
+			for (int levelIndex = 1; levelIndex < allItems.length - 1; levelIndex++) {
+				QuizLevel<CyclicFrequencySet> quizLevel = new QuizLevel<CyclicFrequencySet>("Level " + (levelIndex), levelIndex + 1, allItems);
 				if (quizLevel.quizSections().size() < 2) {
 					break;
 				} else {

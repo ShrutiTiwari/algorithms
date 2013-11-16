@@ -7,7 +7,11 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 
 public enum Song {
 	SONG_BHIMPALASI(new SongBhimpalasi(4)),
-	SONG_JAUNPURI(new SongJaunpuri(4));
+	SONG_JAUNPURI(new SongJaunpuri(4)),
+	SONG_YAMAN1(new SongYaman1(4)),
+	SONG_BAIRAGI(new SongBairagi(2)),
+	SONG_MULTANI(new SongMultani(2)),
+	SONG_SHUDH_SARANG(new SongShudhSarang(4));
 
 	private final AbstractSong song;
 
