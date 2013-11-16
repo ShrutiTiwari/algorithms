@@ -1,17 +1,14 @@
 package com.aqua.music.controller;
 
 import java.awt.TextArea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.bo.audio.manager.AudioTask;
+import com.aqua.music.action.listeners.PlayAllSongsActionListener;
+import com.aqua.music.action.listeners.PlaySingleItemActionListener;
 import com.aqua.music.model.song.Song;
 
 enum UiButtonsForSong {
@@ -21,53 +18,14 @@ enum UiButtonsForSong {
 			final Song song = songs[0];
 			final String buttonTitle = song.name();
 			JButton button = configurableNamedButton(this, buttonTitle);
-
-			ActionListener actionListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					song.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
-					setText(textArea, buttonTitle + "===>" + "\n" + buttonTitle+ "\n" + song.asText());
-				}
-			};
-
-			button.addActionListener(actionListener);
-
+			button.addActionListener(new PlaySingleItemActionListener(textArea,song));
 			return button;
 		}
 	},	PLAY_ALL("PLAY_ALL", "Click this to play all!", 400) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, final Song[] song) {
+		JButton createInstanceWith(final TextArea textArea, final Song[] songs) {
 			JButton button = fixedNameButton(this);
-
-			ActionListener actionListener = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					AudioTask<Song> audioTask = new AudioTask<Song>() {
-						@Override
-						public Song[] forLoopParameter() {
-							return song;
-						}
-
-						@Override
-						public void forLoopBody(final Song song) {
-							String text = song.name() + "===>\n" + song.asText();
-							String displayText = "\n\n Playing::" + text;
-							logger.info(displayText);
-							textArea.append(displayText);
-							song.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
-						}
-
-						@Override
-						public void beforeForLoop() {
-							textArea.setText("Playing all items:\n");
-							logger.info(""+song.length);
-						}
-					};
-					AudioLifeCycleManager.instance.execute(audioTask);
-				}
-			};
-
-			button.addActionListener(actionListener);
+			button.addActionListener(new PlayAllSongsActionListener(textArea,songs));
 			return button;
 		}
 	};

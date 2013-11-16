@@ -4,8 +4,9 @@ import java.util.Collection;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
+import com.aqua.music.model.cyclicset.Playable;
 
-public enum Song {
+public enum Song implements Playable{
 	SONG_BHIMPALASI(new SongBhimpalasi(4)),
 	SONG_JAUNPURI(new SongJaunpuri(4)),
 	SONG_YAMAN1(new SongYaman1(4)),
@@ -29,9 +30,11 @@ public enum Song {
 
 	private final AudioLifeCycleManager player = AudioLifeCycleManager.instance;
 
-	public void play(AudioPlayConfig audioPlayConfig) {
-		System.out.println(song.printSummary());
+	public String play(AudioPlayConfig audioPlayConfig) {
+		String printSummary = song.printSummary();
+		System.out.println(printSummary);
 		player.play(song.frequencies(), audioPlayConfig);
+		return printSummary;
 	}
 	
 

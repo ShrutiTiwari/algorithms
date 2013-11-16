@@ -11,10 +11,10 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
-public interface CyclicFrequencySet {
-	public String freqSetNamePermuationAsText();
-	public String cycleFrequenciesAsText();
-	public String play(AudioPlayConfig audioPlayConfig);
+public interface CyclicFrequencySet extends Playable{
+	public String name();
+	public String asText();
+	
 
 	enum Type {
 		ASSYMETRICAL {

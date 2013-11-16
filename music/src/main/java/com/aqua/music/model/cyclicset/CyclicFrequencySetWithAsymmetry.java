@@ -35,12 +35,12 @@ class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	}
 
 	@Override
-	public String freqSetNamePermuationAsText() {
+	public String name() {
 		return frequencySet.name();
 	}
 
 	@Override
-	public String cycleFrequenciesAsText() {
+	public String asText() {
 		return "";
 	}
 }

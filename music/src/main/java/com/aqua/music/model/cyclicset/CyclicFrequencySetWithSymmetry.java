@@ -35,15 +35,15 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 		this.name = frequencySet.name() + (permutationApplicator == null ? "" : permutationApplicator.permutationText());
 	}
 
-	public String cycleFrequenciesAsText() {
+	public String asText() {
 		return cycleFrequenciesAsText;
 	}
 	@Override
 	public String toString() {
-		return freqSetNamePermuationAsText();
+		return name();
 	}
 	@Override
-	public String freqSetNamePermuationAsText() {
+	public String name() {
 		return name;
 	}
 

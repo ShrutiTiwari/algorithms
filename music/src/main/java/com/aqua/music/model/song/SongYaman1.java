@@ -1,12 +1,10 @@
 package com.aqua.music.model.song;
 
-import static com.aqua.music.model.core.ClassicalNote.*;
 import static com.aqua.music.model.core.ClassicalNote.D;
-import static com.aqua.music.model.core.ClassicalNote.G3_;
-import static com.aqua.music.model.core.ClassicalNote.G_;
-import static com.aqua.music.model.core.ClassicalNote.M;
-import static com.aqua.music.model.core.ClassicalNote.N1_;
-import static com.aqua.music.model.core.ClassicalNote.N_;
+import static com.aqua.music.model.core.ClassicalNote.G;
+import static com.aqua.music.model.core.ClassicalNote.G3;
+import static com.aqua.music.model.core.ClassicalNote.M_;
+import static com.aqua.music.model.core.ClassicalNote.N;
 import static com.aqua.music.model.core.ClassicalNote.P;
 import static com.aqua.music.model.core.ClassicalNote.R;
 import static com.aqua.music.model.core.ClassicalNote.R3;
@@ -46,7 +44,7 @@ class SongYaman1 extends AbstractSong {
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(G, M_, G, P, M_, D, M_, P, S3, N, P, P, R, R, S, S);
+		return new SongLine(beatDivison,2).normal(G, M_, G, P, M_, D, M_, P, S3, N, P, P, R, R, S, S);
 	}
 
 }
