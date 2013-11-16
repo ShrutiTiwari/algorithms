@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
+import com.aqua.music.model.cyclicset.Playable;
 import com.aqua.music.model.song.Song;
 
 public abstract class AbstractRehearseTabPanels<T> {
@@ -47,13 +48,13 @@ public abstract class AbstractRehearseTabPanels<T> {
 	private void addCommonComponents(Collection<T> allFrequencySequences) {
 		// add play all button
 		if (!allFrequencySequences.isEmpty()) {
+			Playable[] playableItems=null;
 			if ((allFrequencySequences.iterator().next()) instanceof CyclicFrequencySet) {
-				final CyclicFrequencySet[] freqSeqArr = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
-				panel.add(UiButtonsForFrequencySet.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), freqSeqArr));
+				playableItems = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
 			} else if ((allFrequencySequences.iterator().next()) instanceof Song) {
-				final Song[] songArr = allFrequencySequences.toArray(new Song[allFrequencySequences.size()]);
-				panel.add(UiButtonsForSong.PLAY_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), songArr));
+				playableItems = allFrequencySequences.toArray(new Song[allFrequencySequences.size()]);
 			}
+			panel.add(UiButtonsForRehearsing.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
 			panel.add(textArea);
 		}
 		panel.add(UiButtonsCommon.QUIT.createButton(yCoordinateTracker.buttonYcoordinate()));

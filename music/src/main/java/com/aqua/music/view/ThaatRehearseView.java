@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.aqua.music.controller.AbstractRehearseTabPanels;
-import com.aqua.music.controller.UiButtonsForFrequencySet;
+import com.aqua.music.controller.UiButtonsForRehearsing;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
@@ -28,7 +28,7 @@ public class ThaatRehearseView implements SwingView {
 			for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
 				CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
 
-				JButton button = UiButtonsForFrequencySet.FREQUENCY_SET_PLAYER.createButton(textArea, buttonYcoordinate(),
+				JButton button = UiButtonsForRehearsing.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(),
 						new CyclicFrequencySet[] { frequencySequence });
 				allFrequencySequences.add(frequencySequence);
 				mainTab.add(button);

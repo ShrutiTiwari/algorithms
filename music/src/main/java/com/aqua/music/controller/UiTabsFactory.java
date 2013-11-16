@@ -77,7 +77,7 @@ class UiTabsFactory {
 				for (int[] eachPermutation : allPermutations) {
 					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet,
 							eachPermutation);
-					JButton button = UiButtonsForFrequencySet.FREQUENCY_SET_PATTERNED_PLAYER.createButton(textArea, buttonYcoordinate(),
+					JButton button = UiButtonsForRehearsing.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(),
 							new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
@@ -91,7 +91,7 @@ class UiTabsFactory {
 				box.setBackground(Color.RED);
 				box.setForeground(Color.GREEN);
 				box.setSelectedItem(frequencySet);
-				box.setBounds(UiButtonsForFrequencySet.X_COORIDNATE, buttonYcoordinate(), 500, UiButtonsForFrequencySet.HEIGHT());
+				box.setBounds(UiButtonsForRehearsing.X_COORIDNATE, buttonYcoordinate(), 500, UiButtonsForRehearsing.HEIGHT());
 				box.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -120,7 +120,7 @@ class UiTabsFactory {
 				for (FrequencySet eachFrequencySet : SymmetricalSet.values()) {
 					CyclicFrequencySet frequencySequence = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(eachFrequencySet);
 
-					JButton button = UiButtonsForFrequencySet.FREQUENCY_SET_PLAYER.createButton(textArea, buttonYcoordinate(),
+					JButton button = UiButtonsForRehearsing.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(),
 							new CyclicFrequencySet[] { frequencySequence });
 					allFrequencySequences.add(frequencySequence);
 					mainTab.add(button);
@@ -139,7 +139,7 @@ class UiTabsFactory {
 				final Collection<Song> allFrequencySequences = new ArrayList<Song>();
 
 				for (Song eachSong : Song.values()) {
-					JButton button = UiButtonsForSong.SONG_PLAYER.createButton(textArea, buttonYcoordinate(), eachSong);
+					JButton button = UiButtonsForRehearsing.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(), eachSong);
 					allFrequencySequences.add(eachSong);
 					mainTab.add(button);
 				}

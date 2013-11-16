@@ -10,39 +10,39 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.bo.audio.manager.AudioTask;
-import com.aqua.music.model.song.Song;
+import com.aqua.music.model.cyclicset.Playable;
 
-public class PlayAllSongsActionListener implements ActionListener {
-	private static final Logger logger = LoggerFactory.getLogger(PlayAllSongsActionListener.class);
+public class PlayAllItemsActionListener implements ActionListener {
+	private static final Logger logger = LoggerFactory.getLogger(PlayAllItemsActionListener.class);
 	private final TextArea textArea;
-	private final Song[] songs;
+	private final Playable[] playableItems;
 
-	public PlayAllSongsActionListener(final TextArea textArea, final Song[] songs) {
+	public PlayAllItemsActionListener(final TextArea textArea, final Playable[] frequencySequences) {
 		this.textArea = textArea;
-		this.songs = songs;
+		this.playableItems = frequencySequences;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		AudioTask<Song> audioTask = new AudioTask<Song>() {
+		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
-			public Song[] forLoopParameter() {
-				return songs;
+			public Playable[] forLoopParameter() {
+				return playableItems;
 			}
 
 			@Override
-			public void forLoopBody(final Song song) {
-				String text = song.name() + "===>\n" + song.asText();
+			public void forLoopBody(final Playable playableItem) {
+				String text = playableItem.name() + "===>\n" + playableItem.asText();
 				String displayText = "\n\n Playing::" + text;
 				logger.info(displayText);
 				textArea.append(displayText);
-				song.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+				playableItem.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
 			}
 
 			@Override
 			public void beforeForLoop() {
 				textArea.setText("Playing all items:\n");
-				logger.info(""+songs.length);
+				logger.info(""+playableItems.length);
 			}
 		};
 		AudioLifeCycleManager.instance.execute(audioTask);
