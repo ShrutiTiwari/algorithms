@@ -1,4 +1,4 @@
-package com.aqua.music.action.listeners;
+package com.aqua.music.controllers;
 
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;

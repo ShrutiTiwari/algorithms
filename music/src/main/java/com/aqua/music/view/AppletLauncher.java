@@ -4,8 +4,6 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.aqua.music.controller.UiLauncher;
-
 public class AppletLauncher extends JApplet {
 	public void init() {
 		try {

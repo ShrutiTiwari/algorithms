@@ -1,4 +1,4 @@
-package com.aqua.music.controller;
+package com.aqua.music.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import com.aqua.music.view.helper.UiTabsFactory;
 
 public class UiLauncher {
 	private static final String frameTitle = "Music";

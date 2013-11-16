@@ -1,17 +1,17 @@
-package com.aqua.music.controller;
+package com.aqua.music.view.helper;
 
-import static com.aqua.music.controller.UiButtonsCommon.configurableNamedButton;
-import static com.aqua.music.controller.UiButtonsCommon.fixedNameButton;
+import static com.aqua.music.view.helper.UiButtonsCommon.configurableNamedButton;
+import static com.aqua.music.view.helper.UiButtonsCommon.fixedNameButton;
 
 import java.awt.TextArea;
 
 import javax.swing.JButton;
 
-import com.aqua.music.action.listeners.PlayAllItemsActionListener;
-import com.aqua.music.action.listeners.PlaySingleItemActionListener;
+import com.aqua.music.controllers.PlayAllItemsActionListener;
+import com.aqua.music.controllers.PlaySingleItemActionListener;
 import com.aqua.music.model.cyclicset.Playable;
 
-public enum UiButtonsForRehearsing implements UiButtons{
+enum UiButtonsForRehearsing implements UiButtons{
 	SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, Playable[] playables) {

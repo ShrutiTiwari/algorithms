@@ -1,4 +1,4 @@
-package com.aqua.music.controller;
+package com.aqua.music.view.helper;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

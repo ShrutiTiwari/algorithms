@@ -1,4 +1,4 @@
-package com.aqua.music.controller;
+package com.aqua.music.view.helper;
 
 import java.awt.Dimension;
 import java.awt.TextArea;
@@ -10,11 +10,9 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.Playable;
-import com.aqua.music.model.song.Song;
 
-public abstract class AbstractRehearseTabPanels<T> {
+abstract class AbstractRehearseTabs<T> {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	private final JPanel panel;
 	private final TextArea textArea;
@@ -22,7 +20,7 @@ public abstract class AbstractRehearseTabPanels<T> {
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
 
-	protected AbstractRehearseTabPanels() {
+	protected AbstractRehearseTabs() {
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.textArea = createTextArea();
 		this.panel = createBlankMainTab();
@@ -31,29 +29,24 @@ public abstract class AbstractRehearseTabPanels<T> {
 	private synchronized void initialize() {
 		if (!initialized) {
 			initialized = true;
-			Collection<T> allFrequencySequences = addSpecificButtons(panel, textArea);
-			addCommonComponents(allFrequencySequences);
+			Collection<T> allPlayableItems = addSpecificButtons(panel, textArea);
+			addCommonComponents(allPlayableItems);
 		}
 	}
 
 	protected abstract Collection<T> addSpecificButtons(final JPanel mainTab, final TextArea textArea);
 
 	public JPanel getPanel() {
-		if(!initialized){
+		if (!initialized) {
 			initialize();
 		}
 		return panel;
 	}
 
-	private void addCommonComponents(Collection<T> allFrequencySequences) {
+	private void addCommonComponents(Collection<T> allPlaybleItems) {
 		// add play all button
-		if (!allFrequencySequences.isEmpty()) {
-			Playable[] playableItems=null;
-			if ((allFrequencySequences.iterator().next()) instanceof CyclicFrequencySet) {
-				playableItems = allFrequencySequences.toArray(new CyclicFrequencySet[allFrequencySequences.size()]);
-			} else if ((allFrequencySequences.iterator().next()) instanceof Song) {
-				playableItems = allFrequencySequences.toArray(new Song[allFrequencySequences.size()]);
-			}
+		if (!allPlaybleItems.isEmpty()) {
+			Playable[] playableItems = allPlaybleItems.toArray(new Playable[allPlaybleItems.size()]);
 			panel.add(UiButtonsForRehearsing.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
 			panel.add(textArea);
 		}

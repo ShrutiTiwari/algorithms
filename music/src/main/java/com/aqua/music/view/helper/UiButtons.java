@@ -1,7 +1,7 @@
 
-package com.aqua.music.controller;
+package com.aqua.music.view.helper;
 
-public interface UiButtons {
+interface UiButtons {
 	int X_COORIDNATE = 30;
 	int BUTTON_HEIGHT = 30;
 	int BUTTON_WIDTH = 500;

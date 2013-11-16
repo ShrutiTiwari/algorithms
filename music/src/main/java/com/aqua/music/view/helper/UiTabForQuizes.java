@@ -1,4 +1,4 @@
-package com.aqua.music.controller;
+package com.aqua.music.view.helper;
 
 import java.awt.Color;
 import java.awt.TextArea;
@@ -18,7 +18,7 @@ import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
-public class UiTabForQuizes extends AbstractRehearseTabPanels<CyclicFrequencySet> {
+class UiTabForQuizes extends AbstractRehearseTabs<CyclicFrequencySet> {
 	private final QuizLevel quizLevel;
 	private final UiTabsFactory rehearseTabs;
 

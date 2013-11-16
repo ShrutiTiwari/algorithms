@@ -1,4 +1,4 @@
-package com.aqua.music.action.listeners;
+package com.aqua.music.controllers;
 
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -17,9 +17,9 @@ public class PlayAllItemsActionListener implements ActionListener {
 	private final TextArea textArea;
 	private final Playable[] playableItems;
 
-	public PlayAllItemsActionListener(final TextArea textArea, final Playable[] frequencySequences) {
+	public PlayAllItemsActionListener(final TextArea textArea, final Playable[] playableItems) {
 		this.textArea = textArea;
-		this.playableItems = frequencySequences;
+		this.playableItems = playableItems;
 	}
 	
 	@Override
