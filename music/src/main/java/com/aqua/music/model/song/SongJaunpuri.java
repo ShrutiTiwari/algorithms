@@ -38,7 +38,7 @@ public class SongJaunpuri extends AbstractSong {
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(M,M,P,P,D_,D_,S3,S3).couple(S3,R3).normal(G3_,R3,S3,N_,S3,D_,M);
+		return new SongLine(beatDivison,2).normal(M,M,P,P,D_,D_,S3,S3).couple(S3,R3).normal(G3_,R3,S3,N_,S3,D_,M);
 	}
 	
 	private Collection<Taan> sthayiTaans() {

@@ -34,7 +34,7 @@ class SongBhimpalasi extends AbstractSong {
 
 	@Override
 	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison,2).couple(R3, S3).normal(N_).extended(D, 2).extended(P, 2).normal(P, P, M, P)
+		return new SongLine(beatDivison).couple(R3, S3).normal(N_).extended(D, 2).extended(P, 2).normal(P, P, M, P)
 				.couple(M, P).normal(D, P, G_).couple(S, R, N1_, S);
 	}
 
