@@ -7,12 +7,15 @@ import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.cyclicset.Playable;
 
 public enum Song implements Playable{
+	SONG_BAIRAGI(new SongBairagi(2)),
+	SONG_BHAIRAV(new SongBhairav(4)),
 	SONG_BHIMPALASI(new SongBhimpalasi(4)),
 	SONG_JAUNPURI(new SongJaunpuri(4)),
-	SONG_YAMAN1(new SongYaman1(4)),
-	SONG_BAIRAGI(new SongBairagi(2)),
 	SONG_MULTANI(new SongMultani(2)),
-	SONG_SHUDH_SARANG(new SongShudhSarang(4));
+	SONG_SHUDH_SARANG(new SongShudhSarang(4)),
+	SONG_YAMAN1(new SongYaman1(4));
+
+	private final AudioLifeCycleManager player = AudioLifeCycleManager.instance;
 
 	private final AbstractSong song;
 
@@ -20,15 +23,9 @@ public enum Song implements Playable{
 		this.song = song;
 	}
 
-	public String songNameAsText() {
-		return this.name();
-	}
-
 	public String asText() {
 		return song.printSummary();
 	}
-
-	private final AudioLifeCycleManager player = AudioLifeCycleManager.instance;
 
 	public String play(AudioPlayConfig audioPlayConfig) {
 		String printSummary = song.printSummary();
@@ -36,7 +33,6 @@ public enum Song implements Playable{
 		player.play(song.frequencies(), audioPlayConfig);
 		return printSummary;
 	}
-	
 
 	public void playTaan(AudioPlayConfig audioPlayConfig) {
 		Collection<Taan> taans = song.taans();
@@ -47,5 +43,10 @@ public enum Song implements Playable{
 				AudioLifeCycleManager.instance.play(playtaan.frequencies(), audioPlayConfig);
 			}
 		}
+	}
+	
+
+	public String songNameAsText() {
+		return this.name();
 	}
 }
