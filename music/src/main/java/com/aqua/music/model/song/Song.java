@@ -2,9 +2,9 @@ package com.aqua.music.model.song;
 
 import java.util.Collection;
 
+import com.aqua.music.api.Playable;
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.model.cyclicset.Playable;
 
 public enum Song implements Playable{
 	SONG_BAIRAGI(new SongBairagi(2)),

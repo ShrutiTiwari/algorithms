@@ -1,4 +1,4 @@
-package com.aqua.music.model.cyclicset;
+package com.aqua.music.api;
 
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 

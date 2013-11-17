@@ -7,9 +7,8 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aqua.music.api.Playable;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
-import com.aqua.music.model.cyclicset.CyclicFrequencySet;
-import com.aqua.music.model.cyclicset.Playable;
 
 public class PlaySingleItemActionListener implements ActionListener {
 	private static final Logger logger = LoggerFactory.getLogger(PlaySingleItemActionListener.class);
@@ -23,7 +22,7 @@ public class PlaySingleItemActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String text = singlePlayableItem.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+		singlePlayableItem.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
 		displayOnConsole(singlePlayableItem.name() + "===>" + "\n" + singlePlayableItem.asText());
 	}
 

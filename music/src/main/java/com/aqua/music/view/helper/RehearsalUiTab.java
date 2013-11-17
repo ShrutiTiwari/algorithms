@@ -7,14 +7,12 @@ import java.util.Collection;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.aqua.music.model.core.FrequencySet;
-import com.aqua.music.model.cyclicset.CyclicFrequencySet;
-import com.aqua.music.model.cyclicset.Playable;
+import com.aqua.music.api.Playable;
 
-class UiTabForRehearsingPlaybles extends AbstractRehearseTabs<Playable> {
-	private final Object[] itemsList;
+class RehearsalUiTab extends AbstractRehearseTabs<Playable> {
+	private final Collection<Playable> itemsList;
 
-	UiTabForRehearsingPlaybles(Object[] itemsList) {
+	RehearsalUiTab(Collection<Playable> itemsList) {
 		super();
 		this.itemsList = itemsList;
 	}
@@ -22,8 +20,7 @@ class UiTabForRehearsingPlaybles extends AbstractRehearseTabs<Playable> {
 	@Override
 	protected Collection<Playable> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 		final Collection<Playable> allItems = new ArrayList<Playable>();
-		for (Object currentItem : itemsList) {
-			Playable playableItem = getPlyableItem(currentItem);
+		for (Playable playableItem : itemsList) {
 			addButtonForPlayble(mainTab, textArea, allItems, playableItem, buttonYcoordinate());
 		}
 		return allItems;
@@ -31,14 +28,9 @@ class UiTabForRehearsingPlaybles extends AbstractRehearseTabs<Playable> {
 
 	static void addButtonForPlayble(final JPanel mainTab, final TextArea textArea, final Collection<Playable> allPlayableItems,
 			Playable playableItem, int buttonYcoordinate) {
-		JButton button = UiButtonsForRehearsing.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate,
+		JButton button = RehearsalUiButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate,
 				new Playable[] { playableItem });
 		allPlayableItems.add(playableItem);
 		mainTab.add(button);
-	}
-
-	private static Playable getPlyableItem(Object eachItem) {
-		return (eachItem instanceof Playable) ? (Playable) eachItem
-				: (eachItem instanceof FrequencySet) ? CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet((FrequencySet) eachItem) : null;
 	}
 }

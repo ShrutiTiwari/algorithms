@@ -12,7 +12,7 @@ import com.aqua.music.controllers.QuizPlayActionListener;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
-enum UiButtonsForQuizs implements UiButtons {
+enum QuizUiButtons implements UiButtons {
 	FREQUENCY_SET_QUIZ("Play $$", "Click this to play $$") {
 		@Override
 		JButton createInstanceWith(final JPanel mainTab, final Quiz<CyclicFrequencySet> quizSection, int buttonYcoordinate, String name,
@@ -45,7 +45,7 @@ enum UiButtonsForQuizs implements UiButtons {
 
 	private final String tooltip;
 
-	private UiButtonsForQuizs(String text, String tooltip) {
+	private QuizUiButtons(String text, String tooltip) {
 		this.text = text;
 		this.tooltip = tooltip;
 	}

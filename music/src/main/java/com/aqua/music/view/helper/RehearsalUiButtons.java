@@ -7,11 +7,11 @@ import java.awt.TextArea;
 
 import javax.swing.JButton;
 
+import com.aqua.music.api.Playable;
 import com.aqua.music.controllers.PlayAllItemsActionListener;
 import com.aqua.music.controllers.PlaySingleItemActionListener;
-import com.aqua.music.model.cyclicset.Playable;
 
-enum UiButtonsForRehearsing implements UiButtons{
+enum RehearsalUiButtons implements UiButtons{
 	SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
 		JButton createInstanceWith(final TextArea textArea, Playable[] playables) {
@@ -33,7 +33,7 @@ enum UiButtonsForRehearsing implements UiButtons{
 	private final String text;
 	private final String tooltip;
 
-	private UiButtonsForRehearsing(String text, String tooltip, int buttonWidth) {
+	private RehearsalUiButtons(String text, String tooltip, int buttonWidth) {
 		this.text = text;
 		this.tooltip = tooltip;
 		this.displayWidth = buttonWidth;

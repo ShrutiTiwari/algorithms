@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.cyclicset.Playable;
+import com.aqua.music.api.Playable;
 
 abstract class AbstractRehearseTabs<T> {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
@@ -47,7 +47,7 @@ abstract class AbstractRehearseTabs<T> {
 		// add play all button
 		if (!allPlaybleItems.isEmpty()) {
 			Playable[] playableItems = allPlaybleItems.toArray(new Playable[allPlaybleItems.size()]);
-			panel.add(UiButtonsForRehearsing.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
+			panel.add(RehearsalUiButtons.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
 			panel.add(textArea);
 		}
 		panel.add(UiButtonsCommon.QUIT.createButton(yCoordinateTracker.buttonYcoordinate()));
