@@ -12,6 +12,7 @@ public enum Song implements Playable{
 	SONG_BHIMPALASI(new SongBhimpalasi(4)),
 	SONG_JAUNPURI(new SongJaunpuri(4)),
 	SONG_MULTANI(new SongMultani(2)),
+	SONG_AHIR_BHAIRAV(new SongAhirBhairav(2)),
 	SONG_SHUDH_SARANG(new SongShudhSarang(4)),
 	SONG_YAMAN1(new SongYaman1(4));
 
