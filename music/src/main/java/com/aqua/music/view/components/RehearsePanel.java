@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import com.aqua.music.api.Playable;
 
-class RehearsePanel extends AbstractRehearsePanel<Playable> {
+class RehearsePanel extends AbstractMusicPanel {
 	private final Collection<Playable> itemsList;
 
 	RehearsePanel(Collection<Playable> itemsList) {
@@ -18,19 +18,18 @@ class RehearsePanel extends AbstractRehearsePanel<Playable> {
 	}
 
 	@Override
-	protected Collection<Playable> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
+	protected void addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 		final Collection<Playable> allItems = new ArrayList<Playable>();
 		for (Playable playableItem : itemsList) {
-			addButtonForPlayble(mainTab, textArea, allItems, playableItem, buttonYcoordinate());
+			JButton button = RehearseButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(),
+					new Playable[] { playableItem });
+			allItems.add(playableItem);
+			mainTab.add(button);
 		}
-		return allItems;
+		
+		Playable[] playableItems = allItems.toArray(new Playable[allItems.size()]);
+		mainTab.add(RehearseButtons.PLAYER_FOR_ALL.createButton(textArea, buttonYcoordinate(), playableItems));
+		mainTab.add(textArea);
 	}
-
-	static void addButtonForPlayble(final JPanel mainTab, final TextArea textArea, final Collection<Playable> allPlayableItems,
-			Playable playableItem, int buttonYcoordinate) {
-		JButton button = RehearseButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate,
-				new Playable[] { playableItem });
-		allPlayableItems.add(playableItem);
-		mainTab.add(button);
-	}
+	
 }

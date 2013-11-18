@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,7 +17,7 @@ import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
-class QuizPanel extends AbstractRehearsePanel<CyclicFrequencySet> {
+class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
 	private final UiTabsFactory rehearseTabs;
 
@@ -31,7 +30,7 @@ class QuizPanel extends AbstractRehearsePanel<CyclicFrequencySet> {
 
 	}
 
-	protected Collection<CyclicFrequencySet> addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
+	protected void addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
 		mainTab.add(createQuizLevelDropdown());
 
 		int i = 1;
@@ -43,7 +42,6 @@ class QuizPanel extends AbstractRehearsePanel<CyclicFrequencySet> {
 			allPlayButtons.add(playButton);
 			i++;
 		}
-		return Collections.EMPTY_LIST;
 	}
 
 	private JComboBox createQuizLevelDropdown() {
