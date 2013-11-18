@@ -11,18 +11,18 @@ import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
 enum RehearseButtons implements UiButtons{
 	SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", 200) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, Playable[] playables) {
+		JButton createInstanceWith(final TextArea consoleArea, Playable[] playables) {
 			final Playable playable = playables[0];
 			JButton button = configurableNamedButton(this, playable.name());
-			button.addActionListener(new PlaySingleItemActionListener(textArea,playable));
+			button.addActionListener(new PlaySingleItemActionListener(consoleArea,playable));
 			return button;
 		}
 	},
 	PLAYER_FOR_ALL("PLAY_ALL", "Click this to play all!", 400) {
 		@Override
-		JButton createInstanceWith(final TextArea textArea, final Playable[] playables) {
+		JButton createInstanceWith(final TextArea consoleArea, final Playable[] playables) {
 			JButton button = fixedNameButton(this);
-			button.addActionListener(new PlayAllItemsActionListener(textArea, playables));
+			button.addActionListener(new PlayAllItemsActionListener(consoleArea, playables));
 			return button;
 		}
 	};
@@ -49,12 +49,12 @@ enum RehearseButtons implements UiButtons{
 		return BUTTON_HEIGHT;
 	}
 
-	public JButton createButton(TextArea textArea, int yCoordinate, Playable... playableItems) {
-		JButton buttonItem = createInstanceWith(textArea, playableItems);
+	public JButton createButton(TextArea consoleArea, int yCoordinate, Playable... playableItems) {
+		JButton buttonItem = createInstanceWith(consoleArea, playableItems);
 		buttonItem.setOpaque(true);
 		buttonItem.setBounds(X_COORIDNATE, yCoordinate, displayWidth, BUTTON_HEIGHT);
 		return buttonItem;
 	}
 
-	abstract JButton createInstanceWith(TextArea textArea, Playable[] playables);
+	abstract JButton createInstanceWith(TextArea consoleArea, Playable[] playables);
 }

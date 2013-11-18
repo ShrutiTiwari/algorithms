@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import com.aqua.music.bo.audio.manager.PlayMode;
+
 interface UiButtons {
 	int X_COORIDNATE = 30;
 	int BUTTON_HEIGHT = 30;
@@ -23,6 +25,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.stop();
 						System.exit(0);
 					}
 				};
@@ -30,7 +33,24 @@ interface UiButtons {
 				button.addActionListener(actionListener);
 				return button;
 			}
+		},
+		STOP("Stop", "Click this to stop!") {
+			@Override
+			JButton createInstanceWith() {
+				JButton button = fixedNameButton(this);
+
+				ActionListener actionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.stop();
+					}
+				};
+
+				button.addActionListener(actionListener);
+				return button;
+			}
 		};
+
 		private final String text;
 		private final String tooltip;
 
@@ -51,10 +71,10 @@ interface UiButtons {
 			return resultButton;
 		}
 		
-		public JButton createButton(int yCoordinate) {
+		public JButton createButton(int xCoordinate, int yCoordinate) {
 			JButton buttonItem = createInstanceWith();
 			buttonItem.setOpaque(true);
-			buttonItem.setBounds(X_COORIDNATE, yCoordinate, BUTTON_WIDTH, BUTTON_HEIGHT);
+			buttonItem.setBounds(xCoordinate, yCoordinate, BUTTON_WIDTH, BUTTON_HEIGHT);
 			return buttonItem;
 		}
 

@@ -2,7 +2,7 @@ package com.aqua.music.model.cyclicset;
 
 import org.junit.Test;
 
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayConfig;
 
 public class SymmetricalSetTest {
 	// @Test

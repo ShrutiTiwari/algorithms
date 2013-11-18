@@ -18,18 +18,17 @@ class RehearsePanel extends AbstractMusicPanel {
 	}
 
 	@Override
-	protected void addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
+	protected void addSpecificButtons(final JPanel mainTab, final TextArea consoleArea) {
 		final Collection<Playable> allItems = new ArrayList<Playable>();
 		for (Playable playableItem : itemsList) {
-			JButton button = RehearseButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate(),
+			JButton button = RehearseButtons.SINGLE_ITEM_PLAYER.createButton(consoleArea, buttonYcoordinate(),
 					new Playable[] { playableItem });
 			allItems.add(playableItem);
 			mainTab.add(button);
 		}
 		
 		Playable[] playableItems = allItems.toArray(new Playable[allItems.size()]);
-		mainTab.add(RehearseButtons.PLAYER_FOR_ALL.createButton(textArea, buttonYcoordinate(), playableItems));
-		mainTab.add(textArea);
+		mainTab.add(RehearseButtons.PLAYER_FOR_ALL.createButton(consoleArea, buttonYcoordinate(), playableItems));
 	}
 	
 }

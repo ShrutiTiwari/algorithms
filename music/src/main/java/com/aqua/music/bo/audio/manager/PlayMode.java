@@ -92,4 +92,12 @@ public enum PlayMode {
 		}
 	}
 
+	public static void stop() {
+		try {
+			AudioLifeCycleManager.instance.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

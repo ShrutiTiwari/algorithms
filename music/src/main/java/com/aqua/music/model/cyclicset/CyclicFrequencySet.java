@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.aqua.music.api.AudioPlayConfig;
 import com.aqua.music.api.Playable;
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 

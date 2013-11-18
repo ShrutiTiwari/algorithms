@@ -1,7 +1,8 @@
-package com.aqua.music.bo.audio.manager;
+package com.aqua.music.api;
 
 import java.util.Collection;
 
+import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.DynamicFrequency;
 
@@ -25,5 +26,9 @@ public enum AudioPlayConfig {
 	
 	public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {
 		playMode.playInLoop(audioPlayerFactory.fetchInstance(), frequencyList);
+	}
+	
+	public static void stop(){
+		PlayMode.stop();
 	}
 }

@@ -2,8 +2,8 @@ package com.aqua.music.model.song;
 
 import java.util.Collection;
 
+import com.aqua.music.api.AudioPlayConfig;
 import com.aqua.music.api.Playable;
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.core.DynamicFrequency;
 
 public enum Song implements Playable{

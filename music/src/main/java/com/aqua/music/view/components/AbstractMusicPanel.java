@@ -14,22 +14,25 @@ import com.aqua.music.view.components.UiButtons.CommonButtons;
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	private final JPanel panel;
-	private final TextArea textArea;
 	private final YCoordinateTracker yCoordinateTracker;
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
+	//private final static JButton stopButton = ;
+	//private static final TextArea textArea = ;
 
 	protected AbstractMusicPanel() {
 		this.yCoordinateTracker = new YCoordinateTracker();
-		this.textArea = createTextArea();
 		this.panel = createBlankMainTab();
 	}
 
 	private synchronized void initialize() {
 		if (!initialized) {
 			initialized = true;
+			panel.add(CommonButtons.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20));
+			TextArea textArea=createTextArea(UiButtons.X_COORIDNATE + 600, 60);
+			panel.add(textArea);
 			addSpecificButtons(panel, textArea);
-			panel.add(CommonButtons.QUIT.createButton(yCoordinateTracker.buttonYcoordinate()));
+			panel.add(CommonButtons.QUIT.createButton(UiButtons.X_COORIDNATE, yCoordinateTracker.buttonYcoordinate()));
 			panel.setOpaque(true);
 		}
 	}
@@ -56,10 +59,10 @@ abstract class AbstractMusicPanel {
 		return jLabel;
 	}
 
-	private TextArea createTextArea() {
+	private static TextArea createTextArea(int xCoordinate, int yCoordintate) {
 		TextArea textArea = new TextArea("Hello shrutz");
 		textArea.setVisible(true);
-		textArea.setBounds(UiButtons.X_COORIDNATE + 600, 60, 600, 600);
+		textArea.setBounds(xCoordinate, yCoordintate, 550, 550);
 		return textArea;
 	}
 

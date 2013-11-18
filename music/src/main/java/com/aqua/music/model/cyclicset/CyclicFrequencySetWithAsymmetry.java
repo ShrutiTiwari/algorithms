@@ -6,7 +6,7 @@ import static com.aqua.music.model.core.ClassicalNote.S3;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aqua.music.bo.audio.manager.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayConfig;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {

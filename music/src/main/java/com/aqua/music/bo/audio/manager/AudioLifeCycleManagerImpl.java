@@ -22,6 +22,13 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
+	public synchronized void stop() {
+		if (currentAudioPlayer != null) {
+			currentAudioPlayer.stop();
+		}
+	}
+
+	@Override
 	public synchronized void acquireRightToPlay() throws InterruptedException {
 		boolean acquired = permitToPlay.tryLock();
 		if (!acquired) {

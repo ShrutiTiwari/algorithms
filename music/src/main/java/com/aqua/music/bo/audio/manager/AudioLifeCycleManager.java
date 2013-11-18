@@ -6,4 +6,6 @@ import org.slf4j.LoggerFactory;
 interface AudioLifeCycleManager {
 	Logger logger = LoggerFactory.getLogger(AudioLifeCycleManager.class);
 	final AudioLifeCycleManager instance = new AudioLifeCycleManagerImpl();
+	
+	void stop();
 }
