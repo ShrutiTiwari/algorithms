@@ -1,4 +1,4 @@
-package com.aqua.music.view.helper;
+package com.aqua.music.view.components;
 
 import java.awt.TextArea;
 import java.util.ArrayList;
@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 
 import com.aqua.music.api.Playable;
 
-class RehearsalUiTab extends AbstractRehearseTabs<Playable> {
+class RehearsePanel extends AbstractRehearsePanel<Playable> {
 	private final Collection<Playable> itemsList;
 
-	RehearsalUiTab(Collection<Playable> itemsList) {
+	RehearsePanel(Collection<Playable> itemsList) {
 		super();
 		this.itemsList = itemsList;
 	}
@@ -28,7 +28,7 @@ class RehearsalUiTab extends AbstractRehearseTabs<Playable> {
 
 	static void addButtonForPlayble(final JPanel mainTab, final TextArea textArea, final Collection<Playable> allPlayableItems,
 			Playable playableItem, int buttonYcoordinate) {
-		JButton button = RehearsalUiButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate,
+		JButton button = RehearseButtons.SINGLE_ITEM_PLAYER.createButton(textArea, buttonYcoordinate,
 				new Playable[] { playableItem });
 		allPlayableItems.add(playableItem);
 		mainTab.add(button);

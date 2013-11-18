@@ -1,4 +1,4 @@
-package com.aqua.music.view.helper;
+package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.awt.TextArea;
@@ -18,13 +18,13 @@ import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
-class QjuizUiTab extends AbstractRehearseTabs<CyclicFrequencySet> {
+class QuizPanel extends AbstractRehearsePanel<CyclicFrequencySet> {
 	private final QuizLevel quizLevel;
 	private final UiTabsFactory rehearseTabs;
 
 	private final JComboBox quizLevelsDD = createQuizLevelDropdown();
 
-	QjuizUiTab(final UiTabsFactory rehearseTabs, final QuizLevel quizLevel) {
+	QuizPanel(final UiTabsFactory rehearseTabs, final QuizLevel quizLevel) {
 		super();
 		this.rehearseTabs = rehearseTabs;
 		this.quizLevel = quizLevel;
@@ -38,7 +38,7 @@ class QjuizUiTab extends AbstractRehearseTabs<CyclicFrequencySet> {
 		List<JButton> allPlayButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
 			final String quizName = "Quiz " + i;
-			JButton playButton = QuizUiButtons.FREQUENCY_SET_QUIZ.createPlayButtonForEachQuiz(mainTab, buttonYcoordinate(), eachQuiz,
+			JButton playButton = QuizButtons.FREQUENCY_SET_QUIZ.createPlayButtonForEachQuiz(mainTab, buttonYcoordinate(), eachQuiz,
 					quizName, allPlayButtons);
 			allPlayButtons.add(playButton);
 			i++;

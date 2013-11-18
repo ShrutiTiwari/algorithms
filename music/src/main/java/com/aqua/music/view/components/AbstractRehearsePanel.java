@@ -1,4 +1,4 @@
-package com.aqua.music.view.helper;
+package com.aqua.music.view.components;
 
 import java.awt.Dimension;
 import java.awt.TextArea;
@@ -11,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.api.Playable;
+import com.aqua.music.view.components.UiButtons.CommonButtons;
 
-abstract class AbstractRehearseTabs<T> {
+abstract class AbstractRehearsePanel<T> {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	private final JPanel panel;
 	private final TextArea textArea;
@@ -20,7 +21,7 @@ abstract class AbstractRehearseTabs<T> {
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
 
-	protected AbstractRehearseTabs() {
+	protected AbstractRehearsePanel() {
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.textArea = createTextArea();
 		this.panel = createBlankMainTab();
@@ -47,10 +48,10 @@ abstract class AbstractRehearseTabs<T> {
 		// add play all button
 		if (!allPlaybleItems.isEmpty()) {
 			Playable[] playableItems = allPlaybleItems.toArray(new Playable[allPlaybleItems.size()]);
-			panel.add(RehearsalUiButtons.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
+			panel.add(RehearseButtons.PLAYER_FOR_ALL.createButton(textArea, yCoordinateTracker.buttonYcoordinate(), playableItems));
 			panel.add(textArea);
 		}
-		panel.add(UiButtonsCommon.QUIT.createButton(yCoordinateTracker.buttonYcoordinate()));
+		panel.add(CommonButtons.QUIT.createButton(yCoordinateTracker.buttonYcoordinate()));
 
 		panel.setOpaque(true);
 	}

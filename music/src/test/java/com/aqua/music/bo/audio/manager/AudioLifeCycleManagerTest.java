@@ -26,14 +26,15 @@ public class AudioLifeCycleManagerTest {
 		Frequency[] sample = new Frequency[] { S, R, G, M, P, D, N, S3 };
 		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		AudioLifeCycleManager.instance.play(asList, AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList);
 	}
 
 	//@Test
 	public void testVlcPlayer() {
 		List<Frequency> frequencyList = new ArrayList<Frequency>();
 		frequencyList.add(ClassicalNote.D);
-		AudioLifeCycleManager.instance.play(frequencyList, AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		
+		AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList);
 	}
 
 }

@@ -13,11 +13,11 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 	private static final double DEFAULT_VOL = 0.8;
 	private static final float SAMPLE_RATE = 8000f;
 
-	private final double vol;
+	private volatile AudioPlayRightsManager audioPlayRightsManager;
 
 	// handle for terminating the blocked running thread
 	private volatile SourceDataLine sdl;
-	private volatile AudioPlayRightsManager audioPlayRightsManager;
+	private final double vol;
 
 	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle() {
 		this(DEFAULT_VOL);
@@ -25,16 +25,6 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 
 	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(double vol) {
 		this.vol = vol;
-	}
-
-	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
-		Runnable task = new Runnable() {
-			@Override
-			public void run() {
-				playFrequencies(frequencyList);
-			}
-		};
-		return task;
 	}
 
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
@@ -64,6 +54,58 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			logger.info("releasing right to play");
 			audioPlayRightsManager.releaseRightToPlay();
 		}
+	}
+
+	public void playFrequenciesInLoop(final Collection<? extends DynamicFrequency> frequencyList) {
+		try {
+			audioPlayRightsManager.acquireRightToPlay();
+			logger.info("acquired right to play");
+			AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
+			this.sdl = AudioSystem.getSourceDataLine(af);
+			sdl.open(af);
+			sdl.start();
+			while (!audioPlayRightsManager.stopPlaying()) {
+				for (final DynamicFrequency each : frequencyList) {
+					if (audioPlayRightsManager.stopPlaying()) {
+						logger.info("oops, marked to stop..breaking now.");
+						break;
+					}
+					final float frequencyInHz = each.frequencyInHz();
+					final int duration = each.duration();
+					throwExceptionForInsaneInput(frequencyInHz, duration, vol);
+					byte[] buf = constructBufferForFrequency(frequencyInHz, duration);
+					sdl.write(buf, 0, buf.length);
+				}
+			}
+			// sdl.drain();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeStream();
+			logger.info("releasing right to play");
+			audioPlayRightsManager.releaseRightToPlay();
+		}
+	}
+
+	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
+		Runnable task = new Runnable() {
+			@Override
+			public void run() {
+				playFrequencies(frequencyList);
+			}
+		};
+		return task;
+	}
+
+	@Override
+	public Runnable playTaskInLoop(final Collection<? extends DynamicFrequency> frequencyList) {
+		Runnable task = new Runnable() {
+			@Override
+			public void run() {
+				playFrequenciesInLoop(frequencyList);
+			}
+		};
+		return task;
 	}
 
 	public void setAudioPlayRigthsManager(AudioPlayRightsManager audioPlayRightsManager) {

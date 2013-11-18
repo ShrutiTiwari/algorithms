@@ -1,4 +1,4 @@
-package com.aqua.music.view.helper;
+package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -40,25 +40,24 @@ public class UiTabsFactory {
 	}
 
 	final void addQuizSectionTab(QuizLevel<CyclicFrequencySet> quizLevel) {
-		this.quizWithFrequencySetPanel = new QjuizUiTab(this, quizLevel).getPanel();
+		this.quizWithFrequencySetPanel = new QuizPanel(this, quizLevel).getPanel();
 		tabbedPane.addTab("Quiz with Frequency sets", quizWithFrequencySetPanel);
 	}
 
-	private final void addPatternTab(SymmetricalSet selectedThaat) {
-		final FrequencySet frequencySet = selectedThaat;
-		RehearsalUiTab tabBuilder = new RehearsalUiTab(PlayApi.getAllPatternedThaat(frequencySet, 2));
-		JComboBox createThaatDropdown = createThaatDropdown(frequencySet, tabBuilder.buttonYcoordinate());
-		tabBuilder.getPanel().add(createThaatDropdown);
-		this.rehearseWithPatternsPanel = tabBuilder.getPanel();
+	private final void addPatternTab(final FrequencySet frequencySet) {
+		RehearsePanel tabBuilder = new RehearsePanel(PlayApi.getAllPatternedThaat(frequencySet, 2));
+		JComboBox thaatDropdown = thaatDropdown(frequencySet, tabBuilder.buttonYcoordinate());
+		tabBuilder.getPanel().add(thaatDropdown);
+		rehearseWithPatternsPanel = tabBuilder.getPanel();
 		tabbedPane.addTab("Rehearse with pattern", rehearseWithPatternsPanel);
 	}
-	
-	private JComboBox createThaatDropdown(final FrequencySet frequencySet, int buttonYcoordinate) {
+
+	private JComboBox thaatDropdown(final FrequencySet frequencySet, int buttonYcoordinate) {
 		final JComboBox box = new JComboBox(SymmetricalSet.values());
 		box.setBackground(Color.RED);
 		box.setForeground(Color.GREEN);
 		box.setSelectedItem(frequencySet);
-		box.setBounds(RehearsalUiButtons.X_COORIDNATE, buttonYcoordinate, 500, RehearsalUiButtons.HEIGHT());
+		box.setBounds(RehearseButtons.X_COORIDNATE, buttonYcoordinate, 500, RehearseButtons.HEIGHT());
 		box.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -86,10 +85,10 @@ public class UiTabsFactory {
 	}
 
 	public JPanel plainTab() {
-		return new RehearsalUiTab(PlayApi.getAllPlainThaat()).getPanel();
+		return new RehearsePanel(PlayApi.getAllPlainThaat()).getPanel();
 	}
 
 	public JPanel songTab() {
-		return new RehearsalUiTab(PlayApi.getAllSongs()).getPanel();
+		return new RehearsePanel(PlayApi.getAllSongs()).getPanel();
 	}
 }

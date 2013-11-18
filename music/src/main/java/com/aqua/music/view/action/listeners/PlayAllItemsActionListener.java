@@ -1,4 +1,4 @@
-package com.aqua.music.controllers;
+package com.aqua.music.view.action.listeners;
 
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -36,7 +36,7 @@ public class PlayAllItemsActionListener implements ActionListener {
 				String displayText = "\n\n Playing::" + text;
 				logger.info(displayText);
 				textArea.append(displayText);
-				playableItem.play(AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER);
+				AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies());
 			}
 
 			@Override

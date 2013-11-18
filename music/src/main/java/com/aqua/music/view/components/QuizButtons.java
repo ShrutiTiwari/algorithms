@@ -1,4 +1,4 @@
-package com.aqua.music.view.helper;
+package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,16 +8,16 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.aqua.music.controllers.QuizPlayActionListener;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
+import com.aqua.music.view.action.listeners.QuizPlayActionListener;
 
-enum QuizUiButtons implements UiButtons {
+enum QuizButtons implements UiButtons {
 	FREQUENCY_SET_QUIZ("Play $$", "Click this to play $$") {
 		@Override
 		JButton createInstanceWith(final JPanel mainTab, final Quiz<CyclicFrequencySet> quizSection, int buttonYcoordinate, String name,
 				List<JButton> allPlayButtons) {
-			JButton button = UiButtonsCommon.configurableNamedButton(this, name);
+			JButton button = CommonButtons.configurableNamedButton(this, name);
 			final Collection<JButton> multipleChoiceSet = multipleChoiceSet(mainTab, quizSection, buttonYcoordinate);
 			button.addActionListener(new QuizPlayActionListener(mainTab, quizSection, multipleChoiceSet, allPlayButtons));
 			return button;
@@ -45,7 +45,7 @@ enum QuizUiButtons implements UiButtons {
 
 	private final String tooltip;
 
-	private QuizUiButtons(String text, String tooltip) {
+	private QuizButtons(String text, String tooltip) {
 		this.text = text;
 		this.tooltip = tooltip;
 	}

@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import com.aqua.music.view.helper.UiTabsFactory;
+import com.aqua.music.view.components.UiTabsFactory;
 
 public class UiLauncher {
 	private static final String frameTitle = "Music";

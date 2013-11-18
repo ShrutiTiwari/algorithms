@@ -2,19 +2,20 @@ package com.aqua.music.model.cyclicset;
 
 import java.util.HashSet;
 
-import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 
 public class AscendDescendSequencePuzzles {
 	public void playThaat() {
-		CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		CyclicFrequencySet playItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL);
+		AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(playItem.frequencies());
 	}
 
 	public void playMultipleThaats() {
-		CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets multipleThaatEnqueuer = new CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets(
+		CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets multipleSymmetricFreqSet = new CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets(
 				new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI });
-		System.out.println(multipleThaatEnqueuer.asString());
-		AudioLifeCycleManager.instance.play(multipleThaatEnqueuer.allFrequenciesInCycle(), AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		System.out.println(multipleSymmetricFreqSet.asString());
+		
+		AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle());
 	}
 
 	public void playAllThats() {
@@ -29,13 +30,13 @@ public class AscendDescendSequencePuzzles {
 	}
 
 	private void playAscendAndDescend(int count, SymmetricalSet... raags) {
-		CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+		AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).frequencies());
 		System.out.println("\n Played [BILAWAL]");
 		HashSet<SymmetricalSet> hasheddata = randomize(raags);
 		for (SymmetricalSet each : hasheddata) {
 
 			for (int i = 0; i < count; i++) {
-				CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).play(AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER);
+				AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).frequencies());
 				System.out.println("\nPlayed [" + each.name() + "] ." + i);
 				System.out.println("\n");
 			}

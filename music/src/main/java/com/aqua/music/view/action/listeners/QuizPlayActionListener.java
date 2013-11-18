@@ -1,4 +1,4 @@
-package com.aqua.music.controllers;
+package com.aqua.music.view.action.listeners;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ public class QuizPlayActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		CyclicFrequencySet playItem = quizSection.playItem();
-		playItem.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playItem.frequencies());
 
 		for (JButton eachMultipleChoiceOption : multipleChoiceSet) {
 			for (ActionListener each : eachMultipleChoiceOption.getActionListeners()) {

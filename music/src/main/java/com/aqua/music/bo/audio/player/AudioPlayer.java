@@ -10,21 +10,29 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);
+	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList);
+
+	Runnable playTaskInLoop(Collection<? extends DynamicFrequency> frequencyList);
+
 	void setAudioPlayRigthsManager(AudioPlayRightsManager audioPlayRightsManager);
 
 	void stop();
-
-	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList);
 
 	enum Factory {
 		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle.class),
 		STATIC_AUDIO(AudioPlayerImplWithStaticSoundBasedOnVLC.class);
 
 		private final Class<? extends AudioPlayer> audioPlayerClass;
+		private AudioPlayer audioPlayerInstance;
+
 		private boolean initialized = false;
 
 		private Factory(Class<? extends AudioPlayer> audioPlayerClass) {
 			this.audioPlayerClass = audioPlayerClass;
+		}
+
+		public static AudioPlayer customizedDymanic(int durationInMsec, double vol) {
+			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(vol);
 		}
 
 		public AudioPlayer fetchInstance() {
@@ -38,17 +46,11 @@ public interface AudioPlayer {
 			return audioPlayerInstance;
 		}
 
-		private AudioPlayer audioPlayerInstance;
-
 		private synchronized void lazyInitialize() throws InstantiationException, IllegalAccessException {
 			if (!initialized) {
 				this.audioPlayerInstance = audioPlayerClass.newInstance();
 				initialized = true;
 			}
-		}
-
-		public static AudioPlayer customizedDymanic(int durationInMsec, double vol) {
-			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(vol);
 		}
 	}
 }

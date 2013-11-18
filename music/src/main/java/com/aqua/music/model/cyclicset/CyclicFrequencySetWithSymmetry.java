@@ -6,22 +6,19 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.model.core.ClassicalNote;
+import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
 class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	Logger logger = LoggerFactory.getLogger(CyclicFrequencySetWithSymmetry.class);
-	private final AudioLifeCycleManager audioLifeCycleManager;
-	private final String cycleFrequenciesAsText;
 	private final Collection<Frequency> allFrequencies;
+	private final String cycleFrequenciesAsText;
 	private final String name;
 
 	public CyclicFrequencySetWithSymmetry(FrequencySet frequencySet, PermutationApplicator permutationApplicator) {
-		this.audioLifeCycleManager = AudioLifeCycleManager.instance;
-
 		CyclicSequence cyclicSequence = null;
 		if (permutationApplicator == null || permutationApplicator == PermutationApplicator.NONE) {
 			cyclicSequence = new CyclicSequenceNonPermutating.SymmetricalFreqSet(frequencySet).cyclicSequence();
@@ -39,16 +36,20 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 		return cycleFrequenciesAsText;
 	}
 	@Override
-	public String toString() {
-		return name();
+	public Collection<? extends DynamicFrequency> frequencies() {
+		return allFrequencies;
 	}
 	@Override
 	public String name() {
 		return name;
 	}
 
-	public String play(AudioPlayConfig audioPlayConfig) {
-		audioLifeCycleManager.play(allFrequencies, audioPlayConfig);
-		return cycleFrequenciesAsText;
+	@Override
+	public void playInLoop(AudioPlayConfig audioPlayConfig) {
+	}
+
+	@Override
+	public String toString() {
+		return name();
 	}
 }

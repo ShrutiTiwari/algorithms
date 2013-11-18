@@ -1,6 +1,9 @@
 package com.aqua.music.bo.audio.manager;
 
+import java.util.Collection;
+
 import com.aqua.music.bo.audio.player.AudioPlayer;
+import com.aqua.music.model.core.DynamicFrequency;
 
 public enum AudioPlayConfig {
 	ASYNCHRONOUS_DYNAMIC_PLAYER(AudioPlayer.Factory.DYNAMIC_AUDIO, PlayMode.Asynchronous),
@@ -15,11 +18,12 @@ public enum AudioPlayConfig {
 
 	private final AudioPlayer.Factory audioPlayerFactory;
 	private final PlayMode playMode;
-	public PlayMode playMode() {
-		return playMode;
-		
+
+	public void play(Collection<? extends DynamicFrequency> frequencyList) {
+		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList);
 	}
-	public AudioPlayer audioPlayer() {
-		return audioPlayerFactory.fetchInstance();
+	
+	public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {
+		playMode.playInLoop(audioPlayerFactory.fetchInstance(), frequencyList);
 	}
 }

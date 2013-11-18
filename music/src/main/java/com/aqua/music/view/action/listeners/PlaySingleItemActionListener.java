@@ -1,4 +1,4 @@
-package com.aqua.music.controllers;
+package com.aqua.music.view.action.listeners;
 
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
@@ -22,7 +22,7 @@ public class PlaySingleItemActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		singlePlayableItem.play(AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER);
+		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(singlePlayableItem.frequencies());
 		displayOnConsole(singlePlayableItem.name() + "===>" + "\n" + singlePlayableItem.asText());
 	}
 
