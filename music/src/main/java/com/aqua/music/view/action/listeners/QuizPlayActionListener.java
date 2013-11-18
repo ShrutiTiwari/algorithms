@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
@@ -31,7 +31,7 @@ public class QuizPlayActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		CyclicFrequencySet playItem = quizSection.playItem();
-		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playItem.frequencies());
+		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playItem.frequencies());
 
 		for (JButton eachMultipleChoiceOption : multipleChoiceSet) {
 			for (ActionListener each : eachMultipleChoiceOption.getActionListeners()) {

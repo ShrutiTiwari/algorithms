@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 
 public class PlaySingleItemActionListener implements ActionListener {
@@ -22,7 +22,7 @@ public class PlaySingleItemActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(singlePlayableItem.frequencies());
+		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(singlePlayableItem.frequencies());
 		displayOnConsole(singlePlayableItem.name() + "===>" + "\n" + singlePlayableItem.asText());
 	}
 

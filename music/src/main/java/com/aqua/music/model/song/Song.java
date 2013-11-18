@@ -2,7 +2,7 @@ package com.aqua.music.model.song;
 
 import java.util.Collection;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 import com.aqua.music.model.core.DynamicFrequency;
 
@@ -31,11 +31,11 @@ public enum Song implements Playable{
 	}
 
 	@Override
-	public void playInLoop(AudioPlayConfig audioPlayConfig) {
+	public void playInLoop(AudioPlayerSettings audioPlayConfig) {
 	}
 	
 
-	public void playTaan(AudioPlayConfig audioPlayConfig) {
+	public void playTaan(AudioPlayerSettings audioPlayConfig) {
 		Collection<Taan> taans = song.taans();
 		for (Taan each : taans) {
 			Taan playtaan = each;

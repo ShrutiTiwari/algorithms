@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
@@ -45,7 +45,7 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	}
 
 	@Override
-	public void playInLoop(AudioPlayConfig audioPlayConfig) {
+	public void playInLoop(AudioPlayerSettings audioPlayConfig) {
 	}
 
 	@Override

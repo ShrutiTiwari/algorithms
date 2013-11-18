@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 
@@ -28,7 +28,7 @@ public class PatternGeneratorTest {
 		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		for (int[] each : result) {
 			CyclicFrequencySet freqSeq = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(SymmetricalSet.THAAT_KAFI,each);
-			AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(freqSeq.frequencies());
+			AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(freqSeq.frequencies());
 		}
 	}
 

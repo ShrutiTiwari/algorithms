@@ -17,7 +17,7 @@ import javax.sound.sampled.LineUnavailableException;
 
 import org.junit.Test;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 public class AudioLifeCycleManagerTest {
@@ -27,7 +27,7 @@ public class AudioLifeCycleManagerTest {
 		Frequency[] sample = new Frequency[] { S, R, G, M, P, D, N, S3 };
 		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		AudioPlayConfig.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList);
+		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList);
 	}
 
 	//@Test
@@ -35,7 +35,7 @@ public class AudioLifeCycleManagerTest {
 		List<Frequency> frequencyList = new ArrayList<Frequency>();
 		frequencyList.add(ClassicalNote.D);
 		
-		AudioPlayConfig.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList);
+		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList);
 	}
 
 }

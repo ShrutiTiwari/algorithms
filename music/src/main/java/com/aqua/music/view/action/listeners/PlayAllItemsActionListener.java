@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.api.AudioPlayConfig;
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
@@ -36,7 +36,7 @@ public class PlayAllItemsActionListener implements ActionListener {
 				String displayText = "\n\n Playing::" + text;
 				logger.info(displayText);
 				textArea.append(displayText);
-				AudioPlayConfig.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies());
+				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies());
 			}
 
 			@Override
