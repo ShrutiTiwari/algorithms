@@ -1,7 +1,6 @@
 package com.aqua.music.view.components;
 
 import java.awt.Color;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,34 +15,41 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
+import com.aqua.music.view.action.listeners.QuizPlayActionListener;
 
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
-	private final UiTabsFactory rehearseTabs;
-
 	private final JComboBox quizLevelsDD = createQuizLevelDropdown();
 
+	private final UiTabsFactory rehearseTabs;
+
 	QuizPanel(final UiTabsFactory rehearseTabs, final QuizLevel quizLevel) {
-		super();
+		super(false);
 		this.rehearseTabs = rehearseTabs;
 		this.quizLevel = quizLevel;
 
 	}
 
-	protected void addSpecificButtons(final JPanel mainTab, final TextArea textArea) {
-		mainTab.add(createQuizLevelDropdown());
+	protected void addSpecificButtons(final JPanel mainPanel) {
+		mainPanel.add(createQuizLevelDropdown());
 
 		int i = 1;
 		List<JButton> allPlayButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
 			final String quizName = "Quiz " + i;
-			JButton playButton = QuizButtons.FREQUENCY_SET_QUIZ.createPlayButtonForEachQuiz(mainTab, buttonYcoordinate(), eachQuiz,
-					quizName, allPlayButtons);
+			
+			int buttonYcoordinate = buttonYcoordinate();
+			JButton playButton = UiButtons.Static.QUIZ_PLAY.createButton(quizName, UiButtons.X_COORIDNATE, buttonYcoordinate);
+			
+			final Collection<JButton> multipleChoiceSet = multipleChoiceSet(mainPanel, eachQuiz, buttonYcoordinate);
+			playButton.addActionListener(new QuizPlayActionListener(mainPanel, eachQuiz, multipleChoiceSet, allPlayButtons));
+			playButton.setOpaque(true);
+			mainPanel.add(playButton);
+			
 			allPlayButtons.add(playButton);
 			i++;
 		}
 	}
-
 	private JComboBox createQuizLevelDropdown() {
 		Collection<QuizLevel> quizLevels = QuizController.FrequencySetQuiz.quizLevels();
 		final JComboBox box = new JComboBox(quizLevels.toArray());
@@ -61,5 +67,22 @@ class QuizPanel extends AbstractMusicPanel {
 			}
 		});
 		return box;
+	}
+
+	private Collection<JButton> multipleChoiceSet(final JPanel mainPanel, final Quiz<CyclicFrequencySet> quizSection,
+			int buttonYcoordinate) {
+		final Collection<JButton> multipleChoiceSet = new ArrayList<JButton>();
+		int startLocation = UiButtons.X_COORIDNATE + UiButtons.MINI_BUTTON_WIDTH + 10;
+		for (CyclicFrequencySet each : quizSection.quizItems()) {
+			JButton multipleChoiceButton = new JButton(each.name());
+			multipleChoiceButton.setBackground(Color.LIGHT_GRAY);
+			multipleChoiceButton.setBounds(startLocation, buttonYcoordinate, UiButtons.MINI_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
+			startLocation = startLocation + UiButtons.MINI_BUTTON_WIDTH + 10;
+			multipleChoiceButton.setVisible(false);
+			multipleChoiceButton.setOpaque(true);
+			mainPanel.add(multipleChoiceButton);
+			multipleChoiceSet.add(multipleChoiceButton);
+		}
+		return multipleChoiceSet;
 	}
 }

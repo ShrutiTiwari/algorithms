@@ -57,7 +57,7 @@ public class UiTabsFactory {
 		box.setBackground(Color.RED);
 		box.setForeground(Color.GREEN);
 		box.setSelectedItem(frequencySet);
-		box.setBounds(RehearseButtons.X_COORIDNATE, buttonYcoordinate, 500, RehearseButtons.HEIGHT());
+		box.setBounds(UiButtons.X_COORIDNATE, buttonYcoordinate, UiButtons.LARGE_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
 		box.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

@@ -3,13 +3,14 @@ package com.aqua.music.view.components;
 import java.awt.Dimension;
 import java.awt.TextArea;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.view.components.UiButtons.CommonButtons;
+import com.aqua.music.view.components.UiButtons.Static;
 
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
@@ -17,27 +18,32 @@ abstract class AbstractMusicPanel {
 	private final YCoordinateTracker yCoordinateTracker;
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
-	//private final static JButton stopButton = ;
-	//private static final TextArea textArea = ;
+	private final static JButton stopButton = Static.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20);
+	private final TextArea consoleArea = createTextArea(UiButtons.X_COORIDNATE + 600, 60);
 
-	protected AbstractMusicPanel() {
+	public TextArea consoleArea() {
+		return consoleArea;
+	}
+
+	protected AbstractMusicPanel(boolean withConsole) {
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.panel = createBlankMainTab();
+		panel.add(stopButton);
+		if (withConsole) {
+			panel.add(consoleArea);
+		}
 	}
 
 	private synchronized void initialize() {
 		if (!initialized) {
 			initialized = true;
-			panel.add(CommonButtons.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20));
-			TextArea textArea=createTextArea(UiButtons.X_COORIDNATE + 600, 60);
-			panel.add(textArea);
-			addSpecificButtons(panel, textArea);
-			panel.add(CommonButtons.QUIT.createButton(UiButtons.X_COORIDNATE, yCoordinateTracker.buttonYcoordinate()));
+			addSpecificButtons(panel);
+			panel.add(Static.QUIT.createButton(UiButtons.X_COORIDNATE, yCoordinateTracker.buttonYcoordinate()));
 			panel.setOpaque(true);
 		}
 	}
 
-	protected abstract void addSpecificButtons(final JPanel mainTab, final TextArea textArea);
+	protected abstract void addSpecificButtons(final JPanel mainPanel);
 
 	public JPanel getPanel() {
 		if (!initialized) {
