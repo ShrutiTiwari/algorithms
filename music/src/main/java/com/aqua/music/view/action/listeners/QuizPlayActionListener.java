@@ -14,11 +14,11 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 
 public class QuizPlayActionListener implements ActionListener {
-	final JPanel mainTab;
+	final JPanel mainPanel;
 
-	public QuizPlayActionListener(JPanel mainTab, Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet,
+	public QuizPlayActionListener(JPanel mainPanel, Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet,
 			List<JButton> allPlayButtons) {
-		this.mainTab = mainTab;
+		this.mainPanel = mainPanel;
 		this.quizSection = quizSection;
 		this.multipleChoiceSet = multipleChoiceSet;
 		this.allPlayButtons = allPlayButtons;
@@ -41,7 +41,7 @@ public class QuizPlayActionListener implements ActionListener {
 			eachMultipleChoiceOption.setBackground(Color.LIGHT_GRAY);
 			eachMultipleChoiceOption.setVisible(true);
 			eachMultipleChoiceOption.setEnabled(true);
-			mainTab.repaint();
+			mainPanel.repaint();
 		}
 	}
 	

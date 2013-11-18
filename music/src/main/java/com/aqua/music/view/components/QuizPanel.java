@@ -37,19 +37,22 @@ class QuizPanel extends AbstractMusicPanel {
 		List<JButton> allPlayButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
 			final String quizName = "Quiz " + i;
-			
 			int buttonYcoordinate = buttonYcoordinate();
+
 			JButton playButton = UiButtons.Static.QUIZ_PLAY.createButton(quizName, UiButtons.X_COORIDNATE, buttonYcoordinate);
-			
-			final Collection<JButton> multipleChoiceSet = multipleChoiceSet(mainPanel, eachQuiz, buttonYcoordinate);
+			final Collection<JButton> multipleChoiceSet = multipleChoiceOptions(eachQuiz, buttonYcoordinate);
+			for (JButton each : multipleChoiceSet) {
+				mainPanel.add(each);
+			}
 			playButton.addActionListener(new QuizPlayActionListener(mainPanel, eachQuiz, multipleChoiceSet, allPlayButtons));
 			playButton.setOpaque(true);
 			mainPanel.add(playButton);
-			
+
 			allPlayButtons.add(playButton);
 			i++;
 		}
 	}
+
 	private JComboBox createQuizLevelDropdown() {
 		Collection<QuizLevel> quizLevels = QuizController.FrequencySetQuiz.quizLevels();
 		final JComboBox box = new JComboBox(quizLevels.toArray());
@@ -69,19 +72,22 @@ class QuizPanel extends AbstractMusicPanel {
 		return box;
 	}
 
-	private Collection<JButton> multipleChoiceSet(final JPanel mainPanel, final Quiz<CyclicFrequencySet> quizSection,
-			int buttonYcoordinate) {
+	private JButton multipleChoiceOptionButton(int buttonYcoordinate, int startLocation, String name) {
+		JButton multipleChoiceButton = new JButton(name);
+		multipleChoiceButton.setBackground(Color.LIGHT_GRAY);
+		multipleChoiceButton.setBounds(startLocation, buttonYcoordinate, UiButtons.MINI_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
+		multipleChoiceButton.setVisible(false);
+		multipleChoiceButton.setOpaque(true);
+		return multipleChoiceButton;
+	}
+
+	private Collection<JButton> multipleChoiceOptions(final Quiz<CyclicFrequencySet> quizSection, int buttonYcoordinate) {
 		final Collection<JButton> multipleChoiceSet = new ArrayList<JButton>();
 		int startLocation = UiButtons.X_COORIDNATE + UiButtons.MINI_BUTTON_WIDTH + 10;
-		for (CyclicFrequencySet each : quizSection.quizItems()) {
-			JButton multipleChoiceButton = new JButton(each.name());
-			multipleChoiceButton.setBackground(Color.LIGHT_GRAY);
-			multipleChoiceButton.setBounds(startLocation, buttonYcoordinate, UiButtons.MINI_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
-			startLocation = startLocation + UiButtons.MINI_BUTTON_WIDTH + 10;
-			multipleChoiceButton.setVisible(false);
-			multipleChoiceButton.setOpaque(true);
-			mainPanel.add(multipleChoiceButton);
+		for (CyclicFrequencySet eachOption : quizSection.quizItems()) {
+			JButton multipleChoiceButton = multipleChoiceOptionButton(buttonYcoordinate, startLocation, eachOption.name());
 			multipleChoiceSet.add(multipleChoiceButton);
+			startLocation = startLocation + UiButtons.MINI_BUTTON_WIDTH + 10;
 		}
 		return multipleChoiceSet;
 	}
