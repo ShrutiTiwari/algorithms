@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.api.Playable;
-import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioPlayConfig;
 import com.aqua.music.bo.audio.manager.AudioTask;
+import com.aqua.music.bo.audio.manager.PlayMode;
 
 public class PlayAllItemsActionListener implements ActionListener {
 	private static final Logger logger = LoggerFactory.getLogger(PlayAllItemsActionListener.class);
@@ -45,6 +45,6 @@ public class PlayAllItemsActionListener implements ActionListener {
 				logger.info(""+playableItems.length);
 			}
 		};
-		AudioLifeCycleManager.instance.execute(audioTask);
+		PlayMode.Asynchronous.playTask(audioTask);
 	}
 }

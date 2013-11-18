@@ -1,12 +1,10 @@
 package com.aqua.music.bo.audio.manager;
 
-import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.aqua.music.bo.audio.player.AudioPlayer;
-import com.aqua.music.model.core.DynamicFrequency;
 
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
@@ -33,11 +31,6 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 			permitToPlay.lock();
 			stopCurrentPlay.set(false);
 		}
-	}
-
-	@Override
-	public <T> void execute(final AudioTask<T> audioTask) {
-		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
 	@Override
