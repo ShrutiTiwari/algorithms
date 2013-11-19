@@ -50,7 +50,7 @@ interface UiButtons {
 			JButton createInstanceWith(String buttonName) {
 				return configurableNamedButton(this, buttonName);
 			}
-		},STOP("Stop", "Click this to stop!") {
+		},STOP("Stop", "Click this to stop!",MINI_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
@@ -63,7 +63,36 @@ interface UiButtons {
 				button.addActionListener(actionListener);
 				return button;
 			}
+		}, PAUSE("Pause", "Click this to pause!",MINI_BUTTON_WIDTH) {
+			@Override
+			JButton createInstanceWith(String name) {
+				JButton button = fixedNameButton(this);
+				ActionListener actionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.pause();
+					}
+				};
+
+				button.addActionListener(actionListener);
+				return button;
+			}
+		}, RESUME("Resume", "Click this to resume!",MINI_BUTTON_WIDTH) {
+			@Override
+			JButton createInstanceWith(String name) {
+				JButton button = fixedNameButton(this);
+				ActionListener actionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.resume();
+					}
+				};
+
+				button.addActionListener(actionListener);
+				return button;
+			}
 		};
+
 
 		private final int buttonWidth;
 		private final String text;

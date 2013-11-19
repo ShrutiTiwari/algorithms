@@ -9,23 +9,18 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
 
+	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
 
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
+		this.pauseCurrentPlay = new AtomicBoolean(false);
 	}
 
 	AudioLifeCycleManagerImpl(int durationInMsec, double vol) {
 		this();
-	}
-
-	@Override
-	public synchronized void stop() {
-		if (currentAudioPlayer != null) {
-			currentAudioPlayer.stop();
-		}
 	}
 
 	@Override
@@ -37,6 +32,31 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 			currentAudioPlayer.stop();
 			permitToPlay.lock();
 			stopCurrentPlay.set(false);
+			pauseCurrentPlay.set(false);
+		}
+	}
+
+	@Override
+	public void pause() {
+		if (currentAudioPlayer != null) {
+			pauseCurrentPlay.set(true);
+		}
+	}
+
+	@Override
+	public boolean pauseCurrentPlay() {
+		return pauseCurrentPlay.get();
+	}
+
+	@Override
+	public void releaseRightToPlay() {
+		permitToPlay.unlock();
+	}
+
+	@Override
+	public void resume() {
+		if (currentAudioPlayer != null) {
+			pauseCurrentPlay.compareAndSet(true, false);
 		}
 	}
 
@@ -46,8 +66,12 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public void releaseRightToPlay() {
-		permitToPlay.unlock();
+	public synchronized void stop() {
+		if (currentAudioPlayer != null) {
+			stopCurrentPlay.set(true);
+			currentAudioPlayer.stop();
+			pauseCurrentPlay.set(false);
+		}
 	}
 
 	@Override

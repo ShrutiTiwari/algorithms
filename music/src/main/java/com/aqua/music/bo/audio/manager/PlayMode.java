@@ -100,4 +100,19 @@ public enum PlayMode {
 		}
 	}
 
+	public static void pause() {
+		try {
+			AudioLifeCycleManager.instance.pause();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void resume() {
+		try {
+			AudioLifeCycleManager.instance.resume();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

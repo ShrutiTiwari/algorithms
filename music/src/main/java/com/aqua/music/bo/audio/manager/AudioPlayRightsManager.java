@@ -10,4 +10,6 @@ public interface AudioPlayRightsManager {
 	void releaseRightToPlay();
 
 	void setCurrentPlayer(AudioPlayer currentAudioPlayer);
+
+	boolean pauseCurrentPlay();
 }

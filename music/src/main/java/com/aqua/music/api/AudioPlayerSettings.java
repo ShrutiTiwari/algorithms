@@ -31,4 +31,9 @@ public enum AudioPlayerSettings {
 	public static void stop(){
 		PlayMode.stop();
 	}
+	
+	public static void pause(){
+		PlayMode.pause();
+	}
+
 }

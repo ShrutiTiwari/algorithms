@@ -18,7 +18,9 @@ abstract class AbstractMusicPanel {
 	private final YCoordinateTracker yCoordinateTracker;
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
-	private final static JButton stopButton = Static.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20);
+	private final JButton stopButton = Static.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20);
+	private final JButton pauseButton = Static.PAUSE.createButton(UiButtons.X_COORIDNATE + 600 + UiButtons.MINI_BUTTON_WIDTH, 20);
+	private final JButton resumeButton = Static.RESUME.createButton(UiButtons.X_COORIDNATE + 600 + (2*UiButtons.MINI_BUTTON_WIDTH), 20);
 	private final TextArea consoleArea = createTextArea(UiButtons.X_COORIDNATE + 600, 60);
 
 	public TextArea consoleArea() {
@@ -29,6 +31,8 @@ abstract class AbstractMusicPanel {
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.panel = createBlankMainTab();
 		panel.add(stopButton);
+		panel.add(pauseButton);
+		panel.add(resumeButton);
 		if (withConsole) {
 			panel.add(consoleArea);
 		}

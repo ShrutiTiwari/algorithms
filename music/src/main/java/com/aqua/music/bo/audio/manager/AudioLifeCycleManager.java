@@ -8,4 +8,8 @@ interface AudioLifeCycleManager {
 	final AudioLifeCycleManager instance = new AudioLifeCycleManagerImpl();
 	
 	void stop();
+
+	void pause();
+
+	void resume();
 }
