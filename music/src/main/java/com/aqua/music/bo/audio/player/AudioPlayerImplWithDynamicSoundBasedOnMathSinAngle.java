@@ -35,7 +35,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			this.sdl = AudioSystem.getSourceDataLine(af);
 			sdl.open(af);
 			sdl.start();
-			startPlaying(frequencyList);
+			generateSound(frequencyList);
 			// sdl.drain();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,28 +43,6 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			closeStream();
 			logger.info("releasing right to play");
 			audioPlayRightsManager.releaseRightToPlay();
-		}
-	}
-
-	private void startPlaying(final Collection<? extends DynamicFrequency> frequencyList) {
-		for (final DynamicFrequency each : frequencyList) {
-			if (audioPlayRightsManager.stopPlaying()) {
-				logger.info("oops, marked to stop..breaking now.");
-				break;
-			}else if(audioPlayRightsManager.pauseCurrentPlay()){
-				while(audioPlayRightsManager.pauseCurrentPlay()&&!audioPlayRightsManager.stopPlaying()){
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			final float frequencyInHz = each.frequencyInHz();
-			final int duration = each.duration();
-			throwExceptionForInsaneInput(frequencyInHz, duration, vol);
-			byte[] buf = constructBufferForFrequency(frequencyInHz, duration);
-			sdl.write(buf, 0, buf.length);
 		}
 	}
 
@@ -77,7 +55,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			sdl.open(af);
 			sdl.start();
 			while (!audioPlayRightsManager.stopPlaying()) {
-				startPlaying(frequencyList);
+				generateSound(frequencyList);
 			}
 			// sdl.drain();
 		} catch (Exception e) {
@@ -146,6 +124,29 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			frequencyBuffer[frequencyBuffer.length - 1 - i] = (byte) (frequencyBuffer[frequencyBuffer.length - 1 - i] * i / (SAMPLE_RATE / 100.0));
 		}
 		return frequencyBuffer;
+	}
+
+	private void generateSound(final Collection<? extends DynamicFrequency> frequencyList) {
+		for (final DynamicFrequency each : frequencyList) {
+			if (audioPlayRightsManager.stopPlaying()) {
+				logger.info("oops, marked to stop..breaking now.");
+				break;
+			}else if(audioPlayRightsManager.pauseCurrentPlay()){
+				while(audioPlayRightsManager.pauseCurrentPlay()&&!audioPlayRightsManager.stopPlaying()){
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				logger.info("Pause cleared!");
+			}
+			final float frequencyInHz = each.frequencyInHz();
+			final int duration = each.duration();
+			throwExceptionForInsaneInput(frequencyInHz, duration, vol);
+			byte[] buf = constructBufferForFrequency(frequencyInHz, duration);
+			sdl.write(buf, 0, buf.length);
+		}
 	}
 
 	private void throwExceptionForInsaneInput(float hz, int msecs, double vol) {

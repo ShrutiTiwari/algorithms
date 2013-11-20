@@ -1,7 +1,6 @@
 package com.aqua.music.view.components;
 
 import java.awt.TextArea;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,10 +11,10 @@ import com.aqua.music.api.Playable;
 import com.aqua.music.view.action.listeners.PlayAllItemsActionListener;
 import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
 
-class RehearsePanel extends AbstractMusicPanel {
+public class RehearsePanel extends AbstractMusicPanel {
 	private final Collection<Playable> itemsList;
 
-	RehearsePanel(Collection<Playable> itemsList) {
+	public RehearsePanel(Collection<Playable> itemsList) {
 		super(true);
 		this.itemsList = itemsList;
 	}

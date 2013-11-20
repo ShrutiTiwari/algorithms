@@ -14,6 +14,8 @@ import com.aqua.music.view.action.listeners.QuizPlayActionListener;
 
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
+	private final int increment = UiButtons.MINI_BUTTON_WIDTH + 10;
+	private final int optionButtonsXLocation = UiButtons.X_COORIDNATE + increment;
 
 	QuizPanel(final QuizLevel quizLevel) {
 		super(false);
@@ -28,27 +30,23 @@ class QuizPanel extends AbstractMusicPanel {
 			int buttonYcoordinate = buttonYcoordinate();
 
 			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName, buttonYcoordinate);
-			final Collection<JButton> groupOfButtonsForMultipleChoices = groupOfButtonsForMultipleChoices(eachQuiz, buttonYcoordinate);
-			for (JButton each : groupOfButtonsForMultipleChoices) {
+			
+			final HorizontallyAlignedButtons optionButtonsBuilder = new HorizontallyAlignedButtons(optionButtonsXLocation, buttonYcoordinate,
+					increment, UiButtons.MusicButtons.CHOICE_OPTIONS);
+			for (CyclicFrequencySet eachOption : eachQuiz.quizItems()) {
+				optionButtonsBuilder.add(eachOption.name());
+			}
+			final Collection<JButton> multipleChoiceButtons = optionButtonsBuilder.all();
+			for (JButton each : multipleChoiceButtons) {
 				mainPanel.add(each);
 			}
-			quizPlayButton.addActionListener(new QuizPlayActionListener(mainPanel, eachQuiz, groupOfButtonsForMultipleChoices, allPlayButtons));
+			
+			quizPlayButton.addActionListener(new QuizPlayActionListener(mainPanel, eachQuiz, multipleChoiceButtons,
+					allPlayButtons));
 			mainPanel.add(quizPlayButton);
 
 			allPlayButtons.add(quizPlayButton);
 			i++;
 		}
-	}
-
-	private Collection<JButton> groupOfButtonsForMultipleChoices(final Quiz<CyclicFrequencySet> quizSection, int buttonYcoordinate) {
-		final Collection<JButton> multipleChoiceSet = new ArrayList<JButton>();
-		int startLocation = UiButtons.X_COORIDNATE + UiButtons.MINI_BUTTON_WIDTH + 10;
-		for (CyclicFrequencySet eachOption : quizSection.quizItems()) {
-			JButton multipleChoiceButton = UiButtons.MusicButtons.CHOICE_OPTIONS.createDynamicNamedButton(eachOption.name(), startLocation,
-					buttonYcoordinate);
-			multipleChoiceSet.add(multipleChoiceButton);
-			startLocation = startLocation + UiButtons.MINI_BUTTON_WIDTH + 10;
-		}
-		return multipleChoiceSet;
 	}
 }

@@ -89,7 +89,7 @@ abstract class AbstractMusicPanel {
 			this.withConsole = withConsole;
 			this.stopButton = MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, 20);
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, 20);
-			this.resumeButton = MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), 20);
+			this.resumeButton = MusicButtons.RESUME.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), 20);
 			this.consoleArea = createTextArea(controlPanelLocation, 60);
 		}
 
@@ -108,6 +108,5 @@ abstract class AbstractMusicPanel {
 			textArea.setBounds(xCoordinate, yCoordintate, 550, 550);
 			return textArea;
 		}
-
 	}
 }

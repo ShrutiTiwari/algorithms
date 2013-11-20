@@ -31,9 +31,9 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 			stopCurrentPlay.set(true);
 			currentAudioPlayer.stop();
 			permitToPlay.lock();
-			stopCurrentPlay.set(false);
-			pauseCurrentPlay.set(false);
 		}
+		stopCurrentPlay.set(false);
+		pauseCurrentPlay.set(false);
 	}
 
 	@Override
@@ -68,9 +68,9 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	@Override
 	public synchronized void stop() {
 		if (currentAudioPlayer != null) {
+			pauseCurrentPlay.set(false);
 			stopCurrentPlay.set(true);
 			currentAudioPlayer.stop();
-			pauseCurrentPlay.set(false);
 		}
 	}
 
