@@ -23,8 +23,6 @@ class SongAhirBhairav extends AbstractSong {
 	@Override
 	protected Collection<SongLine> antaraExtraLines() {
 		Collection<SongLine> result = new ArrayList<SongLine>();
-		result.add(antaraThirdLine());
-		result.add(antaraFourthLine());
 		result.add(antaraFiFthLine());
 		return result;
 	}
@@ -56,7 +54,7 @@ class SongAhirBhairav extends AbstractSong {
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(M, M).couple(D,P).normal(D,N_,S3,N_,R3_).couple(S,N_,D,P).normal(M);
+		return new SongLine(beatDivison).normal(M, M).couple(D,P).normal(D,N_,S3,N_,R3_).couple(S3,N_,D,P).normal(M);
 	}
 
 	@Override
@@ -66,17 +64,5 @@ class SongAhirBhairav extends AbstractSong {
 
 	private SongLine antaraFiFthLine() {
 		return sthayiFirstLine();
-	}
-
-	private SongLine antaraFourthLine() {
-		return commonAnataraThirdLinePart().extended(R_, 2);
-	}
-
-	private SongLine antaraThirdLine() {
-		return commonAnataraThirdLinePart().extended(R_, 4);
-	}
-
-	private SongLine commonAnataraThirdLinePart() {
-		return new SongLine(beatDivison).extended(S3, 2).normal(N_, S3).extended(D, 2).couple(P, M).normal(P, M, M, G, M);
 	}
 }
