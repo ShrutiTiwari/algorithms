@@ -57,7 +57,7 @@ public class UiLauncher {
 			tabbedPane.addTab("Thaat rehearse", rehearseTabFactory.plainTab());
 			rehearseTabFactory.addPatternTab();
 			tabbedPane.addTab("Song rehearse", rehearseTabFactory.songTab());
-			rehearseTabFactory.addQuizSectionTab();
+			rehearseTabFactory.addQuizTab();
 
 			tabbedPane.setOpaque(true);
 			return tabbedPane;

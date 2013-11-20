@@ -1,66 +1,48 @@
 package com.aqua.music.view.components;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collection;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.model.puzzles.QuizController;
-import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
-	private final JPanel panel;
-	private final YCoordinateTracker yCoordinateTracker;
-	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
-	private final JButton stopButton = MusicButtons.STOP.createStaticNamedButton(UiButtons.X_COORIDNATE + 600, 20);
-	private final JButton pauseButton = MusicButtons.PAUSE.createStaticNamedButton(UiButtons.X_COORIDNATE + 600 + UiButtons.MINI_BUTTON_WIDTH, 20);
-	private final JButton resumeButton = MusicButtons.RESUME.createStaticNamedButton(UiButtons.X_COORIDNATE + 600 + (2*UiButtons.MINI_BUTTON_WIDTH), 20);
-	private final TextArea consoleArea = createTextArea(UiButtons.X_COORIDNATE + 600, 60);
 
-	public TextArea consoleArea() {
-		return consoleArea;
-	}
+	private volatile boolean initialized = false;
+	private final JPanel panel;
+	private final PlayerControlPanel playerControlPanel;
+
+	private final YCoordinateTracker yCoordinateTracker;
 
 	protected AbstractMusicPanel(boolean withConsole) {
+		this.playerControlPanel = new PlayerControlPanel(withConsole);
 		this.yCoordinateTracker = new YCoordinateTracker();
 		this.panel = createBlankMainTab();
-		panel.add(stopButton);
-		panel.add(pauseButton);
-		panel.add(resumeButton);
-		if (withConsole) {
-			panel.add(consoleArea);
-		}
+		playerControlPanel.addToPanel(panel);
 	}
 
-	private synchronized void initialize() {
-		if (!initialized) {
-			initialized = true;
-			addSpecificButtons(panel);
-			panel.add(MusicButtons.QUIT.createStaticNamedButton(yCoordinateTracker.buttonYcoordinate()));
-			panel.setOpaque(true);
-		}
+	public TextArea consoleArea() {
+		return playerControlPanel.consoleArea;
 	}
-
-	protected abstract void addSpecificButtons(final JPanel mainPanel);
 
 	public JPanel getPanel() {
 		if (!initialized) {
 			initialize();
 		}
 		return panel;
+	}
+
+	protected abstract void addSpecificButtons(final JPanel mainPanel);
+
+	protected final int buttonYcoordinate() {
+		return yCoordinateTracker.buttonYcoordinate();
 	}
 
 	private JPanel createBlankMainTab() {
@@ -70,21 +52,13 @@ abstract class AbstractMusicPanel {
 		return mainTab;
 	}
 
-	protected JLabel createTextLabel() {
-		JLabel jLabel = new JLabel("");
-		jLabel.setVisible(true);
-		return jLabel;
-	}
-
-	private static TextArea createTextArea(int xCoordinate, int yCoordintate) {
-		TextArea textArea = new TextArea("Hello shrutz");
-		textArea.setVisible(true);
-		textArea.setBounds(xCoordinate, yCoordintate, 550, 550);
-		return textArea;
-	}
-
-	protected final int buttonYcoordinate() {
-		return yCoordinateTracker.buttonYcoordinate();
+	private synchronized void initialize() {
+		if (!initialized) {
+			initialized = true;
+			addSpecificButtons(panel);
+			panel.add(MusicButtons.QUIT.createStaticNamedButton(yCoordinateTracker.buttonYcoordinate()));
+			panel.setOpaque(true);
+		}
 	}
 
 	/**
@@ -100,9 +74,40 @@ abstract class AbstractMusicPanel {
 			yCoordinate += (UiButtons.BUTTON_HEIGHT) + 10;
 			return yCoordinate;
 		}
+	}
 
-		private void reset() {
-			this.yCoordinate = 10;
+	private class PlayerControlPanel {
+		private static final int PANEL_X_COORDINATE = UiButtons.X_COORIDNATE + 600;
+		private final TextArea consoleArea;
+		private final int controlPanelLocation = PANEL_X_COORDINATE;
+		private final JButton pauseButton;
+		private final JButton resumeButton;
+		private final JButton stopButton;
+		private final boolean withConsole;
+
+		private PlayerControlPanel(boolean withConsole) {
+			this.withConsole = withConsole;
+			this.stopButton = MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, 20);
+			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, 20);
+			this.resumeButton = MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), 20);
+			this.consoleArea = createTextArea(controlPanelLocation, 60);
 		}
+
+		public void addToPanel(JPanel panel) {
+			panel.add(stopButton);
+			panel.add(pauseButton);
+			panel.add(resumeButton);
+			if (withConsole) {
+				panel.add(consoleArea);
+			}
+		}
+
+		private TextArea createTextArea(int xCoordinate, int yCoordintate) {
+			TextArea textArea = new TextArea("Hello shrutz");
+			textArea.setVisible(true);
+			textArea.setBounds(xCoordinate, yCoordintate, 550, 550);
+			return textArea;
+		}
+
 	}
 }
