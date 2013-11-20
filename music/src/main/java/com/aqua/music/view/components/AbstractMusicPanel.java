@@ -1,16 +1,23 @@
 package com.aqua.music.view.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Collection;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.view.components.UiButtons.Static;
+import com.aqua.music.model.puzzles.QuizController;
+import com.aqua.music.model.puzzles.QuizLevel;
+import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
@@ -18,9 +25,9 @@ abstract class AbstractMusicPanel {
 	private final YCoordinateTracker yCoordinateTracker;
 	private volatile boolean initialized = false;
 	protected final Logger logger = LoggerFactory.getLogger(UiTabsFactory.class);
-	private final JButton stopButton = Static.STOP.createButton(UiButtons.X_COORIDNATE + 600, 20);
-	private final JButton pauseButton = Static.PAUSE.createButton(UiButtons.X_COORIDNATE + 600 + UiButtons.MINI_BUTTON_WIDTH, 20);
-	private final JButton resumeButton = Static.RESUME.createButton(UiButtons.X_COORIDNATE + 600 + (2*UiButtons.MINI_BUTTON_WIDTH), 20);
+	private final JButton stopButton = MusicButtons.STOP.createStaticNamedButton(UiButtons.X_COORIDNATE + 600, 20);
+	private final JButton pauseButton = MusicButtons.PAUSE.createStaticNamedButton(UiButtons.X_COORIDNATE + 600 + UiButtons.MINI_BUTTON_WIDTH, 20);
+	private final JButton resumeButton = MusicButtons.RESUME.createStaticNamedButton(UiButtons.X_COORIDNATE + 600 + (2*UiButtons.MINI_BUTTON_WIDTH), 20);
 	private final TextArea consoleArea = createTextArea(UiButtons.X_COORIDNATE + 600, 60);
 
 	public TextArea consoleArea() {
@@ -42,7 +49,7 @@ abstract class AbstractMusicPanel {
 		if (!initialized) {
 			initialized = true;
 			addSpecificButtons(panel);
-			panel.add(Static.QUIT.createButton(UiButtons.X_COORIDNATE, yCoordinateTracker.buttonYcoordinate()));
+			panel.add(MusicButtons.QUIT.createStaticNamedButton(yCoordinateTracker.buttonYcoordinate()));
 			panel.setOpaque(true);
 		}
 	}

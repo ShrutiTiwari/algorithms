@@ -43,7 +43,7 @@ public class UiLauncher {
 		return frame;
 	}
 
-	public static class UiTabbedPanel extends JPanel {
+	static class UiTabbedPanel extends JPanel {
 		public UiTabbedPanel() {
 			super(new GridLayout(1, 1));
 			JTabbedPane tabbedPane = createTabbedPan();

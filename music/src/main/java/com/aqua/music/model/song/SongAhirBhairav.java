@@ -1,5 +1,6 @@
 package com.aqua.music.model.song;
 
+import static com.aqua.music.model.core.ClassicalNote.G3;
 import static com.aqua.music.model.core.ClassicalNote.G;
 import static com.aqua.music.model.core.ClassicalNote.M;
 import static com.aqua.music.model.core.ClassicalNote.N_;
@@ -30,40 +31,37 @@ class SongAhirBhairav extends AbstractSong {
 
 	@Override
 	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).extended(M, 2).extended(P, 2).extended(D, 2).extended(N_, 2).extended(S3, 2).normal(S3)
-				.extended(S3, 2).normal(S3, S3, S3);
+		return new SongLine(beatDivison).extended(M, 2).normal(M).couple(M,D).normal(P,D,N_).extended(S3, 2).normal(S3,S3,R3_).couple(S3,R3_).normal(G3,R3_,S3);
 	}
 
 	@Override
 	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison, 2).normal(D, D, N_, N_, S3, S3).extended(S3, 2).normal(R3_).extended(S3, 2).normal(N_, S3)
-				.extended(D, 2).normal(P);
+		return new SongLine(beatDivison, 2).normal(N_, D, M).couple(M,D).normal(P,D,N_).extended(S3, 2).normal(S3,S3,R3_).couple(S3,R3_).normal(G3,R3_,S3);
 	}
 
 	@Override
 	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).couple(D, S3, N_, D, P, M, G, R_, S, N1_).normal(R_, R_).extended(S, 2).normal(S, R_)
-				.extended(G, 2).normal(M, M).couple(D, P);
+		return commonFirstLine().couple(D, P);
 	}
 
+	private SongLine commonFirstLine() {
+		return new SongLine(beatDivison).couple(D, S3, N_, D, P, M, G, R_, S, N1_).normal(R_, R_).extended(S, 2).normal(S, R_)
+				.extended(G, 2).normal(M, M);
+	}
+	
 	@Override
 	protected SongLine sthayiFirstLineVariation() {
-		return new SongLine(beatDivison).normal(P, M).extended(R_, 2).extended(S, 3).normal(R_, N1_, S).extended(M, 4).normal(G)
-				.extended(M, 3);
+		return commonFirstLine().couple(M,G,P, M).extended(R_, 2).extended(S,2);
 	}
 
 	@Override
 	protected SongLine sthayiSecondLine() {
-		return sthayiSecondLineCommonPart().extended(M, 2);
-	}
-
-	private SongLine sthayiSecondLineCommonPart() {
-		return new SongLine(beatDivison).extended(M, 2).normal(M).couple(M, G).extended(P, 2).normal(P, D, S3, N_, D, P, M, M);
+		return new SongLine(beatDivison).normal(M, M).couple(D,P).normal(D,N_,S3,N_,R3_).couple(S,N_,D,P).normal(M);
 	}
 
 	@Override
 	protected SongLine sthayiSecondLineVariation() {
-		return sthayiSecondLineCommonPart();
+		return sthayiFirstLine();
 	}
 
 	private SongLine antaraFiFthLine() {

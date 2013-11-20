@@ -62,10 +62,8 @@ public class QuizPlayActionListener implements ActionListener {
 					selectedButton.setBackground(Color.YELLOW);
 					selectedButton.setEnabled(false);
 				}
-				
 			}
 		};
 		return actionListener;
 	}
-
 }
