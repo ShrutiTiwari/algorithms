@@ -21,8 +21,8 @@ public class UiDropdown {
 	
 	private static JComboBox createWith(Object[] objects, int buttonYcoordinate, Object selectedItem) {
 		final JComboBox box = new JComboBox(objects);
-		box.setBackground(Color.RED);
-		box.setForeground(Color.GREEN);
+		box.setBackground(Color.WHITE);
+		box.setForeground(Color.GRAY);
 		box.setBounds(UiButtons.X_COORIDNATE, buttonYcoordinate, UiButtons.LARGE_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
 		box.setSelectedItem(selectedItem);
 		return box;
