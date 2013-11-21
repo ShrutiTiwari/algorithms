@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import com.aqua.music.api.Playable;
 import com.aqua.music.view.action.listeners.PlayAllItemsActionListener;
@@ -20,21 +20,26 @@ public class RehearsePanel extends AbstractMusicPanel {
 	}
 
 	@Override
-	protected void addSpecificButtons(final JPanel mainTab) {
+	protected Collection<JComponent> addSpecificButtons() {
+		final Collection<JComponent> result = new ArrayList<JComponent>();
+
 		final Collection<Playable> allItems = new ArrayList<Playable>();
 		final TextArea consoleArea = consoleArea();
 
 		for (Playable eachPlayableItem : itemsList) {
-			JButton playSingleItemButton = UiButtons.MusicButtons.SINGLE_ITEM_PLAYER.createDynamicNamedButton(eachPlayableItem.name(),buttonYcoordinate());
+			JButton playSingleItemButton = UiButtons.MusicButtons.SINGLE_ITEM_PLAYER.createDynamicNamedButton(eachPlayableItem.name(),
+					buttonYcoordinate());
 			playSingleItemButton.addActionListener(new PlaySingleItemActionListener(consoleArea, eachPlayableItem));
 			allItems.add(eachPlayableItem);
-			mainTab.add(playSingleItemButton);
+			result.add(playSingleItemButton);
 		}
 
 		Playable[] playableItems = allItems.toArray(new Playable[allItems.size()]);
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton(buttonYcoordinate());
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems));
-		mainTab.add(playAllButton);
+		result.add(playAllButton);
+
+		return result;
 	}
 
 }

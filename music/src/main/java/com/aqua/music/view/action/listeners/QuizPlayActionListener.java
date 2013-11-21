@@ -7,26 +7,22 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
+import com.aqua.music.view.UIMainPanel;
 
 public class QuizPlayActionListener implements ActionListener {
-	final JPanel mainPanel;
-
-	public QuizPlayActionListener(JPanel mainPanel, Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet,
-			List<JButton> allPlayButtons) {
-		this.mainPanel = mainPanel;
+	private final List<JButton> allPlayButtons;
+	private final Collection<JButton> multipleChoiceSet;
+	private final Quiz<CyclicFrequencySet> quizSection;
+	
+	public QuizPlayActionListener(Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet, List<JButton> allPlayButtons) {
 		this.quizSection = quizSection;
 		this.multipleChoiceSet = multipleChoiceSet;
 		this.allPlayButtons = allPlayButtons;
 	}
-
-	final Quiz<CyclicFrequencySet> quizSection;
-	final Collection<JButton> multipleChoiceSet;
-	final List<JButton> allPlayButtons;
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -41,7 +37,7 @@ public class QuizPlayActionListener implements ActionListener {
 			eachMultipleChoiceOption.setBackground(Color.LIGHT_GRAY);
 			eachMultipleChoiceOption.setVisible(true);
 			eachMultipleChoiceOption.setEnabled(true);
-			mainPanel.repaint();
+			UIMainPanel.repaintSelectedTab();
 		}
 	}
 	

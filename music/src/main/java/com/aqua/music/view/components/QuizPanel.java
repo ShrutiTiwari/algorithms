@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
@@ -22,7 +22,8 @@ class QuizPanel extends AbstractMusicPanel {
 		this.quizLevel = quizLevel;
 	}
 
-	protected void addSpecificButtons(final JPanel mainPanel) {
+	protected Collection<JComponent> addSpecificButtons() {
+		final Collection<JComponent> result = new ArrayList<JComponent>();
 		int i = 1;
 		List<JButton> allPlayButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
@@ -30,23 +31,23 @@ class QuizPanel extends AbstractMusicPanel {
 			int buttonYcoordinate = buttonYcoordinate();
 
 			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName, buttonYcoordinate);
-			
-			final HorizontallyAlignedButtons optionButtonsBuilder = new HorizontallyAlignedButtons(optionButtonsXLocation, buttonYcoordinate,
-					increment, UiButtons.MusicButtons.CHOICE_OPTIONS);
+
+			final HorizontallyAlignedButtons optionButtonsBuilder = new HorizontallyAlignedButtons(optionButtonsXLocation,
+					buttonYcoordinate, increment, UiButtons.MusicButtons.CHOICE_OPTIONS);
 			for (CyclicFrequencySet eachOption : eachQuiz.quizItems()) {
 				optionButtonsBuilder.add(eachOption.name());
 			}
 			final Collection<JButton> multipleChoiceButtons = optionButtonsBuilder.all();
 			for (JButton each : multipleChoiceButtons) {
-				mainPanel.add(each);
+				result.add(each);
 			}
-			
-			quizPlayButton.addActionListener(new QuizPlayActionListener(mainPanel, eachQuiz, multipleChoiceButtons,
-					allPlayButtons));
-			mainPanel.add(quizPlayButton);
+
+			quizPlayButton.addActionListener(new QuizPlayActionListener(eachQuiz, multipleChoiceButtons, allPlayButtons));
+			result.add(quizPlayButton);
 
 			allPlayButtons.add(quizPlayButton);
 			i++;
 		}
+		return result;
 	}
 }
