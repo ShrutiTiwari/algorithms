@@ -21,7 +21,6 @@ public class UIMainPanel<T> {
 		tabbedPane.getSelectedComponent().repaint();
 	}
 	
-	
 	T getJPanel() {
 		try {
 			return (T) jPanelInstance;
@@ -35,5 +34,4 @@ public class UIMainPanel<T> {
 			super(new GridLayout(1, 1));
 		}
 	}
-
 }
