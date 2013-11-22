@@ -22,7 +22,7 @@ public class PatternGeneratorTest {
 		assertEquals("12,21,13,31,14,41,15,51,16,61,17,71,", toStringForComparison(result));
 	}
 
-	// @Test
+	@Test
 	public void playPairOfNotes() {
 		Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
 		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);

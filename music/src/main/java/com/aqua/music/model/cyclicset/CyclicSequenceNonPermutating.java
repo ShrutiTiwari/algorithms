@@ -2,6 +2,7 @@ package com.aqua.music.model.cyclicset;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,8 +46,8 @@ interface CyclicSequenceNonPermutating {
 		private CyclicSequence cyclicSeq;
 
 		SymmetricalFreqSet(FrequencySet frequencySet) {
-			List<Frequency> ascend = CyclicSequence.frequencies(frequencySet.ascendNotes(), ClassicalNote.S, ClassicalNote.S3);
-			List<Frequency> descend = CyclicSequence.frequencies(frequencySet.descendNotes(), ClassicalNote.S3, ClassicalNote.S);
+			List<Frequency> ascend = Arrays.asList(frequencySet.ascendNotes());
+			List<Frequency> descend = Arrays.asList(frequencySet.descendNotes());
 			this.cyclicSeq = new CyclicSequence(ascend, descend, 1);
 		}
 
@@ -60,25 +61,6 @@ interface CyclicSequenceNonPermutating {
 
 		public CyclicSequence cyclicSequence() {
 			return cyclicSeq;
-		}
-	}
-
-	static class WithMiddleNotesAndStartEndNotes implements CyclicSequenceNonPermutating {
-		private final List<Frequency> frequencyList;
-		private String printText;
-
-		WithMiddleNotesAndStartEndNotes(Frequency[] middleNotes, Frequency start, Frequency end) {
-			this.frequencyList = CyclicSequence.frequencies(middleNotes, start, end);
-			this.printText = CyclicSequence.groupItemsWithSep(frequencyList, 1);
-		}
-
-		public Collection<Frequency> allFrequenciesInCycle() {
-			return frequencyList;
-		}
-
-		@Override
-		public String asString() {
-			return printText;
 		}
 	}
 }

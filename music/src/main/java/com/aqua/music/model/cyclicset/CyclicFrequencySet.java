@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
@@ -48,15 +47,17 @@ public interface CyclicFrequencySet extends Playable{
 			public List<int[]> generatePermutations(Frequency[] frequencySet) {
 				List<int[]> patternsList = new ArrayList<int[]>();
 
-				int startIndex = 1;
+				patternStartingOrEndingWith(frequencySet, patternsList, 1);
 
+				return patternsList;
+			}
+
+			private void patternStartingOrEndingWith(Frequency[] frequencySet, List<int[]> patternsList, int startIndex) {
 				int numberOfNotes = frequencySet.length;
-				for (int index = 2; index <= numberOfNotes + 1; index++) {
+				for (int index = 2; index <= numberOfNotes - 1; index++) {
 					patternsList.add(new int[] { startIndex, index });
 					patternsList.add(new int[] { index, startIndex });
 				}
-
-				return patternsList;
 			}
 		};
 		public abstract List<int[]> generatePermutations(Frequency[] input);

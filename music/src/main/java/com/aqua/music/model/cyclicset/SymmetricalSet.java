@@ -1,5 +1,7 @@
 package com.aqua.music.model.cyclicset;
 
+import static com.aqua.music.model.core.ClassicalNote.S;
+import static com.aqua.music.model.core.ClassicalNote.S3;
 import static com.aqua.music.model.core.ClassicalNote.D;
 import static com.aqua.music.model.core.ClassicalNote.D_;
 import static com.aqua.music.model.core.ClassicalNote.G;
@@ -22,18 +24,18 @@ import com.aqua.music.model.core.FrequencySet;
  * 
  */
 public enum SymmetricalSet implements FrequencySet {
-	THAAT_BHAIRAV(R_, G, M, P, D_, N),
-	THAAT_PURVI(R_, G, M_, P, D_, N),
-	THAAT_MARWA(R_, G, M_, P, D, N),
-	THAAT_KALYAN(R, G, M_, P, D, N),
-	THAAT_BILAWAL(R, G, M, P, D, N),
-	THAAT_KHAMAJ(R, G, M, P, D, N_),
-	THAAT_KAFI(R, G_, M, P, D, N_),
-	THAAT_ASAVARI(R, G_, M, P, D_, N_),
-	THAAT_BHAIRAVI(R_, G_, M, P, D_, N_),
-	THAAT_TODI(R_, G_, M_, P, D_, N),
-	RAAG2_BAIRAGI(R_, M, P, N_),
-	RAAG2_GUJARI_TODI(R_, G_, M_, D_, N);
+	THAAT_BHAIRAV(S,R_, G, M, P, D_, N,S3),
+	THAAT_PURVI(S,R_, G, M_, P, D_, N,S3),
+	THAAT_MARWA(S,R_, G, M_, P, D, N,S3),
+	THAAT_KALYAN(S,R, G, M_, P, D, N,S3),
+	THAAT_BILAWAL(S,R, G, M, P, D, N,S3),
+	THAAT_KHAMAJ(S,R, G, M, P, D, N_,S3),
+	THAAT_KAFI(S,R, G_, M, P, D, N_,S3),
+	THAAT_ASAVARI(S,R, G_, M, P, D_, N_,S3),
+	THAAT_BHAIRAVI(S,R_, G_, M, P, D_, N_,S3),
+	THAAT_TODI(S,R_, G_, M_, P, D_, N,S3),
+	RAAG2_BAIRAGI(S,R_, M, P, N_,S3),
+	RAAG2_GUJARI_TODI(S,R_, G_, M_, D_, N,S3);
 
 	private final Frequency[] ascendNotes;
 	private final Frequency[] descendNotes;
