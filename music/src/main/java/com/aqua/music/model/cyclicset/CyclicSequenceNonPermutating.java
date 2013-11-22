@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.CyclicSequence;

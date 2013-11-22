@@ -2,8 +2,6 @@ package com.aqua.music.model.cyclicset;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.Test;
 
 import com.aqua.music.model.core.ClassicalNote;
@@ -14,14 +12,14 @@ public class SymmetricalPatternApplicatorTest {
 	private final Frequency[] testset=testset();
 	
 	
-	//@Test
+	@Test
 	public void simpleTest() {
 		PermutationApplicatorForSymmetricalSet patternApplicator = new PermutationApplicatorForSymmetricalSet(new int[] { 1, 2 });
 		CyclicSequence freqSeq = patternApplicator.initializeWith(new Frequency[] { ClassicalNote.S, ClassicalNote.R,
 				ClassicalNote.G });
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
-		assertEquals("SaRe\tReGa", actual[0]);
-		assertEquals("GaRe\tReSa", actual[1]);
+		assertEquals("SR\tRG", actual[0]);
+		assertEquals("GR\tRS", actual[1]);
 	}
 	
 	@Test
@@ -29,8 +27,8 @@ public class SymmetricalPatternApplicatorTest {
 		PermutationApplicatorForSymmetricalSet patternApplicator = new PermutationApplicatorForSymmetricalSet(new int[] { 1, 2 });
 		CyclicSequence freqSeq = patternApplicator.initializeWith(testset);
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
-		assertEquals("SaRe_	Re_Ma	MaPa	PaNi_	Ni_Sa3", actual[0]);
-		assertEquals("Sa3Ni_	Ni_Pa	PaMa	MaRe_	Re_Sa", actual[1]);
+		assertEquals("SR_	R_M	MP	PN_	N_S3", actual[0]);
+		assertEquals("S3N_	N_P	PM	MR_	R_S", actual[1]);
 	}
 	
 	@Test
@@ -39,8 +37,8 @@ public class SymmetricalPatternApplicatorTest {
 		CyclicSequence freqSeq = patternApplicator.initializeWith(testset);
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
 		
-		assertEquals("Re_Sa	MaRe_	PaMa	Ni_Pa	Sa3Ni_", actual[0]);
-		assertEquals("Ni_Sa3	PaNi_	MaPa	Re_Ma	SaRe_	Ni1_Sa", actual[1]);
+		assertEquals("R_S	MR_	PM	N_P	S3N_", actual[0]);
+		assertEquals("N_S3	PN_	MP	R_M	SR_	N1_S", actual[1]);
 	}
 
 	@Test
@@ -49,8 +47,8 @@ public class SymmetricalPatternApplicatorTest {
 		CyclicSequence freqSeq = patternApplicator.initializeWith(testset);
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
 		//System.out.println(freqSeq.asString());
-		assertEquals("MaRe_Sa	PaMaRe_	Ni_PaMa	Sa3Ni_Pa", actual[0]);
-		assertEquals("PaNi_Sa3	MaPaNi_	Re_MaPa	SaRe_Ma	Ni1_SaRe_	Pa1Ni1_Sa", actual[1]);
+		assertEquals("MR_S	PMR_	N_PM	S3N_P", actual[0]);
+		assertEquals("PN_S3	MPN_	R_MP	SR_M	N1_SR_	P1N1_S", actual[1]);
 	}
 
 	
@@ -59,14 +57,12 @@ public class SymmetricalPatternApplicatorTest {
 		PermutationApplicatorForSymmetricalSet patternApplicator = new PermutationApplicatorForSymmetricalSet(new int[] { 3, 1, 2 });
 		CyclicSequence freqSeq = patternApplicator.initializeWith(testset);
 		String[] actual = freqSeq.asString().split(patternApplicator.NEW_LINE_SEP);
-		assertEquals("MaSaRe_	PaRe_Ma	Ni_MaPa	Sa3PaNi_", actual[0]);
-		assertEquals("PaSa3Ni_	MaNi_Pa	Re_PaMa	SaMaRe_	Ni1_Re_Sa", actual[1]);
+		assertEquals("MSR_	PR_M	N_MP	S3PN_", actual[0]);
+		assertEquals("PS3N_	MN_P	R_PM	SMR_	N1_R_S", actual[1]);
 	}
 
 	
 	private Frequency[] testset() {
-		List<Frequency> testFreq = CyclicFrequencySet.CyclicSequence.frequencies(SymmetricalSet.RAAG2_BAIRAGI.ascendNotes(), ClassicalNote.S, ClassicalNote.S3);
-		Frequency[] result = testFreq.toArray(new Frequency[testFreq.size()]);
-		return result;
+		return SymmetricalSet.RAAG2_BAIRAGI.ascendNotes();
 	}
 }

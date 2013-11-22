@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.api.AudioPlayerSettings;
-import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
