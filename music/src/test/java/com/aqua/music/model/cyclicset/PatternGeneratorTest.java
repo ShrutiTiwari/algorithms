@@ -18,17 +18,17 @@ public class PatternGeneratorTest {
 		System.out.println("==>" + input.length);
 		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		assertNotNull(result);
-		assertEquals(input.length * 2, result.size());
+		assertEquals(12, result.size());
 		assertEquals("12,21,13,31,14,41,15,51,16,61,17,71,", toStringForComparison(result));
 	}
 
-	@Test
+	//@Test
 	public void playPairOfNotes() {
 		Frequency[] input = SymmetricalSet.THAAT_KAFI.ascendNotes();
 		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		for (int[] each : result) {
 			CyclicFrequencySet freqSeq = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(SymmetricalSet.THAAT_KAFI,each);
-			AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(freqSeq.frequencies());
+			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(freqSeq.frequencies());
 		}
 	}
 

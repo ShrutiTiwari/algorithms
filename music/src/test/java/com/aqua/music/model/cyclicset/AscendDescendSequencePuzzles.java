@@ -15,7 +15,7 @@ public class AscendDescendSequencePuzzles {
 				new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI });
 		System.out.println(multipleSymmetricFreqSet.asString());
 		
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle());
+		AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle());
 	}
 
 	public void playAllThats() {
