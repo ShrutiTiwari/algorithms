@@ -1,4 +1,4 @@
-package com.aqua.music.model.song;
+package com.aqua.music.model.raag.song;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
-import com.aqua.music.model.song.Song;
+import com.aqua.music.model.raag.song.Song;
 
 public enum PlaybleType {
 	PLAIN_THAAT {

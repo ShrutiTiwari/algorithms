@@ -1,8 +1,11 @@
-package com.aqua.music.model.song;
+package com.aqua.music.model.raag.song;
 
 import org.junit.Test;
 
 import com.aqua.music.api.AudioPlayerSettings;
+import com.aqua.music.model.raag.song.AbstractSong;
+import com.aqua.music.model.raag.song.Song;
+import com.aqua.music.model.raag.song.SongBhimpalasi;
 
 public class SongTest {
 	//@Test

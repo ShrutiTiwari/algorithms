@@ -1,4 +1,4 @@
-package com.aqua.music.model.song;
+package com.aqua.music.model.raag.song;
 
 import java.util.Collection;
 
@@ -14,7 +14,7 @@ public enum Song implements Playable{
 	SONG_JAUNPURI(new SongJaunpuri(4)),
 	SONG_MULTANI(new SongMultani(2)),
 	SONG_SHUDH_SARANG(new SongShudhSarang(4)),
-	SONG_YAMAN1(new SongYaman1(4));
+	SONG_YAMAN1(new SongYaman1(4)), SONG_PURYA_KALYAN(new SongPuryaKalyan(4)), SONG_KHAMAJ(new SongKhamaj(4)), SONG_GUJARI_TODI(new SongGujariTodi(4)), SONG_BHOPALI(new SongBhopali(4));
 
 	private final AbstractSong song;
 

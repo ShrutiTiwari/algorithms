@@ -17,7 +17,7 @@ public class RaagProperties {
 	private final static String propertiesHeader = header();
 	private Map<String, String> myProperties = new LinkedHashMap<String, String>();
 
-	RaagProperties(String raagName, KeyNotes keyNotes, Time time, WriteableThaat thaat, String jaati) {
+	RaagProperties(String raagName, VadiSamvadi keyNotes, Time time, WriteableThaat thaat, String jaati) {
 		myProperties.put(KEY_NAME, raagName);
 		myProperties.put(KEY_THAAT, thaat.name());
 		myProperties.put(KEY_TIME, time.name());

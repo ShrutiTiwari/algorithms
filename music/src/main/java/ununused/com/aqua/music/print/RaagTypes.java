@@ -5,13 +5,13 @@ import ununused.com.aqua.music.print.RaagProperties.WriteableThaat;
 
 abstract class RaagTypes {
 	private final WriteableThaat thaat;
-	private final KeyNotes keyNotes;
+	private final VadiSamvadi keyNotes;
 	private final Time time;
 
 	protected String[] aarohi;
 	protected String[] avrohi;
 
-	protected RaagTypes(WriteableThaat thaat, KeyNotes keyNotes, Time time) {
+	protected RaagTypes(WriteableThaat thaat, VadiSamvadi keyNotes, Time time) {
 		this.thaat = thaat;
 		this.keyNotes = keyNotes;
 		this.time = time;
@@ -26,7 +26,7 @@ abstract class RaagTypes {
 
 	public class Bhairav extends RaagTypes {
 		public Bhairav() {
-			super(WriteableThaat.Bhairav, KeyNotes.with("Re_", "Dha_"), Time.Morning);
+			super(WriteableThaat.Bhairav, VadiSamvadi.with("Re_", "Dha_"), Time.Morning);
 			aarohi = new String[] { "Sa", "Re_", "Ga", "Ma", "Pa", "Dha_", "Ni" };
 			setAvrohiAsReverseOfArohi();
 		}
@@ -34,7 +34,7 @@ abstract class RaagTypes {
 
 	public static class AhirBhairav extends RaagTypes {
 		public AhirBhairav() {
-			super(WriteableThaat.Bhairav, KeyNotes.with("Re_", "Dha_"), Time.Morning);
+			super(WriteableThaat.Bhairav, VadiSamvadi.with("Re_", "Dha_"), Time.Morning);
 			aarohi = new String[] { "Sa", "Re_", "Ga", "Ma", "Pa", "Dha", "Ni_" };
 			setAvrohiAsReverseOfArohi();
 		}
@@ -42,7 +42,7 @@ abstract class RaagTypes {
 
 	public static class Bairagi extends RaagTypes {
 		public Bairagi() {
-			super(WriteableThaat.Bhairav, KeyNotes.with("Re_", "Dha_"), Time.Morning);
+			super(WriteableThaat.Bhairav, VadiSamvadi.with("Re_", "Dha_"), Time.Morning);
 			aarohi = new String[] { "Sa", "Re_", "Ma", "Pa", "Ni" };
 			setAvrohiAsReverseOfArohi();
 		}
@@ -50,7 +50,7 @@ abstract class RaagTypes {
 
 	public static class GujariTodi extends RaagTypes {
 		public GujariTodi() {
-			super(WriteableThaat.Todi, KeyNotes.with("Ga_", "Dha_"), Time.Morning);
+			super(WriteableThaat.Todi, VadiSamvadi.with("Ga_", "Dha_"), Time.Morning);
 			aarohi = new String[] { "Sa", "Re_", "Ga_", "Ma_", "Dha_", "Ni" };
 			setAvrohiAsReverseOfArohi();
 		}
@@ -58,7 +58,7 @@ abstract class RaagTypes {
 
 	public static class Bhopali extends RaagTypes {
 		public Bhopali() {
-			super(WriteableThaat.Kalyan, KeyNotes.with("Ga", "Dha"), Time.Evening);
+			super(WriteableThaat.Kalyan, VadiSamvadi.with("Ga", "Dha"), Time.Evening);
 			aarohi = new String[] { "Sa", "Re", "Ga", "Pa", "Dha" };
 			setAvrohiAsReverseOfArohi();
 		}
@@ -66,7 +66,7 @@ abstract class RaagTypes {
 
 	public static class Yaman extends RaagTypes {
 		public Yaman() {
-			super(WriteableThaat.Kalyan, KeyNotes.with("Ga", "Ni"), Time.Evening);
+			super(WriteableThaat.Kalyan, VadiSamvadi.with("Ga", "Ni"), Time.Evening);
 			aarohi = new String[] { "Re", "Ga", "Ma_", "Dha", "Ni" };
 			avrohi = new String[] { ".Ni", "Ni", "Dha", "Pa", "Ma_", "Ga", "Re" };
 		}
@@ -74,7 +74,7 @@ abstract class RaagTypes {
 
 	public static class ShudhSarang extends RaagTypes {
 		public ShudhSarang() {
-			super(WriteableThaat.Kalyan, KeyNotes.with("Sa", "Ma"), Time.Evening);
+			super(WriteableThaat.Kalyan, VadiSamvadi.with("Sa", "Ma"), Time.Evening);
 			aarohi = new String[] { ".Ni", "Sa", "Re", "Ma", "Pa", "Ni" };
 			avrohi = new String[] { "Ni", "Dha", "Pa", "Ma_", "Pa", "Ma", "Re" };
 		}

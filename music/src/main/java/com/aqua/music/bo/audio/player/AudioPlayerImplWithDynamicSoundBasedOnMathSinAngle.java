@@ -36,7 +36,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			sdl.open(af);
 			sdl.start();
 			generateSound(frequencyList);
-			// sdl.drain();
+			sdl.drain();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -57,7 +57,7 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 			while (!audioPlayRightsManager.stopPlaying()) {
 				generateSound(frequencyList);
 			}
-			// sdl.drain();
+			sdl.drain();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

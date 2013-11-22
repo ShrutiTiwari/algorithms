@@ -1,4 +1,4 @@
-package com.aqua.music.model.song;
+package com.aqua.music.model.raag.song;
 
 import static com.aqua.music.model.core.ClassicalNote.G3;
 import static com.aqua.music.model.core.ClassicalNote.G;

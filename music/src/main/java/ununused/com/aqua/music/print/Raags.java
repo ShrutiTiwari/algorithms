@@ -21,21 +21,21 @@ public class Raags {
 
 	static void populate() {
 		// 1-yr
-		raags.add(new Raag("Bhairav", KeyNotes.with("Re_", "Dha_"), Morning, Bhairav, "sampurn"));
-		raags.add(new Raag("Yaman", KeyNotes.with("Ga", "Ni"), Evening, Kalyan, "Shadav-sampurn"));
-		raags.add(new Raag("Bhopali", KeyNotes.with("Ga", "Dha"), Evening, Kalyan, "Shadav-sampurn"));
-		raags.add(new Raag("Ahir-Bhairav", KeyNotes.with("Ma", "Sa"), Morning, Bhairav, "Shadav-sampurn"));
-		raags.add(new Raag("Khamaj", KeyNotes.with("Ga", "Ni"), Evening, Khamaj, "Shadav-sampurn"));
+		raags.add(new Raag("Bhairav", VadiSamvadi.with("Re_", "Dha_"), Morning, Bhairav, "sampurn"));
+		raags.add(new Raag("Yaman", VadiSamvadi.with("Ga", "Ni"), Evening, Kalyan, "Shadav-sampurn"));
+		raags.add(new Raag("Bhopali", VadiSamvadi.with("Ga", "Dha"), Evening, Kalyan, "Shadav-sampurn"));
+		raags.add(new Raag("Ahir-Bhairav", VadiSamvadi.with("Ma", "Sa"), Morning, Bhairav, "Shadav-sampurn"));
+		raags.add(new Raag("Khamaj", VadiSamvadi.with("Ga", "Ni"), Evening, Khamaj, "Shadav-sampurn"));
 
 		// 2-yr
-		raags.add(new Raag("Multani", KeyNotes.with("Ma", "Sa"), Afternoon, Todi, "Audav-sampurn"));
-		raags.add(new Raag("Gujari-Todi", KeyNotes.with("Dha_", "Re_"), Morning, Todi, "Audav-audav"));
-		raags.add(new Raag("Purya-Kalyan", KeyNotes.with("Ga", "Ni"), Evening, Marva, "Audav-audav"));
-		raags.add(new Raag("Bairagi", KeyNotes.with("Re", ""), Morning, Bhairav, "Audav-audav"));
-		raags.add(new Raag("Shudh-Sarang", KeyNotes.with("Sa", "Ma"), Afternoon, Kalyan, "audav-shadav"));
+		raags.add(new Raag("Multani", VadiSamvadi.with("Ma", "Sa"), Afternoon, Todi, "Audav-sampurn"));
+		raags.add(new Raag("Gujari-Todi", VadiSamvadi.with("Dha_", "Re_"), Morning, Todi, "Audav-audav"));
+		raags.add(new Raag("Purya-Kalyan", VadiSamvadi.with("Ga", "Ni"), Evening, Marva, "Audav-audav"));
+		raags.add(new Raag("Bairagi", VadiSamvadi.with("Re", ""), Morning, Bhairav, "Audav-audav"));
+		raags.add(new Raag("Shudh-Sarang", VadiSamvadi.with("Sa", "Ma"), Afternoon, Kalyan, "audav-shadav"));
 
 		// 3-yr
-		raags.add(new Raag("Bhimpalasi", KeyNotes.with("Ga_", "Ni_"), Afternoon, Kafi, "sampurn"));
+		raags.add(new Raag("Bhimpalasi", VadiSamvadi.with("Ga_", "Ni_"), Afternoon, Kafi, "sampurn"));
 	}
 
 	public static void main(String[] args) {
@@ -47,7 +47,7 @@ public class Raags {
 	static class Raag {
 		final RaagProperties raagProperties;
 
-		Raag(String raagName, KeyNotes keyNotes, Time time, WriteableThaat thaat, String jaati) {
+		Raag(String raagName, VadiSamvadi keyNotes, Time time, WriteableThaat thaat, String jaati) {
 			this.raagProperties = new RaagProperties(raagName, keyNotes, time, thaat, jaati);
 		}
 

@@ -1,4 +1,4 @@
-package com.aqua.music.model.song;
+package com.aqua.music.model.raag.song;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +17,7 @@ abstract class AbstractSong {
 	private final SongLine sthayiFirstLine;
 	private final SongLine sthayiSecondLine;
 
-	private static final SongLine EMPTY = new SongLine(4);
+	protected static final SongLine EMPTY = new SongLine(4);
 
 	private final Collection<Taan> taans = new ArrayList<Taan>();
 
