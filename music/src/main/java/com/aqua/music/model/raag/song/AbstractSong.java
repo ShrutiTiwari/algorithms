@@ -16,6 +16,8 @@ abstract class AbstractSong {
 	private final SongLine antaraSecondLine;
 	private final SongLine sthayiFirstLine;
 	private final SongLine sthayiSecondLine;
+	
+	private final SongLine connectorLine;
 
 	protected static final SongLine EMPTY = new SongLine(4);
 
@@ -27,6 +29,7 @@ abstract class AbstractSong {
 		this.sthayiSecondLine = sthayiSecondLine();
 		this.antaraFirstLine = antaraFirstLine();
 		this.antaraSecondLine = antaraSecondLine();
+		this.connectorLine=connectorLine();
 		SongLine repeatAntaraLine = antaraFirstLineVariation();
 		SongLine repeatSthayiLine = sthayiFirstLineVariation();
 
@@ -34,12 +37,16 @@ abstract class AbstractSong {
 		Collection antaraExtraLines = antaraExtraLines();
 		if (repeatSthayiLine == sthayiFirstLine) {
 			addLines(antaraExtraLines, sthayiFirstLine, repeatSthayiLine, sthayiSecondLine, sthayiSecondLine, sthayiSecondLineVariation,
-					sthayiFirstLine, antaraFirstLine, repeatAntaraLine, antaraSecondLine);
+					connectorLine, antaraFirstLine, repeatAntaraLine, antaraSecondLine);
 		} else {
-			addLines(antaraExtraLines, sthayiFirstLine, repeatSthayiLine, sthayiSecondLine, sthayiSecondLineVariation, sthayiFirstLine,
+			addLines(antaraExtraLines, sthayiFirstLine, repeatSthayiLine, sthayiSecondLine, sthayiSecondLineVariation, connectorLine, 
 					antaraFirstLine, repeatAntaraLine, antaraSecondLine);
 		}
 
+	}
+
+	protected SongLine connectorLine() {
+		return sthayiFirstLine();
 	}
 
 	protected Collection<SongLine> antaraExtraLines() {

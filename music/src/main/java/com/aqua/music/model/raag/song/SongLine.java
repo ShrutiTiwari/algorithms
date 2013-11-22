@@ -76,7 +76,21 @@ class SongLine {
 		return this;
 	}
 
+	
+	SongLine add(SongLine songLine) {
+		for (DynamicFrequency each : songLine.frequencies()) {
+			frequencies.add(each);
+			addToBuffer(each.toString());
+		}
+		return this;
+	}
+
+	
 	String printLine() {
 		return lineSummary.toString();
+	}
+	
+	class Phrase {
+		
 	}
 }

@@ -6,8 +6,13 @@ import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.raag.song.Song;
 
 public class TaanTest {
-	@Test
+	//@Test
 	public void testJaunpuriTaans1() {
 		Song.SONG_JAUNPURI.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
+	}
+	
+	@Test
+	public void testBhairavTaans1() {
+		Song.SONG_BHAIRAV.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
 	}
 }

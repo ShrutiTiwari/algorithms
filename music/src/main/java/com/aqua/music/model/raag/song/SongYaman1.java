@@ -29,7 +29,6 @@ class SongYaman1 extends AbstractSong {
 	@Override
 	protected SongLine antaraFirstLine() {
 		return new SongLine(beatDivison).normal( P, P, S3, S3).extended(S3, 2).normal(S3,S3,N,D).couple(N,R3).normal(S3).couple(N,D).normal(N,P,P);
-
 	}
 
 	@Override
