@@ -25,12 +25,12 @@ import com.aqua.music.model.core.FrequencySet;
  * 
  */
 public enum RaagArohiAvrohi implements FrequencySet {
-	AHIR_BHAIRAV(sequence(S, R_, G, M, P, D, N_, S3), sequence(S3, N_, D, P, M, G, R_, S3)),
-	BAIRAGI(sequence(S, R_, M, P, N_, S3), sequence(S3, N_, P, M, R_, S)),
-	BHAIRAV(sequence(S, R_, G, M, P, D_, N, S3), sequence(S3, N, D_, P, M, G, R_, S)),
+	AHIR_BHAIRAV(sequence(S, R_, G, M, P, D, N_, S3)),
+	BAIRAGI(sequence(S, R_, M, P, N_, S3)),
+	BHAIRAV(sequence(S, R_, G, M, P, D_, N, S3)),
 	BHIMPALASI(sequence(S, G_, M, P, N_, S3), sequence(S3, N_, D, P, M, P, G_, M, G_, R, S)),
-	BHOPALI(sequence(S, R, G, P, D, S3), sequence(S3, D, P, G, R, S)),
-	GUJARI_TODI(sequence(S, R_, G_, M_, D_, N, S3), sequence(S3, N, D_, M_, G_, R_, S)),
+	BHOPALI(sequence(S, R, G, P, D, S3)),
+	GUJARI_TODI(sequence(S, R_, G_, M_, D_, N, S3)),
 	JAUNPURI(sequence(S, R_, M, P, D, N, S3), sequence(S3, N_, D_, P, M, P, D_, M, P, G_, R, S)),
 	KHAMAJ(sequence(S, G, M, P, N, S3), sequence(S3, N_, D, P, M, G, R, S)),
 	MULTANI(sequence(N1, S, G_, M_, P, N, S3), sequence(S3, N, D_, P, M_, G_, R_, S)),

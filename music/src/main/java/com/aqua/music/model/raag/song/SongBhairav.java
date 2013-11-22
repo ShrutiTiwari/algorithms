@@ -1,7 +1,7 @@
 package com.aqua.music.model.raag.song;
 
-import static com.aqua.music.model.core.ClassicalNote.D_;
 import static com.aqua.music.model.core.ClassicalNote.D1_;
+import static com.aqua.music.model.core.ClassicalNote.D_;
 import static com.aqua.music.model.core.ClassicalNote.G;
 import static com.aqua.music.model.core.ClassicalNote.G3;
 import static com.aqua.music.model.core.ClassicalNote.M;
@@ -17,15 +17,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.aqua.music.model.raag.MusicalPhrase;
+
 class SongBhairav extends AbstractSong {
-	SongBhairav(int beatDivison) {
-		super(beatDivison);
+	SongBhairav() {
+		super();
 		addAll(sthayiTaans());
 	}
 
 	@Override
-	protected Collection<SongLine> antaraExtraLines() {
-		Collection<SongLine> result = new ArrayList<SongLine>();
+	protected Collection<MusicalPhrase> antaraExtraLines() {
+		Collection<MusicalPhrase> result = new ArrayList<MusicalPhrase>();
 		result.add(antaraThirdLine());
 		result.add(antaraFourthLine());
 		result.add(antaraFiFthLine());
@@ -33,56 +35,56 @@ class SongBhairav extends AbstractSong {
 	}
 
 	@Override
-	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).extended(M, 2).extended(P, 2).extended(D_, 2).extended(N, 2).extended(S3, 2).normal(S3)
-				.extended(S3, 2).normal(S3, S3, S3);
+	protected MusicalPhrase antaraFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).e(M, 2).e(P, 2).e(D_, 2).e(N, 2).e(S3, 2).n(S3)
+				.e(S3, 2).n(S3, S3, S3);
 	}
 
 	@Override
-	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison, 2).normal(D_, D_, N, N, S3, S3).extended(S3, 2).normal(R3_).extended(S3, 2).normal(N, S3)
-				.extended(D_, 2).normal(P);
+	protected MusicalPhrase antaraSecondLine() {
+		return new MusicalPhrase(beatsPerDivision, 2).n(D_, D_, N, N, S3, S3).e(S3, 2).n(R3_).e(S3, 2).n(N, S3)
+				.e(D_, 2).n(P);
 	}
 
 	@Override
-	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).normal(P, M).extended(R_, 2).extended(S, 3).normal(R_, N1, S).extended(M, 4).normal(G, M);
+	protected MusicalPhrase sthayiFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).n(P, M).e(R_, 2).e(S, 3).n(R_, N1, S).e(M, 4).n(G, M);
 	}
 
 	@Override
-	protected SongLine sthayiFirstLineVariation() {
-		return new SongLine(beatDivison).normal(P, M).extended(R_, 2).extended(S, 3).normal(R_, N1, S).extended(M, 4).normal(G)
-				.extended(M, 3);
+	protected MusicalPhrase sthayiFirstLineVariation() {
+		return new MusicalPhrase(beatsPerDivision).n(P, M).e(R_, 2).e(S, 3).n(R_, N1, S).e(M, 4).n(G)
+				.e(M, 3);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLine() {
-		return sthayiSecondLineCommonPart().extended(M, 2);
+	protected MusicalPhrase sthayiSecondLine() {
+		return sthayiSecondLineCommonPart().e(M, 2);
 	}
 
-	private SongLine sthayiSecondLineCommonPart() {
-		return new SongLine(beatDivison).extended(M, 2).normal(M).couple(M, G).extended(P, 2).normal(P, D_, S3, N, D_, P, M, M);
+	private MusicalPhrase sthayiSecondLineCommonPart() {
+		return new MusicalPhrase(beatsPerDivision).e(M, 2).n(M).couple(M, G).e(P, 2).n(P, D_, S3, N, D_, P, M, M);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLineVariation() {
+	protected MusicalPhrase sthayiSecondLineVariation() {
 		return sthayiSecondLineCommonPart();
 	}
 
-	private SongLine antaraFiFthLine() {
+	private MusicalPhrase antaraFiFthLine() {
 		return sthayiFirstLine();
 	}
 
-	private SongLine antaraFourthLine() {
-		return commonAnataraThirdLinePart().extended(R_, 2);
+	private MusicalPhrase antaraFourthLine() {
+		return commonAnataraThirdLinePart().e(R_, 2);
 	}
 
-	private SongLine antaraThirdLine() {
-		return commonAnataraThirdLinePart().extended(R_, 4);
+	private MusicalPhrase antaraThirdLine() {
+		return commonAnataraThirdLinePart().e(R_, 4);
 	}
 
-	private SongLine commonAnataraThirdLinePart() {
-		return new SongLine(beatDivison).extended(S3, 2).normal(N, S3).extended(D_, 2).couple(P, M).normal(P, M, M, G, M);
+	private MusicalPhrase commonAnataraThirdLinePart() {
+		return new MusicalPhrase(beatsPerDivision).e(S3, 2).n(N, S3).e(D_, 2).couple(P, M).n(P, M, M, G, M);
 	}
 
 	private Collection<Taan> sthayiTaans() {

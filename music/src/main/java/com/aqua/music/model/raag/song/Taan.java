@@ -7,6 +7,7 @@ import java.util.List;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.DynamicFrequency.CustomFreqDuration;
 import com.aqua.music.model.core.Frequency;
+import com.aqua.music.model.raag.MusicalPhrase;
 
 public class Taan {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
@@ -15,11 +16,11 @@ public class Taan {
 	Taan couple(Frequency... notes) {
 		for (int i = 0; i < notes.length;) {
 			Frequency note1 = notes[i++];
-			frequencies.add(new CustomFreqDuration(note1, SongLine.COUPLE_NOTES_DURATION));
+			frequencies.add(new CustomFreqDuration(note1, MusicalPhrase.COUPLE_NOTES_DURATION));
 			lineSummary.append(note1.toString());
 			if (i < notes.length) {
 				Frequency note2 = notes[i++];
-				frequencies.add(new CustomFreqDuration(note2, SongLine.COUPLE_NOTES_DURATION));
+				frequencies.add(new CustomFreqDuration(note2, MusicalPhrase.COUPLE_NOTES_DURATION));
 				lineSummary.append(note2.toString() + " ");
 			}
 		}

@@ -1,0 +1,11 @@
+||DS3|N_D PM GR_ SN1_|
+R_ R_ S -|S R_ G -|M M DP DS3|N_D PM GR_ SN1_| 
+R_ R_ S -|S R_ G -|M M MG PM|R_ R_ S -|
+M M DP D|N_ S3 N_ R3_|S3N_ DP M DS3|N_D PM GR_ SN1_|
+R_ R_ S -|S R_ G -|M M DP DS3|N_D PM GR_ SN1_| 
+R_ R_ S - -|- - - -|M - M MD|P D N_ S3|
+- S3 S3 R3_|S3R3_ G3 R3_ S3|N_ D M MD|P D N_  S3|
+- S3 S3 R3_|S3R3_ G3 R3_ S3|S3 S3 N_ -|D - M M|
+MG R_G MP DS3|N_D PM GP MG|R_S N1_R_  S DS3|N_D PM GR_ SN1_|
+R_ R_ S -|S R_ G -|M M DP DS3|N_D PM GR_ SN1_|  
+R_ R_ S - -|- - - -|

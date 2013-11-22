@@ -6,34 +6,43 @@ import java.util.Collections;
 import java.util.List;
 
 import com.aqua.music.model.core.DynamicFrequency;
+import com.aqua.music.model.raag.MusicalPhrase;
+import com.aqua.music.model.raag.Taal;
 
 abstract class AbstractSong {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
 	private final StringBuffer printSummary = new StringBuffer();
-	final int beatDivison;
-
-	private final SongLine antaraFirstLine;
-	private final SongLine antaraSecondLine;
-	private final SongLine sthayiFirstLine;
-	private final SongLine sthayiSecondLine;
+	final int beatsPerDivision;
 	
-	private final SongLine connectorLine;
+	private final Taal taal;
 
-	protected static final SongLine EMPTY = new SongLine(4);
+	private final MusicalPhrase antaraFirstLine;
+	private final MusicalPhrase antaraSecondLine;
+	private final MusicalPhrase sthayiFirstLine;
+	private final MusicalPhrase sthayiSecondLine;
+	
+	private final MusicalPhrase connectorLine;
+
+	protected static final MusicalPhrase EMPTY = new MusicalPhrase(4);
 
 	private final Collection<Taan> taans = new ArrayList<Taan>();
 
-	AbstractSong(int beatDivison) {
-		this.beatDivison = beatDivison;
+	AbstractSong() {
+		this(Taal.TEENTAL);
+	}
+	
+	AbstractSong(Taal taal) {
+		this.taal=taal;
+		this.beatsPerDivision = taal.totalBeats()/taal.numOfInterval();
 		this.sthayiFirstLine = sthayiFirstLine();
 		this.sthayiSecondLine = sthayiSecondLine();
 		this.antaraFirstLine = antaraFirstLine();
 		this.antaraSecondLine = antaraSecondLine();
 		this.connectorLine=connectorLine();
-		SongLine repeatAntaraLine = antaraFirstLineVariation();
-		SongLine repeatSthayiLine = sthayiFirstLineVariation();
+		MusicalPhrase repeatAntaraLine = antaraFirstLineVariation();
+		MusicalPhrase repeatSthayiLine = sthayiFirstLineVariation();
 
-		SongLine sthayiSecondLineVariation = sthayiSecondLineVariation();
+		MusicalPhrase sthayiSecondLineVariation = sthayiSecondLineVariation();
 		Collection antaraExtraLines = antaraExtraLines();
 		if (repeatSthayiLine == sthayiFirstLine) {
 			addLines(antaraExtraLines, sthayiFirstLine, repeatSthayiLine, sthayiSecondLine, sthayiSecondLine, sthayiSecondLineVariation,
@@ -45,11 +54,11 @@ abstract class AbstractSong {
 
 	}
 
-	protected SongLine connectorLine() {
+	protected MusicalPhrase connectorLine() {
 		return sthayiFirstLine();
 	}
 
-	protected Collection<SongLine> antaraExtraLines() {
+	protected Collection<MusicalPhrase> antaraExtraLines() {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -57,41 +66,41 @@ abstract class AbstractSong {
 		return frequencies;
 	}
 
-	protected SongLine antaraFirstLineVariation() {
+	protected MusicalPhrase antaraFirstLineVariation() {
 		return antaraFirstLine();
 	}
 
-	protected SongLine sthayiFirstLineVariation() {
+	protected MusicalPhrase sthayiFirstLineVariation() {
 		return sthayiFirstLine();
 	}
 
-	protected abstract SongLine antaraFirstLine();
+	protected abstract MusicalPhrase antaraFirstLine();
 
-	protected abstract SongLine antaraSecondLine();
+	protected abstract MusicalPhrase antaraSecondLine();
 
-	protected abstract SongLine sthayiFirstLine();
+	protected abstract MusicalPhrase sthayiFirstLine();
 
-	protected abstract SongLine sthayiSecondLine();
+	protected abstract MusicalPhrase sthayiSecondLine();
 
-	protected SongLine sthayiSecondLineVariation() {
+	protected MusicalPhrase sthayiSecondLineVariation() {
 		return EMPTY;
 	}
 
-	void addLines(Collection<SongLine> extraAntaralines, SongLine... songLines) {
-		for (SongLine each : songLines) {
+	void addLines(Collection<MusicalPhrase> extraAntaralines, MusicalPhrase... songLines) {
+		for (MusicalPhrase each : songLines) {
 			if (each == EMPTY) {
 				continue;
 			}
 			add(each);
 		}
 
-		for (SongLine each1 : extraAntaralines) {
+		for (MusicalPhrase each1 : extraAntaralines) {
 			add(each1);
 		}
 		add(sthayiFirstLine);
 	}
 
-	private void add(SongLine each) {
+	private void add(MusicalPhrase each) {
 		for (int i = 0; i < each.repeatCount(); i++) {
 			frequencies.addAll(each.frequencies());
 			printSummary.append("\n" + each.printLine());
@@ -108,5 +117,9 @@ abstract class AbstractSong {
 
 	Collection<Taan> taans() {
 		return taans;
+	}
+	
+	static MusicalPhrase createNewMusicalPhrase() {
+		return new MusicalPhrase(4);
 	}
 }

@@ -2,7 +2,7 @@ package com.aqua.music.model.core;
 
 public interface MusicPeriod {
 	//final int ONE_SEC = 700;
-	final int ONE_SEC = 400;
+	final int ONE_SEC = 500;
 	
 	int durationInMilliSec();
 	
@@ -20,11 +20,17 @@ public interface MusicPeriod {
 		}
 	};
 	
+	
+	
 	class CustomizedDuration implements MusicPeriod{
 		private final int durationInMilliSec;
 		
 		CustomizedDuration(final int numOfSingleBeats){
-			this.durationInMilliSec = numOfSingleBeats*SINGLE_BEAT.durationInMilliSec();
+			this.durationInMilliSec =  numOfSingleBeats*SINGLE_BEAT.durationInMilliSec();
+		}
+		
+		public CustomizedDuration(final double numOfSingleBeats){
+			this.durationInMilliSec = (int) (numOfSingleBeats*((double)SINGLE_BEAT.durationInMilliSec()));
 		}
 		
 		@Override

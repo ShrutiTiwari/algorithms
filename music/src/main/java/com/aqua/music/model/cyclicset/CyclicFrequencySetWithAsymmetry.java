@@ -35,8 +35,4 @@ class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	public String asText() {
 		return "";
 	}
-
-	@Override
-	public void playInLoop(AudioPlayerSettings audioPlayConfig) {
-	}
 }

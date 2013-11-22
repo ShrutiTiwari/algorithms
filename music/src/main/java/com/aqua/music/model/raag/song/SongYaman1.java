@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.aqua.music.model.raag.MusicalPhrase;
+
 class SongYaman1 extends AbstractSong {
-	SongYaman1(int beatDivison) {
-		super(beatDivison);
+	SongYaman1() {
+		super();
 		addAll(sthayiTaans());
 	}
 
@@ -27,23 +29,23 @@ class SongYaman1 extends AbstractSong {
 	}
 
 	@Override
-	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).normal( P, P, S3, S3).extended(S3, 2).normal(S3,S3,N,D).couple(N,R3).normal(S3).couple(N,D).normal(N,P,P);
+	protected MusicalPhrase antaraFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).n( P, P, S3, S3).e(S3, 2).n(S3,S3,N,D).couple(N,R3).n(S3).couple(N,D).n(N,P,P);
 	}
 
 	@Override
-	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison).normal(P,G3,R3,S3).couple(N,D).normal(N,P,P).couple(M_, N).couple(D, N).extended(P, 2).normal(R, R, S, S);
+	protected MusicalPhrase antaraSecondLine() {
+		return new MusicalPhrase(beatsPerDivision).n(P,G3,R3,S3).couple(N,D).n(N,P,P).couple(M_, N).couple(D, N).e(P, 2).n(R, R, S, S);
 	}
 
 	@Override
-	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).couple(M_, N).couple(D, N).extended(P, 2).normal(R, R, S, S, G, R, G).extended(G, 3).normal(G, M_);
+	protected MusicalPhrase sthayiFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).couple(M_, N).couple(D, N).e(P, 2).n(R, R, S, S, G, R, G).e(G, 3).n(G, M_);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison,2).normal(G, M_, G, P, M_, D, M_, P, S3, N, P, P, R, R, S, S);
+	protected MusicalPhrase sthayiSecondLine() {
+		return new MusicalPhrase(beatsPerDivision,2).n(G, M_, G, P, M_, D, M_, P, S3, N, P, P, R, R, S, S);
 	}
 
 }

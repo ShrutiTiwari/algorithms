@@ -15,30 +15,32 @@ import static com.aqua.music.model.core.ClassicalNote.S3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.aqua.music.model.raag.MusicalPhrase;
 public class SongJaunpuri extends AbstractSong {
-	SongJaunpuri(int beatDivison) {
-		super(beatDivison);
+	SongJaunpuri() {
+		super();
 		addAll(sthayiTaans());
 	}
 
 	@Override
-	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison);
+	protected MusicalPhrase antaraFirstLine() {
+		return new MusicalPhrase(beatsPerDivision);
 	}
 
 	@Override
-	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison);
+	protected MusicalPhrase antaraSecondLine() {
+		return new MusicalPhrase(beatsPerDivision);
 	}
 
 	@Override
-	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).normal(P,M,P,S3,D_,D_).couple(P, M).normal(P,G_,G_,R,S,R,M).extended(P,2);
+	protected MusicalPhrase sthayiFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).n(P,M,P,S3,D_,D_).couple(P, M).n(P,G_,G_,R,S,R,M).e(P,2);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison,2).normal(M,M,P,P,D_,D_,S3,S3).couple(S3,R3).normal(G3_,R3,S3,N_,S3,D_,M);
+	protected MusicalPhrase sthayiSecondLine() {
+		return new MusicalPhrase(beatsPerDivision,2).n(M,M,P,P,D_,D_,S3,S3).couple(S3,R3).n(G3_,R3,S3,N_,S3,D_,M);
 	}
 	
 	private Collection<Taan> sthayiTaans() {

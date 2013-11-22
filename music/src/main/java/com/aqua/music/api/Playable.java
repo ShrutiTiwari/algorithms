@@ -5,7 +5,6 @@ import java.util.Collection;
 import com.aqua.music.model.core.DynamicFrequency;
 
 public interface Playable {
-	public void playInLoop(AudioPlayerSettings audioPlayConfig);
 	public String name();
 	public String asText();
 	public Collection<? extends DynamicFrequency> frequencies();

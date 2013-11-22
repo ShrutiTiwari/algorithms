@@ -14,14 +14,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.aqua.music.model.raag.MusicalPhrase;
+import com.aqua.music.model.raag.Taal;
+
 class SongBairagi extends AbstractSong {
 
-	private static final SongLine commonPhrase1 = new SongLine(4).couple(S3, N_, N_, S3);
-	private static final SongLine commonPhrase2 = new SongLine(4).normal(M, M, R_, R_, S, S, P1, N1_, R_);
-	private static final SongLine commonPhrase3 = new SongLine(4).normal(S, R_, M, P);
+	private static final MusicalPhrase commonPhrase1 = new MusicalPhrase(4).couple(S3, N_, N_, S3);
+	private static final MusicalPhrase commonPhrase2 = new MusicalPhrase(4).n(M, M, R_, R_, S, S, P1, N1_, R_);
+	private static final MusicalPhrase commonPhrase3 = new MusicalPhrase(4).n(S, R_, M, P);
 
-	SongBairagi(int beatDivison) {
-		super(beatDivison);
+	SongBairagi() {
+		super(Taal.EKTAAL);
 		addAll(sthayiTaans());
 	}
 
@@ -31,48 +34,48 @@ class SongBairagi extends AbstractSong {
 	}
 
 	@Override
-	protected Collection<SongLine> antaraExtraLines() {
-		ArrayList<SongLine> result = new ArrayList<SongLine>();
+	protected Collection<MusicalPhrase> antaraExtraLines() {
+		ArrayList<MusicalPhrase> result = new ArrayList<MusicalPhrase>();
 		result.add(antaraThirdLine());
 		return result;
 	}
 
 	@Override
-	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).extended(M, 2).normal(M).couple(M, N_).normal(P, N_, N_, S3, S3, S3, S3, S3);
+	protected MusicalPhrase antaraFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).e(M, 2).n(M).couple(M, N_).n(P, N_, N_, S3, S3, S3, S3, S3);
 	}
 
 	@Override
-	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison, 2).normal(S3, S3).add(commonPhrase1).normal(R3_, N_, P).couple(P, N_, S3, R3_)
-				.extended(S3, 3);
+	protected MusicalPhrase antaraSecondLine() {
+		return new MusicalPhrase(beatsPerDivision, 2).n(S3, S3).add(commonPhrase1).n(R3_, N_, P).couple(P, N_, S3, R3_)
+				.e(S3, 3);
 	}
 
-	protected SongLine antaraThirdLine() {
-		return new SongLine(beatDivison, 2).normal(S3).add(commonPhrase1).normal(R3_, R3_, N_, N_, P, M).couple(R_, M).normal(R_, S);
-	}
-
-	@Override
-	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).add(commonPhrase2).extended(S, 2).normal(R_);
-	}
-
-	protected SongLine sthayiFirstLineVariation() {
-		return new SongLine(beatDivison).add(commonPhrase2).extended(S, 2).normal(S);
+	protected MusicalPhrase antaraThirdLine() {
+		return new MusicalPhrase(beatsPerDivision, 2).n(S3).add(commonPhrase1).n(R3_, R3_, N_, N_, P, M).couple(R_, M).n(R_, S);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).add(commonPhrase3).couple(M, P).normal(N_, N_, P, M).couple(R_, M).normal(R_, S);
+	protected MusicalPhrase sthayiFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).add(commonPhrase2).e(S, 2).n(R_);
+	}
+
+	protected MusicalPhrase sthayiFirstLineVariation() {
+		return new MusicalPhrase(beatsPerDivision).add(commonPhrase2).e(S, 2).n(S);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLineVariation() {
-		return new SongLine(beatDivison).add(commonPhrase3).couple(P, N_, S3, R3_).normal(S3, N_, P, M, R_, S);
+	protected MusicalPhrase sthayiSecondLine() {
+		return new MusicalPhrase(beatsPerDivision).add(commonPhrase3).couple(M, P).n(N_, N_, P, M).couple(R_, M).n(R_, S);
 	}
 
 	@Override
-	protected SongLine connectorLine() {
+	protected MusicalPhrase sthayiSecondLineVariation() {
+		return new MusicalPhrase(beatsPerDivision).add(commonPhrase3).couple(P, N_, S3, R3_).n(S3, N_, P, M, R_, S);
+	}
+
+	@Override
+	protected MusicalPhrase connectorLine() {
 		return sthayiFirstLine();
 	}
 }

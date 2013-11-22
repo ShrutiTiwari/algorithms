@@ -15,9 +15,11 @@ import static com.aqua.music.model.core.ClassicalNote.S3;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.aqua.music.model.raag.MusicalPhrase;
 class SongBhimpalasi extends AbstractSong {
-	SongBhimpalasi(int beatDivison) {
-		super(beatDivison);
+	SongBhimpalasi() {
+		super();
 		addAll(sthayiTaans());
 	}
 
@@ -27,27 +29,27 @@ class SongBhimpalasi extends AbstractSong {
 	}
 
 	@Override
-	protected SongLine antaraFirstLine() {
-		return new SongLine(beatDivison).normal(G_, M, P, N_, P, N_, S3, S3).extended(S3, 2).couple(P, S3, N_, R3)
-				.normal(S3, G3_, R3, S3);
+	protected MusicalPhrase antaraFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).n(G_, M, P, N_, P, N_, S3, S3).e(S3, 2).couple(P, S3, N_, R3)
+				.n(S3, G3_, R3, S3);
 	}
 
 	@Override
-	protected SongLine antaraSecondLine() {
-		return new SongLine(beatDivison).couple(R3, S3).normal(N_).extended(D, 2).extended(P, 2).normal(P, P, M, P)
-				.couple(M, P).normal(D, P, G_).couple(S, R, N1_, S);
+	protected MusicalPhrase antaraSecondLine() {
+		return new MusicalPhrase(beatsPerDivision).couple(R3, S3).n(N_).e(D, 2).e(P, 2).n(P, P, M, P)
+				.couple(M, P).n(D, P, G_).couple(S, R, N1_, S);
 	}
 
 	@Override
-	protected SongLine sthayiFirstLine() {
-		return new SongLine(beatDivison).couple(S, G_, M, P).normal(G_, G_, R, R, S, S).couple(R, S)
-				.normal(N1_, S, M, M, M).couple(P, M).normal(G_);
+	protected MusicalPhrase sthayiFirstLine() {
+		return new MusicalPhrase(beatsPerDivision).couple(S, G_, M, P).n(G_, G_, R, R, S, S).couple(R, S)
+				.n(N1_, S, M, M, M).couple(P, M).n(G_);
 	}
 
 	@Override
-	protected SongLine sthayiSecondLine() {
-		return new SongLine(beatDivison).normal(G_, M, P, S3, N_).extended(D, 2).normal(P, M, P).couple(M, P).couple(D, P)
-				.normal(P, G_).couple(S, R).couple(N1_, S);
+	protected MusicalPhrase sthayiSecondLine() {
+		return new MusicalPhrase(beatsPerDivision).n(G_, M, P, S3, N_).e(D, 2).n(P, M, P).couple(M, P).couple(D, P)
+				.n(P, G_).couple(S, R).couple(N1_, S);
 	}
 
 }

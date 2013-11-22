@@ -44,10 +44,6 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	}
 
 	@Override
-	public void playInLoop(AudioPlayerSettings audioPlayConfig) {
-	}
-
-	@Override
 	public String toString() {
 		return name();
 	}
