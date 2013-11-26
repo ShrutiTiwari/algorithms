@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import com.aqua.music.model.core.Frequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class StaticAudioLibrary {
 	private static final Logger logger = LoggerFactory.getLogger(StaticAudioLibrary.class);
 	private static Map<String, File> library = Duration.ONE_SEC.library;

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 public class QuizLevel<T> {
 	private final Collection<Quiz<T>> quizSections;
 	private final String displayText;

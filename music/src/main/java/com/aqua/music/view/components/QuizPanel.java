@@ -13,6 +13,10 @@ import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
 	private final int increment = UiButtons.MINI_BUTTON_WIDTH + 10;

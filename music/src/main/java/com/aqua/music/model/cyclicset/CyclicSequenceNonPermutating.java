@@ -10,6 +10,10 @@ import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.CyclicSequence;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 interface CyclicSequenceNonPermutating {
 	Collection<Frequency> allFrequenciesInCycle();
 

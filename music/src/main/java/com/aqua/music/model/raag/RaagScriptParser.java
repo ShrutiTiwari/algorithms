@@ -3,6 +3,10 @@ package com.aqua.music.model.raag;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class RaagScriptParser {
 
 	private final int toalBeats;

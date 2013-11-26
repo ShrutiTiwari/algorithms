@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);
 

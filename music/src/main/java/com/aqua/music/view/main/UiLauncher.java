@@ -1,5 +1,9 @@
-package com.aqua.music.view;
+package com.aqua.music.view.main;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class UiLauncher {
 	/**
 	 * Create the GUI and show it. For thread safety, this method should be

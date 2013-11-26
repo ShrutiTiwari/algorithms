@@ -4,6 +4,10 @@ import javax.sound.midi.Instrument;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface BasicNotePlayer {
 	void finish();
 	void play(DynamicFrequency each, int duration);

@@ -1,6 +1,10 @@
 package com.aqua.music.model.core;
 
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface FrequencySet {
 	public String name();
 

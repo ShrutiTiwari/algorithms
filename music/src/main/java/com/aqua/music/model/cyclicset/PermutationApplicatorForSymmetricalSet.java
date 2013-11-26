@@ -7,6 +7,10 @@ import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.CyclicSequence;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class PermutationApplicatorForSymmetricalSet implements PermutationApplicator {
 	private final int[] permutation;
 	private final String permutationText;

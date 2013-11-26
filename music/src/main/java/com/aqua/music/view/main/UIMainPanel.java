@@ -1,4 +1,4 @@
-package com.aqua.music.view;
+package com.aqua.music.view.main;
 
 import java.awt.GridLayout;
 
@@ -7,6 +7,11 @@ import javax.swing.JTabbedPane;
 
 import com.aqua.music.view.components.UiTabbedPane;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 public class UIMainPanel<T> {
 	private final SwingBasedUiMainPanel jPanelInstance;
 	private static JTabbedPane tabbedPane;

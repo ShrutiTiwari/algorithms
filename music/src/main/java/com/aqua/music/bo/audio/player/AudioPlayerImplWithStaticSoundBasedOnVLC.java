@@ -14,6 +14,10 @@ import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	private static final String HOME_VLC_EXE_LOCATION_WINDOWS = "C:/Program Files/VideoLAN/VLC/vlc.exe";
 	private static final String OFFICE_VLC_EXE_LOCATION_WINDOWS = "C:/software/VideoLAN/VLC/vlc.exe";

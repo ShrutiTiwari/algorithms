@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMidiChannel.class);
 	private final Instrument[] allInstruments;

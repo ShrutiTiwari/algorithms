@@ -5,6 +5,10 @@ import java.util.Collection;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public abstract class AbstractRaag {
 	private final Collection<DynamicFrequency> aalap = new ArrayList<DynamicFrequency>();
 	private final Collection<DynamicFrequency> antara = new ArrayList<DynamicFrequency>();

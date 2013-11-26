@@ -8,6 +8,10 @@ import javax.sound.midi.Instrument;
 
 import com.aqua.music.bo.audio.player.AudioPlayer;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
 

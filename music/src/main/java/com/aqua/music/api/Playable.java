@@ -4,6 +4,10 @@ import java.util.Collection;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface Playable {
 	public String name();
 	public String asText();

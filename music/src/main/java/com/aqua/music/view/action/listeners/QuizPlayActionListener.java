@@ -11,8 +11,12 @@ import javax.swing.JButton;
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
-import com.aqua.music.view.UIMainPanel;
+import com.aqua.music.view.main.UIMainPanel;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class QuizPlayActionListener implements ActionListener {
 	private final List<JButton> allPlayButtons;
 	private final Collection<JButton> multipleChoiceSet;

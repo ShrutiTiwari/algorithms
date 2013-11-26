@@ -1,20 +1,13 @@
 package com.aqua.music.model.raag;
 
 import static com.aqua.music.model.core.ClassicalNote.D;
-import static com.aqua.music.model.core.ClassicalNote.D1;
 import static com.aqua.music.model.core.ClassicalNote.G;
 import static com.aqua.music.model.core.ClassicalNote.G3;
-import static com.aqua.music.model.core.ClassicalNote.M1_;
 import static com.aqua.music.model.core.ClassicalNote.M3_;
 import static com.aqua.music.model.core.ClassicalNote.M_;
 import static com.aqua.music.model.core.ClassicalNote.N;
-import static com.aqua.music.model.core.ClassicalNote.N1;
 import static com.aqua.music.model.core.ClassicalNote.P;
-import static com.aqua.music.model.core.ClassicalNote.P1;
-import static com.aqua.music.model.core.ClassicalNote.R;
 import static com.aqua.music.model.core.ClassicalNote.R3;
-import static com.aqua.music.model.core.ClassicalNote.S;
-import static com.aqua.music.model.core.ClassicalNote.S3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,6 +17,10 @@ import java.util.HashSet;
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.puzzles.RandomShuffler;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class RaagPhrases {
 	private final Collection<MusicalPhrase> allPhrases = new HashSet<MusicalPhrase>();
 	private final RandomShuffler shuffler;

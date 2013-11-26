@@ -12,6 +12,10 @@ import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class RaagScriptReader {
 	public static void main(String[] args) {
 		final String fileName = "ahir_bhairav.txt";

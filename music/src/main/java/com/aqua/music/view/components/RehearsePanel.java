@@ -1,6 +1,5 @@
 package com.aqua.music.view.components;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.TextArea;
 import java.util.ArrayList;

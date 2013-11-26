@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	protected final Logger logger = LoggerFactory.getLogger(AbstractMusicPanel.class);

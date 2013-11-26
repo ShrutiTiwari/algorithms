@@ -6,6 +6,10 @@ import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum Song implements Playable {
 	S_AHIR_BHAIRAV(new SongAhirBhairav()),
 	S_BAIRAGI(new SongBairagi()),

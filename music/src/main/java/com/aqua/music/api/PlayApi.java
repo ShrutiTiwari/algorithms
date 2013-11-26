@@ -11,6 +11,10 @@ import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class PlayApi {
 	private static final Collection<Playable> playableSongs = PlaybleType.SONG.playables();
 	private static final Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();

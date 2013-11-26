@@ -1,4 +1,4 @@
-package com.aqua.music.view;
+package com.aqua.music.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 public interface UiMainContainer<T> {
 	UiMainContainer addPanel(UIMainPanel<T> uiMainPanel);
 

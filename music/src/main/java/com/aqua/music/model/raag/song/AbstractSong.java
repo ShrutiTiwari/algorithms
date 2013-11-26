@@ -9,6 +9,10 @@ import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.raag.MusicalPhrase;
 import com.aqua.music.model.raag.Taal;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 abstract class AbstractSong {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
 	private final StringBuffer printSummary = new StringBuffer();

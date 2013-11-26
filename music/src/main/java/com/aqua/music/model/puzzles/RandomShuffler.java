@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 public class RandomShuffler<T> {
 	/**
 	 * Used for re-initialising.

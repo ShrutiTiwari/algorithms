@@ -1,5 +1,9 @@
 package com.aqua.music.model.raag;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class VadiSamvadi {
 	private final String vadi;
 	private final String samvadi;

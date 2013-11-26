@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class PlaySingleItemActionListener implements ActionListener {
 	private static final Logger logger = LoggerFactory.getLogger(PlaySingleItemActionListener.class);
 	private final TextArea consoleArea;

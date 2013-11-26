@@ -8,6 +8,10 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.raag.song.Song;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum PlaybleType {
 	PLAIN_THAAT {
 		@Override

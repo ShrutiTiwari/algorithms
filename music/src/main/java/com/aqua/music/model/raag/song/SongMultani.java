@@ -19,6 +19,10 @@ import java.util.List;
 import com.aqua.music.model.raag.MusicalPhrase;
 import com.aqua.music.model.raag.Taal;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class SongMultani extends AbstractSong {
 	SongMultani() {
 		super(Taal.EKTAAL);

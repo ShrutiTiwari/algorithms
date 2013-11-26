@@ -13,6 +13,10 @@ import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum AudioPlayerSettings {
 	ASYNCHRONOUS_DYNAMIC_PLAYER(AudioPlayer.Factory.DYNAMIC_AUDIO, PlayMode.Asynchronous),
 	ASYNCHRONOUS_STATIC_PLAYER(AudioPlayer.Factory.STATIC_AUDIO, PlayMode.Asynchronous),

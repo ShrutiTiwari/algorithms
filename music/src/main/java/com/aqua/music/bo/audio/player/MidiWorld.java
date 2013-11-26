@@ -5,6 +5,10 @@ import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class MidiWorld {
 	private final MidiChannel[] mc;
 	private final Synthesizer synth;

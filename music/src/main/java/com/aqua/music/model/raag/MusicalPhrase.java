@@ -8,6 +8,10 @@ import com.aqua.music.model.core.DynamicFrequency.CustomFreqDuration;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.MusicPeriod;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class MusicalPhrase {
 	public static final int COUPLE_NOTES_DURATION = MusicPeriod.HALF_BEAT.durationInMilliSec();
 

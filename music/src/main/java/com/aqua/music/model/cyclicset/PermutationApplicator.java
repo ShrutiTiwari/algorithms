@@ -3,6 +3,10 @@ package com.aqua.music.model.cyclicset;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.CyclicSequence;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 interface PermutationApplicator {
 	static final String NEW_LINE_SEP ="\n";
 

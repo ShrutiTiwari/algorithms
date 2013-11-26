@@ -8,6 +8,10 @@ import javax.swing.JButton;
 
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class HorizontallyAlignedButtons {
 	private final int yCoordinate;
 	private final int xIncrement;

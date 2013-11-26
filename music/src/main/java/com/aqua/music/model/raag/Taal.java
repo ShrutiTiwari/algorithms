@@ -1,5 +1,9 @@
 package com.aqua.music.model.raag;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum Taal {
 	EKTAAL(12, 6),
 	RUPAK(7, 2, new int[] { 3, 2, 2 }),

@@ -9,6 +9,10 @@ import com.aqua.music.model.core.DynamicFrequency.CustomFreqDuration;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.raag.MusicalPhrase;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class Taan {
 	private final List<DynamicFrequency> frequencies = new ArrayList<DynamicFrequency>();
 	private final StringBuffer lineSummary = new StringBuffer();

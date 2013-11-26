@@ -1,8 +1,13 @@
+
 package com.aqua.music.model.core;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface Frequency extends DynamicFrequency {
 	public FrequencyRelation freqRel = new FrequencyRelation();
 

@@ -1,17 +1,18 @@
 package com.aqua.music.model.cyclicset;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	Logger logger = LoggerFactory.getLogger(CyclicFrequencySetWithSymmetry.class);
 	private final Collection<Frequency> allFrequencies;

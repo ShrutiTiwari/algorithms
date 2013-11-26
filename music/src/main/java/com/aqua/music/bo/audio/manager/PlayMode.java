@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.DynamicFrequency;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum PlayMode {
 	Asynchronous {
 		@Override

@@ -3,6 +3,10 @@ package com.aqua.music.model.raag;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.raag.song.Song;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum Raag {
 	RAAG_AHIR_BHAIRAV(Time.MORNING, SymmetricalSet.THAAT_BHAIRAV, RaagArohiAvrohi.AHIR_BHAIRAV, Song.S_AHIR_BHAIRAV),
 	RAAG_BAIRAGI(Time.MORNING, SymmetricalSet.THAAT_BHAIRAV, RaagArohiAvrohi.BAIRAGI, Song.S_BAIRAGI),

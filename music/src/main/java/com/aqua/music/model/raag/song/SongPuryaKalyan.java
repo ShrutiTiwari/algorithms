@@ -18,6 +18,10 @@ import java.util.Collection;
 
 import com.aqua.music.model.raag.MusicalPhrase;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class SongPuryaKalyan extends AbstractSong {
 	private final static MusicalPhrase GMRG = new MusicalPhrase(4).n(G, M_, R_, G);
 	private final static MusicalPhrase MDPMG = new MusicalPhrase(4).couple(M_, D).n(P, M_, G);

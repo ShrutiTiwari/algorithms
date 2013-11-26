@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.Playable;
 import com.aqua.music.bo.audio.manager.AudioTask;
-import com.aqua.music.bo.audio.manager.PlayMode;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public class PlayAllItemsActionListener implements ActionListener {
 	private static final Logger logger = LoggerFactory.getLogger(PlayAllItemsActionListener.class);
 	private final TextArea textArea;

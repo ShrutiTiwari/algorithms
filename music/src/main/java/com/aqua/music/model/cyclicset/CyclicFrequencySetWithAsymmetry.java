@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	private final Collection<Frequency> frequencies = new ArrayList<Frequency>();
 	private final FrequencySet frequencySet;

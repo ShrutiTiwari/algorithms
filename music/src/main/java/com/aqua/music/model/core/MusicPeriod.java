@@ -1,5 +1,9 @@
 package com.aqua.music.model.core;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface MusicPeriod {
 	//final int ONE_SEC = 700;
 	final int ONE_SEC = 800;

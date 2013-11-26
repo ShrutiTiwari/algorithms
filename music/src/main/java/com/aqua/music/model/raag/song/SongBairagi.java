@@ -17,6 +17,10 @@ import java.util.List;
 import com.aqua.music.model.raag.MusicalPhrase;
 import com.aqua.music.model.raag.Taal;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 class SongBairagi extends AbstractSong {
 
 	private static final MusicalPhrase commonPhrase1 = new MusicalPhrase(4).couple(S3, N_, N_, S3);

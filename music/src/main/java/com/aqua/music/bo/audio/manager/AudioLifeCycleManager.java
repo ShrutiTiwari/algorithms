@@ -5,6 +5,10 @@ import javax.sound.midi.Instrument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface AudioLifeCycleManager {
 	Logger logger = LoggerFactory.getLogger(AudioLifeCycleManager.class);
 	final AudioLifeCycleManager instance = new AudioLifeCycleManagerImpl();

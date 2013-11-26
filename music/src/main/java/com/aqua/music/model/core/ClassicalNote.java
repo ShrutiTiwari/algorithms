@@ -1,5 +1,13 @@
 package com.aqua.music.model.core;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public enum ClassicalNote implements Frequency {
 	D("F#4", 369.99F,65),
 	D_("F4", 349.23F,64),

@@ -1,7 +1,5 @@
 package com.aqua.music.model.cyclicset;
 
-import static com.aqua.music.model.core.ClassicalNote.S;
-import static com.aqua.music.model.core.ClassicalNote.S3;
 import static com.aqua.music.model.core.ClassicalNote.D;
 import static com.aqua.music.model.core.ClassicalNote.D_;
 import static com.aqua.music.model.core.ClassicalNote.G;
@@ -13,6 +11,8 @@ import static com.aqua.music.model.core.ClassicalNote.N_;
 import static com.aqua.music.model.core.ClassicalNote.P;
 import static com.aqua.music.model.core.ClassicalNote.R;
 import static com.aqua.music.model.core.ClassicalNote.R_;
+import static com.aqua.music.model.core.ClassicalNote.S;
+import static com.aqua.music.model.core.ClassicalNote.S3;
 
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;

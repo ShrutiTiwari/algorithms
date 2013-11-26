@@ -11,6 +11,10 @@ import com.aqua.music.api.Playable;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ */
 public interface CyclicFrequencySet extends Playable{
 	public String name();
 	public String asText();

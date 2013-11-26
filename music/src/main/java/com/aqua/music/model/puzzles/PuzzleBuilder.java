@@ -5,6 +5,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 class PuzzleBuilder<T> {
 	private final Collection<List<T>> bucketedItems = new ArrayList<List<T>>();
 

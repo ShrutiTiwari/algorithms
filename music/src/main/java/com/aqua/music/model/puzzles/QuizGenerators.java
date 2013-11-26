@@ -7,6 +7,11 @@ import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 
+/**
+ * @author "Shruti Tiwari"
+ *
+ * @param <T>
+ */
 interface QuizGenerators<T> {
 	Collection<QuizLevel<T>> quizLevels();
 
