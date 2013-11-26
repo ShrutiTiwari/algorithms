@@ -7,10 +7,10 @@ import org.junit.Test;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.CyclicSequence;
+import com.aqua.music.model.raag.RaagArohiAvrohi;
 
 public class SymmetricalPatternApplicatorTest {
 	private final Frequency[] testset=testset();
-	
 	
 	@Test
 	public void simpleTest() {
@@ -63,6 +63,6 @@ public class SymmetricalPatternApplicatorTest {
 
 	
 	private Frequency[] testset() {
-		return SymmetricalSet.RAAG2_BAIRAGI.ascendNotes();
+		return RaagArohiAvrohi.BAIRAGI.ascendNotes();
 	}
 }

@@ -36,7 +36,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	}
 
 	public void notifyInstrumentChange(Instrument instrument) {
-		logger.info("chanigng the instrument");
+		logger.info("changing the instrument to [" + instrument + "]");
 		midiChannel.programChange(instrument.getPatch().getProgram());
 	}
 
