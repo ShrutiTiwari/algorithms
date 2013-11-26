@@ -2,6 +2,8 @@ package com.aqua.music.bo.audio.player;
 
 import java.util.Collection;
 
+import javax.sound.midi.Instrument;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);
+
 	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList);
 
 	Runnable playTaskInLoop(Collection<? extends DynamicFrequency> frequencyList);
@@ -49,4 +52,6 @@ public interface AudioPlayer {
 			}
 		}
 	}
+
+	void changeInstrumentTo(Instrument instrument);
 }

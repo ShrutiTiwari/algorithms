@@ -1,5 +1,6 @@
 package com.aqua.music.bo.audio.player;
 
+import javax.sound.midi.Instrument;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
@@ -103,6 +104,18 @@ class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 			throw new IllegalArgumentException("Frequency <= 0 hz");
 		if (vol > 1.0 || vol < 0.0)
 			throw new IllegalArgumentException("Volume out of range 0.0 - 1.0");
+	}
+
+	@Override
+	public void notifyInstrumentChange(Instrument instrument) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Instrument[] allInstruments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

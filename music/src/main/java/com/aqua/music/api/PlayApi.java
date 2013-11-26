@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.sound.midi.Instrument;
 
-import com.aqua.music.bo.audio.player.MidiWorld;
+import com.aqua.music.bo.audio.player.BasicNotePlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 
 public class PlayApi {
 	private static final Collection<Playable> playableSongs = PlaybleType.SONG.playables();
-	private static final Instrument[] instruments = new Instrument[1];//MidiWorld.getInstruments();
+	private static final Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
 	private static final Collection<Playable> playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
 
 	public static Collection<Playable> getAllSongs() {

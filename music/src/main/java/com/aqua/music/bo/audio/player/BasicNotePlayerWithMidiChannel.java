@@ -5,32 +5,44 @@ import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aqua.music.model.core.DynamicFrequency;
 
-public class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
-	private final MidiChannel[] mc;
-	private final Synthesizer synth;
+class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
+	Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMidiChannel.class);
 	private final Instrument[] allInstruments;
+	private final MidiChannel[] mc;
 	private final MidiChannel midiChannel;
-	
+	private final Synthesizer synth;
+
+	public Instrument[] allInstruments() {
+		return allInstruments;
+	}
+
 	public BasicNotePlayerWithMidiChannel() {
 		this.synth = getSynth();
 		this.mc = (synth == null ? null : synth.getChannels());
 		this.allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
 		synth.loadAllInstruments(synth.getDefaultSoundbank());
-		this.midiChannel=mc[10];
+		this.midiChannel = mc[10];
 		this.notifyInstrumentChange(allInstruments[0]);
 	}
-	
+
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
 
+	}
+
+	public void notifyInstrumentChange(Instrument instrument) {
+		logger.info("chanigng the instrument");
+		midiChannel.programChange(instrument.getPatch().getProgram());
 	}
 
 	@Override
 	public void play(DynamicFrequency each, int duration) {
-		int eachNoteNumber=each.midiNoteNumber();
+		int eachNoteNumber = each.midiNoteNumber();
 		midiChannel.noteOn(eachNoteNumber, 127);
 		try {
 			Thread.sleep(duration);
@@ -42,21 +54,19 @@ public class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void tidyup() {
-		// TODO Auto-generated method stub
 
 	}
+
 	private Synthesizer getSynth() {
 		Synthesizer synth = null;
 		try {
@@ -66,10 +76,6 @@ public class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 			e.printStackTrace();
 		}
 		return synth;
-	}
-	
-	private void notifyInstrumentChange(Instrument instrument) {
-		midiChannel.programChange(instrument.getPatch().getProgram());
 	}
 
 }

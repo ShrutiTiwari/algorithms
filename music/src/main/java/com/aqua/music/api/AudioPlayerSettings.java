@@ -60,9 +60,9 @@ public enum AudioPlayerSettings {
 		}
 	}
 
-	public static void setInstrument(Object obj) {
+	public static void changeInstrumentTo(Object obj) {
 		if (obj instanceof Instrument) {
-
+			AudioLifeCycleManager.instance.changeInstrumentTo((Instrument)obj);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.aqua.music.bo.audio.manager;
 
+import javax.sound.midi.Instrument;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,4 +18,6 @@ public interface AudioLifeCycleManager {
 	void increaseTempo();
 
 	void decreaseTempo();
+
+	void changeInstrumentTo(Instrument instrument);
 }

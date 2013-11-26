@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javax.sound.midi.Instrument;
+
 import com.aqua.music.bo.audio.player.AudioPlayer;
 
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
@@ -13,7 +15,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
-	
+
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
@@ -39,22 +41,22 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	@Override
 	public void decreaseTempo() {
-		if(this.multipler==-9){
+		if (this.multipler == -9) {
 			logger.info("at min tempo! [" + multipler + "]");
 			return;
 		}
-		this.multipler = multipler-1;
+		this.multipler = multipler - 1;
 		logger.info("Decreased tempo [" + multipler + "]");
 	}
 
 	@Override
 	public void increaseTempo() {
-		if(this.multipler==9){
+		if (this.multipler == 9) {
 			logger.info("at max tempo! [" + multipler + "]");
 			return;
 		}
-		this.multipler = multipler+1;
-		logger.info("Increased tempo [" + multipler + "]");		
+		this.multipler = multipler + 1;
+		logger.info("Increased tempo [" + multipler + "]");
 	}
 
 	@Override
@@ -99,17 +101,23 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	public boolean stopPlaying() {
 		return stopCurrentPlay.get();
 	}
-	
+
 	@Override
 	public int tempoMultilier(int duration) {
-		final int customizedDuration = (multipler == 0) ? duration :newDuration(duration);
+		final int customizedDuration = (multipler == 0) ? duration : newDuration(duration);
 		return customizedDuration;
 	}
 
 	AudioLifeCycleManagerImpl setDurationAndVolume(int durationInMsec, double vol) {
 		return new AudioLifeCycleManagerImpl(durationInMsec, vol);
 	}
+
 	private int newDuration(int duration) {
 		return Math.round((float) (duration - (0.1 * multipler * duration)));
+	}
+
+	@Override
+	public void changeInstrumentTo(Instrument instrument) {
+		currentAudioPlayer.changeInstrumentTo(instrument);
 	}
 }

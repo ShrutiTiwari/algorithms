@@ -2,20 +2,17 @@ package com.aqua.music.bo.audio.player;
 
 import java.util.Collection;
 
+import javax.sound.midi.Instrument;
+
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 
 class AudioPlayerImplWithDynamicSound implements AudioPlayer {
-	private static final double DEFAULT_VOL = 0.8;
-	private static final float SAMPLE_RATE = 8000f;
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
-
-	private final double vol;
 	//private final BasicNotePlayer basicNotePlayer = new BasicNotePlayerWithMathSin();
-	private final BasicNotePlayer basicNotePlayer = new BasicNotePlayerWithMidiChannel();
+	private final BasicNotePlayer basicNotePlayer = BasicNotePlayer.MIDI_BASED_PLAYER;
 
 	AudioPlayerImplWithDynamicSound() {
-		this.vol = DEFAULT_VOL;
 	}
 
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
@@ -106,5 +103,10 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private void throwExceptionForInsaneInput(int msecs) {
 		if (msecs <= 0)
 			throw new IllegalArgumentException("Duration <= 0 msecs");
+	}
+
+	@Override
+	public void changeInstrumentTo(Instrument instrument) {
+		basicNotePlayer.notifyInstrumentChange(instrument);
 	}
 }

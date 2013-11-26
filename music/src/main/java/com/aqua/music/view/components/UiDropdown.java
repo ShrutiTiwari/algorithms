@@ -21,7 +21,9 @@ import com.aqua.music.model.puzzles.QuizLevel;
 
 public class UiDropdown {
 	public static JComponent instrumentDropDown(int xCooridnate, int yCoordinate, Object selectedItem) {
-		return createWith(PlayApi.getAllInstruments(), xCooridnate, yCoordinate, selectedItem,(2*UiButtons.DEFAULT_BUTTON_WIDTH));
+		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), xCooridnate, yCoordinate, selectedItem,(3*UiButtons.DEFAULT_BUTTON_WIDTH));
+		instrumentDropdown.addActionListener(new InstrumentDropdownActionListener());
+		return instrumentDropdown;
 	}
 
 	static JComboBox quizDropdown(int buttonYcoordinate, Object selectedItem) {
@@ -56,7 +58,7 @@ public class UiDropdown {
 		public void actionPerformed(ActionEvent arg0) {
 			JComboBox cbox = (JComboBox) arg0.getSource();
 			Object obj = cbox.getSelectedItem();
-			AudioPlayerSettings.setInstrument(obj);
+			AudioPlayerSettings.changeInstrumentTo(obj);
 		}
 	}
 	

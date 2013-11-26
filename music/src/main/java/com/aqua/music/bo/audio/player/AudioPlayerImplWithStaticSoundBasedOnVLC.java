@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.sound.midi.Instrument;
+
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
@@ -176,5 +178,10 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 				logger.info(s);
 			}
 		}
+	}
+
+	@Override
+	public void changeInstrumentTo(Instrument instrument) {
+		
 	}
 }
