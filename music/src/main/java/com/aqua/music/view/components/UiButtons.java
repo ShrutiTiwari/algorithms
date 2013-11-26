@@ -10,9 +10,9 @@ import com.aqua.music.bo.audio.manager.PlayMode;
 
 interface UiButtons {
 	int BUTTON_HEIGHT = 30;
-	int LARGE_BUTTON_WIDTH = 500;
-	int MINI_BUTTON_WIDTH = 130;
-	int PLAY_BUTTON_WIDTH = 300;
+	int DEFAULT_BUTTON_WIDTH = 120;
+	int MINI_BUTTON_WIDTH = 120;
+	int PLAY_BUTTON_WIDTH = 200;
 	int X_COORIDNATE = 30;
 
 	String text();
@@ -44,10 +44,12 @@ interface UiButtons {
 				return button;
 			}
 		},
-		PLAYER_FOR_ALL("PLAY_ALL", "Click this to play all!", (PLAY_BUTTON_WIDTH + 200)) {
+		PLAYER_FOR_ALL("PLAY_ALL", "Click this to play all!") {
 			@Override
 			JButton createInstanceWith(String name) {
-				return fixedNameButton(this);
+				JButton button = fixedNameButton(this);
+				button.setForeground(Color.BLUE);
+				return button;
 			}
 		},
 		QUIT("Quit", "Click this to quit!") {
@@ -63,13 +65,15 @@ interface UiButtons {
 				};
 
 				button.addActionListener(actionListener);
+				button.setForeground(Color.BLUE);
 				return button;
 			}
 		},
 		QUIZ_PLAY("Play $$", "Click this to play $$", MINI_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String buttonName) {
-				return configurableNamedButton(this, buttonName);
+				JButton button = configurableNamedButton(this, buttonName);
+				return button;
 			}
 		},
 		RESUME("Resume", "Click this to resume!", MINI_BUTTON_WIDTH) {
@@ -90,7 +94,8 @@ interface UiButtons {
 		SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", PLAY_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String buttonName) {
-				return configurableNamedButton(this, buttonName);
+				JButton button = configurableNamedButton(this, buttonName);
+				return button;
 			}
 		},
 		STOP("Stop", "Click this to stop!", MINI_BUTTON_WIDTH) {
@@ -113,7 +118,7 @@ interface UiButtons {
 		private final String tooltip;
 
 		private MusicButtons(String text, String tooltip) {
-			this(text, tooltip, LARGE_BUTTON_WIDTH);
+			this(text, tooltip, DEFAULT_BUTTON_WIDTH);
 		}
 
 		private MusicButtons(String text, String tooltip, int buttonWidth) {

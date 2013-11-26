@@ -1,5 +1,6 @@
 package com.aqua.music.view.components;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +12,7 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
+import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
@@ -25,7 +27,7 @@ class QuizPanel extends AbstractMusicPanel {
 	protected Collection<JComponent> addSpecificButtons() {
 		final Collection<JComponent> result = new ArrayList<JComponent>();
 		int i = 1;
-		List<JButton> allPlayButtons = new ArrayList<JButton>();
+		List<JButton> allButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
 			final String quizName = "Quiz " + i;
 			int buttonYcoordinate = buttonYcoordinate();
@@ -42,12 +44,16 @@ class QuizPanel extends AbstractMusicPanel {
 				result.add(each);
 			}
 
-			quizPlayButton.addActionListener(new QuizPlayActionListener(eachQuiz, multipleChoiceButtons, allPlayButtons));
+			quizPlayButton.addActionListener(new QuizPlayActionListener(eachQuiz, multipleChoiceButtons, allButtons));
 			result.add(quizPlayButton);
 
-			allPlayButtons.add(quizPlayButton);
+			allButtons.add(quizPlayButton);
 			i++;
 		}
+		
+		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton(buttonYcoordinate());
+		result.add(quitButton);
+		
 		return result;
 	}
 }

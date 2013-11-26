@@ -1,10 +1,12 @@
 package com.aqua.music.view.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -62,10 +64,11 @@ abstract class AbstractMusicPanel {
 	private synchronized void initialize() {
 		if (!initialized) {
 			initialized = true;
+			JComponent lastButton=null;
 			for (JComponent each : addSpecificButtons()) {
 				panel.add(each);
+				lastButton=each;
 			}
-			panel.add(MusicButtons.QUIT.createStaticNamedButton(yCoordinateTracker.buttonYcoordinate()));
 			panel.setOpaque(true);
 		}
 	}

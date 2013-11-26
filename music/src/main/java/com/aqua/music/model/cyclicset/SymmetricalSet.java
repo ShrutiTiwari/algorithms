@@ -25,11 +25,6 @@ import com.aqua.music.model.core.FrequencySet;
  * 
  */
 public enum SymmetricalSet implements FrequencySet {
-	RAAG2_AHIR_BHAIRAV(S, R_, G, M, P, D, N_, S3),
-	RAAG2_BAIRAGI(S, R_, M, P, N_, S3),
-	RAAG2_BHAIRAV(S, R_, G, M, P, D_, N, S3),
-	RAAG2_BHOPALI(S, R, G, P, D, S3),
-	RAAG2_GUJARI_TODI(S, R_, G_, M_, D_, N, S3),
 	THAAT_ASAVARI(S, R, G_, M, P, D_, N_, S3),
 	THAAT_BHAIRAV(S, R_, G, M, P, D_, N, S3),
 	THAAT_BHAIRAVI(S, R_, G_, M, P, D_, N_, S3),

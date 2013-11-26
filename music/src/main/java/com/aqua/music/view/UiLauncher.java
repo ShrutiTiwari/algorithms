@@ -2,7 +2,7 @@ package com.aqua.music.view;
 
 public class UiLauncher {
 	/**
-j	 * Create the GUI and show it. For thread safety, this method should be
+	 * Create the GUI and show it. For thread safety, this method should be
 	 * invoked from the event-dispatching thread.
 	 */
 	public static void main(String[] args) {

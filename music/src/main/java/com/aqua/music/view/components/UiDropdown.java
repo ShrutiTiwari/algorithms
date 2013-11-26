@@ -30,7 +30,7 @@ public class UiDropdown {
 		final JComboBox box = new JComboBox(objects);
 		box.setBackground(Color.WHITE);
 		box.setForeground(Color.GRAY);
-		box.setBounds(UiButtons.X_COORIDNATE, buttonYcoordinate, UiButtons.LARGE_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
+		box.setBounds(UiButtons.X_COORIDNATE, buttonYcoordinate, UiButtons.DEFAULT_BUTTON_WIDTH, UiButtons.BUTTON_HEIGHT);
 		box.setSelectedItem(selectedItem);
 		return box;
 	}

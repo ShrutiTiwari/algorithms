@@ -1,5 +1,7 @@
 package com.aqua.music.view.components;
 
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +12,7 @@ import javax.swing.JComponent;
 import com.aqua.music.api.Playable;
 import com.aqua.music.view.action.listeners.PlayAllItemsActionListener;
 import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
+import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 public class RehearsePanel extends AbstractMusicPanel {
 	private final Collection<Playable> itemsList;
@@ -38,7 +41,11 @@ public class RehearsePanel extends AbstractMusicPanel {
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton(buttonYcoordinate());
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems));
 		result.add(playAllButton);
-
+		
+		Rectangle lastButton = playAllButton.getBounds();
+		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton(lastButton.x + UiButtons.DEFAULT_BUTTON_WIDTH + 20, lastButton.y);
+		result.add(quitButton);
+		
 		return result;
 	}
 

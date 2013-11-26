@@ -1,12 +1,13 @@
 package com.aqua.music.model.puzzles;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class RandomShuffler<T> {
+public class RandomShuffler<T> {
 	/**
 	 * Used for re-initialising.
 	 */
@@ -18,12 +19,12 @@ class RandomShuffler<T> {
 	private final AtomicInteger lastResultIndex = new AtomicInteger();
 	private List<T> mutableList;
 
-	public RandomShuffler(List<T> inputList) {
-		if (inputList == null || inputList.isEmpty() || inputList.size() < 2) {
+	public RandomShuffler(Collection<T> inputCollection) {
+		if (inputCollection == null || inputCollection.isEmpty() || inputCollection.size() < 2) {
 			throw new RuntimeException("invalid input ... list is null or has less than 2 items");
 		}
-		this.initialList = Collections.unmodifiableList(new ArrayList<T>(inputList));
-		this.mutableList = new ArrayList<T>(inputList);
+		this.initialList = Collections.unmodifiableList(new ArrayList<T>(inputCollection));
+		this.mutableList = new ArrayList<T>(inputCollection);
 	}
 
 	public synchronized T nextRandom() {

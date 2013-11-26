@@ -15,10 +15,10 @@ public enum Song implements Playable {
 	S_MULTANI(new SongMultani()),
 	S_SHUDH_SARANG(new SongShudhSarang()),
 	S_YAMAN1(new SongYaman1()),
-	SONG_PURYA_KALYAN(new SongPuryaKalyan()),
-	SONG_KHAMAJ(new SongKhamaj()),
-	SONG_GUJARI_TODI(new SongGujariTodi()),
-	SONG_BHOPALI(new SongBhopali());
+	S_PURYA_KALYAN(new SongPuryaKalyan()),
+	S_KHAMAJ(new SongKhamaj()),
+	S_GUJARI_TODI(new SongGujariTodi()),
+	S_BHOPALI(new SongBhopali());
 
 	private final AbstractSong song;
 
