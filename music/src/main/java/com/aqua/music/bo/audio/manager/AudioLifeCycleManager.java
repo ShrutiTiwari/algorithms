@@ -12,4 +12,8 @@ interface AudioLifeCycleManager {
 	void pause();
 
 	void resume();
+
+	void increaseTempo();
+
+	void decreaseTempo();
 }

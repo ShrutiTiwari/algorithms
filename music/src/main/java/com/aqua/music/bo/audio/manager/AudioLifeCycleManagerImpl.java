@@ -82,4 +82,14 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	AudioLifeCycleManagerImpl setDurationAndVolume(int durationInMsec, double vol) {
 		return new AudioLifeCycleManagerImpl(durationInMsec, vol);
 	}
+
+	@Override
+	public void increaseTempo() {
+		currentAudioPlayer.increaseTempo();
+	}
+
+	@Override
+	public void decreaseTempo() {
+		currentAudioPlayer.decreaseTempo();
+	}
 }

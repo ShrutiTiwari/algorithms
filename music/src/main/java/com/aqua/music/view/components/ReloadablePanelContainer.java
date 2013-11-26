@@ -27,10 +27,10 @@ class ReloadablePanelContainer  {
 		if (obj instanceof QuizLevel) {
 			QuizLevel<CyclicFrequencySet> quizLevel = (QuizLevel<CyclicFrequencySet>) obj;
 			QuizPanel quizPanel = new QuizPanel(quizLevel);
-			final JPanel quizWithFrequencySetPanel = quizPanel.getPanel();
 			
 			final JComboBox quizDropdown = UiDropdown.quizDropdown(quizPanel.buttonYcoordinate(), quizLevel);
 			quizDropdown.addActionListener(new DropdownActionListener(uiTabbedPane,this));
+			final JPanel quizWithFrequencySetPanel = quizPanel.getPanel();
 			quizWithFrequencySetPanel.add(quizDropdown);
 			
 			return createMapEntry(UiTabbedPane.TITLE_QUIZ_TAB,quizWithFrequencySetPanel);

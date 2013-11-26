@@ -1,12 +1,10 @@
 package com.aqua.music.view.components;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -96,13 +94,17 @@ abstract class AbstractMusicPanel {
 		private final Collection<JComponent> result = new ArrayList<JComponent>();
 
 		private PlayerControlComponents(boolean withConsole) {
-			this.consoleArea = createTextArea(controlPanelLocation, 60);
-
 			result.add(MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, 20));
 			result.add(MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, 20));
 			result.add(MusicButtons.RESUME.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), 20));
+			
+			int nextYCo = 20+ UiButtons.BUTTON_HEIGHT;
+			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(controlPanelLocation, nextYCo));
+			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, nextYCo));
+			
+			this.consoleArea = createTextArea(controlPanelLocation, 20+ 3*UiButtons.BUTTON_HEIGHT);			
 		}
-
+		
 		public Collection<JComponent> getAllComponents() {
 			return result;
 		}

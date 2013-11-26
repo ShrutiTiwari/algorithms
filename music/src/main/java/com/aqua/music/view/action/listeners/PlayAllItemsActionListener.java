@@ -33,7 +33,7 @@ public class PlayAllItemsActionListener implements ActionListener {
 			@Override
 			public void forLoopBody(final Playable playableItem) {
 				String text = playableItem.name() + "===>\n" + playableItem.asText();
-				String displayText = "\n\n Playing::" + text;
+				String displayText = "Playing::" + text;
 				logger.info(displayText);
 				textArea.append(displayText);
 				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies());

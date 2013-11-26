@@ -12,8 +12,9 @@ import com.aqua.music.model.core.DynamicFrequency;
 class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer {
 	private static final double DEFAULT_VOL = 0.8;
 	private static final float SAMPLE_RATE = 8000f;
-
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
+
+	private volatile int multipler = 0;
 
 	// handle for terminating the blocked running thread
 	private volatile SourceDataLine sdl;
@@ -25,6 +26,26 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 
 	AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(double vol) {
 		this.vol = vol;
+	}
+
+	@Override
+	public void decreaseTempo() {
+		if(this.multipler==-9){
+			logger.info("at min tempo! [" + multipler + "]");
+			return;
+		}
+		this.multipler = multipler-1;
+		logger.info("Decreased tempo [" + multipler + "]");
+	}
+
+	@Override
+	public void increaseTempo() {
+		if(this.multipler==9){
+			logger.info("at max tempo! [" + multipler + "]");
+			return;
+		}
+		this.multipler = multipler+1;
+		logger.info("Increased tempo [" + multipler + "]");		
 	}
 
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
@@ -111,7 +132,9 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 	}
 
 	private byte[] constructBufferForFrequency(float frequencyInHz, int duration) {
-		byte[] frequencyBuffer = new byte[(int) SAMPLE_RATE * duration / 1000];
+		final int customizedDuration = (multipler == 0) ? duration :newDuration(duration);
+
+		byte[] frequencyBuffer = new byte[(int) SAMPLE_RATE * customizedDuration / 1000];
 
 		for (int i = 0; i < frequencyBuffer.length; i++) {
 			double angle = i / (SAMPLE_RATE / frequencyInHz) * 2.0 * Math.PI;
@@ -126,13 +149,17 @@ class AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle implements AudioPlayer 
 		return frequencyBuffer;
 	}
 
+	private int newDuration(int duration) {
+		return Math.round((float) (duration - (0.1 * multipler * duration)));
+	}
+
 	private void generateSound(final Collection<? extends DynamicFrequency> frequencyList) {
 		for (final DynamicFrequency each : frequencyList) {
 			if (audioPlayRightsManager.stopPlaying()) {
 				logger.info("oops, marked to stop..breaking now.");
 				break;
-			}else if(audioPlayRightsManager.pauseCurrentPlay()){
-				while(audioPlayRightsManager.pauseCurrentPlay()&&!audioPlayRightsManager.stopPlaying()){
+			} else if (audioPlayRightsManager.pauseCurrentPlay()) {
+				while (audioPlayRightsManager.pauseCurrentPlay() && !audioPlayRightsManager.stopPlaying()) {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {

@@ -53,4 +53,8 @@ public interface AudioPlayer {
 			}
 		}
 	}
+
+	void decreaseTempo();
+
+	void increaseTempo();
 }

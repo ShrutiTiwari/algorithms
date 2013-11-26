@@ -111,7 +111,33 @@ interface UiButtons {
 				button.addActionListener(actionListener);
 				return button;
 			}
-		};
+		}, INCREASE_TEMPO("IncreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+			@Override
+			JButton createInstanceWith(String name) {
+				JButton button = fixedNameButton(this);
+				ActionListener actionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.increaseTempo();
+					}
+				};
+				button.addActionListener(actionListener);
+				return button;
+			}
+		}, DECREASE_TEMPO("DecreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+			@Override
+			JButton createInstanceWith(String name) {
+				JButton button = fixedNameButton(this);
+				ActionListener actionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						PlayMode.decreaseTempo();
+					}
+				};
+				button.addActionListener(actionListener);
+				return button;
+			}
+		} ;
 
 		private final int buttonWidth;
 		private final String text;

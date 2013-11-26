@@ -115,4 +115,20 @@ public enum PlayMode {
 			e.printStackTrace();
 		}
 	}
+
+	public static void decreaseTempo() {
+		try {
+			AudioLifeCycleManager.instance.decreaseTempo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void increaseTempo() {
+		try {
+			AudioLifeCycleManager.instance.increaseTempo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
