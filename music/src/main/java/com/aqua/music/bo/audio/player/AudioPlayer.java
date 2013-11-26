@@ -19,7 +19,7 @@ public interface AudioPlayer {
 	void stop();
 
 	enum Factory {
-		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle.class),
+		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSound.class),
 		STATIC_AUDIO(AudioPlayerImplWithStaticSoundBasedOnVLC.class);
 
 		private final Class<? extends AudioPlayer> audioPlayerClass;
@@ -29,10 +29,6 @@ public interface AudioPlayer {
 
 		private Factory(Class<? extends AudioPlayer> audioPlayerClass) {
 			this.audioPlayerClass = audioPlayerClass;
-		}
-
-		public static AudioPlayer customizedDymanic(int durationInMsec, double vol) {
-			return new AudioPlayerImplWithDynamicSoundBasedOnMathSinAngle(vol);
 		}
 
 		public AudioPlayer fetchInstance() {
@@ -53,8 +49,4 @@ public interface AudioPlayer {
 			}
 		}
 	}
-
-	void decreaseTempo();
-
-	void increaseTempo();
 }

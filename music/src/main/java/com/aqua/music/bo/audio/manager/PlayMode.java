@@ -91,44 +91,4 @@ public enum PlayMode {
 			return thread;
 		}
 	}
-
-	public static void stop() {
-		try {
-			AudioLifeCycleManager.instance.stop();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void pause() {
-		try {
-			AudioLifeCycleManager.instance.pause();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void resume() {
-		try {
-			AudioLifeCycleManager.instance.resume();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void decreaseTempo() {
-		try {
-			AudioLifeCycleManager.instance.decreaseTempo();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void increaseTempo() {
-		try {
-			AudioLifeCycleManager.instance.increaseTempo();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

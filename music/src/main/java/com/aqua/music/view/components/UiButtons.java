@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.bo.audio.manager.PlayMode;
 
 interface UiButtons {
@@ -36,7 +37,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.pause();
+						AudioPlayerSettings.pause();
 					}
 				};
 
@@ -59,7 +60,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.stop();
+						AudioPlayerSettings.stop();
 						System.exit(0);
 					}
 				};
@@ -83,7 +84,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.resume();
+						AudioPlayerSettings.resume();
 					}
 				};
 
@@ -105,7 +106,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.stop();
+						AudioPlayerSettings.stop();
 					}
 				};
 				button.addActionListener(actionListener);
@@ -118,7 +119,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.increaseTempo();
+						AudioPlayerSettings.increaseTempo();
 					}
 				};
 				button.addActionListener(actionListener);
@@ -131,7 +132,7 @@ interface UiButtons {
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						PlayMode.decreaseTempo();
+						AudioPlayerSettings.decreaseTempo();
 					}
 				};
 				button.addActionListener(actionListener);

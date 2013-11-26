@@ -6,6 +6,7 @@ public interface DynamicFrequency {
 	public float frequencyInHz();
 	
 	public String fileCode();
+	public int midiNoteNumber();
 	
 	class CustomFreqDuration implements DynamicFrequency{
 		private final int duration;
@@ -32,6 +33,10 @@ public interface DynamicFrequency {
 		@Override
 		public String toString() {
 			return frequency.prettyPrint();
+		}
+		@Override
+		public int midiNoteNumber() {
+			return frequency.midiNoteNumber();
 		}
 	}
 }

@@ -12,4 +12,6 @@ public interface AudioPlayRightsManager {
 	void setCurrentPlayer(AudioPlayer currentAudioPlayer);
 
 	boolean pauseCurrentPlay();
+	
+	int tempoMultilier(int duration);
 }

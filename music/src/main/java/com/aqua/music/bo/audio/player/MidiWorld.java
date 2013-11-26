@@ -1,29 +1,40 @@
 package com.aqua.music.bo.audio.player;
 
 import javax.sound.midi.Instrument;
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
-import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
-import javax.sound.midi.Track;
 
 public class MidiWorld {
 	private final MidiChannel[] mc;
 	private final Synthesizer synth;
 	private Instrument instrument;
+	private final Instrument[] allInstruments; 
 
+	
+	public Instrument[] allInstruments(){
+		return allInstruments; 
+	}
+	
+	public static Instrument[] getInstruments(){
+		return new MidiWorld().allInstruments;
+	}
+	
+	
 	MidiWorld() {
 		this.synth = getSynth();
 		this.mc = (synth == null ? null : synth.getChannels());
-		loadInstrument();
+		this.allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
+		/*for (Instrument each : allInstruments) {
+			System.out.println(each);
+		}*/
+		synth.loadAllInstruments(synth.getDefaultSoundbank());
 	}
 
 	public static void main(String[] args) {
 		MidiWorld midiWorld = new MidiWorld();
-		midiWorld.playAscendDescend(56, 58, 60, 61, 63, 65, 67, 68);
+		int[] noteNumbers = { 56, 58, 60, 61, 63, 65, 67, 68 };
+		midiWorld.playAscendDescendWith(10, noteNumbers);
 	}
 
 	private Synthesizer getSynth() {
@@ -37,25 +48,7 @@ public class MidiWorld {
 		return synth;
 	}
 
-	private void loadInstrument() {
-		Instrument[] instr = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
-		for (Instrument each : instr) {
-			System.out.println(each);
-		}
-		if (synth != null) {
-			this.instrument = instr[16];
-			synth.loadInstrument(instrument);
-		}
-	}
-
-	private void playAscendDescend(int... noteNumbers) {
-		/*for (int midiChannelNum = 0; midiChannelNum < mc.length; midiChannelNum++) {
-			playWith(midiChannelNum, noteNumbers);
-		}*/
-		playWith(10, noteNumbers);
-	}
-
-	private void playWith(int midiChannelNum, int... noteNumbers) {
+	private void playAscendDescendWith(int midiChannelNum, int... noteNumbers) {
 		System.out.println("Playing with [midiChannelNum]=" + midiChannelNum);
 		MidiChannel midiChannel = mc[midiChannelNum];
 		//notifyInstrumentChange(midiChannelNum);

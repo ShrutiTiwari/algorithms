@@ -9,10 +9,11 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
 
+	private volatile int multipler = 0;
 	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
-
+	
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
@@ -34,6 +35,26 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 		}
 		stopCurrentPlay.set(false);
 		pauseCurrentPlay.set(false);
+	}
+
+	@Override
+	public void decreaseTempo() {
+		if(this.multipler==-9){
+			logger.info("at min tempo! [" + multipler + "]");
+			return;
+		}
+		this.multipler = multipler-1;
+		logger.info("Decreased tempo [" + multipler + "]");
+	}
+
+	@Override
+	public void increaseTempo() {
+		if(this.multipler==9){
+			logger.info("at max tempo! [" + multipler + "]");
+			return;
+		}
+		this.multipler = multipler+1;
+		logger.info("Increased tempo [" + multipler + "]");		
 	}
 
 	@Override
@@ -78,18 +99,17 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	public boolean stopPlaying() {
 		return stopCurrentPlay.get();
 	}
+	
+	@Override
+	public int tempoMultilier(int duration) {
+		final int customizedDuration = (multipler == 0) ? duration :newDuration(duration);
+		return customizedDuration;
+	}
 
 	AudioLifeCycleManagerImpl setDurationAndVolume(int durationInMsec, double vol) {
 		return new AudioLifeCycleManagerImpl(durationInMsec, vol);
 	}
-
-	@Override
-	public void increaseTempo() {
-		currentAudioPlayer.increaseTempo();
-	}
-
-	@Override
-	public void decreaseTempo() {
-		currentAudioPlayer.decreaseTempo();
+	private int newDuration(int duration) {
+		return Math.round((float) (duration - (0.1 * multipler * duration)));
 	}
 }

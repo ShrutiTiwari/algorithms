@@ -177,16 +177,4 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 			}
 		}
 	}
-
-	@Override
-	public void decreaseTempo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void increaseTempo() {
-		// TODO Auto-generated method stub
-		
-	}
 }

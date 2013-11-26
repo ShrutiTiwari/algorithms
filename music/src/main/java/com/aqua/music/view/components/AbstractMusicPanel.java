@@ -94,15 +94,24 @@ abstract class AbstractMusicPanel {
 		private final Collection<JComponent> result = new ArrayList<JComponent>();
 
 		private PlayerControlComponents(boolean withConsole) {
-			result.add(MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, 20));
-			result.add(MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, 20));
-			result.add(MusicButtons.RESUME.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), 20));
+			int yCoordinate = 20;
 			
-			int nextYCo = 20+ UiButtons.BUTTON_HEIGHT;
-			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(controlPanelLocation, nextYCo));
-			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, nextYCo));
+			result.add(UiDropdown.instrumentDropDown(controlPanelLocation, yCoordinate, null));
 			
-			this.consoleArea = createTextArea(controlPanelLocation, 20+ 3*UiButtons.BUTTON_HEIGHT);			
+			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT;
+			
+			result.add(MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, yCoordinate));
+			result.add(MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, yCoordinate));
+			result.add(MusicButtons.RESUME.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), yCoordinate));
+			
+			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT;
+			
+			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(controlPanelLocation, yCoordinate));
+			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, yCoordinate));
+			
+			yCoordinate = yCoordinate+ 2*UiButtons.BUTTON_HEIGHT;
+			
+			this.consoleArea = createTextArea(controlPanelLocation, yCoordinate);			
 		}
 		
 		public Collection<JComponent> getAllComponents() {

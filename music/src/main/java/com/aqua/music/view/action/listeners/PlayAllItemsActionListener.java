@@ -45,6 +45,7 @@ public class PlayAllItemsActionListener implements ActionListener {
 				logger.info(""+playableItems.length);
 			}
 		};
-		PlayMode.Asynchronous.playTask(audioTask);
+		AudioPlayerSettings.playAsynchronously(audioTask);
+		
 	}
 }
