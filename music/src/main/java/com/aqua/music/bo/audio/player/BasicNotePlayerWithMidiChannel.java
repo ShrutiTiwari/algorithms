@@ -27,7 +27,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 		this.allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
 		synth.loadAllInstruments(synth.getDefaultSoundbank());
 		this.midiChannel = mc[10];
-		this.notifyInstrumentChange(allInstruments[0]);
+		this.notifyInstrumentChange(allInstruments[73]);
 	}
 
 	@Override

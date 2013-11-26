@@ -60,10 +60,13 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public void pause() {
+	public String togglePauseAndResume() {
 		if (currentAudioPlayer != null) {
-			pauseCurrentPlay.set(true);
+			if(!pauseCurrentPlay.compareAndSet(false, true)){
+				pauseCurrentPlay.compareAndSet(true, false);
+			}
 		}
+		return pauseCurrentPlay()?"Resume":"Pause";
 	}
 
 	@Override
@@ -74,13 +77,6 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	@Override
 	public void releaseRightToPlay() {
 		permitToPlay.unlock();
-	}
-
-	@Override
-	public void resume() {
-		if (currentAudioPlayer != null) {
-			pauseCurrentPlay.compareAndSet(true, false);
-		}
 	}
 
 	@Override

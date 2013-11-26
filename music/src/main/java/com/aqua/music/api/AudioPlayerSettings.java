@@ -4,6 +4,9 @@ import java.util.Collection;
 
 import javax.sound.midi.Instrument;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
@@ -17,6 +20,7 @@ public enum AudioPlayerSettings {
 	SYNCHRONOUS_STATIC_PLAYER(AudioPlayer.Factory.STATIC_AUDIO, PlayMode.Synchronous);
 
 	private final AudioPlayer.Factory audioPlayerFactory;
+	private static final Logger logger = LoggerFactory.getLogger(AudioPlayerSettings.class);
 
 	private final PlayMode playMode;
 	private AudioPlayerSettings(AudioPlayer.Factory audioPlayer, PlayMode playMode) {
@@ -28,7 +32,7 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.decreaseTempo();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 	}
 
@@ -36,28 +40,21 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.increaseTempo();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 	}
 
-	public static void pause() {
+	public static String togglePauseAndResume() {
 		try {
-			AudioLifeCycleManager.instance.pause();
+			return AudioLifeCycleManager.instance.togglePauseAndResume();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
+			return e.getMessage();
 		}
 	}
 
 	public static void playAsynchronously(AudioTask<Playable> audioTask) {
 		PlayMode.Asynchronous.playTask(audioTask);
-	}
-
-	public static void resume() {
-		try {
-			AudioLifeCycleManager.instance.resume();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void changeInstrumentTo(Object obj) {
@@ -70,7 +67,7 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.stop();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 	}
 

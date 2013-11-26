@@ -9,11 +9,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
-	//private final BasicNotePlayer basicNotePlayer = new BasicNotePlayerWithMathSin();
 	private final BasicNotePlayer basicNotePlayer = BasicNotePlayer.MIDI_BASED_PLAYER;
-
-	AudioPlayerImplWithDynamicSound() {
-	}
 
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
 		try {

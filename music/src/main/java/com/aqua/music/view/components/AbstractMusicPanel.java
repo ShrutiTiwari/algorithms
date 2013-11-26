@@ -87,7 +87,7 @@ abstract class AbstractMusicPanel {
 	}
 
 	private class PlayerControlComponents {
-		private static final int PANEL_X_COORDINATE = UiButtons.X_COORIDNATE + 600;
+		private static final int PANEL_X_COORDINATE = UiButtons.X_COORIDNATE + 400;
 		private final TextArea consoleArea;
 		private final int controlPanelLocation = PANEL_X_COORDINATE;
 
@@ -95,22 +95,19 @@ abstract class AbstractMusicPanel {
 
 		private PlayerControlComponents(boolean withConsole) {
 			int yCoordinate = 20;
+			int xCoordinate = controlPanelLocation;
+			JComponent dropDown = UiDropdown.instrumentDropDown(xCoordinate, yCoordinate, null);
+			result.add(dropDown);
+
+			xCoordinate = xCoordinate + dropDown.getBounds().width +20;
+			result.add(MusicButtons.PAUSE.createStaticNamedButton(xCoordinate, yCoordinate));
 			
-			result.add(UiDropdown.instrumentDropDown(controlPanelLocation, yCoordinate, null));
+			xCoordinate = xCoordinate + UiButtons.MINI_BUTTON_WIDTH +10;
+			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(xCoordinate, yCoordinate));
+			xCoordinate = xCoordinate + UiButtons.MINI_BUTTON_WIDTH +10;
+			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(xCoordinate, yCoordinate));
 			
-			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT;
-			
-			result.add(MusicButtons.STOP.createStaticNamedButton(controlPanelLocation, yCoordinate));
-			result.add(MusicButtons.PAUSE.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, yCoordinate));
-			result.add(MusicButtons.RESUME.createStaticNamedButton(controlPanelLocation + 2 * (UiButtons.MINI_BUTTON_WIDTH), yCoordinate));
-			
-			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT;
-			
-			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(controlPanelLocation, yCoordinate));
-			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(controlPanelLocation + UiButtons.MINI_BUTTON_WIDTH, yCoordinate));
-			
-			yCoordinate = yCoordinate+ 2*UiButtons.BUTTON_HEIGHT;
-			
+			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT + 10;
 			this.consoleArea = createTextArea(controlPanelLocation, yCoordinate);			
 		}
 		

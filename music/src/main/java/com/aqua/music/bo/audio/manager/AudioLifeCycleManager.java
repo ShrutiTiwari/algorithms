@@ -11,9 +11,7 @@ public interface AudioLifeCycleManager {
 	
 	void stop();
 
-	void pause();
-
-	void resume();
+	String togglePauseAndResume();
 
 	void increaseTempo();
 

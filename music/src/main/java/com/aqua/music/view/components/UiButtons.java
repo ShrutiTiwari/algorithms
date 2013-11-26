@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import com.aqua.music.api.AudioPlayerSettings;
-import com.aqua.music.bo.audio.manager.PlayMode;
 
 interface UiButtons {
 	int BUTTON_HEIGHT = 30;
@@ -33,11 +32,11 @@ interface UiButtons {
 		PAUSE("Pause", "Click this to pause!", MINI_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
+				final JButton button = fixedNameButton(this);
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.pause();
+						button.setText(AudioPlayerSettings.togglePauseAndResume());
 					}
 				};
 
@@ -77,21 +76,6 @@ interface UiButtons {
 				return button;
 			}
 		},
-		RESUME("Resume", "Click this to resume!", MINI_BUTTON_WIDTH) {
-			@Override
-			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.resume();
-					}
-				};
-
-				button.addActionListener(actionListener);
-				return button;
-			}
-		},
 		SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", PLAY_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String buttonName) {
@@ -99,20 +83,7 @@ interface UiButtons {
 				return button;
 			}
 		},
-		STOP("Stop", "Click this to stop!", MINI_BUTTON_WIDTH) {
-			@Override
-			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.stop();
-					}
-				};
-				button.addActionListener(actionListener);
-				return button;
-			}
-		}, INCREASE_TEMPO("IncreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
@@ -125,7 +96,8 @@ interface UiButtons {
 				button.addActionListener(actionListener);
 				return button;
 			}
-		}, DECREASE_TEMPO("DecreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+		},
+		DECREASE_TEMPO("DecreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
@@ -138,7 +110,7 @@ interface UiButtons {
 				button.addActionListener(actionListener);
 				return button;
 			}
-		} ;
+		};
 
 		private final int buttonWidth;
 		private final String text;
