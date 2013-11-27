@@ -27,18 +27,19 @@ public class RehearsePanel extends AbstractMusicPanel {
 
 		final Collection<Playable> allItems = new ArrayList<Playable>();
 		final TextArea consoleArea = consoleArea();
+		final JButton pauseButton = pauseButton();
 
 		for (Playable eachPlayableItem : itemsList) {
 			JButton playSingleItemButton = UiButtons.MusicButtons.SINGLE_ITEM_PLAYER.createDynamicNamedButton(eachPlayableItem.name(),
 					buttonYcoordinate());
-			playSingleItemButton.addActionListener(new PlaySingleItemActionListener(consoleArea, eachPlayableItem));
+			playSingleItemButton.addActionListener(new PlaySingleItemActionListener(consoleArea, eachPlayableItem, pauseButton));
 			allItems.add(eachPlayableItem);
 			result.add(playSingleItemButton);
 		}
 
 		Playable[] playableItems = allItems.toArray(new Playable[allItems.size()]);
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton(buttonYcoordinate());
-		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems));
+		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
 		result.add(playAllButton);
 		
 		Rectangle lastButton = playAllButton.getBounds();

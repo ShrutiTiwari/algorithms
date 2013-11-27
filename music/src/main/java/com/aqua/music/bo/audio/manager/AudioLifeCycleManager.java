@@ -5,6 +5,8 @@ import javax.sound.midi.Instrument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aqua.music.bo.audio.player.AudioPlayer;
+
 /**
  * @author "Shruti Tiwari"
  *
@@ -15,7 +17,7 @@ public interface AudioLifeCycleManager {
 	
 	void stop();
 
-	String togglePauseAndResume();
+	AudioPlayer.NextStatus togglePauseAndResume();
 
 	void increaseTempo();
 

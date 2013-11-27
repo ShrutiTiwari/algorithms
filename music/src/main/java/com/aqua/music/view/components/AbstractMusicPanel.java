@@ -5,6 +5,7 @@ import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -43,6 +44,10 @@ abstract class AbstractMusicPanel {
 		return playerControlPanel.consoleArea;
 	}
 
+	public JButton pauseButton() {
+		return playerControlPanel.pauseButton;
+	}
+	
 	public JPanel getPanel() {
 		if (!initialized) {
 			initialize();
@@ -96,6 +101,7 @@ abstract class AbstractMusicPanel {
 		private final int controlPanelLocation = PANEL_X_COORDINATE;
 
 		private final Collection<JComponent> result = new ArrayList<JComponent>();
+		private final JButton pauseButton;
 
 		private PlayerControlComponents(boolean withConsole) {
 			int yCoordinate = 20;
@@ -104,7 +110,8 @@ abstract class AbstractMusicPanel {
 			result.add(dropDown);
 
 			xCoordinate = xCoordinate + dropDown.getBounds().width +20;
-			result.add(MusicButtons.PAUSE.createStaticNamedButton(xCoordinate, yCoordinate));
+			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton(xCoordinate, yCoordinate);
+			result.add(pauseButton);
 			
 			xCoordinate = xCoordinate + UiButtons.MINI_BUTTON_WIDTH +10;
 			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(xCoordinate, yCoordinate));
@@ -113,6 +120,14 @@ abstract class AbstractMusicPanel {
 			
 			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT + 10;
 			this.consoleArea = createTextArea(controlPanelLocation, yCoordinate);			
+		}
+		
+		/**
+		 * @return 
+		 * 
+		 */
+		private JButton pauseButton() {
+			return pauseButton;
 		}
 		
 		public Collection<JComponent> getAllComponents() {

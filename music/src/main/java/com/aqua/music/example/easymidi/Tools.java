@@ -1,4 +1,4 @@
-package com.aqua.music.example;
+package com.aqua.music.example.easymidi;
 
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
@@ -6,7 +6,6 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
 public class Tools {
-
         static MidiChannel drumChannel = null;
         static Synthesizer synthesizer = null;
         static int[][] channels = new int[8][128];
@@ -31,17 +30,14 @@ public class Tools {
                 }
         }
 
-        public static void playNote(int pitch, int instrument, int velocity, int delay) {
+        public static void playNote(final int pitch, int instrument, int velocity, final int delay) {
                 final int c = openNote(instrument, pitch, velocity);
-                final int d = delay;
-                final int p = pitch;
                 new Thread(new Runnable() {
-
                         @Override
                         public void run() {
                                 try {
-                                        Thread.sleep(d);
-                                        closeNote(p, c);
+                                        Thread.sleep(delay);
+                                        closeNote(pitch, c);
                                 } catch (Throwable t) {
                                         t.printStackTrace();
                                 }
@@ -50,17 +46,14 @@ public class Tools {
 
         }
 
-        public static void playDrum(int instrument, int velocity, int delay) {
+        public static void playDrum(final int instrument, int velocity, final int delay) {
                 openDrum(instrument, velocity);
-                final int d = delay;
-                final int i = instrument;
                 new Thread(new Runnable() {
-
                         @Override
                         public void run() {
                                 try {
-                                        Thread.sleep(d);
-                                        closeDrum(i);
+                                        Thread.sleep(delay);
+                                        closeDrum(instrument);
                                 } catch (Throwable t) {
                                         t.printStackTrace();
                                 }

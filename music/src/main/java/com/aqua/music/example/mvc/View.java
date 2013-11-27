@@ -1,4 +1,4 @@
-package com.aqua.music.example;
+package com.aqua.music.example.mvc;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

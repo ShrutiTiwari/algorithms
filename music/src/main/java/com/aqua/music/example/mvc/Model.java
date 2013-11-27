@@ -1,4 +1,4 @@
-package com.aqua.music.example;
+package com.aqua.music.example.mvc;
 
 import java.util.Observable;
 import java.util.Random;

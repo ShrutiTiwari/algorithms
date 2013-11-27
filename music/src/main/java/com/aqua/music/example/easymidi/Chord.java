@@ -1,4 +1,4 @@
-package com.aqua.music.example;
+package com.aqua.music.example.easymidi;
 
 import java.util.Vector;
 

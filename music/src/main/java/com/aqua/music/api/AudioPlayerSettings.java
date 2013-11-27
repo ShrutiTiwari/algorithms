@@ -50,7 +50,7 @@ public enum AudioPlayerSettings {
 
 	public static String togglePauseAndResume() {
 		try {
-			return AudioLifeCycleManager.instance.togglePauseAndResume();
+			return AudioLifeCycleManager.instance.togglePauseAndResume().toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 			return e.getMessage();
