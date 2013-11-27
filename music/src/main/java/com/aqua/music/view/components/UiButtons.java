@@ -138,23 +138,14 @@ interface UiButtons {
 			return resultButton;
 		}
 
-		public JButton createDynamicNamedButton(String buttonName, int yCoordinate) {
-			return createDynamicNamedButton(buttonName, X_COORIDNATE, yCoordinate);
-		}
-
-		public JButton createDynamicNamedButton(String buttonName, int xCoordinate, int yCoordinate) {
+		public JButton createDynamicNamedButton(String buttonName) {
 			JButton buttonItem = createInstanceWith(buttonName);
 			buttonItem.setOpaque(true);
-			buttonItem.setBounds(xCoordinate, yCoordinate, buttonWidth, BUTTON_HEIGHT);
 			return buttonItem;
 		}
 
-		public JButton createStaticNamedButton(int yCoordinate) {
-			return createDynamicNamedButton("", X_COORIDNATE, yCoordinate);
-		}
-
-		public JButton createStaticNamedButton(int xCoordinate, int yCoordinate) {
-			return createDynamicNamedButton("", xCoordinate, yCoordinate);
+		public JButton createStaticNamedButton() {
+			return createDynamicNamedButton("");
 		}
 
 		@Override

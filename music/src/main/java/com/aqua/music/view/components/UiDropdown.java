@@ -4,42 +4,45 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
-import java.util.Map.Entry;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.PlayApi;
+import com.aqua.music.model.core.FrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
 public class UiDropdown {
-	public static JComponent instrumentDropDown(int xCooridnate, int yCoordinate, Object selectedItem) {
-		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), xCooridnate, yCoordinate, selectedItem,(3*UiButtons.DEFAULT_BUTTON_WIDTH));
+	public static JComponent instrumentDropDown(Object selectedItem) {
+		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), selectedItem, (3 * UiButtons.DEFAULT_BUTTON_WIDTH));
 		instrumentDropdown.addActionListener(new InstrumentDropdownActionListener());
 		return instrumentDropdown;
 	}
 
-	static JComboBox quizDropdown(int buttonYcoordinate, Object selectedItem) {
+	public static JComboBox patternThaatDropDown() {
+		return createWith(new String[] { "PAIR", "TUPLE" }, null, UiButtons.DEFAULT_BUTTON_WIDTH);
+	}
+
+	static JComboBox quizDropdown(Object selectedItem) {
 		Collection<QuizLevel> quizLevels = QuizController.FrequencySetQuiz.quizLevels();
-		return createWith(quizLevels.toArray(), UiButtons.X_COORIDNATE, buttonYcoordinate, selectedItem,UiButtons.DEFAULT_BUTTON_WIDTH);
+		return createWith(quizLevels.toArray(), selectedItem, UiButtons.DEFAULT_BUTTON_WIDTH);
 	}
 
-	static JComboBox thaatDropDown(int buttonYcoordinate, Object selectedItem) {
-		return createWith(SymmetricalSet.values(), UiButtons.X_COORIDNATE, buttonYcoordinate, selectedItem,UiButtons.DEFAULT_BUTTON_WIDTH);
+	static JComboBox thaatDropDown(Object selectedItem) {
+		return createWith(SymmetricalSet.values(), selectedItem, UiButtons.DEFAULT_BUTTON_WIDTH);
 	}
 
-	private static JComboBox createWith(Object[] objects, int xCooridnate, int buttonYcoordinate, Object selectedItem, int dropdownWidth) {
+	private static JComboBox createWith(Object[] objects, Object selectedItem, int dropdownWidth) {
 		final JComboBox box = new JComboBox(objects);
 		box.setBackground(Color.WHITE);
 		box.setForeground(Color.GRAY);
-		box.setBounds(xCooridnate, buttonYcoordinate, dropdownWidth, UiButtons.BUTTON_HEIGHT);
 		if (selectedItem != null) {
 			box.setSelectedItem(selectedItem);
 		} else {
@@ -51,9 +54,6 @@ public class UiDropdown {
 	static class InstrumentDropdownActionListener implements ActionListener {
 		Logger logger = LoggerFactory.getLogger(InstrumentDropdownActionListener.class);
 
-		InstrumentDropdownActionListener() {
-		}
-
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			JComboBox cbox = (JComboBox) arg0.getSource();
@@ -61,23 +61,30 @@ public class UiDropdown {
 			AudioPlayerSettings.changeInstrumentTo(obj);
 		}
 	}
-	
+
 	static class PaneReloadDropdownActionListener implements ActionListener {
 		Logger logger = LoggerFactory.getLogger(PaneReloadDropdownActionListener.class);
-		private final ReloadablePanelContainer reloadablePanelContainer;
-		private UiTabbedPane uiTabbedPane;
+		private final AbstractMusicPanel musicPanel;
 
-		PaneReloadDropdownActionListener(UiTabbedPane uiTabbedPane, ReloadablePanelContainer reloadablePanelContainer) {
-			this.reloadablePanelContainer = reloadablePanelContainer;
-			this.uiTabbedPane = uiTabbedPane;
+		/**
+		 * @param musicPanel
+		 */
+		public PaneReloadDropdownActionListener(AbstractMusicPanel musicPanel) {
+			this.musicPanel = musicPanel;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			JComboBox cbox = (JComboBox) arg0.getSource();
 			Object obj = cbox.getSelectedItem();
-			Entry<String, JPanel> newPanelWith = reloadablePanelContainer.newPanelWith(obj);
-			uiTabbedPane.refreshReloadablePanel(newPanelWith.getValue(), newPanelWith.getKey());
+
+			if (obj instanceof FrequencySet) {
+				final FrequencySet frequencySet = (FrequencySet) obj;
+				musicPanel.renewSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, 2));
+			} else {
+				QuizLevel<CyclicFrequencySet> quizLevel = (QuizLevel<CyclicFrequencySet>) obj;
+				musicPanel.renewSpecificComponentPanel(quizLevel);
+			}
 		}
 	}
 }

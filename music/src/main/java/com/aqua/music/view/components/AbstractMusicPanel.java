@@ -1,7 +1,7 @@
 package com.aqua.music.view.components;
 
 import java.awt.Dimension;
-import java.awt.TextArea;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,129 +16,85 @@ import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 abstract class AbstractMusicPanel {
 	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	protected final Logger logger = LoggerFactory.getLogger(AbstractMusicPanel.class);
 
+	private final JPanel commonComponentPanel;
+	private final CommonComponents commonComponents;
 	private volatile boolean initialized = false;
-	private final JPanel panel;
-	private final PlayerControlComponents playerControlPanel;
+	private final JPanel mainPanel;
+	private JPanel specificComponentPanel;	
 
-	private final YCoordinateTracker yCoordinateTracker;
-
-	protected AbstractMusicPanel(boolean withConsole) {
-		this.playerControlPanel = new PlayerControlComponents(withConsole);
-		this.yCoordinateTracker = new YCoordinateTracker();
-		this.panel = createBlankMainTab();
-		for (JComponent each : playerControlPanel.getAllComponents()) {
-			panel.add(each);
+	protected AbstractMusicPanel() {
+		this.mainPanel = createBlankMainTab();
+		this.commonComponentPanel = new JPanel();
+		//commonComponentPanel.setLayout(new BorderLayout());
+		this.commonComponents = new CommonComponents();
+		for (JComponent each : commonComponents.getAllComponents()) {
+			commonComponentPanel.add(each);
 		}
-		if (withConsole) {
-			panel.add(playerControlPanel.consoleArea);
-		}
+		mainPanel.add(commonComponentPanel);
 	}
 
-	public TextArea consoleArea() {
-		return playerControlPanel.consoleArea;
-	}
-
-	public JButton pauseButton() {
-		return playerControlPanel.pauseButton;
+	public void addToCommonComponentPanel(JComponent aComponent) {
+		commonComponentPanel.add(aComponent);
 	}
 	
 	public JPanel getPanel() {
 		if (!initialized) {
-			initialize();
+			addSpecificComponentPanel();
 		}
-		return panel;
+		return mainPanel;
 	}
 
-	protected abstract Collection<JComponent> addSpecificButtons();
+	public JButton pauseButton() {
+		return commonComponents.pauseButton;
+	}
 
-	protected final int buttonYcoordinate() {
-		return yCoordinateTracker.buttonYcoordinate();
+	public void renewSpecificComponentPanel(final Object selectedObject) {
+		mainPanel.remove(specificComponentPanel);
+		this.specificComponentPanel = createSpecificComponentPanel(selectedObject);
+		mainPanel.add(specificComponentPanel);
+		mainPanel.revalidate();
+		mainPanel.repaint();
+	}
+
+	protected abstract JPanel createSpecificComponentPanel(final Object selectedObject);
+
+	private synchronized void addSpecificComponentPanel() {
+		if (!initialized) {
+			this.specificComponentPanel = createSpecificComponentPanel(null);
+			mainPanel.add(specificComponentPanel);
+			mainPanel.setOpaque(true);
+			initialized = true;
+		}
 	}
 
 	private JPanel createBlankMainTab() {
 		JPanel mainTab = new JPanel();
-		mainTab.setLayout(null);
+		mainTab.setLayout(new GridLayout(2,1));
 		mainTab.setPreferredSize(preferredSizeForThaatPanel);
 		return mainTab;
 	}
 
-	private synchronized void initialize() {
-		if (!initialized) {
-			initialized = true;
-			JComponent lastButton=null;
-			for (JComponent each : addSpecificButtons()) {
-				panel.add(each);
-				lastButton=each;
-			}
-			panel.setOpaque(true);
-		}
-	}
-
-	/**
-	 * Synchronisation policy: ThreadConfined - Meant for SingleThreaded use.
-	 * */
-
-	class YCoordinateTracker {
-		private static final int START = 10;
-		// mutated variable
-		private int yCoordinate = START;
-
-		private int buttonYcoordinate() {
-			yCoordinate += (UiButtons.BUTTON_HEIGHT) + 10;
-			return yCoordinate;
-		}
-	}
-
-	private class PlayerControlComponents {
-		private static final int PANEL_X_COORDINATE = UiButtons.X_COORIDNATE + 400;
-		private final TextArea consoleArea;
-		private final int controlPanelLocation = PANEL_X_COORDINATE;
-
-		private final Collection<JComponent> result = new ArrayList<JComponent>();
+	private static class CommonComponents {
 		private final JButton pauseButton;
+		private final Collection<JComponent> result = new ArrayList<JComponent>();
 
-		private PlayerControlComponents(boolean withConsole) {
-			int yCoordinate = 20;
-			int xCoordinate = controlPanelLocation;
-			JComponent dropDown = UiDropdown.instrumentDropDown(xCoordinate, yCoordinate, null);
+		private CommonComponents() {
+			JComponent dropDown = UiDropdown.instrumentDropDown(null);
 			result.add(dropDown);
-
-			xCoordinate = xCoordinate + dropDown.getBounds().width +20;
-			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton(xCoordinate, yCoordinate);
+			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
 			result.add(pauseButton);
-			
-			xCoordinate = xCoordinate + UiButtons.MINI_BUTTON_WIDTH +10;
-			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(xCoordinate, yCoordinate));
-			xCoordinate = xCoordinate + UiButtons.MINI_BUTTON_WIDTH +10;
-			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(xCoordinate, yCoordinate));
-			
-			yCoordinate = yCoordinate+ UiButtons.BUTTON_HEIGHT + 10;
-			this.consoleArea = createTextArea(controlPanelLocation, yCoordinate);			
-		}
-		
-		/**
-		 * @return 
-		 * 
-		 */
-		private JButton pauseButton() {
-			return pauseButton;
-		}
-		
-		public Collection<JComponent> getAllComponents() {
-			return result;
+			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton());
+			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton());
 		}
 
-		private TextArea createTextArea(int xCoordinate, int yCoordintate) {
-			TextArea textArea = new TextArea("Hello shrutz");
-			textArea.setVisible(true);
-			textArea.setBounds(xCoordinate, yCoordintate, 550, 550);
-			return textArea;
+		private Collection<JComponent> getAllComponents() {
+			return result;
 		}
 	}
 }

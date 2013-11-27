@@ -5,17 +5,20 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
 import com.aqua.music.view.components.UiButtons.MusicButtons;
+import com.aqua.music.view.components.UiDropdown.PaneReloadDropdownActionListener;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
@@ -23,40 +26,48 @@ class QuizPanel extends AbstractMusicPanel {
 	private final int optionButtonsXLocation = UiButtons.X_COORIDNATE + increment;
 
 	QuizPanel(final QuizLevel quizLevel) {
-		super(false);
+		super();
 		this.quizLevel = quizLevel;
+		final JComboBox quizDropdown = UiDropdown.quizDropdown(quizLevel);
+		quizDropdown.addActionListener(new PaneReloadDropdownActionListener(this));
+		addToCommonComponentPanel(quizDropdown);
 	}
 
-	protected Collection<JComponent> addSpecificButtons() {
-		final Collection<JComponent> result = new ArrayList<JComponent>();
+	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
+		QuizLevel quizLevel = (QuizLevel) selectedObject;
+		if (quizLevel == null) {
+			quizLevel = this.quizLevel;
+		}
+		final Collection<JComponent> allButtonsIncludingQuizAndChoice = new ArrayList<JComponent>();
 		int i = 1;
-		List<JButton> allButtons = new ArrayList<JButton>();
+		List<JButton> allQuizPlayButtons = new ArrayList<JButton>();
 		for (Quiz<CyclicFrequencySet> eachQuiz : (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections()) {
 			final String quizName = "Quiz " + i;
-			int buttonYcoordinate = buttonYcoordinate();
+			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName);
 
-			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName, buttonYcoordinate);
-
-			final HorizontallyAlignedButtons optionButtonsBuilder = new HorizontallyAlignedButtons(optionButtonsXLocation,
-					buttonYcoordinate, increment, UiButtons.MusicButtons.CHOICE_OPTIONS);
+			final Collection<JButton> multipleChoiceButtons = new ArrayList<JButton>();
 			for (CyclicFrequencySet eachOption : eachQuiz.quizItems()) {
-				optionButtonsBuilder.add(eachOption.name());
-			}
-			final Collection<JButton> multipleChoiceButtons = optionButtonsBuilder.all();
-			for (JButton each : multipleChoiceButtons) {
-				result.add(each);
-			}
+				JButton b = UiButtons.MusicButtons.CHOICE_OPTIONS.createDynamicNamedButton(eachOption.name());
+				allButtonsIncludingQuizAndChoice.add(b);
+				multipleChoiceButtons.add(b);
 
-			quizPlayButton.addActionListener(new QuizPlayActionListener(eachQuiz, multipleChoiceButtons, allButtons));
-			result.add(quizPlayButton);
+			}
+			quizPlayButton.addActionListener(new QuizPlayActionListener(eachQuiz, multipleChoiceButtons, allQuizPlayButtons));
+			allButtonsIncludingQuizAndChoice.add(quizPlayButton);
 
-			allButtons.add(quizPlayButton);
+			allQuizPlayButtons.add(quizPlayButton);
 			i++;
 		}
-		
-		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton(buttonYcoordinate());
-		result.add(quitButton);
-		
+
+		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
+		allButtonsIncludingQuizAndChoice.add(quitButton);
+
+		JPanel result = new JPanel();
+		// result.setPreferredSize(new Dimension(400, 300));
+		for (JComponent each : allButtonsIncludingQuizAndChoice) {
+			result.add(each);
+		}
+
 		return result;
 	}
 }
