@@ -21,25 +21,25 @@ import com.aqua.music.model.puzzles.QuizLevel;
 
 public class UiDropdown {
 	public static JComponent instrumentDropDown(Object selectedItem) {
-		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), selectedItem, (3 * UiButtons.DEFAULT_BUTTON_WIDTH));
+		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), selectedItem);
 		instrumentDropdown.addActionListener(new InstrumentDropdownActionListener());
 		return instrumentDropdown;
 	}
 
 	public static JComboBox patternThaatDropDown() {
-		return createWith(new String[] { "PAIR", "TUPLE" }, null, UiButtons.DEFAULT_BUTTON_WIDTH);
+		return createWith(new String[] { "PAIR", "TUPLE" }, null);
 	}
 
 	static JComboBox quizDropdown(Object selectedItem) {
 		Collection<QuizLevel> quizLevels = QuizController.FrequencySetQuiz.quizLevels();
-		return createWith(quizLevels.toArray(), selectedItem, UiButtons.DEFAULT_BUTTON_WIDTH);
+		return createWith(quizLevels.toArray(), selectedItem);
 	}
 
 	static JComboBox thaatDropDown(Object selectedItem) {
-		return createWith(SymmetricalSet.values(), selectedItem, UiButtons.DEFAULT_BUTTON_WIDTH);
+		return createWith(SymmetricalSet.values(), selectedItem);
 	}
 
-	private static JComboBox createWith(Object[] objects, Object selectedItem, int dropdownWidth) {
+	private static JComboBox createWith(Object[] objects, Object selectedItem) {
 		final JComboBox box = new JComboBox(objects);
 		box.setBackground(Color.WHITE);
 		box.setForeground(Color.GRAY);

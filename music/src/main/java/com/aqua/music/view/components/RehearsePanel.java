@@ -62,9 +62,6 @@ public class RehearsePanel extends AbstractMusicPanel {
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
 		allButtons.add(playAllButton);
 
-		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
-		allButtons.add(quitButton);
-
 		JPanel result = new JPanel();
 		result.setOpaque(true);
 		for (JComponent each : allButtons) {

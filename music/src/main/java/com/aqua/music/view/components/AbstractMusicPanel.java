@@ -91,6 +91,7 @@ abstract class AbstractMusicPanel {
 			result.add(pauseButton);
 			result.add(MusicButtons.INCREASE_TEMPO.createStaticNamedButton());
 			result.add(MusicButtons.DECREASE_TEMPO.createStaticNamedButton());
+			result.add(MusicButtons.QUIT.createStaticNamedButton());
 		}
 
 		private Collection<JComponent> getAllComponents() {

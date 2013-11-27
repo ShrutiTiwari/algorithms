@@ -9,18 +9,12 @@ import javax.swing.JButton;
 import com.aqua.music.api.AudioPlayerSettings;
 
 interface UiButtons {
-	int BUTTON_HEIGHT = 30;
-	int DEFAULT_BUTTON_WIDTH = 120;
-	int MINI_BUTTON_WIDTH = 150;
-	int PLAY_BUTTON_WIDTH = 200;
-	int X_COORIDNATE = 30;
-
 	String text();
 
 	String tooltip();
 
 	enum MusicButtons implements UiButtons {
-		CHOICE_OPTIONS("$$", "This thaat is $$", MINI_BUTTON_WIDTH) {
+		CHOICE_OPTIONS("$$", "This thaat is $$") {
 			@Override
 			JButton createInstanceWith(String buttonName) {
 				JButton choiceButton = configurableNamedButton(this, buttonName);
@@ -76,14 +70,14 @@ interface UiButtons {
 				return button;
 			}
 		},
-		SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$", PLAY_BUTTON_WIDTH) {
+		SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$") {
 			@Override
 			JButton createInstanceWith(String buttonName) {
 				JButton button = configurableNamedButton(this, buttonName);
 				return button;
 			}
 		},
-		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!") {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
@@ -97,7 +91,7 @@ interface UiButtons {
 				return button;
 			}
 		},
-		DECREASE_TEMPO("DecreaseTempo", "Click this to stop!", MINI_BUTTON_WIDTH) {
+		DECREASE_TEMPO("DecreaseTempo", "Click this to stop!") {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
@@ -111,19 +105,12 @@ interface UiButtons {
 				return button;
 			}
 		};
-
-		private final int buttonWidth;
 		private final String text;
 		private final String tooltip;
 
 		private MusicButtons(String text, String tooltip) {
-			this(text, tooltip, DEFAULT_BUTTON_WIDTH);
-		}
-
-		private MusicButtons(String text, String tooltip, int buttonWidth) {
 			this.text = text;
 			this.tooltip = tooltip;
-			this.buttonWidth = buttonWidth;
 		}
 
 		private static JButton configurableNamedButton(UiButtons itemType, String replaceName) {

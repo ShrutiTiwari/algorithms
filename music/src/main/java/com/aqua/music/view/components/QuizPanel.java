@@ -1,5 +1,6 @@
 package com.aqua.music.view.components;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +14,6 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
-import com.aqua.music.view.components.UiButtons.MusicButtons;
 import com.aqua.music.view.components.UiDropdown.PaneReloadDropdownActionListener;
 
 /**
@@ -22,8 +22,6 @@ import com.aqua.music.view.components.UiDropdown.PaneReloadDropdownActionListene
  */
 class QuizPanel extends AbstractMusicPanel {
 	private final QuizLevel quizLevel;
-	private final int increment = UiButtons.MINI_BUTTON_WIDTH + 10;
-	private final int optionButtonsXLocation = UiButtons.X_COORIDNATE + increment;
 
 	QuizPanel(final QuizLevel quizLevel) {
 		super();
@@ -59,10 +57,8 @@ class QuizPanel extends AbstractMusicPanel {
 			i++;
 		}
 
-		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
-		allButtonsIncludingQuizAndChoice.add(quitButton);
-
 		JPanel result = new JPanel();
+		result.setLayout(new FlowLayout());
 		// result.setPreferredSize(new Dimension(400, 300));
 		for (JComponent each : allButtonsIncludingQuizAndChoice) {
 			result.add(each);
