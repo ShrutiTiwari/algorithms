@@ -12,7 +12,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMidiChannel.class);
@@ -20,6 +20,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	private final MidiChannel[] mc;
 	private final MidiChannel midiChannel;
 	private final Synthesizer synth;
+	private volatile int activeNoteNumber=-1;
 
 	public Instrument[] allInstruments() {
 		return allInstruments;
@@ -46,14 +47,15 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 
 	@Override
 	public void play(DynamicFrequency each, int duration) {
-		int eachNoteNumber = each.midiNoteNumber();
-		midiChannel.noteOn(eachNoteNumber, 127);
+		this.activeNoteNumber = each.midiNoteNumber();
+		midiChannel.noteOn(activeNoteNumber, 127);
 		try {
 			Thread.sleep(duration);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		midiChannel.noteOn(eachNoteNumber, 0);
+		midiChannel.noteOn(activeNoteNumber, 0);
+		activeNoteNumber = -1;
 	}
 
 	@Override
@@ -63,7 +65,9 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 
 	@Override
 	public void stop() {
-
+		if (activeNoteNumber != -1) {
+			midiChannel.noteOn(activeNoteNumber, 0);
+		}
 	}
 
 	@Override

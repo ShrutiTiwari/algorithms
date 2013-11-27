@@ -92,14 +92,14 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	@Override
 	public synchronized void stop() {
 		if (currentAudioPlayer != null) {
-			pauseCurrentPlay.set(false);
 			stopCurrentPlay.set(true);
 			currentAudioPlayer.stop();
+			pauseCurrentPlay.set(false);
 		}
 	}
 
 	@Override
-	public boolean stopPlaying() {
+	public boolean isMarkedToStopPlaying() {
 		return stopCurrentPlay.get();
 	}
 

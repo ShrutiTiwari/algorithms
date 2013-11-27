@@ -11,7 +11,7 @@ import com.aqua.music.api.AudioPlayerSettings;
 interface UiButtons {
 	int BUTTON_HEIGHT = 30;
 	int DEFAULT_BUTTON_WIDTH = 120;
-	int MINI_BUTTON_WIDTH = 120;
+	int MINI_BUTTON_WIDTH = 150;
 	int PLAY_BUTTON_WIDTH = 200;
 	int X_COORIDNATE = 30;
 
@@ -29,7 +29,7 @@ interface UiButtons {
 				return choiceButton;
 			}
 		},
-		PAUSE("Pause", "Click this to pause!", MINI_BUTTON_WIDTH) {
+		PAUSE("Pause", "Click this to pause!") {
 			@Override
 			JButton createInstanceWith(String name) {
 				final JButton button = fixedNameButton(this);
@@ -69,7 +69,7 @@ interface UiButtons {
 				return button;
 			}
 		},
-		QUIZ_PLAY("Play $$", "Click this to play $$", MINI_BUTTON_WIDTH) {
+		QUIZ_PLAY("Play $$", "Click this to play $$") {
 			@Override
 			JButton createInstanceWith(String buttonName) {
 				JButton button = configurableNamedButton(this, buttonName);

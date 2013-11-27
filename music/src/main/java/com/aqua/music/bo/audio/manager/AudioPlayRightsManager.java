@@ -9,7 +9,7 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 public interface AudioPlayRightsManager {
 	void acquireRightToPlay() throws InterruptedException;
 
-	boolean stopPlaying();
+	boolean isMarkedToStopPlaying();
 
 	void releaseRightToPlay();
 

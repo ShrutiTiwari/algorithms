@@ -9,7 +9,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
@@ -18,7 +18,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
-			logger.info("acquired right to play");
+			logger.debug("acquired right to play");
 			basicNotePlayer.start();
 			generateSound(frequencyList);
 			basicNotePlayer.finish();
@@ -26,7 +26,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 			e.printStackTrace();
 		} finally {
 			basicNotePlayer.tidyup();
-			logger.info("releasing right to play");
+			logger.debug("releasing right to play");
 			audioPlayRightsManager.releaseRightToPlay();
 		}
 	}
@@ -34,9 +34,9 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	public void playFrequenciesInLoop(final Collection<? extends DynamicFrequency> frequencyList) {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
-			logger.info("acquired right to play");
+			logger.debug("acquired right to play");
 			basicNotePlayer.start();
-			while (!audioPlayRightsManager.stopPlaying()) {
+			while (!audioPlayRightsManager.isMarkedToStopPlaying()) {
 				generateSound(frequencyList);
 			}
 			basicNotePlayer.finish();
@@ -44,7 +44,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 			e.printStackTrace();
 		} finally {
 			basicNotePlayer.tidyup();
-			logger.info("releasing right to play");
+			logger.debug("releasing right to play");
 			audioPlayRightsManager.releaseRightToPlay();
 		}
 	}
@@ -78,25 +78,28 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		basicNotePlayer.stop();
 	}
 
-
 	private void generateSound(final Collection<? extends DynamicFrequency> frequencyList) {
 		for (final DynamicFrequency each : frequencyList) {
-			if (audioPlayRightsManager.stopPlaying()) {
-				logger.info("oops, marked to stop..breaking now.");
+			if (audioPlayRightsManager.isMarkedToStopPlaying()) {
+				logger.debug("oops, marked to stop..breaking now.");
 				break;
 			} else if (audioPlayRightsManager.pauseCurrentPlay()) {
-				while (audioPlayRightsManager.pauseCurrentPlay() && !audioPlayRightsManager.stopPlaying()) {
+				while (audioPlayRightsManager.pauseCurrentPlay() && !audioPlayRightsManager.isMarkedToStopPlaying()) {
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				logger.info("Pause cleared!");
+				logger.debug("Pause cleared Or marked to stop playing!");
 			}
-			final int customizedDuration = audioPlayRightsManager.tempoMultilier(each.duration());
-			throwExceptionForInsaneInput(customizedDuration);
-			basicNotePlayer.play(each, customizedDuration);
+			if (audioPlayRightsManager.isMarkedToStopPlaying()) {
+				return;
+			} else {
+				final int customizedDuration = audioPlayRightsManager.tempoMultilier(each.duration());
+				throwExceptionForInsaneInput(customizedDuration);
+				basicNotePlayer.play(each, customizedDuration);
+			}
 		}
 	}
 

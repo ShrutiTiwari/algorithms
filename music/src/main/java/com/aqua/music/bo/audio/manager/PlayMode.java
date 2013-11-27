@@ -65,7 +65,7 @@ public enum PlayMode {
 					audioTask.beforeForLoop();
 
 					for (T e : audioTask.forLoopParameter()) {
-						if (audioPlayRightsManager.stopPlaying()) {
+						if (audioPlayRightsManager.isMarkedToStopPlaying()) {
 							break;
 						}
 						audioTask.forLoopBody(e);

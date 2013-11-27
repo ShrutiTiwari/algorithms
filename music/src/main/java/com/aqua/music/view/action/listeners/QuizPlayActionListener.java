@@ -8,6 +8,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
@@ -18,6 +21,7 @@ import com.aqua.music.view.main.UIMainPanel;
  *
  */
 public class QuizPlayActionListener implements ActionListener {
+	private static final Logger logger = LoggerFactory.getLogger(QuizPlayActionListener.class);
 	private final List<JButton> allPlayButtons;
 	private final Collection<JButton> multipleChoiceSet;
 	private final Quiz<CyclicFrequencySet> quizSection;
@@ -51,14 +55,13 @@ public class QuizPlayActionListener implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				String selectedButtonText = selectedButton.getText();
 				String correctAnswer = playItem.name();
-				if (selectedButtonText == correctAnswer) {
-					System.out.println(" :) Correct guess!!! clickedButton[" + selectedButtonText + "] correctAnswer[" + correctAnswer + "]");
+				if (selectedButtonText.equals(correctAnswer)) {
 					selectedButton.setBackground(Color.GREEN);
 					for(JButton each:guessButtonsSet){
 							each.setEnabled(false);
 					}
 				} else {
-					System.out.println(" :( Wrong guess... clickedButton[" + selectedButtonText + "] correctAnswer[" + correctAnswer + "]");
+					logger.info(" :( Wrong guess... clickedButton[" + selectedButtonText + "] correctAnswer[" + correctAnswer + "]");
 					selectedButton.setBackground(Color.YELLOW);
 					selectedButton.setEnabled(false);
 				}
