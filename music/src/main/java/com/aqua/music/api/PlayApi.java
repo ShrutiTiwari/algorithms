@@ -28,8 +28,8 @@ public class PlayApi {
 		return playablePlainThaats;
 	}
 
-	public static Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, int bucketSize) {
-		List<int[]> allPermutations = PermuatationsGenerator.PAIR.generatePermutations(frequencySet.ascendNotes());
+	public static Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
+		List<int[]> allPermutations = permuatationsGenerator.generatePermutations(frequencySet.ascendNotes());
 
 		Collection<Playable> result = new ArrayList<Playable>();
 		for (int[] eachPermutation : allPermutations) {

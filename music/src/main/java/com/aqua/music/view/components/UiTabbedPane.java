@@ -4,6 +4,7 @@ import javax.swing.JTabbedPane;
 
 import com.aqua.music.api.PlayApi;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
@@ -26,7 +27,7 @@ public class UiTabbedPane {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab(UiTabbedPane.TITLE_PLAIN_THAAT, new RehearsePanel(PlayApi.getAllPlainThaat()).getPanel());
 		tabbedPane.addTab(UiTabbedPane.TITLE_SONG_TAB, new RehearsePanel(PlayApi.getAllSongs()).getPanel());
-		tabbedPane.addTab(TITLE_REHEARSE_TAB, new RehearsePanel(firstThaat, 2).getPanel());
+		tabbedPane.addTab(TITLE_REHEARSE_TAB, new RehearsePanel(firstThaat, PermuatationsGenerator.PAIR).getPanel());
 		tabbedPane.addTab(TITLE_QUIZ_TAB, new QuizPanel(firstQuizLevel).getPanel());
 		tabbedPane.setOpaque(true);
 		return tabbedPane;
