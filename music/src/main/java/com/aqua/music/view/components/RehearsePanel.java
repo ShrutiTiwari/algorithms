@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 import com.aqua.music.api.PlayApi;
 import com.aqua.music.api.Playable;
 import com.aqua.music.model.core.FrequencySet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.view.action.listeners.PlayAllItemsActionListener;
 import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
-import com.aqua.music.view.components.UiButtons.MusicButtons;
-import com.aqua.music.view.components.UiDropdown.PaneReloadDropdownActionListener;
+import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 public class RehearsePanel extends AbstractMusicPanel {
 	private final Collection<Playable> itemsList;
@@ -25,15 +25,17 @@ public class RehearsePanel extends AbstractMusicPanel {
 		this.itemsList = itemsList;
 	}
 
-	public RehearsePanel(FrequencySet frequencySet, int patternItemsCount) {
+	public RehearsePanel(FrequencySet frequencySet, PermuatationsGenerator patternItemsCount) {
 		super();
 		this.itemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
-
+		
+		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this,frequencySet, patternItemsCount);
+		
 		final JComboBox thaatDropdown = UiDropdown.thaatDropDown(frequencySet);
-		thaatDropdown.addActionListener(new PaneReloadDropdownActionListener(this));
+		thaatDropdown.addActionListener(thaatPatternListener);
 
 		final JComboBox patternDropdown = UiDropdown.patternThaatDropDown();
-		patternDropdown.addActionListener(new PaneReloadDropdownActionListener(this));
+		patternDropdown.addActionListener(thaatPatternListener);
 
 		addToCommonComponentPanel(thaatDropdown);
 		addToCommonComponentPanel(patternDropdown);

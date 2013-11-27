@@ -50,9 +50,7 @@ public interface CyclicFrequencySet extends Playable{
 			@Override
 			public List<int[]> generatePermutations(Frequency[] frequencySet) {
 				List<int[]> patternsList = new ArrayList<int[]>();
-
 				patternStartingOrEndingWith(frequencySet, patternsList, 1);
-
 				return patternsList;
 			}
 
@@ -61,6 +59,26 @@ public interface CyclicFrequencySet extends Playable{
 				for (int index = 2; index <= numberOfNotes - 1; index++) {
 					patternsList.add(new int[] { startIndex, index });
 					patternsList.add(new int[] { index, startIndex });
+				}
+			}
+		},
+		TUPLE {
+			@Override
+			public List<int[]> generatePermutations(Frequency[] frequencySet) {
+				List<int[]> patternsList = new ArrayList<int[]>();
+				patternStartingOrEndingWith(frequencySet, patternsList, 1);
+				return patternsList;
+			}
+
+			private void patternStartingOrEndingWith(Frequency[] frequencySet, List<int[]> patternsList, int startIndex) {
+				int numberOfNotes = frequencySet.length;
+				for (int index = 3; index <= numberOfNotes - 1; index++) {
+					patternsList.add(new int[] { startIndex, index-1, index });
+					patternsList.add(new int[] { startIndex, index, index-1 });
+					patternsList.add(new int[] { index-1, startIndex, index });
+					patternsList.add(new int[] { index, startIndex, index-1 });
+					patternsList.add(new int[] { index-1, index, startIndex });
+					patternsList.add(new int[] { index, index-1, startIndex });
 				}
 			}
 		};

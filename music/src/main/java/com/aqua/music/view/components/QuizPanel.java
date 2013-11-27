@@ -14,7 +14,7 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
-import com.aqua.music.view.components.UiDropdown.PaneReloadDropdownActionListener;
+import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 /**
  * @author "Shruti Tiwari"
@@ -27,7 +27,7 @@ class QuizPanel extends AbstractMusicPanel {
 		super();
 		this.quizLevel = quizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(quizLevel);
-		quizDropdown.addActionListener(new PaneReloadDropdownActionListener(this));
+		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
 		addToCommonComponentPanel(quizDropdown);
 	}
 

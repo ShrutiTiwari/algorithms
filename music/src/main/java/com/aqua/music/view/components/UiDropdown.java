@@ -16,6 +16,7 @@ import com.aqua.music.api.PlayApi;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
+import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
@@ -27,7 +28,7 @@ public class UiDropdown {
 	}
 
 	public static JComboBox patternThaatDropDown() {
-		return createWith(new String[] { "PAIR", "TUPLE" }, null);
+		return createWith(PermuatationsGenerator.values(), null);
 	}
 
 	static JComboBox quizDropdown(Object selectedItem) {
@@ -62,14 +63,11 @@ public class UiDropdown {
 		}
 	}
 
-	static class PaneReloadDropdownActionListener implements ActionListener {
-		Logger logger = LoggerFactory.getLogger(PaneReloadDropdownActionListener.class);
+	static class QuizDropdownActionListener implements ActionListener {
+		Logger logger = LoggerFactory.getLogger(QuizDropdownActionListener.class);
 		private final AbstractMusicPanel musicPanel;
 
-		/**
-		 * @param musicPanel
-		 */
-		public PaneReloadDropdownActionListener(AbstractMusicPanel musicPanel) {
+		public QuizDropdownActionListener(AbstractMusicPanel musicPanel) {
 			this.musicPanel = musicPanel;
 		}
 
@@ -77,14 +75,32 @@ public class UiDropdown {
 		public void actionPerformed(ActionEvent arg0) {
 			JComboBox cbox = (JComboBox) arg0.getSource();
 			Object obj = cbox.getSelectedItem();
+			QuizLevel<CyclicFrequencySet> quizLevel = (QuizLevel<CyclicFrequencySet>) obj;
+			musicPanel.renewSpecificComponentPanel(quizLevel);
+		}
+	}
 
+	static class ThaatAndPatternDropdownActionListener implements ActionListener {
+		Logger logger = LoggerFactory.getLogger(ThaatAndPatternDropdownActionListener.class);
+		private final AbstractMusicPanel musicPanel;
+		private FrequencySet frequencySet ;
+		private PermuatationsGenerator patternItemsCount;
+		public ThaatAndPatternDropdownActionListener(AbstractMusicPanel musicPanel, FrequencySet frequencySet2, PermuatationsGenerator patternItemsCount) {
+			this.musicPanel = musicPanel;
+			this.frequencySet=frequencySet2;
+			this.patternItemsCount=patternItemsCount;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			JComboBox cbox = (JComboBox) arg0.getSource();
+			Object obj = cbox.getSelectedItem();
 			if (obj instanceof FrequencySet) {
-				final FrequencySet frequencySet = (FrequencySet) obj;
-				musicPanel.renewSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, 2));
-			} else {
-				QuizLevel<CyclicFrequencySet> quizLevel = (QuizLevel<CyclicFrequencySet>) obj;
-				musicPanel.renewSpecificComponentPanel(quizLevel);
+				this.frequencySet = (FrequencySet) obj;
+			} else  {
+				this.patternItemsCount = (PermuatationsGenerator) obj;
 			}
+			musicPanel.renewSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
 	}
 }
