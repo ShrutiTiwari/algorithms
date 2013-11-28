@@ -41,8 +41,9 @@ public class RaagPhrases {
 		 * MusicalPhrase().n(S3, R3, G3, G3)); allPhrases.add(new
 		 * MusicalPhrase().n(N, R3, G3, M3_));
 		 */
-		allPhrases.add(new MusicalPhrase().n(G, M_, M_, D, P, M_));
-		allPhrases.add(new MusicalPhrase().n(N, R3, G3, M3_));
+		//allPhrases.add(new MusicalPhrase().n(G, M_, M_, D, P, M_));
+		//allPhrases.add(new MusicalPhrase().n(N, R3, G3, M3_));
+		//allPhrases.add(new MusicalPhrase().n(M_, G, R_, R_, S));
 		this.shuffler = new RandomShuffler<MusicalPhrase>(allPhrases);
 	}
 
