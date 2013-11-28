@@ -76,8 +76,8 @@ public interface CyclicFrequencySet extends Playable{
 					patternsList.add(new int[] { startIndex, index-1, index });
 					patternsList.add(new int[] { startIndex, index, index-1 });
 					patternsList.add(new int[] { index-1, startIndex, index });
-					patternsList.add(new int[] { index, startIndex, index-1 });
 					patternsList.add(new int[] { index-1, index, startIndex });
+					patternsList.add(new int[] { index, startIndex, index-1 });
 					patternsList.add(new int[] { index, index-1, startIndex });
 				}
 			}

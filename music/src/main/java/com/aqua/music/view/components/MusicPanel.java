@@ -1,8 +1,8 @@
 package com.aqua.music.view.components;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -41,6 +41,7 @@ abstract class MusicPanel {
 		this.commonComponentPanel = new JPanel();
 		this.commonComponents = new CommonComponents();
 		for (JComponent each : commonComponents.getAllComponents()) {
+			each.setForeground(Color.BLUE);
 			commonComponentPanel.add(each);
 		}
 		mainPanel.add(commonComponentPanel, BorderLayout.PAGE_END);

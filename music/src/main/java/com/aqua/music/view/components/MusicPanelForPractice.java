@@ -1,12 +1,10 @@
 package com.aqua.music.view.components;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -76,19 +74,22 @@ public class MusicPanelForPractice extends MusicPanel {
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
 		allButtons.add(playAllButton);
 
-		JPanel resultPanel = new JPanel();
-		resultPanel.setOpaque(true);
+		JPanel resultButtonsPanel = new JPanel();
+		resultButtonsPanel.setOpaque(true);
 		
 		for (JComponent each : allButtons) {
-			resultPanel.add(each,BorderLayout.CENTER);
+			resultButtonsPanel.add(each);
 		}
 
-		resultPanel.add(consoleArea, BorderLayout.AFTER_LAST_LINE);
+		JPanel resultPanel = new JPanel(new BorderLayout());
+		resultPanel.add(resultButtonsPanel, BorderLayout.CENTER);
+		resultPanel.add(consoleArea, BorderLayout.PAGE_END);
 		return resultPanel;
 	}
 
 	private TextArea createConsoleArea() {
-		TextArea textArea = new TextArea("Hello shrutz");
+		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
+		textArea.setEditable(false);
 		textArea.setVisible(true);
 		return textArea;
 	}
