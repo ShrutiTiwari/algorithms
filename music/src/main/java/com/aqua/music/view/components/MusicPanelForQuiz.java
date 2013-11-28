@@ -14,27 +14,26 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 import com.aqua.music.view.action.listeners.QuizPlayActionListener;
-import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 /**
  * @author "Shruti Tiwari"
  * 
  */
-class QuizPanel extends AbstractMusicPanel {
-	private final QuizLevel quizLevel;
+class MusicPanelForQuiz extends MusicPanel {
+	private final QuizLevel initialQuizLevel;
 
-	QuizPanel(final QuizLevel quizLevel) {
-		super();
-		this.quizLevel = quizLevel;
-		final JComboBox quizDropdown = UiDropdown.quizDropdown(quizLevel);
+	MusicPanelForQuiz(final QuizLevel initialQuizLevel) {
+		super(true);
+		this.initialQuizLevel = initialQuizLevel;
+		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);
 		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
-		addToCommonComponentPanel(quizDropdown);
+		addToExtraComponentPanel(quizDropdown);
 	}
 
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
 		QuizLevel quizLevel = (QuizLevel) selectedObject;
 		if (quizLevel == null) {
-			quizLevel = this.quizLevel;
+			quizLevel = this.initialQuizLevel;
 		}
 		final Collection<JComponent> allButtonsIncludingQuizAndChoice = new ArrayList<JComponent>();
 		int i = 1;
@@ -57,8 +56,7 @@ class QuizPanel extends AbstractMusicPanel {
 			i++;
 		}
 
-		JPanel result = new JPanel();
-		result.setLayout(new FlowLayout());
+		JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		// result.setPreferredSize(new Dimension(400, 300));
 		for (JComponent each : allButtonsIncludingQuizAndChoice) {
 			result.add(each);

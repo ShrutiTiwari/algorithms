@@ -40,9 +40,9 @@ public interface UiMainContainer<T> {
 			// AWTUtilities.setWindowOpacity(frame, 0.7f);
 			swingframe.pack();
 			swingframe.setVisible(true);
-
+			swingframe.setLocationRelativeTo(null);
 			swingframe.getContentPane().setPreferredSize(preferredSizeForMainPane);
-			swingframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			//swingframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		}
 	}
 }

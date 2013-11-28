@@ -65,9 +65,9 @@ public class UiDropdown {
 
 	static class QuizDropdownActionListener implements ActionListener {
 		Logger logger = LoggerFactory.getLogger(QuizDropdownActionListener.class);
-		private final AbstractMusicPanel musicPanel;
+		private final MusicPanel musicPanel;
 
-		public QuizDropdownActionListener(AbstractMusicPanel musicPanel) {
+		public QuizDropdownActionListener(MusicPanel musicPanel) {
 			this.musicPanel = musicPanel;
 		}
 
@@ -76,16 +76,16 @@ public class UiDropdown {
 			JComboBox cbox = (JComboBox) arg0.getSource();
 			Object obj = cbox.getSelectedItem();
 			QuizLevel<CyclicFrequencySet> quizLevel = (QuizLevel<CyclicFrequencySet>) obj;
-			musicPanel.renewSpecificComponentPanel(quizLevel);
+			musicPanel.refreshSpecificComponentPanel(quizLevel);
 		}
 	}
 
 	static class ThaatAndPatternDropdownActionListener implements ActionListener {
 		Logger logger = LoggerFactory.getLogger(ThaatAndPatternDropdownActionListener.class);
-		private final AbstractMusicPanel musicPanel;
+		private final MusicPanel musicPanel;
 		private FrequencySet frequencySet ;
 		private PermuatationsGenerator patternItemsCount;
-		public ThaatAndPatternDropdownActionListener(AbstractMusicPanel musicPanel, FrequencySet frequencySet2, PermuatationsGenerator patternItemsCount) {
+		public ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2, PermuatationsGenerator patternItemsCount) {
 			this.musicPanel = musicPanel;
 			this.frequencySet=frequencySet2;
 			this.patternItemsCount=patternItemsCount;
@@ -100,7 +100,7 @@ public class UiDropdown {
 			} else  {
 				this.patternItemsCount = (PermuatationsGenerator) obj;
 			}
-			musicPanel.renewSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
+			musicPanel.refreshSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
 	}
 }

@@ -25,10 +25,10 @@ public class UiTabbedPane {
 
 	public static JTabbedPane getTabbedPane() {
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(UiTabbedPane.TITLE_PLAIN_THAAT, new RehearsePanel(PlayApi.getAllPlainThaat()).getPanel());
-		tabbedPane.addTab(UiTabbedPane.TITLE_SONG_TAB, new RehearsePanel(PlayApi.getAllSongs()).getPanel());
-		tabbedPane.addTab(TITLE_REHEARSE_TAB, new RehearsePanel(firstThaat, PermuatationsGenerator.PAIR).getPanel());
-		tabbedPane.addTab(TITLE_QUIZ_TAB, new QuizPanel(firstQuizLevel).getPanel());
+		tabbedPane.addTab(UiTabbedPane.TITLE_PLAIN_THAAT, new MusicPanelForPractice(PlayApi.getAllPlainThaat()).getPanel());
+		tabbedPane.addTab(UiTabbedPane.TITLE_SONG_TAB, new MusicPanelForPractice(PlayApi.getAllSongs()).getPanel());
+		tabbedPane.addTab(TITLE_REHEARSE_TAB, new MusicPanelForPractice(firstThaat, PermuatationsGenerator.PAIR).getPanel());
+		tabbedPane.addTab(TITLE_QUIZ_TAB, new MusicPanelForQuiz(firstQuizLevel).getPanel());
 		tabbedPane.setOpaque(true);
 		return tabbedPane;
 	}

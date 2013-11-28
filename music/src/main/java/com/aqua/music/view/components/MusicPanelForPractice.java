@@ -1,5 +1,6 @@
 package com.aqua.music.view.components;
 
+import java.awt.FlowLayout;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,35 +18,44 @@ import com.aqua.music.view.action.listeners.PlayAllItemsActionListener;
 import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
-public class RehearsePanel extends AbstractMusicPanel {
-	private final Collection<Playable> itemsList;
+public class MusicPanelForPractice extends MusicPanel {
+	private final Collection<Playable> intialItemsList;
 
-	public RehearsePanel(Collection<Playable> itemsList) {
-		super();
-		this.itemsList = itemsList;
+	/**
+	 * Used for plain rehearsing - of thaat and songs  
+	 */
+	public MusicPanelForPractice(Collection<Playable> itemsList) {
+		super(false);
+		this.intialItemsList = itemsList;
 	}
 
-	public RehearsePanel(FrequencySet frequencySet, PermuatationsGenerator patternItemsCount) {
-		super();
-		this.itemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
-		
-		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this,frequencySet, patternItemsCount);
-		
+	/**
+	 * Used for patterned rehearse of thaat.
+	 * @param frequencySet
+	 * @param patternItemsCount
+	 */
+	public MusicPanelForPractice(FrequencySet frequencySet, PermuatationsGenerator patternItemsCount) {
+		super(true);
+		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
+
+		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this, frequencySet,
+				patternItemsCount);
+
 		final JComboBox thaatDropdown = UiDropdown.thaatDropDown(frequencySet);
 		thaatDropdown.addActionListener(thaatPatternListener);
 
 		final JComboBox patternDropdown = UiDropdown.patternThaatDropDown();
 		patternDropdown.addActionListener(thaatPatternListener);
 
-		addToCommonComponentPanel(thaatDropdown);
-		addToCommonComponentPanel(patternDropdown);
+		addToExtraComponentPanel(thaatDropdown);
+		addToExtraComponentPanel(patternDropdown);
 	}
 
 	@Override
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
-			itemsList = this.itemsList;
+			itemsList = this.intialItemsList;
 		}
 		final Collection<JComponent> allButtons = new ArrayList<JComponent>();
 		final Collection<Playable> allItems = new ArrayList<Playable>();
@@ -64,13 +74,15 @@ public class RehearsePanel extends AbstractMusicPanel {
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
 		allButtons.add(playAllButton);
 
-		JPanel result = new JPanel();
-		result.setOpaque(true);
+		JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		resultPanel.setOpaque(true);
+		
 		for (JComponent each : allButtons) {
-			result.add(each);
+			resultPanel.add(each);
 		}
-		result.add(consoleArea);
-		return result;
+
+		resultPanel.add(consoleArea);
+		return resultPanel;
 	}
 
 	private TextArea createConsoleArea() {
