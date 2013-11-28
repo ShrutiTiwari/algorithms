@@ -42,7 +42,6 @@ public interface UiMainContainer<T> {
 			swingframe.setVisible(true);
 			swingframe.setLocationRelativeTo(null);
 			swingframe.getContentPane().setPreferredSize(preferredSizeForMainPane);
-			//swingframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		}
 	}
 }

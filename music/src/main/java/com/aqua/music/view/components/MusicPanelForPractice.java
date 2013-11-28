@@ -1,10 +1,12 @@
 package com.aqua.music.view.components;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -74,14 +76,14 @@ public class MusicPanelForPractice extends MusicPanel {
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
 		allButtons.add(playAllButton);
 
-		JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel resultPanel = new JPanel();
 		resultPanel.setOpaque(true);
 		
 		for (JComponent each : allButtons) {
-			resultPanel.add(each);
+			resultPanel.add(each,BorderLayout.CENTER);
 		}
 
-		resultPanel.add(consoleArea);
+		resultPanel.add(consoleArea, BorderLayout.AFTER_LAST_LINE);
 		return resultPanel;
 	}
 
