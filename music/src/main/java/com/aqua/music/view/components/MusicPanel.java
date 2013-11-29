@@ -35,20 +35,18 @@ abstract class MusicPanel {
 
 	protected MusicPanel(boolean extraPanel) {
 		this.mainPanel = new JPanel(new BorderLayout());
-		/*BoxLayout b = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
-		mainPanel.setLayout(b);*/
-		//mainPanel.setLayout(new GridLayout((extraPanel?3:2), 1));
 		this.commonComponentPanel = new JPanel();
 		this.commonComponents = new CommonComponents();
 		for (JComponent each : commonComponents.getAllComponents()) {
 			each.setForeground(Color.BLUE);
 			commonComponentPanel.add(each);
 		}
-		mainPanel.add(commonComponentPanel, BorderLayout.PAGE_END);
-
 		if (extraPanel) {
 			this.extraComponentPanel = new JPanel();
 			mainPanel.add(extraComponentPanel, BorderLayout.PAGE_START);
+			mainPanel.add(commonComponentPanel, BorderLayout.PAGE_END);
+		}else{
+			mainPanel.add(commonComponentPanel, BorderLayout.PAGE_START);
 		}
 	}
 

@@ -5,10 +5,16 @@ import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
 
 import com.aqua.music.api.PlayApi;
 import com.aqua.music.api.Playable;
@@ -19,6 +25,7 @@ import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 public class MusicPanelForPractice extends MusicPanel {
+	private static final float LEFT_ALIGNMENT = 0;
 	private final Collection<Playable> intialItemsList;
 
 	/**
@@ -53,33 +60,37 @@ public class MusicPanelForPractice extends MusicPanel {
 
 	@Override
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
+		JPanel resultButtonsPanel = new JPanel();
+		BoxLayout b = new BoxLayout(resultButtonsPanel, BoxLayout.PAGE_AXIS);
+		resultButtonsPanel.setLayout(b);
+		resultButtonsPanel.setOpaque(true);
+		resultButtonsPanel.add(Box.createVerticalStrut(100));
+		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
 			itemsList = this.intialItemsList;
 		}
 		final Collection<JComponent> allButtons = new ArrayList<JComponent>();
-		final Collection<Playable> allItems = new ArrayList<Playable>();
 		final TextArea consoleArea = createConsoleArea();
 		final JButton pauseButton = pauseButton();
-
-		for (Playable eachPlayableItem : itemsList) {
-			JButton playSingleItemButton = UiButtons.MusicButtons.SINGLE_ITEM_PLAYER.createDynamicNamedButton(eachPlayableItem.name());
-			playSingleItemButton.addActionListener(new PlaySingleItemActionListener(consoleArea, eachPlayableItem, pauseButton));
-			allItems.add(eachPlayableItem);
-			allButtons.add(playSingleItemButton);
-		}
-
-		Playable[] playableItems = allItems.toArray(new Playable[allItems.size()]);
-		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
-		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, playableItems, pauseButton));
-		allButtons.add(playAllButton);
-
-		JPanel resultButtonsPanel = new JPanel();
-		resultButtonsPanel.setOpaque(true);
 		
-		for (JComponent each : allButtons) {
-			resultButtonsPanel.add(each);
-		}
+		Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
+
+		JList jlist=new JList(allPlayableItems);
+		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jlist.setLayoutOrientation(JList.VERTICAL_WRAP);
+		jlist.setVisibleRowCount(-1);
+		jlist.addListSelectionListener(new PlaySingleItemActionListener(jlist, consoleArea, allPlayableItems, pauseButton));
+		JScrollPane listScroller = new JScrollPane(jlist);
+        listScroller.setAlignmentX(LEFT_ALIGNMENT);
+		
+		resultButtonsPanel.add(listScroller);
+		resultButtonsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
+		
+		
+		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
+		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
+		resultButtonsPanel.add(playAllButton);
 
 		JPanel resultPanel = new JPanel(new BorderLayout());
 		resultPanel.add(resultButtonsPanel, BorderLayout.CENTER);
