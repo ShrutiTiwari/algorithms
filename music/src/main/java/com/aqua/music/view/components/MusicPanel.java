@@ -2,10 +2,12 @@ package com.aqua.music.view.components;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -35,13 +37,21 @@ abstract class MusicPanel {
 	protected MusicPanel(boolean extraPanel) {
 		this.mainPanel = new JPanel(new BorderLayout());
 		this.commonComponentPanel = new JPanel();
+		BoxLayout b = new BoxLayout(commonComponentPanel, BoxLayout.PAGE_AXIS);
+		commonComponentPanel.setLayout(b);
+		commonComponentPanel.setAlignmentY(Component.RIGHT_ALIGNMENT);
+		commonComponentPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		this.commonComponents = new CommonComponents();
 		for (JComponent each : commonComponents.getAllComponents()) {
 			each.setForeground(Color.BLUE);
 			commonComponentPanel.add(each);
+			each.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			commonComponentPanel.add(Box.createVerticalGlue());
 		}
 		if (extraPanel) {
 			this.extraComponentPanel = new JPanel();
+			BoxLayout b1 = new BoxLayout(extraComponentPanel, BoxLayout.PAGE_AXIS);
+			extraComponentPanel.setLayout(b1);
 			mainPanel.add(extraComponentPanel, BorderLayout.WEST);
 		}
 		mainPanel.add(commonComponentPanel, BorderLayout.EAST);
@@ -49,6 +59,7 @@ abstract class MusicPanel {
 
 	public void addToExtraComponentPanel(JComponent aComponent) {
 		extraComponentPanel.add(aComponent);
+		extraComponentPanel.add(Box.createVerticalGlue());
 	}
 
 	public JPanel getPanel() {

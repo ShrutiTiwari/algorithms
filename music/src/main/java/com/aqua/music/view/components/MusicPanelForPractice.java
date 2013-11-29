@@ -63,7 +63,7 @@ public class MusicPanelForPractice extends MusicPanel {
 		BoxLayout b = new BoxLayout(resultButtonsPanel, BoxLayout.PAGE_AXIS);
 		resultButtonsPanel.setLayout(b);
 		resultButtonsPanel.setOpaque(true);
-		resultButtonsPanel.add(Box.createVerticalStrut(100));
+		resultButtonsPanel.add(Box.createVerticalStrut(50));
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
