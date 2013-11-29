@@ -59,21 +59,20 @@ public class MusicPanelForPractice extends MusicPanel {
 
 	@Override
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
-		JPanel resultButtonsPanel = new JPanel();
-		BoxLayout b = new BoxLayout(resultButtonsPanel, BoxLayout.PAGE_AXIS);
-		resultButtonsPanel.setLayout(b);
-		resultButtonsPanel.setOpaque(true);
-		resultButtonsPanel.add(Box.createVerticalStrut(50));
+		JPanel resultPanel = new JPanel();
+		BoxLayout b = new BoxLayout(resultPanel, BoxLayout.PAGE_AXIS);
+		resultPanel.setLayout(b);
+		resultPanel.setOpaque(true);
+		resultPanel.add(Box.createVerticalStrut(50));
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
 			itemsList = this.intialItemsList;
 		}
-		final Collection<JComponent> allButtons = new ArrayList<JComponent>();
+
 		final TextArea consoleArea = createConsoleArea();
 		final JButton pauseButton = pauseButton();
-		
-		Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
+		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 
 		JList playItemsList=new JList(allPlayableItems);
 		playItemsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -82,18 +81,15 @@ public class MusicPanelForPractice extends MusicPanel {
 		playItemsList.setFixedCellWidth(200);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
 		JScrollPane listScroller = new JScrollPane(playItemsList);
-        listScroller.setAlignmentX(LEFT_ALIGNMENT);
-		resultButtonsPanel.add(listScroller);
+        //listScroller.setAlignmentX(LEFT_ALIGNMENT);
+		resultPanel.add(listScroller);
 
-		//resultButtonsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
-		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
-		resultButtonsPanel.add(playAllButton);
-
-		JPanel resultPanel = new JPanel(new BorderLayout());
-		resultPanel.add(resultButtonsPanel, BorderLayout.CENTER);
-		resultPanel.add(consoleArea, BorderLayout.PAGE_END);
+		resultPanel.add(playAllButton);
+		
+		resultPanel.add(consoleArea);
+		
 		return resultPanel;
 	}
 

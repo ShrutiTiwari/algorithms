@@ -3,6 +3,7 @@ package com.aqua.music.view.components;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,24 +38,9 @@ abstract class MusicPanel {
 	protected MusicPanel(boolean extraPanel) {
 		this.mainPanel = new JPanel(new BorderLayout());
 		this.commonComponentPanel = new JPanel();
-		BoxLayout b = new BoxLayout(commonComponentPanel, BoxLayout.PAGE_AXIS);
-		commonComponentPanel.setLayout(b);
-		commonComponentPanel.setAlignmentY(Component.RIGHT_ALIGNMENT);
-		commonComponentPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		this.commonComponents = new CommonComponents();
-		for (JComponent each : commonComponents.getAllComponents()) {
-			each.setForeground(Color.BLUE);
-			commonComponentPanel.add(each);
-			each.setAlignmentX(Component.RIGHT_ALIGNMENT);
-			commonComponentPanel.add(Box.createVerticalGlue());
-		}
-		if (extraPanel) {
-			this.extraComponentPanel = new JPanel();
-			BoxLayout b1 = new BoxLayout(extraComponentPanel, BoxLayout.PAGE_AXIS);
-			extraComponentPanel.setLayout(b1);
-			mainPanel.add(extraComponentPanel, BorderLayout.WEST);
-		}
-		mainPanel.add(commonComponentPanel, BorderLayout.EAST);
+		configureCommonComponentsPanel();
+		configureExtraPanel(extraPanel);
 	}
 
 	public void addToExtraComponentPanel(JComponent aComponent) {
@@ -85,6 +71,28 @@ abstract class MusicPanel {
 	private void addSpecificComponentPanel(final Object selectedObject) {
 		this.specificComponentPanel = createSpecificComponentPanel(selectedObject);
 		mainPanel.add(specificComponentPanel, BorderLayout.CENTER);
+	}
+
+	private void configureCommonComponentsPanel() {
+		BoxLayout b = new BoxLayout(commonComponentPanel, BoxLayout.PAGE_AXIS);
+		commonComponentPanel.setLayout(b);
+		for (JComponent each : commonComponents.getAllComponents()) {
+			each.setForeground(Color.BLUE);
+			commonComponentPanel.add(each);
+			each.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			each.setMinimumSize(new Dimension(200, 200));
+			commonComponentPanel.add(Box.createVerticalGlue());
+		}
+		mainPanel.add(commonComponentPanel, BorderLayout.EAST);
+	}
+
+	private void configureExtraPanel(boolean extraPanel) {
+		if (extraPanel) {
+			this.extraComponentPanel = new JPanel();
+			BoxLayout b1 = new BoxLayout(extraComponentPanel, BoxLayout.PAGE_AXIS);
+			extraComponentPanel.setLayout(b1);
+			mainPanel.add(extraComponentPanel, BorderLayout.WEST);
+		}
 	}
 
 	private synchronized void configureSpecificComponentPanel() {
