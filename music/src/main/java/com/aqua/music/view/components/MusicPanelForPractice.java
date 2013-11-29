@@ -1,15 +1,12 @@
 package com.aqua.music.view.components;
 
-import java.awt.BorderLayout;
 import java.awt.TextArea;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,9 +21,7 @@ import com.aqua.music.view.action.listeners.PlaySingleItemActionListener;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 public class MusicPanelForPractice extends MusicPanel {
-	private static final float LEFT_ALIGNMENT = 0;
 	private final Collection<Playable> intialItemsList;
-
 	/**
 	 * Used for plain rehearsing - of thaat and songs  
 	 */
@@ -81,7 +76,6 @@ public class MusicPanelForPractice extends MusicPanel {
 		playItemsList.setFixedCellWidth(200);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
 		JScrollPane listScroller = new JScrollPane(playItemsList);
-        //listScroller.setAlignmentX(LEFT_ALIGNMENT);
 		resultPanel.add(listScroller);
 
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();

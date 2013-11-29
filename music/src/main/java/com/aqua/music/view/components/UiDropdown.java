@@ -15,8 +15,8 @@ import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.api.PlayApi;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
-import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
+import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
