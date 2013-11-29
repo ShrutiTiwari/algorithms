@@ -1,6 +1,6 @@
 package com.aqua.music.model.raag.song;
 
-import com.aqua.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerSettings;
 
 public class SongTest {
 	//@Test

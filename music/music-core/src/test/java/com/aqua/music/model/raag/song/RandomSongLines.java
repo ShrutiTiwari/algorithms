@@ -10,9 +10,9 @@ import static com.aqua.music.model.core.ClassicalNote.M_;
 import static com.aqua.music.model.core.ClassicalNote.N1;
 import static com.aqua.music.model.core.ClassicalNote.R_;
 import static com.aqua.music.model.core.ClassicalNote.S;
+import open.music.api.AudioPlayerSettings;
+import open.music.api.PlayApi;
 
-import com.aqua.music.api.AudioPlayerSettings;
-import com.aqua.music.api.PlayApi;
 import com.aqua.music.model.raag.MusicalPhrase;
 
 /**

@@ -7,11 +7,12 @@ import java.util.Collection;
 
 import javax.swing.JButton;
 
+import open.music.api.AudioPlayerSettings;
+import open.music.api.PlayApi;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aqua.music.api.AudioPlayerSettings;
-import com.aqua.music.api.PlayApi;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 

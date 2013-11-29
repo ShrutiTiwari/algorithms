@@ -6,8 +6,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.PlayApi.AudioPlayerNextStatus;
+
 import com.aqua.music.bo.audio.player.AudioPlayer;
-import com.aqua.music.bo.audio.player.AudioPlayer.NextStatus;
 
 /**
  * @author "Shruti Tiwari"
@@ -65,13 +66,13 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public NextStatus togglePauseAndResume() {
+	public AudioPlayerNextStatus togglePauseAndResume() {
 		if (currentAudioPlayer != null) {
 			if(!pauseCurrentPlay.compareAndSet(false, true)){
 				pauseCurrentPlay.compareAndSet(true, false);
 			}
 		}
-		return pauseCurrentPlay()?AudioPlayer.NextStatus.RESUME:AudioPlayer.NextStatus.PAUSE;
+		return pauseCurrentPlay()?AudioPlayerNextStatus.RESUME:AudioPlayerNextStatus.PAUSE;
 	}
 
 	@Override

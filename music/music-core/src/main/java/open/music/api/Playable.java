@@ -1,4 +1,4 @@
-package com.aqua.music.api;
+package open.music.api;
 
 import java.util.Collection;
 

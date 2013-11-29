@@ -5,9 +5,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import open.music.api.AudioPlayerSettings;
+
 import org.junit.Test;
 
-import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 

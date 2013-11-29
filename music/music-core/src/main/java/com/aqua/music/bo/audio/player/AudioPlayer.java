@@ -58,8 +58,4 @@ public interface AudioPlayer {
 	}
 
 	void changeInstrumentTo(Instrument instrument);
-	
-	enum NextStatus{
-		PAUSE, RESUME;
-	}
 }

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.aqua.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerSettings;
 
 interface UiButtons {
 	String text();

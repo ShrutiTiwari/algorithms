@@ -3,7 +3,8 @@ package com.aqua.music.model.raag;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aqua.music.api.Playable;
+import open.music.api.Playable;
+
 import com.aqua.music.model.core.DynamicFrequency;
 
 

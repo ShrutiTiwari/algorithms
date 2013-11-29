@@ -14,7 +14,8 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.aqua.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerSettings;
+
 import com.aqua.music.model.puzzles.RandomShuffler;
 
 /**

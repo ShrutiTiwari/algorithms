@@ -1,4 +1,4 @@
-package com.aqua.music.api;
+package open.music.api;
 
 import java.awt.TextArea;
 import java.util.ArrayList;
@@ -93,5 +93,10 @@ public class PlayApi {
 			}
 		};
 		return audioTask;
+	}
+	
+
+	public enum AudioPlayerNextStatus{
+		PAUSE, RESUME;
 	}
 }

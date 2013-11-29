@@ -2,7 +2,8 @@ package com.aqua.music.view.components;
 
 import javax.swing.JTabbedPane;
 
-import com.aqua.music.api.PlayApi;
+import open.music.api.PlayApi;
+
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.cyclicset.SymmetricalSet;

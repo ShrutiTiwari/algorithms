@@ -15,9 +15,10 @@ import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
+import open.music.api.AudioPlayerSettings;
+
 import org.junit.Test;
 
-import com.aqua.music.api.AudioPlayerSettings;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 public class AudioLifeCycleManagerTest {

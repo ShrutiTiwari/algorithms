@@ -2,10 +2,10 @@ package com.aqua.music.bo.audio.manager;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.PlayApi;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.aqua.music.bo.audio.player.AudioPlayer;
 
 /**
  * @author "Shruti Tiwari"
@@ -17,7 +17,7 @@ public interface AudioLifeCycleManager {
 	
 	void stop();
 
-	AudioPlayer.NextStatus togglePauseAndResume();
+	PlayApi.AudioPlayerNextStatus togglePauseAndResume();
 
 	void increaseTempo();
 

@@ -2,7 +2,7 @@ package com.aqua.music.model.cyclicset;
 
 import java.util.HashSet;
 
-import com.aqua.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerSettings;
 
 public class AscendDescendSequencePuzzles {
 	public void playThaat() {

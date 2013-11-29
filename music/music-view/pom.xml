@@ -16,14 +16,14 @@
 		<version>2.4.1</version> </dependency> </dependencies> -->
 	<name>music-view</name>
 
-	<dependencies>
+  	<dependencies>
 		<dependency>
 			<groupId>com.aqua.octopus</groupId>
 			<artifactId>music-core</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-
+  
 	<build>
 		<plugins>
 			<plugin>

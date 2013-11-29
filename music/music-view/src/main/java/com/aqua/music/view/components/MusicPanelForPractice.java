@@ -16,8 +16,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.aqua.music.api.PlayApi;
-import com.aqua.music.api.Playable;
+import open.music.api.PlayApi;
+import open.music.api.PlayApi.AudioPlayerNextStatus;
+import open.music.api.Playable;
+
 import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -118,7 +120,7 @@ class MusicPanelForPractice extends MusicPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			this.pauseButton.setText(AudioPlayer.NextStatus.PAUSE.toString());
+			this.pauseButton.setText(AudioPlayerNextStatus.PAUSE.toString());
 			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, textArea);
 		}
 	}
@@ -148,7 +150,7 @@ class MusicPanelForPractice extends MusicPanel {
 			if (e.getValueIsAdjusting() == false) {
 				int selectedIndex = jlist.getSelectedIndex();
 				if (selectedIndex != -1) {
-					this.pauseButton.setText(AudioPlayer.NextStatus.PAUSE.toString());
+					this.pauseButton.setText(AudioPlayerNextStatus.PAUSE.toString());
 					PlayApi.playInLoop(allPlayableItems[selectedIndex]);
 					displayOnConsole(allPlayableItems[selectedIndex].name() + "===>" + "\n" + allPlayableItems[selectedIndex].asText());
 				}

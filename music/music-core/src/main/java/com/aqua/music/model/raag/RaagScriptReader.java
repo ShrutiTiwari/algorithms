@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.aqua.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerSettings;
+
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.DynamicFrequency;
 

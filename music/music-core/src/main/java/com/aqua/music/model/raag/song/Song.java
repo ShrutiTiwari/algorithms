@@ -2,8 +2,9 @@ package com.aqua.music.model.raag.song;
 
 import java.util.Collection;
 
-import com.aqua.music.api.AudioPlayerSettings;
-import com.aqua.music.api.Playable;
+import open.music.api.AudioPlayerSettings;
+import open.music.api.Playable;
+
 import com.aqua.music.model.core.DynamicFrequency;
 
 /**
