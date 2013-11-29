@@ -70,6 +70,13 @@ interface UiButtons {
 				return button;
 			}
 		},
+		SINGLE_ITEM_PLAYER("Play $$", "Click this to play $$") {
+			@Override
+			JButton createInstanceWith(String buttonName) {
+				JButton button = configurableNamedButton(this, buttonName);
+				return button;
+			}
+		},
 		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!") {
 			@Override
 			JButton createInstanceWith(String name) {
