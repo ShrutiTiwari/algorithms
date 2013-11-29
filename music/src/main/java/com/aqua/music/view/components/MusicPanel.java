@@ -22,7 +22,6 @@ import com.aqua.music.view.components.UiButtons.MusicButtons;
  * 
  */
 abstract class MusicPanel {
-	private static final Dimension preferredSizeForThaatPanel = new Dimension(400, 400);
 	protected final Logger logger = LoggerFactory.getLogger(MusicPanel.class);
 
 	private final JPanel commonComponentPanel;
@@ -43,11 +42,9 @@ abstract class MusicPanel {
 		}
 		if (extraPanel) {
 			this.extraComponentPanel = new JPanel();
-			mainPanel.add(extraComponentPanel, BorderLayout.PAGE_START);
-			mainPanel.add(commonComponentPanel, BorderLayout.PAGE_END);
-		}else{
-			mainPanel.add(commonComponentPanel, BorderLayout.PAGE_START);
+			mainPanel.add(extraComponentPanel, BorderLayout.WEST);
 		}
+		mainPanel.add(commonComponentPanel, BorderLayout.EAST);
 	}
 
 	public void addToExtraComponentPanel(JComponent aComponent) {

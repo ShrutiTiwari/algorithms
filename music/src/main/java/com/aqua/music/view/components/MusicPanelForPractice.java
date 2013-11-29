@@ -13,7 +13,6 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 
 import com.aqua.music.api.PlayApi;
@@ -76,17 +75,17 @@ public class MusicPanelForPractice extends MusicPanel {
 		
 		Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 
-		JList jlist=new JList(allPlayableItems);
-		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jlist.setLayoutOrientation(JList.VERTICAL_WRAP);
-		jlist.setVisibleRowCount(-1);
-		jlist.addListSelectionListener(new PlaySingleItemActionListener(jlist, consoleArea, allPlayableItems, pauseButton));
-		JScrollPane listScroller = new JScrollPane(jlist);
+		JList playItemsList=new JList(allPlayableItems);
+		playItemsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		playItemsList.setLayoutOrientation(JList.VERTICAL_WRAP);
+		playItemsList.setVisibleRowCount(10);
+		playItemsList.setFixedCellWidth(200);
+		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
+		JScrollPane listScroller = new JScrollPane(playItemsList);
         listScroller.setAlignmentX(LEFT_ALIGNMENT);
-		
 		resultButtonsPanel.add(listScroller);
-		resultButtonsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
-		
+
+		//resultButtonsPanel.add(new JSeparator(JSeparator.HORIZONTAL));
 		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
