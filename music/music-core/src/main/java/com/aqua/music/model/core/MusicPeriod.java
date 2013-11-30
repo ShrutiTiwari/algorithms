@@ -5,8 +5,8 @@ package com.aqua.music.model.core;
  *
  */
 public interface MusicPeriod {
-	//final int ONE_SEC = 700;
-	final int ONE_SEC = 800;
+	final int ONE_SEC = 700;
+	//final int ONE_SEC = 800;
 	
 	int durationInMilliSec();
 	
