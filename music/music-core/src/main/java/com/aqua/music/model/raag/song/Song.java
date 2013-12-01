@@ -9,7 +9,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public enum Song implements Playable {
 	S_AHIR_BHAIRAV(new SongAhirBhairav()),
@@ -44,9 +44,7 @@ public enum Song implements Playable {
 		for (Taan each : taans) {
 			Taan playtaan = each;
 			System.out.println(playtaan.printText());
-			for (int i = 0; i < 2; i++) {
-				audioPlayConfig.play(playtaan.frequencies());
-			}
+			audioPlayConfig.play(playtaan.frequencies(), 2);
 		}
 	}
 

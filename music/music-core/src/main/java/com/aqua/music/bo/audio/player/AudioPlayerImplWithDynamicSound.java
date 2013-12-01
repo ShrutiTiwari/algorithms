@@ -15,12 +15,12 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
 	private final BasicNotePlayer basicNotePlayer = BasicNotePlayer.MIDI_BASED_PLAYER;
 
-	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList) {
+	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList, final int repeatCount) {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.debug("acquired right to play");
 			basicNotePlayer.start();
-			generateSound(frequencyList);
+			generateSound(frequencyList, repeatCount);
 			basicNotePlayer.finish();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -37,7 +37,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 			logger.debug("acquired right to play");
 			basicNotePlayer.start();
 			while (!audioPlayRightsManager.isMarkedToStopPlaying()) {
-				generateSound(frequencyList);
+				generateSound(frequencyList, 1);
 			}
 			basicNotePlayer.finish();
 		} catch (Exception e) {
@@ -49,11 +49,11 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		}
 	}
 
-	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
+	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList, final int repeatCount) {
 		Runnable task = new Runnable() {
 			@Override
 			public void run() {
-				playFrequencies(frequencyList);
+				playFrequencies(frequencyList, repeatCount);
 			}
 		};
 		return task;
@@ -78,27 +78,29 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		basicNotePlayer.stop();
 	}
 
-	private void generateSound(final Collection<? extends DynamicFrequency> frequencyList) {
-		for (final DynamicFrequency each : frequencyList) {
-			if (audioPlayRightsManager.isMarkedToStopPlaying()) {
-				logger.debug("oops, marked to stop..breaking now.");
-				break;
-			} else if (audioPlayRightsManager.pauseCurrentPlay()) {
-				while (audioPlayRightsManager.pauseCurrentPlay() && !audioPlayRightsManager.isMarkedToStopPlaying()) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+	private void generateSound(final Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
+		for (int i = 0; i < repeatCount; i++) {
+			for (final DynamicFrequency each : frequencyList) {
+				if (audioPlayRightsManager.isMarkedToStopPlaying()) {
+					logger.debug("oops, marked to stop..breaking now.");
+					return;
+				} else if (audioPlayRightsManager.pauseCurrentPlay()) {
+					while (audioPlayRightsManager.pauseCurrentPlay() && !audioPlayRightsManager.isMarkedToStopPlaying()) {
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					logger.debug("Pause cleared Or marked to stop playing!");
 				}
-				logger.debug("Pause cleared Or marked to stop playing!");
-			}
-			if (audioPlayRightsManager.isMarkedToStopPlaying()) {
-				return;
-			} else {
-				final int customizedDuration = audioPlayRightsManager.tempoMultilier(each.duration());
-				throwExceptionForInsaneInput(customizedDuration);
-				basicNotePlayer.play(each, customizedDuration);
+				if (audioPlayRightsManager.isMarkedToStopPlaying()) {
+					return;
+				} else {
+					final int customizedDuration = audioPlayRightsManager.tempoMultilier(each.duration());
+					throwExceptionForInsaneInput(customizedDuration);
+					basicNotePlayer.play(each, customizedDuration);
+				}
 			}
 		}
 	}

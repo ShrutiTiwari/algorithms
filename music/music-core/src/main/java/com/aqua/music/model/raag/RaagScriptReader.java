@@ -27,7 +27,7 @@ public class RaagScriptReader {
 		try {
 			Collection<String[]> allResultLines = new RaagScriptParser(Taal.TEENTAL).parseLines(readFile(fileName));
 			Collection<DynamicFrequency> allFrequencies = printResult(allResultLines);
-			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(allFrequencies);
+			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(allFrequencies, 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

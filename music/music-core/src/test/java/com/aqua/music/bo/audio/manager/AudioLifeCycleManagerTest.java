@@ -28,7 +28,7 @@ public class AudioLifeCycleManagerTest {
 		Frequency[] sample = new Frequency[] { S, R, G, M, P, D, N, S3 };
 		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList);
+		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList, 1);
 	}
 
 	//@Test
@@ -36,7 +36,7 @@ public class AudioLifeCycleManagerTest {
 		List<Frequency> frequencyList = new ArrayList<Frequency>();
 		frequencyList.add(ClassicalNote.D);
 		
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList);
+		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList, 1);
 	}
 
 }

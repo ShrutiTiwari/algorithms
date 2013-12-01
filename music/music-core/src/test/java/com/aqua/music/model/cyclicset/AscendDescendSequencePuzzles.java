@@ -7,7 +7,7 @@ import open.music.api.AudioPlayerSettings;
 public class AscendDescendSequencePuzzles {
 	public void playThaat() {
 		CyclicFrequencySet playItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL);
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(playItem.frequencies());
+		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(playItem.frequencies(), 1);
 	}
 
 	public void playMultipleThaats() {
@@ -15,7 +15,7 @@ public class AscendDescendSequencePuzzles {
 				new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI });
 		System.out.println(multipleSymmetricFreqSet.asString());
 		
-		AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle());
+		AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle(), 1);
 	}
 
 	public void playAllThats() {
@@ -30,13 +30,13 @@ public class AscendDescendSequencePuzzles {
 	}
 
 	private void playAscendAndDescend(int count, SymmetricalSet... raags) {
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).frequencies());
+		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).frequencies(), 1);
 		System.out.println("\n Played [BILAWAL]");
 		HashSet<SymmetricalSet> hasheddata = randomize(raags);
 		for (SymmetricalSet each : hasheddata) {
 
 			for (int i = 0; i < count; i++) {
-				AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).frequencies());
+				AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).frequencies(), 1);
 				System.out.println("\nPlayed [" + each.name() + "] ." + i);
 				System.out.println("\n");
 			}

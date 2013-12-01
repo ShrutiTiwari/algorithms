@@ -34,7 +34,7 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	}
 
 	@Override
-	public Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList) {
+	public Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
 		Collection<File> playlist = new AudioFilesList(frequencyList).allAudioFiles();
 		final File[] audioFilesArray = playlist.toArray(new File[playlist.size()]);
 

@@ -20,7 +20,6 @@ import open.music.api.PlayApi;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 import open.music.api.Playable;
 
-import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
@@ -121,7 +120,7 @@ class MusicPanelForPractice extends MusicPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			this.pauseButton.setText(AudioPlayerNextStatus.PAUSE.toString());
-			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, textArea);
+			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, textArea, 5);
 		}
 	}
 

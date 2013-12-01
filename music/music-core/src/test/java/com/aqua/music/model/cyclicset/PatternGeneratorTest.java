@@ -29,7 +29,7 @@ public class PatternGeneratorTest {
 		List<int[]> result = PermuatationsGenerator.PAIR.generatePermutations(input);
 		for (int[] each : result) {
 			CyclicFrequencySet freqSeq = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(SymmetricalSet.THAAT_KAFI,each);
-			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(freqSeq.frequencies());
+			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(freqSeq.frequencies(), 1);
 		}
 	}
 

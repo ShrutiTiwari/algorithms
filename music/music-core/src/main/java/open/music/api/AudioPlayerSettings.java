@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
-import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.DynamicFrequency;
@@ -57,10 +56,6 @@ public enum AudioPlayerSettings {
 		}
 	}
 
-	public static void playAsynchronously(AudioTask<Playable> audioTask) {
-		PlayMode.Asynchronous.playTask(audioTask);
-	}
-
 	public static void changeInstrumentTo(Object obj) {
 		if (obj instanceof Instrument) {
 			AudioLifeCycleManager.instance.changeInstrumentTo((Instrument)obj);
@@ -76,7 +71,11 @@ public enum AudioPlayerSettings {
 	}
 
 	public void play(Collection<? extends DynamicFrequency> frequencyList) {
-		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList);
+		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, 1);
+	}
+	
+	public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
+		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, repeatCount);
 	}
 
 	public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {

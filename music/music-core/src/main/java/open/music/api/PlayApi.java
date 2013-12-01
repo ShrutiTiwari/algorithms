@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioTask;
+import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.BasicNotePlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
@@ -63,14 +64,15 @@ public class PlayApi {
 	 * @param frequencyList
 	 */
 	public static void play(Playable playableitem) {
-		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies());
+		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
 	}
 	
-	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, final TextArea textArea) {
-		AudioPlayerSettings.playAsynchronously(audioTaskWith(playableItems, textArea));
+	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, final TextArea textArea, int repeatCount) {
+		AudioTask<Playable> audioTask = audioTaskWith(playableItems, textArea, repeatCount);
+		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
-	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final TextArea textArea) {
+	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final TextArea textArea, final int repeatCount) {
 		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
 			public Playable[] forLoopParameter() {
@@ -83,7 +85,7 @@ public class PlayApi {
 				String displayText = "Playing::" + text;
 				logger.info(displayText);
 				textArea.append(displayText);
-				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies());
+				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies(), repeatCount);
 			}
 
 			@Override

@@ -16,9 +16,9 @@ import com.aqua.music.model.core.DynamicFrequency;
 public enum PlayMode {
 	Asynchronous {
 		@Override
-		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList) {
+		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
 			setup(currentAudioPlayer);
-			executor.execute(currentAudioPlayer.playTask(frequencyList));
+			executor.execute(currentAudioPlayer.playTask(frequencyList, repeatCount));
 		}
 
 		@Override
@@ -30,9 +30,9 @@ public enum PlayMode {
 	},
 	Synchronous {
 		@Override
-		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList) {
+		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
 			setup(currentAudioPlayer);
-			currentAudioPlayer.playTask(frequencyList).run();
+			currentAudioPlayer.playTask(frequencyList, repeatCount).run();
 
 		}
 
@@ -51,7 +51,7 @@ public enum PlayMode {
 		currentAudioPlayer.setAudioPlayRigthsManager(audioPlayRightsManager);
 	}
 
-	abstract public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList);
+	abstract public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount);
 
 	abstract public void playInLoop(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList);
 

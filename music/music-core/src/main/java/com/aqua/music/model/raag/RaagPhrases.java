@@ -55,7 +55,7 @@ public class RaagPhrases {
 		while (true) {
 			MusicalPhrase p = myshuffler.nextRandom();
 			System.out.println("Listen recording");
-			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(p.frequencies());
+			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(p.frequencies(), 1);
 			System.out.println("what was the phrase?");
 			try {
 				String userInput = myReader.readLine();

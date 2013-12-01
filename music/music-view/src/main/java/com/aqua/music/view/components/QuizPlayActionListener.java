@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import javax.swing.JButton;
 
-import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi;
 
 import org.slf4j.Logger;

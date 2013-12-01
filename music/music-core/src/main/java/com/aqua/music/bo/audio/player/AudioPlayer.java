@@ -17,7 +17,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 public interface AudioPlayer {
 	Logger logger = LoggerFactory.getLogger(AudioPlayer.class);
 
-	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList);
+	Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList, int repeatCount);
 
 	Runnable playTaskInLoop(Collection<? extends DynamicFrequency> frequencyList);
 
