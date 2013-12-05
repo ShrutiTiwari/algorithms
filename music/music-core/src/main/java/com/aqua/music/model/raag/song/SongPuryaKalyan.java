@@ -51,7 +51,7 @@ public class SongPuryaKalyan extends AbstractSong {
 
 	@Override
 	protected MusicalPhrase antaraSecondLine() {
-		return new MusicalPhrase(beatsPerDivision,2).n(N, N, R3_).couple(G3, R3_).n(G3, R3_).e(S3, 3).n(N, R3_, N).couple(D, N)
+		return new MusicalPhrase(beatsPerDivision,2).n(N, N, R3_).couple(G3, R3_).n(G3, R3_).e(S3, 2).n(N, R3_, N).couple(D, N)
 				.n(D).couple(R3_, N).n(D, P);
 	}
 
