@@ -54,7 +54,7 @@ public class UiScrollPane {
 
 		JList jList = new JList(instrumentNames);
 		jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments));
-		return new UiScrollPane(11, maxNameLength, new Dimension(900, 200)).createScrollPane(jList);
+		return new UiScrollPane(5, maxNameLength, new Dimension(900, 100)).createScrollPane(jList);
 	}
 
 	JScrollPane createScrollPane(JList jList) {

@@ -53,8 +53,8 @@ class MusicPanelForPractice extends MusicPanel {
 		final JComboBox patternDropdown = UiDropdown.patternThaatDropDown();
 		patternDropdown.addActionListener(thaatPatternListener);
 
-		addExtraComponents(thaatDropdown);
-		addExtraComponents(patternDropdown);
+		addExtraTopControl(thaatDropdown);
+		addExtraTopControl(patternDropdown);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ class MusicPanelForPractice extends MusicPanel {
 	}
 
 	@Override
-	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
+	protected JPanel createMiddlePanel(final Object selectedObject) {
 		this.specificComponentPanel = MusicPanels.BOX_VERTICAL.createPanel();
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
@@ -89,6 +89,7 @@ class MusicPanelForPractice extends MusicPanel {
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
 		
 		specificComponentPanel.add(playAreaPanel);
+		specificComponentPanel.add(Box.createVerticalGlue());
 		specificComponentPanel.add(playAllButton);
 		return specificComponentPanel;
 	}

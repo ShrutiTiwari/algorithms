@@ -1,8 +1,8 @@
 package com.aqua.music.view.components;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.logging.log4j.core.impl.LogEventFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,24 +28,24 @@ public abstract class MusicPanel {
 	private final JButton pauseButton;
 	private volatile boolean initialized = false;
 	private final JPanel mainPanel;
-	private final ConfigurationPanel configurationPanel;
-	private JPanel specificComponentPanel;
+	private final TopPanelBuilder topPanelBuilder;
+	private JPanel middlePanel;
 
 	protected MusicPanel(boolean extraPanel) {
 		this.mainPanel = MusicPanels.BOX_VERTICAL.createPanel();
-		this.configurationPanel = new ConfigurationPanel();
-		this.pauseButton = configurationPanel.pauseButton;
-		mainPanel.add(configurationPanel.getPanel());
+		this.topPanelBuilder = new TopPanelBuilder();
+		this.pauseButton = topPanelBuilder.pauseButton;
+		mainPanel.add(topPanelBuilder.topPanel);
 		mainPanel.add(Box.createVerticalGlue());
 	}
 
-	public void addExtraComponents(JComponent aComponent) {
-		configurationPanel.add(aComponent);
+	public void addExtraTopControl(JComponent aComponent) {
+		topPanelBuilder.add(aComponent);
 	}
 
 	public JPanel getPanel() {
 		if (!initialized) {
-			configureSpecificComponentPanel();
+			configureMiddlePanel();
 		}
 		return mainPanel;
 	}
@@ -54,57 +55,44 @@ public abstract class MusicPanel {
 	}
 
 	public void refreshSpecificComponentPanel(final Object selectedObject) {
-		mainPanel.remove(specificComponentPanel);
-		addSpecificComponentPanel(selectedObject);
+		mainPanel.remove(middlePanel);
+		addMiddlePanel(selectedObject);
 		mainPanel.revalidate();
 	}
 
 	public abstract void repaint();
 
-	protected abstract JPanel createSpecificComponentPanel(final Object selectedObject);
+	protected abstract JPanel createMiddlePanel(final Object selectedObject);
 
-	private void addSpecificComponentPanel(final Object selectedObject) {
-		this.specificComponentPanel = createSpecificComponentPanel(selectedObject);
-		specificComponentPanel.add(MusicButtons.QUIT.createStaticNamedButton());
-		mainPanel.add(specificComponentPanel, BorderLayout.CENTER);
+	private void addMiddlePanel(final Object selectedObject) {
+		this.middlePanel = createMiddlePanel(selectedObject);
+		mainPanel.add(middlePanel);
 	}
 
-	private synchronized void configureSpecificComponentPanel() {
+	private synchronized void configureMiddlePanel() {
 		if (!initialized) {
-			addSpecificComponentPanel(null);
+			addMiddlePanel(null);
+			mainPanel.add(Box.createVerticalGlue());
+			mainPanel.add(new BottomPanelBuilder().bottomPanel);
 			mainPanel.setOpaque(true);
 			initialized = true;
 		}
 	}
 
-	private static class ConfigurationPanel {
+	private static class TopPanelBuilder {
 		private final JButton pauseButton;
-		private final JPanel configurationPanel;
+		private final JPanel topPanel;
 		private final JPanel extraComponents = MusicPanels.BOX_HORIZONTAL.createPanel();
 
-		private ConfigurationPanel() {
+		private TopPanelBuilder() {
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
-			this.configurationPanel = MusicPanels.BOX_VERTICAL.createPanel();
-
-			JPanel configurationButtonsPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
-			configurationButtonsPanel.add(extraComponents);
-			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), configurationButtonsPanel);
-			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), configurationButtonsPanel);
-			addToPanel(pauseButton, configurationButtonsPanel);
-
-			configurationPanel.add(configurationButtonsPanel);
-			configurationPanel.add(Box.createVerticalGlue());
-			
-			JPanel instrumentPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
-			JLabel instrumentsTitle = new JLabel("Instruments::");
-			instrumentPanel.add(instrumentsTitle);
-			instrumentPanel.add(UiScrollPane.instrumentDisplay(null));
-			configurationPanel.add(instrumentPanel);
+			this.topPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
+			topPanel.add(extraComponents);
+			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), topPanel);
+			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), topPanel);
+			addToPanel(pauseButton, topPanel);
 		}
 
-		/**
-		 * @param aComponent
-		 */
 		public void add(JComponent aComponent) {
 			extraComponents.add(aComponent);
 		}
@@ -115,9 +103,29 @@ public abstract class MusicPanel {
 			each.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			containerPanel.add(Box.createVerticalGlue());
 		}
+	}
 
-		private JPanel getPanel() {
-			return configurationPanel;
+	private static class BottomPanelBuilder {
+		private final JPanel bottomPanel;
+
+		private BottomPanelBuilder() {
+			this.bottomPanel = MusicPanels.BOX_VERTICAL.createPanel();
+
+			JPanel instrumentLabelPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
+			instrumentLabelPanel.add(new JLabel("Instruments::"));
+			instrumentLabelPanel.setSize(new Dimension(10,40));
+			
+			JComponent scrollPane = UiScrollPane.instrumentDisplay(null);
+
+			JPanel quitPanel = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
+			JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
+			quitPanel.add(quitButton);
+			
+			bottomPanel.add(instrumentLabelPanel);
+			bottomPanel.add(scrollPane);
+			bottomPanel.add(Box.createVerticalGlue());
+			bottomPanel.add(quitPanel);
+			
 		}
 	}
 }

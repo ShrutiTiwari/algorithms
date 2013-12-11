@@ -25,10 +25,10 @@ class MusicPanelForQuiz extends MusicPanel {
 		this.initialQuizLevel = initialQuizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);
 		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
-		addExtraComponents(quizDropdown);
+		addExtraTopControl(quizDropdown);
 	}
 
-	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
+	protected JPanel createMiddlePanel(final Object selectedObject) {
 		specificComponentsPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
 		specificComponentsPanel.add(Box.createVerticalStrut(100));
 

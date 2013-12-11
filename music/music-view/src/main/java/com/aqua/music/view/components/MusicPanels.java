@@ -34,6 +34,12 @@ public enum MusicPanels {
 		public JPanel createPanel() {
 			return new JPanel(new FlowLayout(FlowLayout.LEFT));
 		}
+	},
+	RIGHT_FLOWLAYOUT {
+		@Override
+		public JPanel createPanel() {
+			return new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		}
 	};
 	public abstract JPanel createPanel();
 }
