@@ -28,6 +28,8 @@ public abstract class MusicPanel {
 	private volatile boolean initialized = false;
 	private final JPanel mainPanel;
 	private final TopPanelBuilder topPanelBuilder;
+	private JPanel refreshablePanel;
+
 	private JPanel middlePanel;
 
 	protected MusicPanel(boolean extraPanel) {
@@ -36,6 +38,8 @@ public abstract class MusicPanel {
 		this.pauseButton = topPanelBuilder.pauseButton;
 		mainPanel.add(topPanelBuilder.topPanel);
 		mainPanel.add(Box.createVerticalGlue());
+		this.middlePanel= MusicPanels.BOX_VERTICAL.createPanel();
+		mainPanel.add(middlePanel);
 	}
 
 	public void addExtraTopControl(JComponent aComponent) {
@@ -54,9 +58,9 @@ public abstract class MusicPanel {
 	}
 
 	public void refreshSpecificComponentPanel(final Object selectedObject) {
-		mainPanel.remove(middlePanel);
+		middlePanel.remove(refreshablePanel);
 		addMiddlePanel(selectedObject);
-		mainPanel.revalidate();
+		middlePanel.revalidate();
 	}
 
 	public abstract void repaint();
@@ -64,8 +68,8 @@ public abstract class MusicPanel {
 	protected abstract JPanel createMiddlePanel(final Object selectedObject);
 
 	private void addMiddlePanel(final Object selectedObject) {
-		this.middlePanel = createMiddlePanel(selectedObject);
-		mainPanel.add(middlePanel);
+		this.refreshablePanel = createMiddlePanel(selectedObject);
+		middlePanel.add(refreshablePanel);
 	}
 
 	private synchronized void configureMiddlePanel() {
