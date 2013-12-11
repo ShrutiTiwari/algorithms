@@ -55,8 +55,8 @@ class MusicPanelForPractice extends MusicPanel {
 		final JComboBox patternDropdown = UiDropdown.patternThaatDropDown();
 		patternDropdown.addActionListener(thaatPatternListener);
 
-		addToExtraComponentPanel(thaatDropdown);
-		addToExtraComponentPanel(patternDropdown);
+		addExtraComponents(thaatDropdown);
+		addExtraComponents(patternDropdown);
 	}
 
 	@Override
