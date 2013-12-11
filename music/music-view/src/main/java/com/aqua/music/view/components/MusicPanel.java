@@ -10,7 +10,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.apache.logging.log4j.core.impl.LogEventFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,11 +81,11 @@ public abstract class MusicPanel {
 	private static class TopPanelBuilder {
 		private final JButton pauseButton;
 		private final JPanel topPanel;
-		private final JPanel extraComponents = MusicPanels.BOX_HORIZONTAL.createPanel();
+		private final JPanel extraComponents = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
 
 		private TopPanelBuilder() {
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
-			this.topPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
+			this.topPanel = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
 			topPanel.add(extraComponents);
 			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), topPanel);
 			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), topPanel);

@@ -90,7 +90,11 @@ class MusicPanelForPractice extends MusicPanel {
 		
 		specificComponentPanel.add(playAreaPanel);
 		specificComponentPanel.add(Box.createVerticalGlue());
-		specificComponentPanel.add(playAllButton);
+		
+		
+		JPanel playAllPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
+		playAllPanel.add(playAllButton);
+		specificComponentPanel.add(playAllPanel);
 		return specificComponentPanel;
 	}
 
