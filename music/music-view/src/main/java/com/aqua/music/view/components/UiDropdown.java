@@ -5,8 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
+import javax.sound.midi.Instrument;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi;
@@ -23,9 +29,23 @@ import com.aqua.music.model.puzzles.QuizLevel;
 
 public class UiDropdown {
 	public static JComponent instrumentDropDown(Object selectedItem) {
-		JComboBox instrumentDropdown = createWith(PlayApi.getAllInstruments(), selectedItem);
-		instrumentDropdown.addActionListener(new InstrumentDropdownActionListener());
-		return instrumentDropdown;
+		Instrument[] allInstruments = PlayApi.getAllInstruments();
+
+		String[] instrumentNames = new String[allInstruments.length];
+		int i = 0;
+		int maxNameLength = 150;
+		for (Instrument each : allInstruments) {
+			String name = each.getName().trim();
+			instrumentNames[i++] = name;
+			if (maxNameLength < name.length()) {
+				maxNameLength = name.length();
+			}
+		}
+
+		JList jList = new JList(instrumentNames);
+		InstrumentDropdownActionListener listener = new InstrumentDropdownActionListener(jList, allInstruments);
+
+		return createScrollPane(jList, listener, 5, maxNameLength);
 	}
 
 	public static JComboBox patternThaatDropDown() {
@@ -53,14 +73,35 @@ public class UiDropdown {
 		return box;
 	}
 
-	static class InstrumentDropdownActionListener implements ActionListener {
+	static class InstrumentDropdownActionListener implements ActionListener, ListSelectionListener {
 		Logger logger = LoggerFactory.getLogger(InstrumentDropdownActionListener.class);
+		private final JList jList;
+		private Instrument[] allInstruments;
+
+		/**
+		 * @param jList
+		 * @param allInstruments
+		 */
+		public InstrumentDropdownActionListener(JList jList, Instrument[] allInstruments) {
+			this.jList = jList;
+			this.allInstruments = allInstruments;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			JComboBox cbox = (JComboBox) arg0.getSource();
 			Object obj = cbox.getSelectedItem();
 			AudioPlayerSettings.changeInstrumentTo(obj);
+		}
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			if (e.getValueIsAdjusting() == false) {
+				int selectedIndex = jList.getSelectedIndex();
+				if (selectedIndex != -1) {
+					AudioPlayerSettings.changeInstrumentTo(allInstruments[selectedIndex]);
+				}
+			}
 		}
 	}
 
@@ -84,12 +125,14 @@ public class UiDropdown {
 	static class ThaatAndPatternDropdownActionListener implements ActionListener {
 		Logger logger = LoggerFactory.getLogger(ThaatAndPatternDropdownActionListener.class);
 		private final MusicPanel musicPanel;
-		private FrequencySet frequencySet ;
+		private FrequencySet frequencySet;
 		private PermuatationsGenerator patternItemsCount;
-		public ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2, PermuatationsGenerator patternItemsCount) {
+
+		public ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2,
+				PermuatationsGenerator patternItemsCount) {
 			this.musicPanel = musicPanel;
-			this.frequencySet=frequencySet2;
-			this.patternItemsCount=patternItemsCount;
+			this.frequencySet = frequencySet2;
+			this.patternItemsCount = patternItemsCount;
 		}
 
 		@Override
@@ -98,10 +141,22 @@ public class UiDropdown {
 			Object obj = cbox.getSelectedItem();
 			if (obj instanceof FrequencySet) {
 				this.frequencySet = (FrequencySet) obj;
-			} else  {
+			} else {
 				this.patternItemsCount = (PermuatationsGenerator) obj;
 			}
 			musicPanel.refreshSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
+	}
+
+	static JScrollPane createScrollPane(JList jList, ListSelectionListener listener, int itemCount, int maxNameLength) {
+		jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jList.setLayoutOrientation(JList.VERTICAL_WRAP);
+		jList.setVisibleRowCount(itemCount);
+		jList.setFixedCellWidth(maxNameLength);
+		jList.addListSelectionListener(listener);
+		JScrollPane scrollPane = new JScrollPane(jList);
+		// scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		// scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		return scrollPane;
 	}
 }

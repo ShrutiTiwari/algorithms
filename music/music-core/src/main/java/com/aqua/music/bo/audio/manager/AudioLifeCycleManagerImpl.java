@@ -12,7 +12,7 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
@@ -21,7 +21,8 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
-
+	private volatile Instrument configuredInstrument;
+	
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
@@ -68,11 +69,11 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	@Override
 	public AudioPlayerNextStatus togglePauseAndResume() {
 		if (currentAudioPlayer != null) {
-			if(!pauseCurrentPlay.compareAndSet(false, true)){
+			if (!pauseCurrentPlay.compareAndSet(false, true)) {
 				pauseCurrentPlay.compareAndSet(true, false);
 			}
 		}
-		return pauseCurrentPlay()?AudioPlayerNextStatus.RESUME:AudioPlayerNextStatus.PAUSE;
+		return pauseCurrentPlay() ? AudioPlayerNextStatus.RESUME : AudioPlayerNextStatus.PAUSE;
 	}
 
 	@Override
@@ -88,6 +89,9 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	@Override
 	public void setCurrentPlayer(AudioPlayer audioPlayer) {
 		this.currentAudioPlayer = audioPlayer;
+		if(configuredInstrument!=null){
+			changeInstrumentTo(configuredInstrument);
+		}
 	}
 
 	@Override
@@ -120,6 +124,9 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	@Override
 	public void changeInstrumentTo(Instrument instrument) {
-		currentAudioPlayer.changeInstrumentTo(instrument);
+		this.configuredInstrument=instrument;
+		if (currentAudioPlayer != null) {
+			currentAudioPlayer.changeInstrumentTo(configuredInstrument);
+		}
 	}
 }

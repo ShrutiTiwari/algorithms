@@ -92,14 +92,14 @@ public abstract class MusicPanel {
 			BoxLayout b = new BoxLayout(configurationPanel, BoxLayout.PAGE_AXIS);
 			configurationPanel.setLayout(b);
 
-			JPanel commonComponents = new JPanel();
-			addToPanel(UiDropdown.instrumentDropDown(null), commonComponents);
-			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), commonComponents);
-			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), commonComponents);
+			JPanel commonPanel = new JPanel();
+			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), commonPanel);
+			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), commonPanel);
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
-			addToPanel(pauseButton, commonComponents);
+			addToPanel(pauseButton, commonPanel);
+			addToPanel(UiDropdown.instrumentDropDown(null), commonPanel);
 			
-			addToPanel(commonComponents, configurationPanel);
+			addToPanel(commonPanel, configurationPanel);
 		}
 
 		/**
