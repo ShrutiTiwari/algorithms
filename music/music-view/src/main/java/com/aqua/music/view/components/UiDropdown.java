@@ -45,7 +45,7 @@ public class UiDropdown {
 		JList jList = new JList(instrumentNames);
 		InstrumentDropdownActionListener listener = new InstrumentDropdownActionListener(jList, allInstruments);
 
-		return createScrollPane(jList, listener, 5, maxNameLength);
+		return createScrollPane(jList, listener, 10, maxNameLength);
 	}
 
 	public static JComboBox patternThaatDropDown() {
@@ -155,6 +155,7 @@ public class UiDropdown {
 		jList.setFixedCellWidth(maxNameLength);
 		jList.addListSelectionListener(listener);
 		JScrollPane scrollPane = new JScrollPane(jList);
+		scrollPane.setAutoscrolls(true);
 		// scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		return scrollPane;
