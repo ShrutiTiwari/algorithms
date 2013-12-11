@@ -1,9 +1,7 @@
 package com.aqua.music.view.components;
 
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -20,7 +18,7 @@ import com.aqua.music.model.puzzles.QuizLevel.Quiz;
  */
 class MusicPanelForQuiz extends MusicPanel {
 	private final QuizLevel initialQuizLevel;
-	private JPanel resultPanel;
+	private JPanel specificComponentsPanel;
 
 	MusicPanelForQuiz(final QuizLevel initialQuizLevel) {
 		super(true);
@@ -31,8 +29,8 @@ class MusicPanelForQuiz extends MusicPanel {
 	}
 
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
-		resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		resultPanel.add(Box.createVerticalStrut(100));
+		specificComponentsPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
+		specificComponentsPanel.add(Box.createVerticalStrut(100));
 
 		QuizLevel quizLevel = (QuizLevel) selectedObject;
 		if (quizLevel == null) {
@@ -47,18 +45,18 @@ class MusicPanelForQuiz extends MusicPanel {
 			for (CyclicFrequencySet eachOption : eachQuiz.quizItems()) {
 				JButton b = UiButtons.MusicButtons.CHOICE_OPTIONS.createDynamicNamedButton(eachOption.name());
 				multipleChoiceButtons.add(b);
-				resultPanel.add(b);
+				specificComponentsPanel.add(b);
 			}
 			quizPlayButton.addActionListener(new QuizPlayActionListener(this, eachQuiz, multipleChoiceButtons));
 
-			resultPanel.add(quizPlayButton);
+			specificComponentsPanel.add(quizPlayButton);
 			i++;
 		}
 
-		return resultPanel;
+		return specificComponentsPanel;
 	}
 
 	public void repaint() {
-		resultPanel.repaint();
+		specificComponentsPanel.repaint();
 	}
 }

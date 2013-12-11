@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -25,7 +24,7 @@ import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionLi
 
 class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
-	private JPanel playAreaPanel;
+	private JPanel specificComponentPanel;
 
 	/**
 	 * Used for plain rehearsing - of thaat and songs
@@ -60,18 +59,16 @@ class MusicPanelForPractice extends MusicPanel {
 
 	@Override
 	public void repaint() {
-		playAreaPanel.repaint();
+		specificComponentPanel.repaint();
 	}
 
 	@Override
 	protected JPanel createSpecificComponentPanel(final Object selectedObject) {
-		this.playAreaPanel = new JPanel();
-		BoxLayout b = new BoxLayout(playAreaPanel, BoxLayout.PAGE_AXIS);
-		playAreaPanel.setLayout(b);
-		playAreaPanel.setOpaque(true);
-		playAreaPanel.add(Box.createVerticalStrut(50));
+		this.specificComponentPanel = MusicPanels.BOX_VERTICAL.createPanel();
+		specificComponentPanel.setOpaque(true);
+		specificComponentPanel.add(Box.createVerticalStrut(50));
 
-		JPanel playAreaSubPanel = new JPanel();
+		JPanel playAreaPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
@@ -79,23 +76,21 @@ class MusicPanelForPractice extends MusicPanel {
 		}
 
 		final TextArea consoleArea = createConsoleArea();
+		
 		final JButton pauseButton = pauseButton();
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
-
 		JList playItemsList = new JList(allPlayableItems);
-		PlaySingleItemActionListener listener = new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton);
+		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
+		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 		
-		JScrollPane listScroller = UiDropdown.createScrollPane(playItemsList, listener,10,200);
-
+		playAreaPanel.add(consoleArea);
+		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
-
-		playAreaSubPanel.add(listScroller);
-		playAreaSubPanel.add(consoleArea);
 		
-		playAreaPanel.add(playAreaSubPanel);
-		playAreaPanel.add(playAllButton);
-		return playAreaPanel;
+		specificComponentPanel.add(playAreaPanel);
+		specificComponentPanel.add(playAllButton);
+		return specificComponentPanel;
 	}
 
 	private TextArea createConsoleArea() {

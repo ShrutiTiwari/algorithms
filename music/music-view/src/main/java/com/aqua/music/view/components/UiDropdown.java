@@ -1,6 +1,7 @@
 package com.aqua.music.view.components;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -9,8 +10,6 @@ import javax.sound.midi.Instrument;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -43,9 +42,8 @@ public class UiDropdown {
 		}
 
 		JList jList = new JList(instrumentNames);
-		InstrumentDropdownActionListener listener = new InstrumentDropdownActionListener(jList, allInstruments);
-
-		return createScrollPane(jList, listener, 10, maxNameLength);
+		jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments));		
+		return new UiScrollPane(10, maxNameLength, new Dimension(900,200)).createScrollPane(jList);
 	}
 
 	public static JComboBox patternThaatDropDown() {
@@ -146,18 +144,5 @@ public class UiDropdown {
 			}
 			musicPanel.refreshSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
-	}
-
-	static JScrollPane createScrollPane(JList jList, ListSelectionListener listener, int itemCount, int maxNameLength) {
-		jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jList.setLayoutOrientation(JList.VERTICAL_WRAP);
-		jList.setVisibleRowCount(itemCount);
-		jList.setFixedCellWidth(maxNameLength);
-		jList.addListSelectionListener(listener);
-		JScrollPane scrollPane = new JScrollPane(jList);
-		scrollPane.setAutoscrolls(true);
-		// scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		// scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		return scrollPane;
 	}
 }
