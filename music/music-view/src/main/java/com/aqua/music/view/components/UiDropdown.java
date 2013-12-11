@@ -1,19 +1,12 @@
 package com.aqua.music.view.components;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
-import javax.sound.midi.Instrument;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi;
 
 import org.slf4j.Logger;
@@ -27,25 +20,6 @@ import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
 public class UiDropdown {
-	public static JComponent instrumentDropDown(Object selectedItem) {
-		Instrument[] allInstruments = PlayApi.getAllInstruments();
-
-		String[] instrumentNames = new String[allInstruments.length];
-		int i = 0;
-		int maxNameLength = 150;
-		for (Instrument each : allInstruments) {
-			String name = each.getName().trim();
-			instrumentNames[i++] = name;
-			if (maxNameLength < name.length()) {
-				maxNameLength = name.length();
-			}
-		}
-
-		JList jList = new JList(instrumentNames);
-		jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments));		
-		return new UiScrollPane(10, maxNameLength, new Dimension(900,200)).createScrollPane(jList);
-	}
-
 	public static JComboBox patternThaatDropDown() {
 		return createWith(PermuatationsGenerator.values(), null);
 	}
@@ -69,38 +43,6 @@ public class UiDropdown {
 			box.setSelectedItem(objects[0]);
 		}
 		return box;
-	}
-
-	static class InstrumentDropdownActionListener implements ActionListener, ListSelectionListener {
-		Logger logger = LoggerFactory.getLogger(InstrumentDropdownActionListener.class);
-		private final JList jList;
-		private Instrument[] allInstruments;
-
-		/**
-		 * @param jList
-		 * @param allInstruments
-		 */
-		public InstrumentDropdownActionListener(JList jList, Instrument[] allInstruments) {
-			this.jList = jList;
-			this.allInstruments = allInstruments;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			JComboBox cbox = (JComboBox) arg0.getSource();
-			Object obj = cbox.getSelectedItem();
-			AudioPlayerSettings.changeInstrumentTo(obj);
-		}
-
-		@Override
-		public void valueChanged(ListSelectionEvent e) {
-			if (e.getValueIsAdjusting() == false) {
-				int selectedIndex = jList.getSelectedIndex();
-				if (selectedIndex != -1) {
-					AudioPlayerSettings.changeInstrumentTo(allInstruments[selectedIndex]);
-				}
-			}
-		}
 	}
 
 	static class QuizDropdownActionListener implements ActionListener {

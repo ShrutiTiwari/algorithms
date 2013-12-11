@@ -35,6 +35,7 @@ public abstract class MusicPanel {
 		this.configurationPanel = new ConfigurationPanel();
 		this.pauseButton = configurationPanel.pauseButton;
 		mainPanel.add(configurationPanel.getPanel());
+		mainPanel.add(Box.createVerticalGlue());
 	}
 
 	public void addExtraComponents(JComponent aComponent) {
@@ -92,11 +93,12 @@ public abstract class MusicPanel {
 			addToPanel(pauseButton, configurationButtonsPanel);
 
 			configurationPanel.add(configurationButtonsPanel);
-
+			configurationPanel.add(Box.createVerticalGlue());
+			
 			JPanel instrumentPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
 			JLabel instrumentsTitle = new JLabel("Instruments::");
 			instrumentPanel.add(instrumentsTitle);
-			instrumentPanel.add(UiDropdown.instrumentDropDown(null));
+			instrumentPanel.add(UiScrollPane.instrumentDisplay(null));
 			configurationPanel.add(instrumentPanel);
 		}
 
