@@ -2,6 +2,8 @@ package open.music.api;
 
 import java.util.Collection;
 
+import open.music.api.PlayApi.AudioPlayerNextStatus;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,12 +47,12 @@ public enum AudioPlayerSettings {
 		}
 	}
 
-	public static String togglePauseAndResume() {
+	public static AudioPlayerNextStatus togglePauseAndResume() {
 		try {
-			return AudioLifeCycleManager.instance.togglePauseAndResume().toString();
+			return AudioLifeCycleManager.instance.togglePauseAndResume();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return e.getMessage();
+			return null;
 		}
 	}
 

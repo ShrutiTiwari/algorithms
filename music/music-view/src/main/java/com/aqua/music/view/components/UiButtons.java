@@ -1,17 +1,32 @@
 package com.aqua.music.view.components;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import open.music.api.AudioPlayerSettings;
+import open.music.api.PlayApi.AudioPlayerNextStatus;
 
 interface UiButtons {
 	String text();
 
 	String tooltip();
+
+	String IMAGE_INCREASE_TEMPO = "arrow_up.png";
+	String IMAGE_DECREASE_TEMPO = "arrow_down.png";
+	String IMAGE_PAUSE = "button_pause.png";
+	String IMAGE_PLAY = "button_play.png";
+	ImageResourceCache imageResourceCache = new ImageResourceCache();
 
 	enum MusicButtons implements UiButtons {
 		CHOICE_OPTIONS("$$", "This thaat is $$") {
@@ -26,11 +41,14 @@ interface UiButtons {
 		PAUSE("Pause", "Click this to pause!") {
 			@Override
 			JButton createInstanceWith(String name) {
-				final JButton button = fixedNameButton(this);
+				final JButton button = createImageButton(IMAGE_PLAY, fixedNameButton(this));
+				final Icon playIcon = imageResourceCache.imageIcon(IMAGE_PLAY);
+				final Icon pauseIcon = imageResourceCache.imageIcon(IMAGE_PAUSE);
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						button.setText(AudioPlayerSettings.togglePauseAndResume());
+						Icon newIcon = (AudioPlayerSettings.togglePauseAndResume() == AudioPlayerNextStatus.PAUSE) ? pauseIcon : playIcon;
+						button.setIcon(newIcon);
 					}
 				};
 
@@ -73,7 +91,7 @@ interface UiButtons {
 		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!") {
 			@Override
 			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
+				JButton button = createImageButton(IMAGE_INCREASE_TEMPO, fixedNameButton(this));
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -87,7 +105,7 @@ interface UiButtons {
 		DECREASE_TEMPO("DecreaseTempo", "Click this to stop!") {
 			@Override
 			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
+				JButton button = createImageButton(IMAGE_DECREASE_TEMPO, fixedNameButton(this));
 				ActionListener actionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
@@ -139,5 +157,42 @@ interface UiButtons {
 		}
 
 		abstract JButton createInstanceWith(String name);
+
+		private static JButton createImageButton(String imageName, JButton namedButton) {
+			try {
+				JButton imageButton = new JButton(imageResourceCache.imageIcon(imageName));
+				imageButton.setBorder(BorderFactory.createEmptyBorder());
+				imageButton.setPreferredSize(new Dimension(30, 30));
+				return imageButton;
+			} catch (Exception e) {
+				return namedButton;
+			}
+		}
 	}
+
+	public class ImageResourceCache {
+		Map<String, ImageIcon> cachedResoureces = new ConcurrentHashMap<String, ImageIcon>();
+
+		public synchronized ImageIcon imageIcon(String imageName) {
+			ImageIcon existing = cachedResoureces.get(imageName);
+			if (existing != null) {
+				return existing;
+			}
+			ImageIcon imageIconLookup = imageIconLookup(imageName);
+			cachedResoureces.put(imageName, imageIconLookup);
+			return imageIconLookup;
+		}
+
+		private static ImageIcon imageIconLookup(String imageName) {
+			String path = Thread.currentThread().getContextClassLoader().getResource(imageName).getPath();
+			try {
+				ImageIcon imageIcon = new ImageIcon(ImageIO.read(new File(path)));
+				return imageIcon;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+
+	}
+
 }

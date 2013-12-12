@@ -2,12 +2,10 @@ package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import open.music.api.InstrumentRole;
@@ -92,8 +90,8 @@ public abstract class MusicPanel {
 
 		private TopPanelBuilder() {
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
-			
 			this.rightPanel = MusicPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
+
 			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), rightPanel);
 			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), rightPanel);
 			addToPanel(pauseButton, rightPanel);
@@ -133,16 +131,11 @@ public abstract class MusicPanel {
 			bottomPanel.add(quitPanel);
 		}
 
-		private void addInstrument(InstrumentRole instrumentAs) {
-			String label = UiLabels.INSTRUMENT_LABEL + instrumentAs.name().toLowerCase() + " play:";
-			JPanel instrumentLabelPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
-			instrumentLabelPanel.add(new JLabel(label));
-			instrumentLabelPanel.setSize(new Dimension(10, 40));
-			JComponent scrollPane = UiScrollPane.instrumentDisplay(instrumentAs, null);
-			bottomPanel.add(instrumentLabelPanel);
-			bottomPanel.add(scrollPane);
+		private void addInstrument(InstrumentRole instrumentRole) {
+			InstrumentDisplay instrumentDisplay = new InstrumentDisplay(instrumentRole);
+			bottomPanel.add(instrumentDisplay.instrumentLabel());
+			bottomPanel.add(instrumentDisplay.displayPane());
 			bottomPanel.add(Box.createVerticalGlue());
 		}
-
 	}
 }
