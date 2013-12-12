@@ -3,80 +3,75 @@ package com.aqua.music.example.easymidi;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Ticker {
+import com.aqua.music.example.easymidi.Chord.ChordsList;
 
-    Timer timer;
-    public int counter16 = 0;
-    Phrase phrase = null;
-    int currentChord = 0;
-    int tempo = 120;
-    int delay16 = 0;
-    boolean on = false;
-    public Ticker(int tempo, Phrase p) {
-        timer = new Timer(true);
-        phrase = p;
-        this.tempo = tempo;
-        delay16 = (int) (60000.0 / tempo / 4.0);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (on) {
-                    counter16++;
-                    tick();
-                    onTick(counter16);
-                }
-            }
-        }, 0, delay16);
-    }
-    public void onTick(long count) {
-    }
-    public void onFinish() {
-        restart();
-    }
-    void tick() {
-        if (phrase == null) {
-            return;
-        }
-        if (phrase.chords == null) {
-            return;
-        }
-        if (currentChord >= phrase.chords.size()) {
-            onFinish();
-        }
-        if (currentChord >= phrase.chords.size()) {
-            return;
-        }
-        phrase.chords.get(currentChord).counter16++;
-        int pp = 16 / phrase.chords.get(currentChord).part;
-        if (phrase.chords.get(currentChord).counter16 >= pp) {
-            currentChord++;
-            if (currentChord >= phrase.chords.size()) {
-                onFinish();
-            } else {
-                phrase.chords.get(currentChord).play();
-            }
-        } else {
-            for (int i = 0; i < phrase.chords.size(); i++) {
-                phrase.chords.get(i).tick();
-            }
-        }
-    }
-    public void play() {
-        on = true;
-    }
-    public void restart() {
-        counter16 = 0;
-        currentChord = 0;
-        on = true;
-        if (currentChord >= phrase.chords.size()) {
-            return;
-        }
-        phrase.chords.get(currentChord).play();
-    }
-    public void stop() {
-        on = false;
-        for (int i = 0; i < phrase.chords.size(); i++) {
-            phrase.chords.get(i).stop();
-        }
-    }
+public class Ticker {
+	public int counter16 = 0;
+	int currentChordNum = 0;
+	boolean on = false;
+
+	private final int delay16;
+	private final ChordsList chordsList;
+	private final Timer timer;
+
+	public Ticker(int tempo, ChordsList chordsList) {
+		this.timer = new Timer(true);
+		this.chordsList = chordsList;
+		this.delay16 = (int) (60000.0 / tempo / 4.0);
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if (on) {
+					counter16++;
+					tick();
+				}
+			}
+		}, 0, delay16);
+	}
+
+	public void restart() {
+		counter16 = 0;
+		currentChordNum = 0;
+		on = true;
+		if (currentChordNum >= chordsList.numOfchords()) {
+			return;
+		}
+		chordsList.getChord(currentChordNum).play();
+	}
+
+	public void stop() {
+		on = false;
+		chordsList.stopAll();
+	}
+
+	void onFinish() {
+		restart();
+	}
+
+	private void tick() {
+		if (chordsList == null || chordsList.isEmpty()) {
+			return;
+		}
+		if (currentChordNum >= chordsList.numOfchords()) {
+			onFinish();
+		}
+		if (currentChordNum >= chordsList.numOfchords()) {
+			return;
+		}
+
+		Chord currentChord = chordsList.getChord(currentChordNum);
+		currentChord.incrementCounter();
+		if (currentChord.counter() >= currentChord.divisionInSixteen()) {
+			currentChordNum++;
+			if (currentChordNum >= chordsList.chords.size()) {
+				onFinish();
+			} else {
+				chordsList.getChord(currentChordNum).play();
+			}
+		} else {
+			for (int i = 0; i < chordsList.chords.size(); i++) {
+				currentChord.tick();
+			}
+		}
+	}
 }

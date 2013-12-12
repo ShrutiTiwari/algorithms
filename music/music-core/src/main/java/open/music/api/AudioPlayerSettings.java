@@ -2,8 +2,6 @@ package open.music.api;
 
 import java.util.Collection;
 
-import javax.sound.midi.Instrument;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public enum AudioPlayerSettings {
 	ASYNCHRONOUS_DYNAMIC_PLAYER(AudioPlayer.Factory.DYNAMIC_AUDIO, PlayMode.Asynchronous),
@@ -24,8 +22,8 @@ public enum AudioPlayerSettings {
 
 	private final AudioPlayer.Factory audioPlayerFactory;
 	private static final Logger logger = LoggerFactory.getLogger(AudioPlayerSettings.class);
-
 	private final PlayMode playMode;
+
 	private AudioPlayerSettings(AudioPlayer.Factory audioPlayer, PlayMode playMode) {
 		this.audioPlayerFactory = audioPlayer;
 		this.playMode = playMode;
@@ -35,7 +33,7 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.decreaseTempo();
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -43,7 +41,7 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.increaseTempo();
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -51,14 +49,8 @@ public enum AudioPlayerSettings {
 		try {
 			return AudioLifeCycleManager.instance.togglePauseAndResume().toString();
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
+			logger.error(e.getMessage(), e);
 			return e.getMessage();
-		}
-	}
-
-	public static void changeInstrumentTo(Object obj) {
-		if (obj instanceof Instrument) {
-			AudioLifeCycleManager.instance.changeInstrumentTo((Instrument)obj);
 		}
 	}
 
@@ -66,14 +58,14 @@ public enum AudioPlayerSettings {
 		try {
 			AudioLifeCycleManager.instance.stop();
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
+			logger.error(e.getMessage(), e);
 		}
 	}
 
 	public void play(Collection<? extends DynamicFrequency> frequencyList) {
 		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, 1);
 	}
-	
+
 	public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
 		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, repeatCount);
 	}

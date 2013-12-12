@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import open.music.api.InstrumentRole;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +35,12 @@ public abstract class MusicPanel {
 	private JPanel middlePanel;
 
 	protected MusicPanel(boolean extraPanel) {
-		this.mainPanel = MusicPanels.BOX_VERTICAL.createPanel();
+		this.mainPanel = MusicPanelBuilder.BOX_VERTICAL.createPanel();
 		this.topPanelBuilder = new TopPanelBuilder();
 		this.pauseButton = topPanelBuilder.pauseButton;
 		mainPanel.add(topPanelBuilder.topPanel);
 		mainPanel.add(Box.createVerticalGlue());
-		this.middlePanel= MusicPanels.BOX_VERTICAL.createPanel();
+		this.middlePanel= MusicPanelBuilder.BOX_VERTICAL.createPanel();
 		mainPanel.add(middlePanel);
 	}
 
@@ -85,11 +87,11 @@ public abstract class MusicPanel {
 	private static class TopPanelBuilder {
 		private final JButton pauseButton;
 		private final JPanel topPanel;
-		private final JPanel extraComponents = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
+		private final JPanel extraComponents = MusicPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 
 		private TopPanelBuilder() {
 			this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
-			this.topPanel = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
+			this.topPanel = MusicPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 			topPanel.add(extraComponents);
 			addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), topPanel);
 			addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), topPanel);
@@ -112,23 +114,29 @@ public abstract class MusicPanel {
 		private final JPanel bottomPanel;
 
 		private BottomPanelBuilder() {
-			this.bottomPanel = MusicPanels.BOX_VERTICAL.createPanel();
+			this.bottomPanel = MusicPanelBuilder.BOX_VERTICAL.createPanel();
 
-			JPanel instrumentLabelPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
-			instrumentLabelPanel.add(new JLabel("Instruments::"));
-			instrumentLabelPanel.setSize(new Dimension(10,40));
+			addInstrument(InstrumentRole.MAIN);
+			addInstrument(InstrumentRole.RHYTHM);
 			
-			JComponent scrollPane = UiScrollPane.instrumentDisplay(null);
-
-			JPanel quitPanel = MusicPanels.RIGHT_FLOWLAYOUT.createPanel();
+			JPanel quitPanel = MusicPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 			JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
 			quitPanel.add(quitButton);
-			
+			bottomPanel.add(quitPanel);
+		}
+
+		private void addInstrument(InstrumentRole instrumentAs) {
+			String label="Instruments for "
+					+ instrumentAs.name().toLowerCase()
+					+ " play";
+			JPanel instrumentLabelPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+			instrumentLabelPanel.add(new JLabel(label));
+			instrumentLabelPanel.setSize(new Dimension(10,40));
+			JComponent scrollPane = UiScrollPane.instrumentDisplay(instrumentAs, null);
 			bottomPanel.add(instrumentLabelPanel);
 			bottomPanel.add(scrollPane);
 			bottomPanel.add(Box.createVerticalGlue());
-			bottomPanel.add(quitPanel);
-			
 		}
+		
 	}
 }

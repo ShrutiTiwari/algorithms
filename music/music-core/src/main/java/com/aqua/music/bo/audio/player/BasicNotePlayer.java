@@ -2,6 +2,8 @@ package com.aqua.music.bo.audio.player;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
+
 import com.aqua.music.model.core.DynamicFrequency;
 
 /**
@@ -14,7 +16,7 @@ public interface BasicNotePlayer {
 	void start();
 	void stop();
 	void tidyup();
-	void notifyInstrumentChange(Instrument instrument);
+	void notifyInstrumentChange(Instrument instrument, InstrumentRole changingInstrument);
 	Instrument[] allInstruments();
 	
 	BasicNotePlayer MIDI_BASED_PLAYER = new BasicNotePlayerWithMidiChannel();

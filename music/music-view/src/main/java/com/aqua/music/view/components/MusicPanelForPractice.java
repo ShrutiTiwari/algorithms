@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -64,11 +63,11 @@ class MusicPanelForPractice extends MusicPanel {
 
 	@Override
 	protected JPanel createMiddlePanel(final Object selectedObject) {
-		this.specificComponentPanel = MusicPanels.BOX_VERTICAL.createPanel();
+		this.specificComponentPanel = MusicPanelBuilder.BOX_VERTICAL.createPanel();
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
 
-		JPanel playAreaPanel = MusicPanels.BOX_HORIZONTAL.createPanel();
+		JPanel playAreaPanel = MusicPanelBuilder.BOX_HORIZONTAL.createPanel();
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
@@ -92,7 +91,7 @@ class MusicPanelForPractice extends MusicPanel {
 		specificComponentPanel.add(Box.createVerticalGlue());
 		
 		
-		JPanel playAllPanel = MusicPanels.LEFT_FLOWLAYOUT.createPanel();
+		JPanel playAllPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		playAllPanel.add(playAllButton);
 		specificComponentPanel.add(playAllPanel);
 		return specificComponentPanel;

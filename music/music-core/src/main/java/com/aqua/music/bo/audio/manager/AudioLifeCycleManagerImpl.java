@@ -6,6 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 
 import com.aqua.music.bo.audio.player.AudioPlayer;
@@ -90,7 +91,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	public void setCurrentPlayer(AudioPlayer audioPlayer) {
 		this.currentAudioPlayer = audioPlayer;
 		if(configuredInstrument!=null){
-			changeInstrumentTo(configuredInstrument);
+			changeInstrumentTo(configuredInstrument, InstrumentRole.MAIN);
 		}
 	}
 
@@ -123,10 +124,10 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public void changeInstrumentTo(Instrument instrument) {
+	public void changeInstrumentTo(Instrument instrument, InstrumentRole instrumentRole) {
 		this.configuredInstrument=instrument;
 		if (currentAudioPlayer != null) {
-			currentAudioPlayer.changeInstrumentTo(configuredInstrument);
+			currentAudioPlayer.changeInstrumentTo(configuredInstrument, instrumentRole);
 		}
 	}
 }

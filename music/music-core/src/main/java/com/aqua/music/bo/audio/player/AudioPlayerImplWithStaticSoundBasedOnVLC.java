@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
+
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
@@ -185,7 +187,7 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	}
 
 	@Override
-	public void changeInstrumentTo(Instrument instrument) {
+	public void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument) {
 		
 	}
 }

@@ -2,6 +2,7 @@ package com.aqua.music.bo.audio.manager;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
 
 import org.slf4j.Logger;
@@ -23,5 +24,5 @@ public interface AudioLifeCycleManager {
 
 	void decreaseTempo();
 
-	void changeInstrumentTo(Instrument instrument);
+	void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument);
 }

@@ -7,27 +7,30 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import com.aqua.music.example.easymidi.AbsractPlayable.Drum;
+import com.aqua.music.example.easymidi.AbsractPlayable.Note;
+import com.aqua.music.example.easymidi.Chord.ChordsList;
+
 public class Demo extends JFrame {
-	int bassVoice = Note.i33_Electric_Bass_finger;
+	private final int bassVoice = Playable.i33_Electric_Bass_finger;
 
-	Drum hat = new Drum(4, Drum.d42_Closed_Hi_Hat, 64);
-	Drum snare = new Drum(4, Drum.d38_Acoustic_Snare);
-	Drum bass = new Drum(4, Drum.d35_Acoustic_Bass_Drum);
+	private final Drum hat = new Drum(4, Playable.d42_Closed_Hi_Hat, 64);
+	private final Drum snare = new Drum(4, Playable.d38_Acoustic_Snare);
+	private final Drum bass = new Drum(4, Playable.d35_Acoustic_Bass_Drum);
 
-	int guitarVoice = Note.i30_Distortion_Guitar;
+	private final Note bullet = new Note(4, Playable.p96_8_Do, Playable.i127_Gunshot);
+	private final Note backgroundDrumNote = new Note(8, Playable.p28_2_Mi, bassVoice);
 
-	Note bullet = new Note(4, Note.p96_8_Do, Note.i127_Gunshot);
+	ChordsList backgroundDrumChordList = new ChordsList().chord(new Chord(8).addDrum(hat).addDrum(bass).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addDrum(snare).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addDrum(bass).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addDrum(bass).addNote(backgroundDrumNote))
+			.chord(new Chord(8).addDrum(hat).addDrum(snare).addNote(8, Playable.p34_2_La_Diese, bassVoice))
+			.chord(new Chord(8).addDrum(hat).addNote(8, Playable.p35_2_Si, bassVoice));
 
-	Phrase p1 = new Phrase().chord(new Chord(8).drum(hat).drum(bass).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).drum(snare).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).drum(bass).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).drum(bass).note(8, Note.p28_2_Mi, bassVoice))
-			.chord(new Chord(8).drum(hat).drum(snare).note(8, Note.p34_2_La_Diese, bassVoice))
-			.chord(new Chord(8).drum(hat).note(8, Note.p35_2_Si, bassVoice));
-
-	Ticker ti = new Ticker(120, p1) {
+	Ticker backgroundDrumsTicker = new Ticker(120, backgroundDrumChordList) {
 		public void onTick(long count) {
 			if (count == 0) {
 				System.out.println("begin");
@@ -35,7 +38,7 @@ public class Demo extends JFrame {
 		}
 	};
 
-	Ticker gunSerie = new Ticker(180, new Phrase().chord(new Chord(8).note(bullet)).chord(new Chord(8).note(bullet))
+	Ticker gunSerie = new Ticker(180, new ChordsList().chord(new Chord(8).addNote(bullet)).chord(new Chord(8).note(bullet))
 			.chord(new Chord(8).note(bullet)).chord(new Chord(8).note(bullet)).chord(new Chord(8).note(bullet))) {
 		@Override
 		public void onFinish() {
@@ -52,7 +55,7 @@ public class Demo extends JFrame {
 
 	public Demo() {
 		Tools.initSynthesizer();
-		ti.restart();
+		backgroundDrumsTicker.restart();
 		this.setSize(500, 150);
 		this.setTitle("EasyMIDI test");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,19 +69,19 @@ public class Demo extends JFrame {
 		stop.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ti.stop();
+				backgroundDrumsTicker.stop();
 			}
 		});
 		play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ti.restart();
+				backgroundDrumsTicker.restart();
 			}
 		});
 		gun.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Tools.playNote(Note.p93_7_La, Note.i127_Gunshot, 127, 2000);
+				Tools.playNote(Playable.p93_7_La, Playable.i127_Gunshot, 127, 2000);
 			}
 		});
 		mgun.addActionListener(new ActionListener() {
@@ -90,13 +93,13 @@ public class Demo extends JFrame {
 		tweet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Tools.playNote(Note.p69_5_La, Note.i123_Bird_Tweet, 99, 3000);
+				Tools.playNote(Playable.p69_5_La, Playable.i123_Bird_Tweet, 99, 3000);
 			}
 		});
 		clap.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Tools.playDrum(Drum.d39_Hand_Clap, 127, 2000);
+				Tools.playDrum(Playable.d39_Hand_Clap, 127, 2000);
 			}
 		});
 		this.setVisible(true);

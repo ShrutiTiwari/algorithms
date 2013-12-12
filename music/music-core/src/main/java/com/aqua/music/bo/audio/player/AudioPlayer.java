@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,5 +59,5 @@ public interface AudioPlayer {
 		}
 	}
 
-	void changeInstrumentTo(Instrument instrument);
+	void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument);
 }

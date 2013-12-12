@@ -1,10 +1,8 @@
 package com.aqua.music.model.raag.song;
 
 import static com.aqua.music.model.core.ClassicalNote.D;
-import static com.aqua.music.model.core.ClassicalNote.D_;
 import static com.aqua.music.model.core.ClassicalNote.G;
 import static com.aqua.music.model.core.ClassicalNote.G3;
-import static com.aqua.music.model.core.ClassicalNote.G_;
 import static com.aqua.music.model.core.ClassicalNote.M;
 import static com.aqua.music.model.core.ClassicalNote.M_;
 import static com.aqua.music.model.core.ClassicalNote.N;

@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.sound.midi.Instrument;
 
+import open.music.api.InstrumentRole;
+
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
 
@@ -111,7 +113,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	}
 
 	@Override
-	public void changeInstrumentTo(Instrument instrument) {
-		basicNotePlayer.notifyInstrumentChange(instrument);
+	public void changeInstrumentTo(Instrument instrument, InstrumentRole instrumentRole) {
+		basicNotePlayer.notifyInstrumentChange(instrument, instrumentRole);
 	}
 }

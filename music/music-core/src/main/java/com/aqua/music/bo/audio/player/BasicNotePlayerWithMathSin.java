@@ -5,6 +5,8 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
+import open.music.api.InstrumentRole;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,7 +113,7 @@ class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 	}
 
 	@Override
-	public void notifyInstrumentChange(Instrument instrument) {
+	public void notifyInstrumentChange(Instrument instrument, InstrumentRole changingInstrument) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -121,5 +123,4 @@ class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

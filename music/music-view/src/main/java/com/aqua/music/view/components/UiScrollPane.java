@@ -13,11 +13,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author "Shruti Tiwari"
@@ -38,7 +35,7 @@ public class UiScrollPane {
 		this(10, 200, null);
 	}
 
-	public static JComponent instrumentDisplay(Object selectedItem) {
+	public static JComponent instrumentDisplay(InstrumentRole instrumentRole, Object selectedItem) {
 		Instrument[] allInstruments = PlayApi.getAllInstruments();
 
 		String[] instrumentNames = new String[allInstruments.length];
@@ -53,7 +50,9 @@ public class UiScrollPane {
 		}
 
 		JList jList = new JList(instrumentNames);
-		jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments));
+
+		jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
+
 		return new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
 	}
 
@@ -70,18 +69,15 @@ public class UiScrollPane {
 		return scrollPane;
 	}
 
-	static class InstrumentDropdownActionListener implements ListSelectionListener {
-		Logger logger = LoggerFactory.getLogger(InstrumentDropdownActionListener.class);
+	private static class InstrumentDropdownActionListener implements ListSelectionListener {
 		private final JList jList;
 		private Instrument[] allInstruments;
+		private InstrumentRole instrumentRole;
 
-		/**
-		 * @param jList
-		 * @param allInstruments
-		 */
-		public InstrumentDropdownActionListener(JList jList, Instrument[] allInstruments) {
+		public InstrumentDropdownActionListener(JList jList, Instrument[] allInstruments, InstrumentRole instrumentRole) {
 			this.jList = jList;
 			this.allInstruments = allInstruments;
+			this.instrumentRole = instrumentRole;
 		}
 
 		@Override
@@ -89,7 +85,7 @@ public class UiScrollPane {
 			if (e.getValueIsAdjusting() == false) {
 				int selectedIndex = jList.getSelectedIndex();
 				if (selectedIndex != -1) {
-					AudioPlayerSettings.changeInstrumentTo(allInstruments[selectedIndex]);
+					instrumentRole.setTo(allInstruments[selectedIndex]);
 				}
 			}
 		}
