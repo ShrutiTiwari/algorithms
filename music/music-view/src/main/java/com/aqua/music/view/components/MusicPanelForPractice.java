@@ -1,5 +1,6 @@
 package com.aqua.music.view.components;
 
+import java.awt.Dimension;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.util.Collection;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -67,6 +69,11 @@ class MusicPanelForPractice extends MusicPanel {
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
 
+		
+		JPanel labelPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+		labelPanel.add(new JLabel(UiLabels.PRACTICE_LABEL));
+		labelPanel.setSize(new Dimension(10,40));
+		
 		JPanel playAreaPanel = MusicPanelBuilder.BOX_HORIZONTAL.createPanel();
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
@@ -87,6 +94,7 @@ class MusicPanelForPractice extends MusicPanel {
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
 		
+		specificComponentPanel.add(labelPanel);
 		specificComponentPanel.add(playAreaPanel);
 		specificComponentPanel.add(Box.createVerticalGlue());
 		
