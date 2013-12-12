@@ -2,6 +2,7 @@ package com.aqua.music.view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public interface UiMainContainer<T> {
 		public SwingBasedUiMainContainer() {
 			this.swingframe = new JFrame(frameTitle);
 			swingframe.setLocationRelativeTo(null);
+			swingframe.addWindowListener(new AppCloseWindowsListern());
 		}
 
 		@Override
