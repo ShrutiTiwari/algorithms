@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * @author "Shruti Tiwari"
  * 
  */
-public enum MusicPanelBuilder {
+public enum UiJPanelBuilder {
 	BOX_HORIZONTAL {
 		@Override
 		public JPanel createPanel() {

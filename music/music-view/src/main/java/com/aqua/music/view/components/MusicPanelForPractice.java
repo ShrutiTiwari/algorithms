@@ -26,12 +26,15 @@ import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionLi
 class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
 	private JPanel specificComponentPanel;
+	private final String pickTitle;
 
 	/**
 	 * Used for plain rehearsing - of thaat and songs
+	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(Collection<Playable> itemsList) {
-		super(false);
+	public MusicPanelForPractice(TopPanelBuilder topPanelBuilder,Collection<Playable> itemsList, String pickTitle) {
+		super(topPanelBuilder,false);
+		this.pickTitle=pickTitle;
 		this.intialItemsList = itemsList;
 	}
 
@@ -40,9 +43,11 @@ class MusicPanelForPractice extends MusicPanel {
 	 * 
 	 * @param frequencySet
 	 * @param patternItemsCount
+	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(FrequencySet frequencySet, PermuatationsGenerator patternItemsCount) {
-		super(true);
+	public MusicPanelForPractice(TopPanelBuilder topPanelBuilder,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
+		super(topPanelBuilder,true);
+		this.pickTitle=pickTitle;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
 		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this, frequencySet,
@@ -65,16 +70,16 @@ class MusicPanelForPractice extends MusicPanel {
 
 	@Override
 	protected JPanel createMiddlePanel(final Object selectedObject) {
-		this.specificComponentPanel = MusicPanelBuilder.BOX_VERTICAL.createPanel();
+		this.specificComponentPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
 
 		
-		JPanel labelPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
-		labelPanel.add(new JLabel(UiLabels.PRACTICE_LABEL));
+		JPanel labelPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+		labelPanel.add(new JLabel(pickTitle));
 		labelPanel.setSize(new Dimension(10,40));
 		
-		JPanel playAreaPanel = MusicPanelBuilder.BOX_HORIZONTAL.createPanel();
+		JPanel playAreaPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 		
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
@@ -99,7 +104,7 @@ class MusicPanelForPractice extends MusicPanel {
 		specificComponentPanel.add(Box.createVerticalGlue());
 		
 		
-		JPanel playAllPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+		JPanel playAllPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		playAllPanel.add(playAllButton);
 		specificComponentPanel.add(playAllPanel);
 		return specificComponentPanel;

@@ -20,8 +20,8 @@ class MusicPanelForQuiz extends MusicPanel {
 	private final QuizLevel initialQuizLevel;
 	private JPanel resultPanel;
 
-	MusicPanelForQuiz(final QuizLevel initialQuizLevel) {
-		super(true);
+	MusicPanelForQuiz(TopPanelBuilder topPanelBuilder,final QuizLevel initialQuizLevel) {
+		super(topPanelBuilder,true);
 		this.initialQuizLevel = initialQuizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);
 		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
@@ -29,7 +29,7 @@ class MusicPanelForQuiz extends MusicPanel {
 	}
 
 	protected JPanel createMiddlePanel(final Object selectedObject) {
-		resultPanel = MusicPanelBuilder.BOX_HORIZONTAL.createPanel();
+		resultPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 		resultPanel.add(Box.createVerticalStrut(100));
 
 		QuizLevel quizLevel = (QuizLevel) selectedObject;
@@ -39,15 +39,15 @@ class MusicPanelForQuiz extends MusicPanel {
 		int quizIndex = 1;
 
 		Collection<Quiz<CyclicFrequencySet>> quizSections = (Collection<Quiz<CyclicFrequencySet>>) quizLevel.quizSections();
-		JPanel[] subPanels = new JPanel[] { MusicPanelBuilder.BOX_VERTICAL.createPanel() };
+		JPanel[] subPanels = new JPanel[] { UiJPanelBuilder.BOX_VERTICAL.createPanel() };
 
 		if (quizSections.size() > 5) {
-			subPanels = new JPanel[] { MusicPanelBuilder.BOX_VERTICAL.createPanel(), MusicPanelBuilder.BOX_VERTICAL.createPanel() };
+			subPanels = new JPanel[] { UiJPanelBuilder.BOX_VERTICAL.createPanel(), UiJPanelBuilder.BOX_VERTICAL.createPanel() };
 		}
 
 		int panel = 0;
 		for (Quiz<CyclicFrequencySet> eachQuizSection : quizSections) {
-			JPanel quizSectionPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+			JPanel quizSectionPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 			final String quizName = "Quiz " + quizIndex;
 			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName);
 			quizSectionPanel.add(quizPlayButton);

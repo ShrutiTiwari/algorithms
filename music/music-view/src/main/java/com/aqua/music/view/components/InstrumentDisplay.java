@@ -30,7 +30,7 @@ public class InstrumentDisplay {
 
 	public JPanel instrumentLabel() {
 		String label = UiLabels.INSTRUMENT_LABEL + instrumentRole.name().toLowerCase() + " play:";
-		JPanel instrumentLabelPanel = MusicPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+		JPanel instrumentLabelPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		instrumentLabelPanel.add(new JLabel(label));
 		instrumentLabelPanel.setSize(new Dimension(10, 40));
 		return instrumentLabelPanel;

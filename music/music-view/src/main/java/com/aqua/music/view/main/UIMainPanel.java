@@ -1,9 +1,11 @@
 package com.aqua.music.view.main;
 
-import java.awt.GridLayout;
-
+import javax.swing.Box;
 import javax.swing.JPanel;
 
+import com.aqua.music.view.components.BottomPanelBuilder;
+import com.aqua.music.view.components.TopPanelBuilder;
+import com.aqua.music.view.components.UiJPanelBuilder;
 import com.aqua.music.view.components.UiTabbedPane;
 
 /**
@@ -15,8 +17,13 @@ public class UIMainPanel<T> {
 	private final JPanel jPanelInstance;
 
 	UIMainPanel() {
-		this.jPanelInstance = new JPanel(new GridLayout(1, 1));
-		jPanelInstance.add(UiTabbedPane.getTabbedPane());
+		this.jPanelInstance = UiJPanelBuilder.BOX_VERTICAL.createPanel();
+		
+		final TopPanelBuilder topPanelBuilder = new TopPanelBuilder();
+		jPanelInstance.add(topPanelBuilder.getPanel());
+		jPanelInstance.add(UiTabbedPane.getTabbedPane(topPanelBuilder));
+		jPanelInstance.add(Box.createVerticalGlue());
+		jPanelInstance.add(new BottomPanelBuilder().panel());
 	}
 
 	T getJPanel() {
