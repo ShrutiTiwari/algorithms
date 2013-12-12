@@ -8,14 +8,14 @@ import open.music.api.InstrumentRole;
 
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
-public class BottomPanelBuilder {
+public class CommonBottomPanel {
 	private final JPanel bottomPanel;
 
 	public JPanel panel(){
 		return bottomPanel;
 	}
 	
-	public BottomPanelBuilder() {
+	public CommonBottomPanel() {
 		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 
 		addInstrument(InstrumentRole.MAIN);

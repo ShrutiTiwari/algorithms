@@ -13,13 +13,17 @@ import javax.swing.JPanel;
 
 import com.aqua.music.view.components.UiButtons.MusicButtons;
 
-public class TopPanelBuilder {
-	final JButton pauseButton;
+public class CommonTopPanel {
+	private final JButton pauseButton;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 	private JPanel rightPanel;
 	private final JPanel topMostPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 
-	public TopPanelBuilder() {
+	public JButton pauseButton(){
+		return pauseButton;
+	}
+	
+	public CommonTopPanel() {
 		this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
 		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 

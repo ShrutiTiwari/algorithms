@@ -28,5 +28,4 @@ public class TaanTest {
 		AudioPlayerSettings.increaseTempo();
 		Song.S_BHIMPALASI.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
 	}
-
 }

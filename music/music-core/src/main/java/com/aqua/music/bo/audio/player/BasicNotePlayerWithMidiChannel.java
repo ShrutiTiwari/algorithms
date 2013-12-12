@@ -24,9 +24,9 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	private final MidiChannel mainNoteChannel;
 	private final MidiChannel rhythmChannel;
 	private final Synthesizer synth;
-	private volatile int activeNoteNumber=-1;
+	private volatile int activeNoteNumber = -1;
 	private final int rhythmNote = ClassicalNote.S.midiNoteNumber();
-	
+
 	public Instrument[] allInstruments() {
 		return allInstruments;
 	}
@@ -36,8 +36,8 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 		this.mc = (synth == null ? null : synth.getChannels());
 		this.allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
 		synth.loadAllInstruments(synth.getDefaultSoundbank());
-		this.rhythmChannel= mc[9];
-		this.mainNoteChannel =mc[8];
+		this.rhythmChannel = mc[9];
+		this.mainNoteChannel = mc[8];
 		this.notifyInstrumentChange(allInstruments[73], InstrumentRole.MAIN);
 		this.notifyInstrumentChange(allInstruments[13], InstrumentRole.RHYTHM);
 	}
@@ -48,17 +48,17 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	}
 
 	public void notifyInstrumentChange(Instrument instrument, InstrumentRole instrumentRole) {
-		if(instrumentRole==InstrumentRole.MAIN){
+		if (instrumentRole == InstrumentRole.MAIN) {
 			logger.info("changing main instrument to [" + instrument + "]");
 			synth.loadInstrument(instrument);
 			mainNoteChannel.programChange(instrument.getPatch().getProgram());
-		}else{
+		} else {
 			logger.info("changing rhythm instrument to [" + instrument + "]");
 			synth.loadInstrument(instrument);
 			rhythmChannel.programChange(instrument.getPatch().getProgram());
 		}
 	}
-	
+
 	@Override
 	public void play(DynamicFrequency each, int duration) {
 		this.activeNoteNumber = each.midiNoteNumber();

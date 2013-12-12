@@ -1,5 +1,6 @@
 package com.aqua.music.view.components;
 
+import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,9 +20,11 @@ import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 class MusicPanelForQuiz extends MusicPanel {
 	private final QuizLevel initialQuizLevel;
 	private JPanel resultPanel;
+	private final TextArea consoleArea;
 
-	MusicPanelForQuiz(TopPanelBuilder topPanelBuilder,final QuizLevel initialQuizLevel) {
-		super(topPanelBuilder,true);
+	MusicPanelForQuiz(CommonPanelComponents commonPanelComponents, final QuizLevel initialQuizLevel) {
+		super(commonPanelComponents, true);
+		this.consoleArea = commonPanelComponents.consoleArea();
 		this.initialQuizLevel = initialQuizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);
 		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
@@ -61,7 +64,7 @@ class MusicPanelForQuiz extends MusicPanel {
 			quizPlayButton.addActionListener(new QuizPlayActionListener(this, eachQuizSection, multipleChoiceButtons));
 			quizIndex++;
 			subPanels[panel++].add(quizSectionPanel);
-			panel = (panel > subPanels.length-1 ? 0 : panel);
+			panel = (panel > subPanels.length - 1 ? 0 : panel);
 		}
 
 		for (JPanel each : subPanels) {

@@ -19,21 +19,22 @@ public abstract class MusicPanel {
 	private final JButton pauseButton;
 	private volatile boolean initialized = false;
 	private final JPanel mainPanel;
-	private final TopPanelBuilder topPanelBuilder;
 	private JPanel refreshablePanel;
+	
+	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 
 	private JPanel middlePanel;
 
-	protected MusicPanel(TopPanelBuilder topPanelBuilder,boolean extraPanel) {
+	protected MusicPanel(CommonPanelComponents commonPanelComponents,boolean extraPanel) {
 		this.mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
-		this.topPanelBuilder = topPanelBuilder;
-		this.pauseButton = topPanelBuilder.pauseButton;
+		this.pauseButton = commonPanelComponents.pauseButton();
 		this.middlePanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
+		mainPanel.add(leftPanel);
 		mainPanel.add(middlePanel);
 	}
 
 	public void addExtraTopControl(JComponent aComponent) {
-		topPanelBuilder.add(aComponent);
+		leftPanel.add(aComponent);
 	}
 
 	public JPanel getPanel() {

@@ -23,12 +23,12 @@ public class UiTabbedPane {
 	private static final String TITLE_PRACTICE_THAAT_PATTERN = "Practice Thaats with pattern";
 	private static final String TITLE_PRACTICE_THAAT_PLAIN = "Practice Thaats";
 
-	public static JTabbedPane getTabbedPane(TopPanelBuilder topPanelBuilder) {
+	public static JTabbedPane getTabbedPane(CommonPanelComponents commonPanelComponents) {
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(UiTabbedPane.TITLE_PRACTICE_THAAT_PLAIN, new MusicPanelForPractice(topPanelBuilder,PlayApi.getAllPlainThaat(), UiLabels.PRACTICE_A_THAAT).getPanel());
-		tabbedPane.addTab(TITLE_PRACTICE_THAAT_PATTERN, new MusicPanelForPractice(topPanelBuilder,firstThaat, PermuatationsGenerator.PAIR, UiLabels.PRACTICE_A_PATTERN).getPanel());
-		tabbedPane.addTab(TITLE_QUIZ_TAB, new MusicPanelForQuiz(topPanelBuilder,firstQuizLevel).getPanel());
-		tabbedPane.addTab(UiTabbedPane.TITLE_SONG_TAB, new MusicPanelForPractice(topPanelBuilder,PlayApi.getAllSongs(), UiLabels.PRACTICE_A_SONG).getPanel());
+		tabbedPane.addTab(UiTabbedPane.TITLE_PRACTICE_THAAT_PLAIN, new MusicPanelForPractice(commonPanelComponents,PlayApi.getAllPlainThaat(), UiLabels.PRACTICE_A_THAAT).getPanel());
+		tabbedPane.addTab(TITLE_PRACTICE_THAAT_PATTERN, new MusicPanelForPractice(commonPanelComponents,firstThaat, PermuatationsGenerator.PAIR, UiLabels.PRACTICE_A_PATTERN).getPanel());
+		tabbedPane.addTab(TITLE_QUIZ_TAB, new MusicPanelForQuiz(commonPanelComponents,firstQuizLevel).getPanel());
+		tabbedPane.addTab(UiTabbedPane.TITLE_SONG_TAB, new MusicPanelForPractice(commonPanelComponents,PlayApi.getAllSongs(), UiLabels.PRACTICE_A_SONG).getPanel());
 		tabbedPane.setOpaque(true);
 		return tabbedPane;
 	}

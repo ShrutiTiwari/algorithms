@@ -27,13 +27,14 @@ class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
 	private JPanel specificComponentPanel;
 	private final String pickTitle;
-
+	private final TextArea consoleArea;
 	/**
 	 * Used for plain rehearsing - of thaat and songs
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(TopPanelBuilder topPanelBuilder,Collection<Playable> itemsList, String pickTitle) {
-		super(topPanelBuilder,false);
+	public MusicPanelForPractice(CommonPanelComponents commonPanelComponents,Collection<Playable> itemsList, String pickTitle) {
+		super(commonPanelComponents,false);
+		this.consoleArea=commonPanelComponents.consoleArea();
 		this.pickTitle=pickTitle;
 		this.intialItemsList = itemsList;
 	}
@@ -45,8 +46,9 @@ class MusicPanelForPractice extends MusicPanel {
 	 * @param patternItemsCount
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(TopPanelBuilder topPanelBuilder,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
-		super(topPanelBuilder,true);
+	public MusicPanelForPractice(CommonPanelComponents commonPanelComponents,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
+		super(commonPanelComponents,true);
+		this.consoleArea=commonPanelComponents.consoleArea();
 		this.pickTitle=pickTitle;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
@@ -73,7 +75,6 @@ class MusicPanelForPractice extends MusicPanel {
 		this.specificComponentPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
-
 		
 		JPanel labelPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		labelPanel.add(new JLabel(pickTitle));
@@ -86,15 +87,11 @@ class MusicPanelForPractice extends MusicPanel {
 			itemsList = this.intialItemsList;
 		}
 
-		final TextArea consoleArea = createConsoleArea();
-		
 		final JButton pauseButton = pauseButton();
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
-		
-		playAreaPanel.add(consoleArea);
 		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
@@ -108,13 +105,6 @@ class MusicPanelForPractice extends MusicPanel {
 		playAllPanel.add(playAllButton);
 		specificComponentPanel.add(playAllPanel);
 		return specificComponentPanel;
-	}
-
-	private TextArea createConsoleArea() {
-		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
-		textArea.setEditable(false);
-		textArea.setVisible(true);
-		return textArea;
 	}
 
 	class PlayAllItemsActionListener implements ActionListener {
