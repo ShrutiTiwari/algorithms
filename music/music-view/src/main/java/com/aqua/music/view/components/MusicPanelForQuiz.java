@@ -1,6 +1,5 @@
 package com.aqua.music.view.components;
 
-import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -8,6 +7,8 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+
+import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.puzzles.QuizLevel;
@@ -20,15 +21,19 @@ import com.aqua.music.model.puzzles.QuizLevel.Quiz;
 class MusicPanelForQuiz extends MusicPanel {
 	private final QuizLevel initialQuizLevel;
 	private JPanel resultPanel;
-	private final TextArea consoleArea;
+	private final StateDependentUi stateDependentUi;
 
-	MusicPanelForQuiz(CommonPanelComponents commonPanelComponents, final QuizLevel initialQuizLevel) {
-		super(commonPanelComponents, true);
-		this.consoleArea = commonPanelComponents.consoleArea();
+	MusicPanelForQuiz(StateDependentUi stateDependentUi, final QuizLevel initialQuizLevel) {
+		super(stateDependentUi, true);
+		this.stateDependentUi=stateDependentUi;
 		this.initialQuizLevel = initialQuizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);
 		quizDropdown.addActionListener(new UiDropdown.QuizDropdownActionListener(this));
 		addExtraTopControl(quizDropdown);
+	}
+
+	public void repaint() {
+		resultPanel.repaint();
 	}
 
 	protected JPanel createMiddlePanel(final Object selectedObject) {
@@ -61,7 +66,7 @@ class MusicPanelForQuiz extends MusicPanel {
 				multipleChoiceButtons.add(b);
 				quizSectionPanel.add(b);
 			}
-			quizPlayButton.addActionListener(new QuizPlayActionListener(this, eachQuizSection, multipleChoiceButtons));
+			quizPlayButton.addActionListener(new QuizPlayActionListener(this, eachQuizSection, multipleChoiceButtons, stateDependentUi));
 			quizIndex++;
 			subPanels[panel++].add(quizSectionPanel);
 			panel = (panel > subPanels.length - 1 ? 0 : panel);
@@ -72,9 +77,5 @@ class MusicPanelForQuiz extends MusicPanel {
 		}
 
 		return resultPanel;
-	}
-
-	public void repaint() {
-		resultPanel.repaint();
 	}
 }

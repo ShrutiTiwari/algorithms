@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import open.music.api.StateDependentUi;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,7 @@ abstract class MusicPanel {
 
 	private JPanel middlePanel;
 
-	protected MusicPanel(CommonPanelComponents commonPanelComponents,boolean extraPanel) {
+	protected MusicPanel(StateDependentUi commonPanelComponents,boolean extraPanel) {
 		this.mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		this.pauseButton = commonPanelComponents.pauseButton();
 		this.middlePanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();

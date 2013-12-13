@@ -1,7 +1,6 @@
 package com.aqua.music.view.components;
 
 import java.awt.Dimension;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -16,8 +15,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import open.music.api.PlayApi;
-import open.music.api.PlayApi.AudioPlayerNextStatus;
 import open.music.api.Playable;
+import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -25,16 +24,16 @@ import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionLi
 
 class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
-	private JPanel specificComponentPanel;
 	private final String pickTitle;
-	private final TextArea consoleArea;
+	private JPanel specificComponentPanel;
+	private final StateDependentUi stateDependentUi;
 	/**
 	 * Used for plain rehearsing - of thaat and songs
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(CommonPanelComponents commonPanelComponents,Collection<Playable> itemsList, String pickTitle) {
-		super(commonPanelComponents,false);
-		this.consoleArea=commonPanelComponents.consoleArea();
+	public MusicPanelForPractice(StateDependentUi stateDependentUi,Collection<Playable> itemsList, String pickTitle) {
+		super(stateDependentUi,false);
+		this.stateDependentUi=stateDependentUi;
 		this.pickTitle=pickTitle;
 		this.intialItemsList = itemsList;
 	}
@@ -46,9 +45,9 @@ class MusicPanelForPractice extends MusicPanel {
 	 * @param patternItemsCount
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(CommonPanelComponents commonPanelComponents,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
-		super(commonPanelComponents,true);
-		this.consoleArea=commonPanelComponents.consoleArea();
+	public MusicPanelForPractice(StateDependentUi stateDependentUi,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
+		super(stateDependentUi,true);
+		this.stateDependentUi=stateDependentUi;
 		this.pickTitle=pickTitle;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
@@ -90,16 +89,15 @@ class MusicPanelForPractice extends MusicPanel {
 		final JButton pauseButton = pauseButton();
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
-		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, consoleArea, allPlayableItems, pauseButton));
+		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems, stateDependentUi));
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
-		playAllButton.addActionListener(new PlayAllItemsActionListener(consoleArea, allPlayableItems, pauseButton));
+		playAllButton.addActionListener(new PlayAllItemsActionListener(stateDependentUi, allPlayableItems));
 		
 		specificComponentPanel.add(labelPanel);
 		specificComponentPanel.add(playAreaPanel);
 		specificComponentPanel.add(Box.createVerticalGlue());
-		
 		
 		JPanel playAllPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		playAllPanel.add(playAllButton);
@@ -108,41 +106,29 @@ class MusicPanelForPractice extends MusicPanel {
 	}
 
 	class PlayAllItemsActionListener implements ActionListener {
-		private final TextArea textArea;
 		private final Playable[] playableItems;
-		private final JButton pauseButton;
+		private StateDependentUi stateDependentUi;
 
-		public PlayAllItemsActionListener(final TextArea textArea, final Playable[] playableItems, JButton pauseButton) {
-			this.textArea = textArea;
+		public PlayAllItemsActionListener(final StateDependentUi stateDependentUi, final Playable[] playableItems) {
 			this.playableItems = playableItems;
-			this.pauseButton = pauseButton;
+			this.stateDependentUi=stateDependentUi;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			this.pauseButton.setText(AudioPlayerNextStatus.PAUSE.toString());
-			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, textArea, 5);
+			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, stateDependentUi, 5);
 		}
 	}
 
 	class PlaySingleItemActionListener implements ListSelectionListener {
-		private final TextArea consoleArea;
 		private final Playable[] allPlayableItems;
-		private final JButton pauseButton;
 		private JList jlist;
+		private StateDependentUi stateDependentUi;
 
-		public PlaySingleItemActionListener(final JList jlist, final TextArea consoleArea, Playable[] singlePlayableItem,
-				JButton pauseButton) {
+		public PlaySingleItemActionListener(final JList jlist, Playable[] singlePlayableItem, final StateDependentUi stateDependentUi) {
 			this.jlist = jlist;
-			this.consoleArea = consoleArea;
 			this.allPlayableItems = singlePlayableItem;
-			this.pauseButton = pauseButton;
-		}
-
-		private void displayOnConsole(final String name) {
-			String displayText = "\n\n Playing::" + name;
-			logger.info(displayText);
-			consoleArea.setText(displayText);
+			this.stateDependentUi= stateDependentUi;
 		}
 
 		@Override
@@ -150,11 +136,18 @@ class MusicPanelForPractice extends MusicPanel {
 			if (e.getValueIsAdjusting() == false) {
 				int selectedIndex = jlist.getSelectedIndex();
 				if (selectedIndex != -1) {
-					this.pauseButton.setText(AudioPlayerNextStatus.PAUSE.toString());
 					PlayApi.playInLoop(allPlayableItems[selectedIndex]);
-					displayOnConsole(allPlayableItems[selectedIndex].name() + "===>" + "\n" + allPlayableItems[selectedIndex].asText());
+					String playableName = allPlayableItems[selectedIndex].name();
+					stateDependentUi.updatePlayable(playableName);
+					displayOnConsole(playableName + "===>" + "\n" + allPlayableItems[selectedIndex].asText());
 				}
 			}
+		}
+
+		private void displayOnConsole(final String name) {
+			String displayText = "\n\n Playing::" + name;
+			logger.info(displayText);
+			stateDependentUi.updateConsole(displayText);
 		}
 	}
 }

@@ -8,6 +8,7 @@ import java.util.Collection;
 import javax.swing.JButton;
 
 import open.music.api.PlayApi;
+import open.music.api.StateDependentUi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +25,19 @@ class QuizPlayActionListener implements ActionListener {
 	private final Collection<JButton> multipleChoiceSet;
 	private final Quiz<CyclicFrequencySet> quizSection;
 	private final MusicPanel musicPanelForQuiz;
+	private final StateDependentUi stateDependentUi;
 
-	public QuizPlayActionListener(MusicPanel musicPanelForQuiz, Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet) {
+	public QuizPlayActionListener(MusicPanel musicPanelForQuiz, Quiz<CyclicFrequencySet> quizSection, Collection<JButton> multipleChoiceSet, StateDependentUi stateDependentUi) {
 		this.musicPanelForQuiz = musicPanelForQuiz;
 		this.quizSection = quizSection;
 		this.multipleChoiceSet = multipleChoiceSet;
+		this.stateDependentUi=stateDependentUi;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		CyclicFrequencySet playItem = quizSection.playItem();
+		stateDependentUi.updatePlayable(((JButton)arg0.getSource()).getText());
 		PlayApi.play(playItem);
 
 		for (JButton eachMultipleChoiceOption : multipleChoiceSet) {

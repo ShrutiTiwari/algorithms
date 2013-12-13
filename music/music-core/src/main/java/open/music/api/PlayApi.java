@@ -67,12 +67,12 @@ public class PlayApi {
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
 	}
 	
-	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, final TextArea textArea, int repeatCount) {
-		AudioTask<Playable> audioTask = audioTaskWith(playableItems, textArea, repeatCount);
+	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, final StateDependentUi stateDependentUi, int repeatCount) {
+		AudioTask<Playable> audioTask = audioTaskWith(playableItems, stateDependentUi, repeatCount);
 		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
-	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final TextArea textArea, final int repeatCount) {
+	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final StateDependentUi stateDependentUi, final int repeatCount) {
 		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
 			public Playable[] forLoopParameter() {
@@ -81,16 +81,18 @@ public class PlayApi {
 
 			@Override
 			public void forLoopBody(final Playable playableItem) {
-				String text = playableItem.name() + "===>\n" + playableItem.asText();
+				String playableName = playableItem.name();
+				stateDependentUi.updatePlayable(playableName);
+				String text = playableName + "===>\n" + playableItem.asText();
 				String displayText = "Playing::" + text;
 				logger.info(displayText);
-				textArea.append(displayText);
+				stateDependentUi.appendToConsole(displayText);
 				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies(), repeatCount);
 			}
 
 			@Override
 			public void beforeForLoop() {
-				textArea.setText("Playing all items:\n");
+				stateDependentUi.updateConsole("Playing all items:\n");
 				logger.info("" + playableItems.length);
 			}
 		};

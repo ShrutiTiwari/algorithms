@@ -6,9 +6,11 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import open.music.api.StateDependentUi;
+
 import com.aqua.music.view.components.CommonBottomPanel;
-import com.aqua.music.view.components.CommonPanelComponents;
 import com.aqua.music.view.components.CommonTopPanel;
+import com.aqua.music.view.components.StateDependentUiImpl;
 import com.aqua.music.view.components.UiJPanelBuilder;
 import com.aqua.music.view.components.UiTabbedPane;
 
@@ -19,22 +21,17 @@ import com.aqua.music.view.components.UiTabbedPane;
  */
 public class UIMainPanel<T> {
 	private final JPanel jPanelInstance;
-
 	UIMainPanel() {
 		this.jPanelInstance = UiJPanelBuilder.BOX_VERTICAL.createPanel();
-		
-		final CommonTopPanel commonTopPanel = new CommonTopPanel();
-		JPanel topPanel = commonTopPanel.getPanel();
-
 		JPanel middlePanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
-		final TextArea consoleArea = createConsoleArea();
-		JTabbedPane tabbedPane = UiTabbedPane.getTabbedPane(new CommonPanelComponents(commonTopPanel.pauseButton(), consoleArea));
+		StateDependentUiImpl stateDependentUi = new StateDependentUiImpl();
+		JTabbedPane tabbedPane = UiTabbedPane.getTabbedPane(stateDependentUi);
 		middlePanel.add(tabbedPane);
-		middlePanel.add(consoleArea);
+		middlePanel.add(stateDependentUi.consoleArea());
 
 		JPanel bottomPanel = new CommonBottomPanel().panel();
 
-		jPanelInstance.add(topPanel);
+		jPanelInstance.add(stateDependentUi.topPanel());
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
 		jPanelInstance.add(bottomPanel);
@@ -46,11 +43,5 @@ public class UIMainPanel<T> {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-	private TextArea createConsoleArea() {
-		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
-		textArea.setEditable(false);
-		textArea.setVisible(true);
-		return textArea;
 	}
 }
