@@ -39,10 +39,7 @@ class CommonUiTop {
 		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), rightPanel);
 		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), rightPanel);
 
-		JLabel lable = UiTexts.UiLables.MESSAGE_TOP.getLabel();
-		lable.setFont(new Font("", Font.PLAIN, 30));
-		leftPanel.add(lable);
-
+		leftPanel.add(UiTexts.UiLables.MESSAGE_TOP.getLabel());
 		mainPanel.add(rightPanel);
 	}
 

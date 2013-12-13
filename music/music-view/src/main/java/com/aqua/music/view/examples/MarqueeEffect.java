@@ -35,7 +35,7 @@ public class MarqueeEffect {
         mp.start();
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
 
             @Override
@@ -44,7 +44,7 @@ public class MarqueeEffect {
             }
         });
     }
-}
+*/}
 
 /** Side-scroll n characters of s. */
 class MarqueePanel extends JPanel implements ActionListener {
