@@ -4,6 +4,9 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import open.music.api.PlayApi;
+
+import com.aqua.music.example.easymidi.Playable;
 import com.aqua.music.view.components.CommonBottomPanel;
 import com.aqua.music.view.components.StateDependentUiImpl;
 import com.aqua.music.view.components.UiJPanelBuilder;
@@ -30,6 +33,7 @@ public class UIMainPanel<T> {
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
 		jPanelInstance.add(bottomPanel);
+		PlayApi.initializeStateDepenendentUi(stateDependentUi);
 	}
 
 	T getJPanel() {

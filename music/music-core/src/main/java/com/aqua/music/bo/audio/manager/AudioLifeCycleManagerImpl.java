@@ -8,6 +8,7 @@ import javax.sound.midi.Instrument;
 
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
+import open.music.api.StateDependentUi;
 
 import com.aqua.music.bo.audio.player.AudioPlayer;
 
@@ -23,6 +24,8 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
 	private volatile Instrument configuredInstrument;
+
+	private StateDependentUi stateObserver;
 	
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
@@ -55,6 +58,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 		}
 		this.multipler = multipler - 1;
 		logger.info("Decreased tempo [" + multipler + "]");
+		stateObserver.updateTempo(multipler);
 	}
 
 	@Override
@@ -65,6 +69,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 		}
 		this.multipler = multipler + 1;
 		logger.info("Increased tempo [" + multipler + "]");
+		stateObserver.updateTempo(multipler);
 	}
 
 	@Override
@@ -129,5 +134,9 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 		if (currentAudioPlayer != null) {
 			currentAudioPlayer.changeInstrumentTo(configuredInstrument, instrumentRole);
 		}
+	}
+
+	public void addStateObserver(StateDependentUi stateDependentUi) {
+		this.stateObserver=stateDependentUi;
 	}
 }

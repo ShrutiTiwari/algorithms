@@ -1,6 +1,5 @@
 package open.music.api;
 
-import java.awt.TextArea;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +9,7 @@ import javax.sound.midi.Instrument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.BasicNotePlayer;
@@ -27,6 +27,9 @@ public class PlayApi {
 	private static final Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
 	private static final Collection<Playable> playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
 
+	private static StateDependentUi stateDependentUi;
+	private static Instrument defaultInstrument= BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
+	
 	public static Collection<Playable> getAllSongs() {
 		return playableSongs;
 	}
@@ -56,6 +59,13 @@ public class PlayApi {
 	 * @param frequencyList
 	 */
 	public static void playInLoop(Playable playableitem) {
+		String playableName = playableitem.name();
+		stateDependentUi.updatePlayable(playableName);
+		String displayText = "\n\n Playing::" + playableName + "===>" + "\n" + playableitem.asText();
+		logger.info(displayText);
+		stateDependentUi.updateConsole(displayText);
+	
+		stateDependentUi.setPauseToDisplay();
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(playableitem.frequencies());
 	}
 
@@ -64,15 +74,17 @@ public class PlayApi {
 	 * @param frequencyList
 	 */
 	public static void play(Playable playableitem) {
+		stateDependentUi.setPauseToDisplay();
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
 	}
 	
-	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, final StateDependentUi stateDependentUi, int repeatCount) {
-		AudioTask<Playable> audioTask = audioTaskWith(playableItems, stateDependentUi, repeatCount);
+	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
+		AudioTask<Playable> audioTask = audioTaskWith(playableItems, repeatCount);
+		stateDependentUi.setPauseToDisplay();
 		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
-	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final StateDependentUi stateDependentUi, final int repeatCount) {
+	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final int repeatCount) {
 		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
 			public Playable[] forLoopParameter() {
@@ -102,5 +114,11 @@ public class PlayApi {
 
 	public enum AudioPlayerNextStatus{
 		PAUSE, RESUME;
+	}
+	
+	public static void initializeStateDepenendentUi(StateDependentUi stateDependentUi){
+		PlayApi.stateDependentUi=stateDependentUi;
+		stateDependentUi.updateInstrument(defaultInstrument);
+		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
 	}
 }

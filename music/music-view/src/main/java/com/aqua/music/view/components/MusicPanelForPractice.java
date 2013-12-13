@@ -26,14 +26,12 @@ class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
 	private final String pickTitle;
 	private JPanel specificComponentPanel;
-	private final StateDependentUi stateDependentUi;
 	/**
 	 * Used for plain rehearsing - of thaat and songs
 	 * @param pickTitle TODO
 	 */
 	public MusicPanelForPractice(StateDependentUi stateDependentUi,Collection<Playable> itemsList, String pickTitle) {
 		super(stateDependentUi,false);
-		this.stateDependentUi=stateDependentUi;
 		this.pickTitle=pickTitle;
 		this.intialItemsList = itemsList;
 	}
@@ -47,7 +45,6 @@ class MusicPanelForPractice extends MusicPanel {
 	 */
 	public MusicPanelForPractice(StateDependentUi stateDependentUi,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
 		super(stateDependentUi,true);
-		this.stateDependentUi=stateDependentUi;
 		this.pickTitle=pickTitle;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
@@ -88,11 +85,11 @@ class MusicPanelForPractice extends MusicPanel {
 
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
-		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems, stateDependentUi));
+		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems));
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 		
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.getButton();
-		playAllButton.addActionListener(new PlayAllItemsActionListener(stateDependentUi, allPlayableItems));
+		playAllButton.addActionListener(new PlayAllItemsActionListener(allPlayableItems));
 		
 		specificComponentPanel.add(labelPanel);
 		specificComponentPanel.add(playAreaPanel);
@@ -106,28 +103,24 @@ class MusicPanelForPractice extends MusicPanel {
 
 	class PlayAllItemsActionListener implements ActionListener {
 		private final Playable[] playableItems;
-		private StateDependentUi stateDependentUi;
 
-		public PlayAllItemsActionListener(final StateDependentUi stateDependentUi, final Playable[] playableItems) {
+		public PlayAllItemsActionListener(final Playable[] playableItems) {
 			this.playableItems = playableItems;
-			this.stateDependentUi=stateDependentUi;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, stateDependentUi, 5);
+			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, 5);
 		}
 	}
 
 	class PlaySingleItemActionListener implements ListSelectionListener {
 		private final Playable[] allPlayableItems;
 		private JList jlist;
-		private StateDependentUi stateDependentUi;
 
-		public PlaySingleItemActionListener(final JList jlist, Playable[] singlePlayableItem, final StateDependentUi stateDependentUi) {
+		public PlaySingleItemActionListener(final JList jlist, Playable[] singlePlayableItem) {
 			this.jlist = jlist;
 			this.allPlayableItems = singlePlayableItem;
-			this.stateDependentUi= stateDependentUi;
 		}
 
 		@Override
@@ -136,17 +129,8 @@ class MusicPanelForPractice extends MusicPanel {
 				int selectedIndex = jlist.getSelectedIndex();
 				if (selectedIndex != -1) {
 					PlayApi.playInLoop(allPlayableItems[selectedIndex]);
-					String playableName = allPlayableItems[selectedIndex].name();
-					stateDependentUi.updatePlayable(playableName);
-					displayOnConsole(playableName + "===>" + "\n" + allPlayableItems[selectedIndex].asText());
 				}
 			}
-		}
-
-		private void displayOnConsole(final String name) {
-			String displayText = "\n\n Playing::" + name;
-			logger.info(displayText);
-			stateDependentUi.updateConsole(displayText);
 		}
 	}
 }

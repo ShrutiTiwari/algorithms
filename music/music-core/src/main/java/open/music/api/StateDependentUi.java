@@ -3,8 +3,7 @@
  */
 package open.music.api;
 
-import java.awt.TextArea;
-
+import javax.sound.midi.Instrument;
 import javax.swing.JButton;
 
 /**
@@ -13,17 +12,24 @@ import javax.swing.JButton;
  */
 public interface StateDependentUi {
 
-	public JButton pauseButton();
-
-	public void updateConsole(String displayText);
-
 	/**
 	 * @param displayText
 	 */
 	public void appendToConsole(String displayText);
 
+	public void setPauseToDisplay();
+
+	public void updateConsole(String displayText);
+
+	public void updateInstrument(Instrument instrument);
+
 	/**
 	 * @param playableName
 	 */
 	public void updatePlayable(String playableName);
+	
+	/**
+	 * @param multipler
+	 */
+	public void updateTempo(int multipler);
 }

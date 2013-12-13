@@ -4,6 +4,7 @@ import javax.sound.midi.Instrument;
 
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
+import open.music.api.StateDependentUi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,4 +26,9 @@ public interface AudioLifeCycleManager {
 	void decreaseTempo();
 
 	void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument);
+
+	/**
+	 * @param stateDependentUi
+	 */
+	void addStateObserver(StateDependentUi stateDependentUi);
 }

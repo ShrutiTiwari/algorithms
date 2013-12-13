@@ -6,6 +6,7 @@ package com.aqua.music.view.components;
 import java.awt.TextArea;
 
 import javax.sound.midi.Instrument;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -15,11 +16,11 @@ import open.music.api.StateDependentUi;
  * @author "Shruti Tiwari"
  * 
  */
-public class StateDependentUiImpl implements StateDependentUi  {
+public class StateDependentUiImpl implements StateDependentUi {
+	private final CommonTopPanel commonTopPanel;
 	private final TextArea consoleArea;
 	private final JButton pauseButton;
-	private final CommonTopPanel commonTopPanel;
-	
+
 	public StateDependentUiImpl() {
 		this.commonTopPanel = new CommonTopPanel();
 		this.pauseButton = commonTopPanel.pauseButton();
@@ -27,32 +28,32 @@ public class StateDependentUiImpl implements StateDependentUi  {
 	}
 
 	@Override
-	public JButton pauseButton() {
-		return pauseButton;
+	public void appendToConsole(String text) {
+		consoleArea.append(text);
 	}
-	
+
+	public TextArea consoleArea() {
+		return consoleArea;
+	}
+
+	@Override
+	public void setPauseToDisplay() {
+		final Icon pauseIcon = UiButtons.imageResourceCache.imageIcon(UiButtons.IMAGE_PAUSE);
+		pauseButton.setIcon(pauseIcon);
+	}
+
+	public JPanel topPanel() {
+		return commonTopPanel.getPanel();
+	}
+
 	@Override
 	public void updateConsole(String displayText) {
 		consoleArea.setText(displayText);
 	}
 
 	@Override
-	public void appendToConsole(String text) {
-		consoleArea.append(text);
-	}
-	private TextArea createConsoleArea() {
-		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
-		textArea.setEditable(false);
-		textArea.setVisible(true);
-		return textArea;
-	}
-	
-	public TextArea consoleArea(){
-		return consoleArea; 
-	}
-	
-	public JPanel topPanel() {
-		return commonTopPanel.getPanel();
+	public void updateInstrument(Instrument instrument) {
+		commonTopPanel.currentState().setMainInstrument(instrument);
 	}
 
 	@Override
@@ -60,10 +61,15 @@ public class StateDependentUiImpl implements StateDependentUi  {
 		commonTopPanel.currentState().setCurrentPlayable(playableName);
 	}
 
-	/**
-	 * @param instrument
-	 */
-	public void updateInstrument(Instrument instrument) {
-		commonTopPanel.currentState().setMainInstrument(instrument);
+	@Override
+	public void updateTempo(int multipler) {
+		commonTopPanel.currentState().setSpeed(multipler);
+	}
+
+	private TextArea createConsoleArea() {
+		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
+		textArea.setEditable(false);
+		textArea.setVisible(true);
+		return textArea;
 	}
 }

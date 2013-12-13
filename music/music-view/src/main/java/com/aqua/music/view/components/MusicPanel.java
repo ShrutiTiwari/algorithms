@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 abstract class MusicPanel {
 	protected final Logger logger = LoggerFactory.getLogger(MusicPanel.class);
 
-	private final JButton pauseButton;
 	private volatile boolean initialized = false;
 	private final JPanel mainPanel;
 	private JPanel refreshablePanel;
@@ -29,7 +28,6 @@ abstract class MusicPanel {
 
 	protected MusicPanel(StateDependentUi commonPanelComponents,boolean extraPanel) {
 		this.mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
-		this.pauseButton = commonPanelComponents.pauseButton();
 		this.middlePanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		mainPanel.add(leftPanel);
 		mainPanel.add(middlePanel);
@@ -44,10 +42,6 @@ abstract class MusicPanel {
 			configureMiddlePanel();
 		}
 		return mainPanel;
-	}
-
-	public JButton pauseButton() {
-		return pauseButton;
 	}
 
 	public void refreshSpecificComponentPanel(final Object selectedObject) {
