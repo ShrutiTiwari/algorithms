@@ -9,8 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.aqua.music.view.components.UiTexts.UiLables;
 
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
@@ -44,18 +47,18 @@ class CommonUiBottom {
 	}
 
 	public class InstrumentDisplay {
-
 		private final InstrumentRole instrumentRole;
-
 		InstrumentDisplay(InstrumentRole instrumentRole) {
 			this.instrumentRole = instrumentRole;
 		}
 
 		public JPanel instrumentLabel() {
-			String label = UiLabels.INSTRUMENT_LABEL + instrumentRole.name().toLowerCase() + " play:";
+			JLabel label = UiTexts.UiLables.INSTRUMENT_LABEL.getLabel();
+			label.setText(label.getText() + instrumentRole.name().toLowerCase() + " play:");
 			JPanel instrumentLabelPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
-			instrumentLabelPanel.add(new JLabel(label));
+			instrumentLabelPanel.add(label);
 			instrumentLabelPanel.setSize(new Dimension(10, 40));
+			
 			return instrumentLabelPanel;
 		}
 
@@ -75,7 +78,10 @@ class CommonUiBottom {
 			JList jList = new JList(instrumentNames);
 			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
 
-			return new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
+			jList.setBackground(UiColor.CLICKABLE_SECTION);
+			JScrollPane instrumentPane = new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
+			instrumentPane.setBackground(UiColor.BG_CLR);
+			return instrumentPane;
 		}
 
 		private class InstrumentDropdownActionListener implements ListSelectionListener {

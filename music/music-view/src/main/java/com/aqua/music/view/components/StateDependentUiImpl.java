@@ -3,6 +3,7 @@
  */
 package com.aqua.music.view.components;
 
+import java.awt.Color;
 import java.awt.TextArea;
 
 import javax.sound.midi.Instrument;
@@ -70,6 +71,7 @@ class StateDependentUiImpl implements StateDependentUi {
 		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
 		textArea.setEditable(false);
 		textArea.setVisible(true);
+		textArea.setBackground(UiColor.VISUALIZATION);
 		return textArea;
 	}
 }

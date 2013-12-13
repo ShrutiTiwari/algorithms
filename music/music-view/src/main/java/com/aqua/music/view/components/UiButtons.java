@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,11 +14,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 interface UiButtons {
 	String IMAGE_DECREASE_TEMPO = "arrow_down.png";
@@ -171,7 +169,6 @@ interface UiButtons {
 			@Override
 			JButton createInstanceWith(String name) {
 				JButton button = fixedNameButton(this);
-				button.setForeground(Color.BLUE);
 				return button;
 			}
 		},

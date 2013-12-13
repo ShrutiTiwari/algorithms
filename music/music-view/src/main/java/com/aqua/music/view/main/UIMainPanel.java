@@ -7,6 +7,7 @@ import javax.swing.JTabbedPane;
 import open.music.api.PlayApi;
 
 import com.aqua.music.view.components.CommonUi;
+import com.aqua.music.view.components.UiColor;
 import com.aqua.music.view.components.UiJPanelBuilder;
 import com.aqua.music.view.components.UiTabbedPane;
 
@@ -19,6 +20,7 @@ public class UIMainPanel<T> {
 	private final JPanel jPanelInstance;
 	UIMainPanel() {
 		this.jPanelInstance = UiJPanelBuilder.BOX_VERTICAL.createPanel();
+		jPanelInstance.setBackground(UiColor.BG_CLR);
 		JPanel middlePanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 
 		CommonUi<T> commonComponents=new CommonUi<T>();

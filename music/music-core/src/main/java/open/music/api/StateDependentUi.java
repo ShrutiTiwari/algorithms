@@ -4,7 +4,6 @@
 package open.music.api;
 
 import javax.sound.midi.Instrument;
-import javax.swing.JButton;
 
 /**
  * @author "Shruti Tiwari"

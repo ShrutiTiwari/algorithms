@@ -13,6 +13,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.aqua.music.view.components.UiTexts.UiLables;
+
 class CommonUiTop {
 	private final CurrentState currentState;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
@@ -30,14 +32,13 @@ class CommonUiTop {
 		addToPanel(pauseButton, rightPanel);
 
 		mainPanel.add(leftPanel);
-
-		leftPanel.add(new JLabel(" Choose one of the practice tabs for practice "));
+		leftPanel.add(UiTexts.UiLables.MESSAGE_TOP.getLabel());
 
 		mainPanel.add(rightPanel);
 	}
 
 	private static void addToPanel(JComponent each, JPanel containerPanel) {
-		each.setForeground(Color.BLUE);
+		each.setForeground(Color.WHITE);
 		containerPanel.add(each);
 		each.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		containerPanel.add(Box.createVerticalGlue());

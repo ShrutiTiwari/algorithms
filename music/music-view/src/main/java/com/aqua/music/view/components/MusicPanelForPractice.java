@@ -8,7 +8,6 @@ import java.util.Collection;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -20,30 +19,36 @@ import open.music.api.Playable;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
+import com.aqua.music.view.components.UiTexts.UiLables;
 
 class MusicPanelForPractice extends MusicPanel {
 	private final Collection<Playable> intialItemsList;
-	private final String pickTitle;
+	private final UiLables pickTitle;
 	private JPanel specificComponentPanel;
+
 	/**
 	 * Used for plain rehearsing - of thaat and songs
-	 * @param pickTitle TODO
+	 * 
+	 * @param titleLabel
+	 *            TODO
 	 */
-	public MusicPanelForPractice(Collection<Playable> itemsList,String pickTitle) {
+	public MusicPanelForPractice(Collection<Playable> itemsList, UiLables titleLabel) {
 		super(false);
-		this.pickTitle=pickTitle;
+		this.pickTitle = titleLabel;
 		this.intialItemsList = itemsList;
 	}
 
 	/**
 	 * Used for patterned rehearse of thaat.
+	 * 
 	 * @param frequencySet
 	 * @param patternItemsCount
-	 * @param pickTitle TODO
+	 * @param pickTitle
+	 *            TODO
 	 */
-	public MusicPanelForPractice(FrequencySet frequencySet,PermuatationsGenerator patternItemsCount, String pickTitle) {
+	public MusicPanelForPractice(FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, UiLables titleLabel) {
 		super(true);
-		this.pickTitle=pickTitle;
+		this.pickTitle = titleLabel;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
 		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this, frequencySet,
@@ -69,13 +74,13 @@ class MusicPanelForPractice extends MusicPanel {
 		this.specificComponentPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		specificComponentPanel.setOpaque(true);
 		specificComponentPanel.add(Box.createVerticalStrut(50));
-		
+
 		JPanel labelPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
-		labelPanel.add(new JLabel(pickTitle));
-		labelPanel.setSize(new Dimension(10,40));
-		
+		labelPanel.add(pickTitle.getLabel());
+		labelPanel.setSize(new Dimension(10, 40));
+
 		JPanel playAreaPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
-		
+
 		Collection<Playable> itemsList = (Collection<Playable>) selectedObject;
 		if (itemsList == null) {
 			itemsList = this.intialItemsList;
@@ -84,15 +89,16 @@ class MusicPanelForPractice extends MusicPanel {
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems));
+		playItemsList.setBackground(UiColor.CLICKABLE_SECTION);
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
-		
+
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.getButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(allPlayableItems));
-		
+
 		specificComponentPanel.add(labelPanel);
 		specificComponentPanel.add(playAreaPanel);
 		specificComponentPanel.add(Box.createVerticalGlue());
-		
+
 		JPanel playAllPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 		playAllPanel.add(playAllButton);
 		specificComponentPanel.add(playAllPanel);

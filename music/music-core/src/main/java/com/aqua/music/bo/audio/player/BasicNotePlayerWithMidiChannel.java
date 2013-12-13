@@ -6,7 +6,6 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
 import open.music.api.InstrumentRole;
-import open.music.api.PlayApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

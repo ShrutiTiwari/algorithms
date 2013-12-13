@@ -18,6 +18,7 @@ public enum UiJPanelBuilder {
 		public JPanel createPanel() {
 			JPanel result = new JPanel();
 			result.setLayout(new BoxLayout(result, BoxLayout.LINE_AXIS));
+			result.setBackground(UiColor.BG_CLR);
 			return result;
 		}
 	},
@@ -26,19 +27,24 @@ public enum UiJPanelBuilder {
 		public JPanel createPanel() {
 			JPanel result = new JPanel();
 			result.setLayout(new BoxLayout(result, BoxLayout.PAGE_AXIS));
+			result.setBackground(UiColor.BG_CLR);
 			return result;
 		}
 	},
 	LEFT_FLOWLAYOUT {
 		@Override
 		public JPanel createPanel() {
-			return new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JPanel result = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			result.setBackground(UiColor.BG_CLR);
+			return result;
 		}
 	},
 	RIGHT_FLOWLAYOUT {
 		@Override
 		public JPanel createPanel() {
-			return new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			JPanel result = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			result.setBackground(UiColor.BG_CLR);
+			return result;
 		}
 	};
 	public abstract JPanel createPanel();

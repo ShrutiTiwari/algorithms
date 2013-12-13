@@ -35,13 +35,14 @@ class UiDropdown {
 
 	private static JComboBox createWith(Object[] objects, Object selectedItem) {
 		final JComboBox box = new JComboBox(objects);
-		box.setBackground(Color.WHITE);
-		box.setForeground(Color.GRAY);
+		box.setBackground(UiColor.CLICKABLE_SECTION);
+		box.setForeground(UiColor.BG_CLR);
 		if (selectedItem != null) {
 			box.setSelectedItem(selectedItem);
 		} else {
 			box.setSelectedItem(objects[0]);
 		}
+		
 		return box;
 	}
 
