@@ -1,6 +1,5 @@
 package com.aqua.music.view.components;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 

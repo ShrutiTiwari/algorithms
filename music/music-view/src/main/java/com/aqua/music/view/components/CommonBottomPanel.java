@@ -15,8 +15,6 @@ import javax.swing.event.ListSelectionListener;
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
 
-import com.aqua.music.view.components.UiButtons.MusicButtons;
-
 public class CommonBottomPanel {
 	private final JPanel bottomPanel;
 	private final StateDependentUiImpl stateDependentUi;

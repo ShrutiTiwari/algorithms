@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,6 +15,9 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
@@ -23,7 +28,7 @@ interface UiButtons {
 	String IMAGE_PAUSE = "button_pause.png";
 	String IMAGE_PLAY = "button_play.png";
 	ImageResourceCache imageResourceCache = new ImageResourceCache();
-	
+
 	UiButtons PAUSE = new ButtonBuilder(IMAGE_PLAY, "Pause", "Click this to pause!") {
 		@Override
 		void actionListenerWork() {
@@ -126,14 +131,16 @@ interface UiButtons {
 	}
 
 	public class ImageResourceCache {
+		private static final Logger logger = LoggerFactory.getLogger(ImageResourceCache.class);
 		Map<String, ImageIcon> cachedResoureces = new ConcurrentHashMap<String, ImageIcon>();
 
 		private static ImageIcon imageIconLookup(String imageName) {
-			String path = Thread.currentThread().getContextClassLoader().getResource(imageName).getPath();
 			try {
-				ImageIcon imageIcon = new ImageIcon(ImageIO.read(new File(path)));
-				return imageIcon;
+				BufferedImage readImage = ImageIO.read(UiButtons.class.getResource(imageName));
+				return new ImageIcon(readImage);
 			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error(e.getMessage());
 				return null;
 			}
 		}
