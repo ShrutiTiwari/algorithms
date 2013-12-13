@@ -12,7 +12,7 @@ import open.music.api.AudioPlayerSettings;
  * @author "Shruti Tiwari"
  * 
  */
-public class AppCloseWindowsListern implements WindowListener {
+public class AppCloseWindowsListener implements WindowListener {
 
 	@Override
 	public void windowActivated(WindowEvent e) {

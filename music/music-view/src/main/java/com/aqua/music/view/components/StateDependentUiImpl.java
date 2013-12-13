@@ -16,13 +16,13 @@ import open.music.api.StateDependentUi;
  * @author "Shruti Tiwari"
  * 
  */
-public class StateDependentUiImpl implements StateDependentUi {
-	private final CommonTopPanel topPanelArea;
+class StateDependentUiImpl implements StateDependentUi {
+	private final CommonUiTop topPanelArea;
 	private final TextArea consoleArea;
 	private final JButton pauseButton;
 
 	public StateDependentUiImpl() {
-		this.topPanelArea = new CommonTopPanel();
+		this.topPanelArea = new CommonUiTop();
 		this.pauseButton = topPanelArea.pauseButton();
 		this.consoleArea = createConsoleArea();
 	}

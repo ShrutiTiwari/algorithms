@@ -13,14 +13,14 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CommonTopPanel {
+class CommonUiTop {
 	private final CurrentState currentState;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 	private final JPanel mainPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 	private final JButton pauseButton;
 	private JPanel rightPanel;
 
-	public CommonTopPanel() {
+	public CommonUiTop() {
 		this.pauseButton = UiButtons.PAUSE.getButton();
 		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 		this.currentState = new CurrentState();
@@ -85,7 +85,7 @@ public class CommonTopPanel {
 		public String toString() {
 			String instrumentName = mainInstrument==null?"--":mainInstrument.getName();
 			String playableName = currentPlayable==null?"--":currentPlayable;
-			return "Playing[" + playableName + "]     instrument[" + instrumentName + "]     speed [" + speed + "]";
+			return "Playing[" + playableName + "]     Instrument[" + instrumentName + "]     Speed [" + speed + "]";
 
 		}
 

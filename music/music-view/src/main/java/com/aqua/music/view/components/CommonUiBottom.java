@@ -16,7 +16,7 @@ import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
 import open.music.api.StateDependentUi;
 
-public class CommonBottomPanel {
+class CommonUiBottom {
 	private final JPanel bottomPanel;
 	private final StateDependentUi stateDependentUi;
 
@@ -24,7 +24,7 @@ public class CommonBottomPanel {
 		return bottomPanel;
 	}
 
-	public CommonBottomPanel(StateDependentUi stateDependentUi) {
+	public CommonUiBottom(StateDependentUi stateDependentUi) {
 		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		this.stateDependentUi = stateDependentUi;
 		addInstrument(InstrumentRole.MAIN);

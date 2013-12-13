@@ -6,8 +6,7 @@ import javax.swing.JTabbedPane;
 
 import open.music.api.PlayApi;
 
-import com.aqua.music.view.components.CommonBottomPanel;
-import com.aqua.music.view.components.StateDependentUiImpl;
+import com.aqua.music.view.components.CommonUi;
 import com.aqua.music.view.components.UiJPanelBuilder;
 import com.aqua.music.view.components.UiTabbedPane;
 
@@ -21,18 +20,18 @@ public class UIMainPanel<T> {
 	UIMainPanel() {
 		this.jPanelInstance = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		JPanel middlePanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
-		StateDependentUiImpl stateDependentUi = new StateDependentUiImpl();
-		JTabbedPane tabbedPane = UiTabbedPane.getTabbedPane(stateDependentUi);
+
+		CommonUi<T> commonComponents=new CommonUi<T>();
+		
+		JTabbedPane tabbedPane = UiTabbedPane.getTabbedPane(commonComponents.stateDependentUi());
 		middlePanel.add(tabbedPane);
-		middlePanel.add(stateDependentUi.consoleArea());
+		middlePanel.add(commonComponents.consoleArea());
 
-		JPanel bottomPanel = new CommonBottomPanel(stateDependentUi).panel();
-
-		jPanelInstance.add(stateDependentUi.topPanel());
+		jPanelInstance.add(commonComponents.topPanel());
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
-		jPanelInstance.add(bottomPanel);
-		PlayApi.initializeStateDepenendentUi(stateDependentUi);
+		jPanelInstance.add(commonComponents.bottomPanel());
+		PlayApi.initializeStateDepenendentUi(commonComponents.stateDependentUi());
 	}
 
 	T getJPanel() {

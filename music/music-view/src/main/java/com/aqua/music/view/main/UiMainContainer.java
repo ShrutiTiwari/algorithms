@@ -26,7 +26,7 @@ public interface UiMainContainer<T> {
 		public SwingBasedUiMainContainer() {
 			this.swingframe = new JFrame(frameTitle);
 			swingframe.setLocationRelativeTo(null);
-			swingframe.addWindowListener(new AppCloseWindowsListern());
+			swingframe.addWindowListener(new AppCloseWindowsListener());
 		}
 
 		@Override
