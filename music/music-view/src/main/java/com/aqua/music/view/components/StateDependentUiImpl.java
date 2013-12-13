@@ -70,7 +70,7 @@ class StateDependentUiImpl implements StateDependentUi {
 		TextArea textArea = new TextArea("Played notes will be displayed here in indian scale....");
 		textArea.setEditable(false);
 		textArea.setVisible(true);
-		textArea.setBackground(UiColor.VISUALIZATION);
+		textArea.setBackground(UiColor.LOW_PRIORITY_CLR);
 		return textArea;
 	}
 }

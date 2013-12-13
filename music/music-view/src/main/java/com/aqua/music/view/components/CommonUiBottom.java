@@ -77,7 +77,7 @@ class CommonUiBottom {
 			JList jList = new JList(instrumentNames);
 			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
 
-			jList.setBackground(UiColor.LIGHT_GREEN);
+			jList.setBackground(UiColor.LOW_PRIORITY_CLR);
 			JScrollPane instrumentPane = new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
 			instrumentPane.setBackground(UiColor.BG_CLR);
 			return instrumentPane;

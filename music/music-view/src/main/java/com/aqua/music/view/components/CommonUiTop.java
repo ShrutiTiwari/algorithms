@@ -79,26 +79,26 @@ class CommonUiTop {
 		private int speed;
 
 		private CurrentState() {
-			this.currentPlayableLabel = new JLabel("Playing[ -  ]");
-			this.currentInstrumentLabel = new JLabel("Playing[ " + PlayApi.defaultInstrument().getName() + "  ]");
-			this.currentSpeedLabel = new JLabel("Speed[ 0  ]");
+			this.currentPlayableLabel = UiTexts.UiLables.STATUS_PLAYABLE.getLabel();
+			this.currentInstrumentLabel = UiTexts.UiLables.STATUS_INSTRUMENT.getLabel();
+			this.currentSpeedLabel = UiTexts.UiLables.STATUS_SPEED.getLabel();
 		}
 
 		public void setCurrentPlayable(String currentPlayable) {
 			this.currentPlayable = currentPlayable;
 			String playableName = currentPlayable == null ? "--" : currentPlayable;
-			currentPlayableLabel.setText("Playing[" + playableName + "]");
+			currentPlayableLabel.setText("Playing[ " + playableName + " ]");
 		}
 
 		public void setMainInstrument(Instrument mainInstrument) {
 			this.mainInstrument = mainInstrument;
 			String instrumentName = mainInstrument == null ? "--" : mainInstrument.getName();
-			currentInstrumentLabel.setText("Instrument[" + instrumentName + "]");
+			currentInstrumentLabel.setText("Instrument[ " + instrumentName + " ]");
 		}
 
 		public void setSpeed(int speed) {
 			this.speed = speed;
-			currentSpeedLabel.setText("Speed [" + speed + "]");
+			currentSpeedLabel.setText("Speed [ " + speed + " ]");
 		}
 	}
 }

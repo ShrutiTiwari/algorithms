@@ -19,10 +19,7 @@ public interface UiColor {
 	Color LIGHT_CORAL=new Color(240,128,128);
 	Color LIGHT_GREEN=new Color(153,255,153);
 	
-	
-	//Color ALTERNATE_BG_CLR=Color.BLACK;
 	Color BG_CLR= Color.BLACK;
-	Color VISUALIZATION=LIGHT_GREEN;
-	Color CLICKABLE_SECTION =LIME_GREEN;
-
+	Color ALT_BG_CLR =LIME_GREEN;
+	Color LOW_PRIORITY_CLR =UiColor.LIGHT_GREEN;
 }

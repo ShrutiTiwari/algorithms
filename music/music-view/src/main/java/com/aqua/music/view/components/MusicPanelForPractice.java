@@ -89,7 +89,7 @@ class MusicPanelForPractice extends MusicPanel {
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems));
-		playItemsList.setBackground(UiColor.CLICKABLE_SECTION);
+		playItemsList.setBackground(UiColor.ALT_BG_CLR);
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.getButton();

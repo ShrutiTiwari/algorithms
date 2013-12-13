@@ -8,6 +8,8 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 
+import open.music.api.PlayApi;
+
 /**
  * @author "Shruti Tiwari"
  * 
@@ -24,7 +26,11 @@ interface UiTexts {
 		PRACTICE_A_SONG("Choose a song or 'play all'"),
 		PRACTICE_A_PATTERN("Choose a pattern or 'play all'"),
 		MESSAGE_TOP("Hello, Great to see you here."),
-		INSTRUMENT_LABEL("Change instrument for ");
+		INSTRUMENT_LABEL("Change instrument for "),
+		
+		STATUS_INSTRUMENT("Instrument[ " + PlayApi.defaultInstrument().getName() + "  ]"),
+		STATUS_SPEED("Speed[ 0 ]"),
+		STATUS_PLAYABLE("Playing[ - ]");
 
 		private final JLabel label;
 
