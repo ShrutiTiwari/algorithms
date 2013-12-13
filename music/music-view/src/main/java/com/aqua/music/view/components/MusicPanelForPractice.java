@@ -86,13 +86,12 @@ class MusicPanelForPractice extends MusicPanel {
 			itemsList = this.intialItemsList;
 		}
 
-		final JButton pauseButton = pauseButton();
 		final Playable[] allPlayableItems = itemsList.toArray(new Playable[itemsList.size()]);
 		JList playItemsList = new JList(allPlayableItems);
 		playItemsList.addListSelectionListener(new PlaySingleItemActionListener(playItemsList, allPlayableItems, stateDependentUi));
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 		
-		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.createStaticNamedButton();
+		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.getButton();
 		playAllButton.addActionListener(new PlayAllItemsActionListener(stateDependentUi, allPlayableItems));
 		
 		specificComponentPanel.add(labelPanel);

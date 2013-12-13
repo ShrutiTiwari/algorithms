@@ -13,9 +13,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.example.easymidi.Playable;
-import com.aqua.music.view.components.UiButtons.MusicButtons;
-
 public class CommonTopPanel {
 	private final CurrentState currentState;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
@@ -24,14 +21,12 @@ public class CommonTopPanel {
 	private JPanel rightPanel;
 
 	public CommonTopPanel() {
-		this.pauseButton = MusicButtons.PAUSE.createStaticNamedButton();
+		this.pauseButton = UiButtons.PAUSE.getButton();
 		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
-
 		this.currentState = new CurrentState();
-
 		addToPanel(currentState.currentStateLabel(), rightPanel);
-		addToPanel(MusicButtons.INCREASE_TEMPO.createStaticNamedButton(), rightPanel);
-		addToPanel(MusicButtons.DECREASE_TEMPO.createStaticNamedButton(), rightPanel);
+		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), rightPanel);
+		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), rightPanel);
 		addToPanel(pauseButton, rightPanel);
 
 		mainPanel.add(leftPanel);
@@ -88,7 +83,8 @@ public class CommonTopPanel {
 
 		@Override
 		public String toString() {
-			return "Playing[" + currentPlayable + "]     instrument[" + mainInstrument + "]     speed [" + speed + "]";
+			String instrumentName = mainInstrument==null?"":mainInstrument.getName();
+			return "Playing[" + currentPlayable + "]     instrument[" + instrumentName + "]     speed [" + speed + "]";
 
 		}
 

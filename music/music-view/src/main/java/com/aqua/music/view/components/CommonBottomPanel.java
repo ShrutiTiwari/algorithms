@@ -19,19 +19,20 @@ import com.aqua.music.view.components.UiButtons.MusicButtons;
 
 public class CommonBottomPanel {
 	private final JPanel bottomPanel;
+	private final StateDependentUiImpl stateDependentUi;
 
-	public JPanel panel(){
+	public JPanel panel() {
 		return bottomPanel;
 	}
-	
-	public CommonBottomPanel() {
-		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 
+	public CommonBottomPanel(StateDependentUiImpl stateDependentUi) {
+		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
+		this.stateDependentUi = stateDependentUi;
 		addInstrument(InstrumentRole.MAIN);
 		// addInstrument(InstrumentRole.RHYTHM);
 
 		JPanel quitPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
-		JButton quitButton = MusicButtons.QUIT.createStaticNamedButton();
+		JButton quitButton = UiButtons.QUIT.getButton();
 		quitPanel.add(quitButton);
 		bottomPanel.add(quitPanel);
 	}
@@ -42,7 +43,7 @@ public class CommonBottomPanel {
 		bottomPanel.add(instrumentDisplay.displayPane());
 		bottomPanel.add(Box.createVerticalGlue());
 	}
-	
+
 	public class InstrumentDisplay {
 
 		private final InstrumentRole instrumentRole;
@@ -61,7 +62,7 @@ public class CommonBottomPanel {
 
 		public Component displayPane() {
 			Instrument[] allInstruments = PlayApi.getAllInstruments();
-			
+
 			String[] instrumentNames = new String[allInstruments.length];
 			int i = 0;
 			int maxNameLength = 150;
@@ -74,7 +75,7 @@ public class CommonBottomPanel {
 			}
 			JList jList = new JList(instrumentNames);
 			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
-			
+
 			return new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
 		}
 
@@ -94,7 +95,9 @@ public class CommonBottomPanel {
 				if (e.getValueIsAdjusting() == false) {
 					int selectedIndex = jList.getSelectedIndex();
 					if (selectedIndex != -1) {
-						instrumentRole.setTo(allInstruments[selectedIndex]);
+						Instrument instrument = allInstruments[selectedIndex];
+						instrumentRole.setTo(instrument);
+						stateDependentUi.updateInstrument(instrument);
 					}
 				}
 			}

@@ -5,12 +5,11 @@ package com.aqua.music.view.components;
 
 import java.awt.TextArea;
 
+import javax.sound.midi.Instrument;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import open.music.api.StateDependentUi;
-
-import com.aqua.music.view.components.CommonTopPanel.CurrentState;
 
 /**
  * @author "Shruti Tiwari"
@@ -59,5 +58,12 @@ public class StateDependentUiImpl implements StateDependentUi  {
 	@Override
 	public void updatePlayable(String playableName) {
 		commonTopPanel.currentState().setCurrentPlayable(playableName);
+	}
+
+	/**
+	 * @param instrument
+	 */
+	public void updateInstrument(Instrument instrument) {
+		commonTopPanel.currentState().setMainInstrument(instrument);
 	}
 }

@@ -57,12 +57,12 @@ class MusicPanelForQuiz extends MusicPanel {
 		for (Quiz<CyclicFrequencySet> eachQuizSection : quizSections) {
 			JPanel quizSectionPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
 			final String quizName = "Quiz " + quizIndex;
-			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.createDynamicNamedButton(quizName);
+			JButton quizPlayButton = UiButtons.MusicButtons.QUIZ_PLAY.getButtonWithNameSuffix(quizName);
 			quizSectionPanel.add(quizPlayButton);
 
 			final Collection<JButton> multipleChoiceButtons = new ArrayList<JButton>();
 			for (CyclicFrequencySet eachOption : eachQuizSection.quizItems()) {
-				JButton b = UiButtons.MusicButtons.CHOICE_OPTIONS.createDynamicNamedButton(eachOption.name());
+				JButton b = UiButtons.MusicButtons.CHOICE_OPTIONS.getButtonWithNameSuffix(eachOption.name());
 				multipleChoiceButtons.add(b);
 				quizSectionPanel.add(b);
 			}

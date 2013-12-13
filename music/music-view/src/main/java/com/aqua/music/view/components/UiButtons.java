@@ -18,15 +18,137 @@ import open.music.api.AudioPlayerSettings;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 
 interface UiButtons {
+	String IMAGE_DECREASE_TEMPO = "arrow_down.png";
+	String IMAGE_INCREASE_TEMPO = "arrow_up.png";
+	String IMAGE_PAUSE = "button_pause.png";
+	String IMAGE_PLAY = "button_play.png";
+	ImageResourceCache imageResourceCache = new ImageResourceCache();
+	
+	UiButtons PAUSE = new ButtonBuilder(IMAGE_PLAY, "Pause", "Click this to pause!") {
+		@Override
+		void actionListenerWork() {
+			final Icon playIcon = imageResourceCache.imageIcon(IMAGE_PLAY);
+			final Icon pauseIcon = imageResourceCache.imageIcon(IMAGE_PAUSE);
+			Icon newIcon = (AudioPlayerSettings.togglePauseAndResume() == AudioPlayerNextStatus.PAUSE) ? pauseIcon : playIcon;
+			PAUSE.getButton().setIcon(newIcon);
+		}
+	};
+	UiButtons DECREASE_TEMPO = new ButtonBuilder(IMAGE_DECREASE_TEMPO, "DecreaseTempo", "Click this to decrease tempo.") {
+		@Override
+		void actionListenerWork() {
+			AudioPlayerSettings.decreaseTempo();
+		}
+	};
+
+	UiButtons INCREASE_TEMPO = new ButtonBuilder(IMAGE_INCREASE_TEMPO, "IncreaseTempo", "Click this to increase tempo.") {
+		@Override
+		void actionListenerWork() {
+			AudioPlayerSettings.increaseTempo();
+		}
+	};
+
+	UiButtons QUIT = new ButtonBuilder("Quit", "Click this to quit!") {
+		@Override
+		void actionListenerWork() {
+			AudioPlayerSettings.stop();
+			System.exit(0);
+		}
+	};
+
+	JButton getButton();
+
 	String text();
 
 	String tooltip();
 
-	String IMAGE_INCREASE_TEMPO = "arrow_up.png";
-	String IMAGE_DECREASE_TEMPO = "arrow_down.png";
-	String IMAGE_PAUSE = "button_pause.png";
-	String IMAGE_PLAY = "button_play.png";
-	ImageResourceCache imageResourceCache = new ImageResourceCache();
+	abstract class ButtonBuilder implements UiButtons {
+		private final String imageName;
+		private final JButton resultButton;
+		private final String text;
+		private final String tooltip;
+
+		ButtonBuilder(String text, String tooltip) {
+			this.text = text;
+			this.tooltip = tooltip;
+			this.imageName = null;
+			this.resultButton = createButton();
+		}
+
+		ButtonBuilder(String imageName, String text, String tooltip) {
+			this.imageName = imageName;
+			this.text = text;
+			this.tooltip = tooltip;
+			this.resultButton = createButton();
+		}
+
+		@Override
+		public JButton getButton() {
+			return resultButton;
+		}
+
+		@Override
+		public String text() {
+			return text;
+		}
+
+		@Override
+		public String tooltip() {
+			return tooltip;
+		}
+
+		abstract void actionListenerWork();
+
+		private JButton createButton() {
+			JButton button = createImageButton();
+			ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					actionListenerWork();
+				}
+			};
+			button.addActionListener(actionListener);
+			return button;
+		}
+
+		private JButton createImageButton() {
+			if (imageName != null) {
+				try {
+					JButton imageButton = new JButton(imageResourceCache.imageIcon(imageName));
+					imageButton.setForeground(Color.BLUE);
+					imageButton.setBorder(BorderFactory.createEmptyBorder());
+					imageButton.setPreferredSize(new Dimension(30, 30));
+					return imageButton;
+				} catch (Exception e) {
+				}
+			}
+			return new JButton(text);
+		}
+	}
+
+	public class ImageResourceCache {
+		Map<String, ImageIcon> cachedResoureces = new ConcurrentHashMap<String, ImageIcon>();
+
+		private static ImageIcon imageIconLookup(String imageName) {
+			String path = Thread.currentThread().getContextClassLoader().getResource(imageName).getPath();
+			try {
+				ImageIcon imageIcon = new ImageIcon(ImageIO.read(new File(path)));
+				return imageIcon;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+
+		public synchronized ImageIcon imageIcon(String imageName) {
+			ImageIcon existing = cachedResoureces.get(imageName);
+			if (existing != null) {
+				return existing;
+			}
+			ImageIcon imageIconLookup = imageIconLookup(imageName);
+			cachedResoureces.put(imageName, imageIconLookup);
+			return imageIconLookup;
+		}
+
+	}
 
 	enum MusicButtons implements UiButtons {
 		CHOICE_OPTIONS("$$", "This thaat is $$") {
@@ -38,24 +160,6 @@ interface UiButtons {
 				return choiceButton;
 			}
 		},
-		PAUSE("Pause", "Click this to pause!") {
-			@Override
-			JButton createInstanceWith(String name) {
-				final JButton button = createImageButton(IMAGE_PLAY, fixedNameButton(this));
-				final Icon playIcon = imageResourceCache.imageIcon(IMAGE_PLAY);
-				final Icon pauseIcon = imageResourceCache.imageIcon(IMAGE_PAUSE);
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						Icon newIcon = (AudioPlayerSettings.togglePauseAndResume() == AudioPlayerNextStatus.PAUSE) ? pauseIcon : playIcon;
-						button.setIcon(newIcon);
-					}
-				};
-
-				button.addActionListener(actionListener);
-				return button;
-			}
-		},
 		PLAYER_FOR_ALL("PLAY_ALL", "Click this to play all!") {
 			@Override
 			JButton createInstanceWith(String name) {
@@ -64,55 +168,10 @@ interface UiButtons {
 				return button;
 			}
 		},
-		QUIT("Quit", "Click this to quit!") {
-			@Override
-			JButton createInstanceWith(String name) {
-				JButton button = fixedNameButton(this);
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.stop();
-						System.exit(0);
-					}
-				};
-
-				button.addActionListener(actionListener);
-				button.setForeground(Color.BLUE);
-				return button;
-			}
-		},
 		QUIZ_PLAY("Play $$", "Click this to play $$") {
 			@Override
 			JButton createInstanceWith(String buttonName) {
 				JButton button = configurableNamedButton(this, buttonName);
-				return button;
-			}
-		},
-		INCREASE_TEMPO("IncreaseTempo", "Click this to stop!") {
-			@Override
-			JButton createInstanceWith(String name) {
-				JButton button = createImageButton(IMAGE_INCREASE_TEMPO, fixedNameButton(this));
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.increaseTempo();
-					}
-				};
-				button.addActionListener(actionListener);
-				return button;
-			}
-		},
-		DECREASE_TEMPO("DecreaseTempo", "Click this to stop!") {
-			@Override
-			JButton createInstanceWith(String name) {
-				JButton button = createImageButton(IMAGE_DECREASE_TEMPO, fixedNameButton(this));
-				ActionListener actionListener = new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						AudioPlayerSettings.decreaseTempo();
-					}
-				};
-				button.addActionListener(actionListener);
 				return button;
 			}
 		};
@@ -130,20 +189,32 @@ interface UiButtons {
 			return resultButton;
 		}
 
+		private static JButton createImageButton(String imageName, JButton namedButton) {
+			try {
+				JButton imageButton = new JButton(imageResourceCache.imageIcon(imageName));
+				imageButton.setBorder(BorderFactory.createEmptyBorder());
+				imageButton.setPreferredSize(new Dimension(30, 30));
+				return imageButton;
+			} catch (Exception e) {
+				return namedButton;
+			}
+		}
+
 		private static JButton fixedNameButton(UiButtons itemType) {
 			JButton resultButton = new JButton(itemType.text());
 			resultButton.setToolTipText(itemType.tooltip());
 			return resultButton;
 		}
 
-		public JButton createDynamicNamedButton(String buttonName) {
-			JButton buttonItem = createInstanceWith(buttonName);
-			buttonItem.setOpaque(true);
-			return buttonItem;
+		public JButton getButton() {
+			return getButtonWithNameSuffix("");
 		}
 
-		public JButton createStaticNamedButton() {
-			return createDynamicNamedButton("");
+		public JButton getButtonWithNameSuffix(String buttonName) {
+			JButton buttonItem = createInstanceWith(buttonName);
+			buttonItem.setOpaque(true);
+			buttonItem.setToolTipText(tooltip);
+			return buttonItem;
 		}
 
 		@Override
@@ -157,42 +228,5 @@ interface UiButtons {
 		}
 
 		abstract JButton createInstanceWith(String name);
-
-		private static JButton createImageButton(String imageName, JButton namedButton) {
-			try {
-				JButton imageButton = new JButton(imageResourceCache.imageIcon(imageName));
-				imageButton.setBorder(BorderFactory.createEmptyBorder());
-				imageButton.setPreferredSize(new Dimension(30, 30));
-				return imageButton;
-			} catch (Exception e) {
-				return namedButton;
-			}
-		}
 	}
-
-	public class ImageResourceCache {
-		Map<String, ImageIcon> cachedResoureces = new ConcurrentHashMap<String, ImageIcon>();
-
-		public synchronized ImageIcon imageIcon(String imageName) {
-			ImageIcon existing = cachedResoureces.get(imageName);
-			if (existing != null) {
-				return existing;
-			}
-			ImageIcon imageIconLookup = imageIconLookup(imageName);
-			cachedResoureces.put(imageName, imageIconLookup);
-			return imageIconLookup;
-		}
-
-		private static ImageIcon imageIconLookup(String imageName) {
-			String path = Thread.currentThread().getContextClassLoader().getResource(imageName).getPath();
-			try {
-				ImageIcon imageIcon = new ImageIcon(ImageIO.read(new File(path)));
-				return imageIcon;
-			} catch (Exception e) {
-				return null;
-			}
-		}
-
-	}
-
 }

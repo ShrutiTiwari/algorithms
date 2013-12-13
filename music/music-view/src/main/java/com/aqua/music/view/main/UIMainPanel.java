@@ -1,15 +1,10 @@
 package com.aqua.music.view.main;
 
-import java.awt.TextArea;
-
 import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import open.music.api.StateDependentUi;
-
 import com.aqua.music.view.components.CommonBottomPanel;
-import com.aqua.music.view.components.CommonTopPanel;
 import com.aqua.music.view.components.StateDependentUiImpl;
 import com.aqua.music.view.components.UiJPanelBuilder;
 import com.aqua.music.view.components.UiTabbedPane;
@@ -29,7 +24,7 @@ public class UIMainPanel<T> {
 		middlePanel.add(tabbedPane);
 		middlePanel.add(stateDependentUi.consoleArea());
 
-		JPanel bottomPanel = new CommonBottomPanel().panel();
+		JPanel bottomPanel = new CommonBottomPanel(stateDependentUi).panel();
 
 		jPanelInstance.add(stateDependentUi.topPanel());
 		jPanelInstance.add(middlePanel);
