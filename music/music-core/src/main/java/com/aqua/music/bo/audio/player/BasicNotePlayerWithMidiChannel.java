@@ -6,6 +6,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
 import open.music.api.InstrumentRole;
+import open.music.api.PlayApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,6 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 		synth.loadAllInstruments(synth.getDefaultSoundbank());
 		this.rhythmChannel = mc[9];
 		this.mainNoteChannel = mc[8];
-		this.notifyInstrumentChange(allInstruments[73], InstrumentRole.MAIN);
 		this.notifyInstrumentChange(allInstruments[13], InstrumentRole.RHYTHM);
 	}
 
@@ -62,7 +62,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	@Override
 	public void play(DynamicFrequency each, int duration) {
 		this.activeNoteNumber = each.midiNoteNumber();
-		rhythmChannel.noteOn(rhythmNote, 90);
+		//rhythmChannel.noteOn(rhythmNote, 90);
 		mainNoteChannel.noteOn(activeNoteNumber, 127);
 		try {
 			Thread.sleep(duration);
@@ -70,7 +70,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 			e.printStackTrace();
 		}
 		mainNoteChannel.noteOn(activeNoteNumber, 0);
-		rhythmChannel.noteOn(rhythmNote, 0);
+		//rhythmChannel.noteOn(rhythmNote, 0);
 		activeNoteNumber = -1;
 	}
 

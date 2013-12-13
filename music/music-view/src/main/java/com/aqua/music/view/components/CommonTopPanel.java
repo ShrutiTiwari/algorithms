@@ -83,8 +83,9 @@ public class CommonTopPanel {
 
 		@Override
 		public String toString() {
-			String instrumentName = mainInstrument==null?"":mainInstrument.getName();
-			return "Playing[" + currentPlayable + "]     instrument[" + instrumentName + "]     speed [" + speed + "]";
+			String instrumentName = mainInstrument==null?"--":mainInstrument.getName();
+			String playableName = currentPlayable==null?"--":currentPlayable;
+			return "Playing[" + playableName + "]     instrument[" + instrumentName + "]     speed [" + speed + "]";
 
 		}
 

@@ -118,7 +118,12 @@ public class PlayApi {
 	
 	public static void initializeStateDepenendentUi(StateDependentUi stateDependentUi){
 		PlayApi.stateDependentUi=stateDependentUi;
+		InstrumentRole.MAIN.setTo(defaultInstrument);
 		stateDependentUi.updateInstrument(defaultInstrument);
 		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
+	}
+	
+	public static Instrument defaultInstrument(){
+		return defaultInstrument;
 	}
 }

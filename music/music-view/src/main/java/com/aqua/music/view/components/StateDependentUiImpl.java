@@ -17,13 +17,13 @@ import open.music.api.StateDependentUi;
  * 
  */
 public class StateDependentUiImpl implements StateDependentUi {
-	private final CommonTopPanel commonTopPanel;
+	private final CommonTopPanel topPanelArea;
 	private final TextArea consoleArea;
 	private final JButton pauseButton;
 
 	public StateDependentUiImpl() {
-		this.commonTopPanel = new CommonTopPanel();
-		this.pauseButton = commonTopPanel.pauseButton();
+		this.topPanelArea = new CommonTopPanel();
+		this.pauseButton = topPanelArea.pauseButton();
 		this.consoleArea = createConsoleArea();
 	}
 
@@ -43,7 +43,7 @@ public class StateDependentUiImpl implements StateDependentUi {
 	}
 
 	public JPanel topPanel() {
-		return commonTopPanel.getPanel();
+		return topPanelArea.getPanel();
 	}
 
 	@Override
@@ -53,17 +53,17 @@ public class StateDependentUiImpl implements StateDependentUi {
 
 	@Override
 	public void updateInstrument(Instrument instrument) {
-		commonTopPanel.currentState().setMainInstrument(instrument);
+		topPanelArea.currentState().setMainInstrument(instrument);
 	}
 
 	@Override
 	public void updatePlayable(String playableName) {
-		commonTopPanel.currentState().setCurrentPlayable(playableName);
+		topPanelArea.currentState().setCurrentPlayable(playableName);
 	}
 
 	@Override
 	public void updateTempo(int multipler) {
-		commonTopPanel.currentState().setSpeed(multipler);
+		topPanelArea.currentState().setSpeed(multipler);
 	}
 
 	private TextArea createConsoleArea() {
