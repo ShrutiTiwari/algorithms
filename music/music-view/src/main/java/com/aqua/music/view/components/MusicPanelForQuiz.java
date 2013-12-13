@@ -24,7 +24,7 @@ class MusicPanelForQuiz extends MusicPanel {
 	private final StateDependentUi stateDependentUi;
 
 	MusicPanelForQuiz(StateDependentUi stateDependentUi, final QuizLevel initialQuizLevel) {
-		super(stateDependentUi, true);
+		super(true);
 		this.stateDependentUi=stateDependentUi;
 		this.initialQuizLevel = initialQuizLevel;
 		final JComboBox quizDropdown = UiDropdown.quizDropdown(initialQuizLevel);

@@ -16,7 +16,6 @@ import javax.swing.event.ListSelectionListener;
 
 import open.music.api.PlayApi;
 import open.music.api.Playable;
-import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -30,21 +29,20 @@ class MusicPanelForPractice extends MusicPanel {
 	 * Used for plain rehearsing - of thaat and songs
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(StateDependentUi stateDependentUi,Collection<Playable> itemsList, String pickTitle) {
-		super(stateDependentUi,false);
+	public MusicPanelForPractice(Collection<Playable> itemsList,String pickTitle) {
+		super(false);
 		this.pickTitle=pickTitle;
 		this.intialItemsList = itemsList;
 	}
 
 	/**
 	 * Used for patterned rehearse of thaat.
-	 * 
 	 * @param frequencySet
 	 * @param patternItemsCount
 	 * @param pickTitle TODO
 	 */
-	public MusicPanelForPractice(StateDependentUi stateDependentUi,FrequencySet frequencySet, PermuatationsGenerator patternItemsCount, String pickTitle) {
-		super(stateDependentUi,true);
+	public MusicPanelForPractice(FrequencySet frequencySet,PermuatationsGenerator patternItemsCount, String pickTitle) {
+		super(true);
 		this.pickTitle=pickTitle;
 		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 

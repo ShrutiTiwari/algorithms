@@ -3,8 +3,6 @@ package com.aqua.music.view.components;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import open.music.api.StateDependentUi;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +23,7 @@ abstract class MusicPanel {
 
 	private JPanel middlePanel;
 
-	protected MusicPanel(StateDependentUi commonPanelComponents,boolean extraPanel) {
+	protected MusicPanel(boolean extraPanel) {
 		this.mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		this.middlePanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		mainPanel.add(leftPanel);

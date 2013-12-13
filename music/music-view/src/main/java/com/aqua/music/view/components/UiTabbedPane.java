@@ -26,15 +26,17 @@ public class UiTabbedPane {
 
 	public static JTabbedPane getTabbedPane(StateDependentUi stateDependentUi) {
 		JTabbedPane mainTabbedPane = new JTabbedPane();
-		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(TITLE_THAAT, new MusicPanelForPractice(stateDependentUi,PlayApi.getAllPlainThaat(), UiLabels.PRACTICE_A_THAAT).getPanel());
-		tabbedPane.addTab(TITLE_THAAT_PATTERN, new MusicPanelForPractice(stateDependentUi,firstThaat, PermuatationsGenerator.PAIR, UiLabels.PRACTICE_A_PATTERN).getPanel());
-		tabbedPane.addTab(TITLE_SONG_TAB, new MusicPanelForPractice(stateDependentUi,PlayApi.getAllSongs(), UiLabels.PRACTICE_A_SONG).getPanel());
 		
-		mainTabbedPane.addTab(UiLabels.TITLE_PRACTICE, tabbedPane);
+		JTabbedPane pracitceTabbedPane = new JTabbedPane();
+		pracitceTabbedPane.addTab(TITLE_THAAT, new MusicPanelForPractice(PlayApi.getAllPlainThaat(),UiLabels.PRACTICE_A_THAAT).getPanel());
+		pracitceTabbedPane.addTab(TITLE_THAAT_PATTERN, new MusicPanelForPractice(firstThaat,PermuatationsGenerator.PAIR, UiLabels.PRACTICE_A_PATTERN).getPanel());
+		pracitceTabbedPane.addTab(TITLE_SONG_TAB, new MusicPanelForPractice(PlayApi.getAllSongs(),UiLabels.PRACTICE_A_SONG).getPanel());
+		mainTabbedPane.addTab(UiLabels.TITLE_PRACTICE, pracitceTabbedPane);
+		
 		mainTabbedPane.addTab(TITLE_PUZZLES, new MusicPanelForQuiz(stateDependentUi,firstQuizLevel).getPanel());
+
 		mainTabbedPane.setOpaque(true);
-		tabbedPane.setOpaque(true);
+		pracitceTabbedPane.setOpaque(true);
 		return mainTabbedPane;
 	}
 }

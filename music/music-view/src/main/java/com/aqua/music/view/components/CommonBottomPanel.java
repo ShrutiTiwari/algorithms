@@ -14,16 +14,17 @@ import javax.swing.event.ListSelectionListener;
 
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
+import open.music.api.StateDependentUi;
 
 public class CommonBottomPanel {
 	private final JPanel bottomPanel;
-	private final StateDependentUiImpl stateDependentUi;
+	private final StateDependentUi stateDependentUi;
 
 	public JPanel panel() {
 		return bottomPanel;
 	}
 
-	public CommonBottomPanel(StateDependentUiImpl stateDependentUi) {
+	public CommonBottomPanel(StateDependentUi stateDependentUi) {
 		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		this.stateDependentUi = stateDependentUi;
 		addInstrument(InstrumentRole.MAIN);
