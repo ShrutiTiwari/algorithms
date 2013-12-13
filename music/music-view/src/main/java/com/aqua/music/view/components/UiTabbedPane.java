@@ -15,7 +15,6 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
-import com.aqua.music.view.components.UiTexts.UiLables;
 /**
  * @author "Shruti Tiwari"
  */

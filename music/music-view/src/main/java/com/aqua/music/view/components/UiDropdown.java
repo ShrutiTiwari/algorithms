@@ -1,6 +1,5 @@
 package com.aqua.music.view.components;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;

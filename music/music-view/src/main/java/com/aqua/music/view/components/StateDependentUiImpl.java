@@ -3,7 +3,6 @@
  */
 package com.aqua.music.view.components;
 
-import java.awt.Color;
 import java.awt.TextArea;
 
 import javax.sound.midi.Instrument;

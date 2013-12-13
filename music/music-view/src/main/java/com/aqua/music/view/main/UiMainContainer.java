@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.aqua.music.view.components.UiColor;
-
 /**
  * @author "Shruti Tiwari"
  *

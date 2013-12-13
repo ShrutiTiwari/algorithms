@@ -5,6 +5,7 @@ package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.sound.midi.Instrument;
 import javax.swing.Box;
@@ -13,26 +14,37 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.aqua.music.view.components.UiTexts.UiLables;
+import open.music.api.PlayApi;
 
 class CommonUiTop {
 	private final CurrentState currentState;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
-	private final JPanel mainPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
+	private final JPanel mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 	private final JButton pauseButton;
 	private JPanel rightPanel;
 
 	public CommonUiTop() {
+		mainPanel.add(leftPanel);
+		
 		this.pauseButton = UiButtons.PAUSE.getButton();
 		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 		this.currentState = new CurrentState();
-		addToPanel(currentState.currentStateLabel(), rightPanel);
+
+		addToPanel(currentState.currentPlayableLabel, rightPanel);
+		addToPanel(pauseButton, rightPanel);
+		rightPanel.add(new JLabel("  "));
+		
+		addToPanel(currentState.currentInstrumentLabel, rightPanel);
+
+		rightPanel.add(new JLabel("  "));
+		addToPanel(currentState.currentSpeedLabel, rightPanel);
 		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), rightPanel);
 		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), rightPanel);
-		addToPanel(pauseButton, rightPanel);
 
-		mainPanel.add(leftPanel);
-		leftPanel.add(UiTexts.UiLables.MESSAGE_TOP.getLabel());
+		
+		JLabel lable = UiTexts.UiLables.MESSAGE_TOP.getLabel();
+		lable.setFont(new Font("", Font.PLAIN, 30));
+		leftPanel.add(lable);
 
 		mainPanel.add(rightPanel);
 	}
@@ -58,44 +70,35 @@ class CommonUiTop {
 
 	public static class CurrentState {
 		private String currentPlayable;
-		private final JLabel currentStateLabel;
+
+		private final JLabel currentPlayableLabel;
+		private final JLabel currentInstrumentLabel;
+		private final JLabel currentSpeedLabel;
+
 		private Instrument mainInstrument;
 		private int speed;
 
 		private CurrentState() {
-			this.currentStateLabel = new JLabel();
-			update();
+			this.currentPlayableLabel = new JLabel("Playing[ -  ]");
+			this.currentInstrumentLabel = new JLabel("Playing[ " + PlayApi.defaultInstrument().getName() + "  ]");
+			this.currentSpeedLabel = new JLabel("Speed[ 0  ]");
 		}
 
 		public void setCurrentPlayable(String currentPlayable) {
 			this.currentPlayable = currentPlayable;
-			update();
+			String playableName = currentPlayable == null ? "--" : currentPlayable;
+			currentPlayableLabel.setText("Playing[" + playableName + "]");
 		}
 
 		public void setMainInstrument(Instrument mainInstrument) {
 			this.mainInstrument = mainInstrument;
-			update();
+			String instrumentName = mainInstrument == null ? "--" : mainInstrument.getName();
+			currentInstrumentLabel.setText("Instrument[" + instrumentName + "]");
 		}
 
 		public void setSpeed(int speed) {
 			this.speed = speed;
-			update();
-		}
-
-		@Override
-		public String toString() {
-			String instrumentName = mainInstrument==null?"--":mainInstrument.getName();
-			String playableName = currentPlayable==null?"--":currentPlayable;
-			return "Playing[" + playableName + "]     Instrument[" + instrumentName + "]     Speed [" + speed + "]";
-
-		}
-
-		private JLabel currentStateLabel() {
-			return currentStateLabel;
-		}
-
-		private void update() {
-			currentStateLabel.setText(this.toString());
+			currentSpeedLabel.setText("Speed [" + speed + "]");
 		}
 	}
 }

@@ -13,8 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.aqua.music.view.components.UiTexts.UiLables;
-
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
 import open.music.api.StateDependentUi;
@@ -41,6 +39,7 @@ class CommonUiBottom {
 
 	private void addInstrument(InstrumentRole instrumentRole) {
 		InstrumentDisplay instrumentDisplay = new InstrumentDisplay(instrumentRole);
+		
 		bottomPanel.add(instrumentDisplay.instrumentLabel());
 		bottomPanel.add(instrumentDisplay.displayPane());
 		bottomPanel.add(Box.createVerticalGlue());
@@ -78,7 +77,7 @@ class CommonUiBottom {
 			JList jList = new JList(instrumentNames);
 			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
 
-			jList.setBackground(UiColor.CLICKABLE_SECTION);
+			jList.setBackground(UiColor.LIGHT_GREEN);
 			JScrollPane instrumentPane = new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
 			instrumentPane.setBackground(UiColor.BG_CLR);
 			return instrumentPane;
