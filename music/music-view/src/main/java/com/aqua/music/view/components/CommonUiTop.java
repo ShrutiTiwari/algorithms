@@ -14,8 +14,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import open.music.api.PlayApi;
-
 class CommonUiTop {
 	private final CurrentState currentState;
 	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
@@ -25,7 +23,7 @@ class CommonUiTop {
 
 	public CommonUiTop() {
 		mainPanel.add(leftPanel);
-		
+
 		this.pauseButton = UiButtons.PAUSE.getButton();
 		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 		this.currentState = new CurrentState();
@@ -33,7 +31,7 @@ class CommonUiTop {
 		addToPanel(currentState.currentPlayableLabel, rightPanel);
 		addToPanel(pauseButton, rightPanel);
 		rightPanel.add(new JLabel("  "));
-		
+
 		addToPanel(currentState.currentInstrumentLabel, rightPanel);
 
 		rightPanel.add(new JLabel("  "));
@@ -41,7 +39,6 @@ class CommonUiTop {
 		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), rightPanel);
 		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), rightPanel);
 
-		
 		JLabel lable = UiTexts.UiLables.MESSAGE_TOP.getLabel();
 		lable.setFont(new Font("", Font.PLAIN, 30));
 		leftPanel.add(lable);
@@ -69,13 +66,12 @@ class CommonUiTop {
 	}
 
 	public static class CurrentState {
-		private String currentPlayable;
-
-		private final JLabel currentPlayableLabel;
 		private final JLabel currentInstrumentLabel;
+		private final JLabel currentPlayableLabel;
 		private final JLabel currentSpeedLabel;
 
 		private Instrument mainInstrument;
+		private String playableName;
 		private int speed;
 
 		private CurrentState() {
@@ -85,7 +81,7 @@ class CommonUiTop {
 		}
 
 		public void setCurrentPlayable(String currentPlayable) {
-			this.currentPlayable = currentPlayable;
+			this.playableName = currentPlayable;
 			String playableName = currentPlayable == null ? "--" : currentPlayable;
 			currentPlayableLabel.setText("Playing[ " + playableName + " ]");
 		}
@@ -98,7 +94,7 @@ class CommonUiTop {
 
 		public void setSpeed(int speed) {
 			this.speed = speed;
-			currentSpeedLabel.setText("Speed [ " + speed + " ]");
+			currentSpeedLabel.setText("Speed[ " + speed + " ]");
 		}
 	}
 }
