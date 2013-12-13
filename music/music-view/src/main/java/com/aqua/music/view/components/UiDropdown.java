@@ -19,8 +19,8 @@ import com.aqua.music.model.cyclicset.SymmetricalSet;
 import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
-public class UiDropdown {
-	public static JComboBox patternThaatDropDown() {
+class UiDropdown {
+	static JComboBox patternThaatDropDown() {
 		return createWith(PermuatationsGenerator.values(), null);
 	}
 
@@ -68,7 +68,7 @@ public class UiDropdown {
 		private FrequencySet frequencySet;
 		private PermuatationsGenerator patternItemsCount;
 
-		public ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2,
+		ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2,
 				PermuatationsGenerator patternItemsCount) {
 			this.musicPanel = musicPanel;
 			this.frequencySet = frequencySet2;

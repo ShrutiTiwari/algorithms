@@ -13,12 +13,12 @@ import javax.swing.ListSelectionModel;
  * @author "Shruti Tiwari"
  * 
  */
-public class UiScrollPane {
+class UiScrollPane {
 	private final Dimension dimension;
 	private final int itemCount;
 	private final int maxNameLength;
 
-	public UiScrollPane(int itemCount, int maxNameLength, Dimension dimension) {
+	UiScrollPane(int itemCount, int maxNameLength, Dimension dimension) {
 		this.itemCount = itemCount;
 		this.maxNameLength = maxNameLength;
 		this.dimension = dimension;

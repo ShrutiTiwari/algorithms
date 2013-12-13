@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author "Shruti Tiwari"
  * 
  */
-public abstract class MusicPanel {
+abstract class MusicPanel {
 	protected final Logger logger = LoggerFactory.getLogger(MusicPanel.class);
 
 	private final JButton pauseButton;
