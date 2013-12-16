@@ -28,9 +28,9 @@ public class UiTabbedPane {
 		JTabbedPane mainTabbedPane = new JTabbedPane();
 		
 		JTabbedPane pracitceTabbedPane = new JTabbedPane();
-		pracitceTabbedPane.addTab(TITLE_THAAT, new MusicPanelForPractice(PlayApi.getAllPlainThaat(),UiTexts.UiLables.PRACTICE_A_THAAT).getPanel());
-		pracitceTabbedPane.addTab(TITLE_THAAT_PATTERN, new MusicPanelForPractice(firstThaat,PermuatationsGenerator.PAIR, UiTexts.UiLables.PRACTICE_A_PATTERN).getPanel());
-		pracitceTabbedPane.addTab(TITLE_SONG_TAB, new MusicPanelForPractice(PlayApi.getAllSongs(),UiTexts.UiLables.PRACTICE_A_SONG).getPanel());
+		pracitceTabbedPane.addTab(TITLE_THAAT, new MusicPanelForPractice(stateDependentUi,PlayApi.getAllPlainThaat(),UiTexts.UiLables.PRACTICE_A_THAAT).getPanel());
+		pracitceTabbedPane.addTab(TITLE_THAAT_PATTERN, new MusicPanelForPractice(stateDependentUi,firstThaat,PermuatationsGenerator.PAIR, UiTexts.UiLables.PRACTICE_A_PATTERN).getPanel());
+		pracitceTabbedPane.addTab(TITLE_SONG_TAB, new MusicPanelForPractice(stateDependentUi,PlayApi.getAllSongs(),UiTexts.UiLables.PRACTICE_A_SONG).getPanel());
 		mainTabbedPane.addTab(UiTexts.TITLE_PRACTICE, pracitceTabbedPane);
 		
 		mainTabbedPane.addTab(TITLE_PUZZLES, new MusicPanelForQuiz(stateDependentUi,firstQuizLevel).getPanel());

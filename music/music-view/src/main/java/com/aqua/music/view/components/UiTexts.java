@@ -26,7 +26,7 @@ interface UiTexts {
 		PRACTICE_A_SONG("Choose a song or 'play all'", FONT_SIZE.MEDIUM),
 		PRACTICE_A_PATTERN("Choose a pattern or 'play all'", FONT_SIZE.MEDIUM),
 		MESSAGE_TOP("Hello, Great to see you here.", FONT_SIZE.LARGE),
-		INSTRUMENT_LABEL("Change instrument for ", FONT_SIZE.MEDIUM),
+		INSTRUMENT_LABEL("Change instrument for ", FONT_SIZE.SMALL),
 		
 		STATUS_INSTRUMENT("Instrument[ " + PlayApi.defaultInstrument().getName() + "  ]", FONT_SIZE.SMALL),
 		STATUS_SPEED("Speed[ 0 ]", FONT_SIZE.SMALL),

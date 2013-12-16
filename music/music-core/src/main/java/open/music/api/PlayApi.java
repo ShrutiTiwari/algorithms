@@ -28,8 +28,8 @@ public class PlayApi {
 	private static final Collection<Playable> playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
 
 	private static StateDependentUi stateDependentUi;
-	private static Instrument defaultInstrument= BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
-	
+	private static Instrument defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
+
 	public static Collection<Playable> getAllSongs() {
 		return playableSongs;
 	}
@@ -56,6 +56,7 @@ public class PlayApi {
 
 	/**
 	 * NOTE: Its a non blocking call
+	 * 
 	 * @param frequencyList
 	 */
 	public static void playInLoop(Playable playableitem) {
@@ -64,20 +65,21 @@ public class PlayApi {
 		String displayText = "\n\n Playing::" + playableName + "===>" + "\n" + playableitem.asText();
 		logger.info(displayText);
 		stateDependentUi.updateConsole(displayText);
-	
+
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(playableitem.frequencies());
 	}
 
 	/**
 	 * NOTE: Its a non blocking call
+	 * 
 	 * @param frequencyList
 	 */
 	public static void play(Playable playableitem) {
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
 	}
-	
+
 	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
 		AudioTask<Playable> audioTask = audioTaskWith(playableItems, repeatCount);
 		stateDependentUi.setPauseToDisplay();
@@ -104,26 +106,26 @@ public class PlayApi {
 
 			@Override
 			public void beforeForLoop() {
-				stateDependentUi.updateConsole("Playing all items:\n");
+				stateDependentUi.updateConsole("Playing all items, each [" + repeatCount + "] times :\n");
 				logger.info("" + playableItems.length);
 			}
 		};
 		return audioTask;
 	}
-	
 
-	public enum AudioPlayerNextStatus{
-		PAUSE, RESUME;
+	public enum AudioPlayerNextStatus {
+		PAUSE,
+		RESUME;
 	}
-	
-	public static void initializeStateDepenendentUi(StateDependentUi stateDependentUi){
-		PlayApi.stateDependentUi=stateDependentUi;
+
+	public static void initializeStateDepenendentUi(StateDependentUi stateDependentUi) {
+		PlayApi.stateDependentUi = stateDependentUi;
 		InstrumentRole.MAIN.setTo(defaultInstrument);
 		stateDependentUi.updateInstrument(defaultInstrument);
 		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
 	}
-	
-	public static Instrument defaultInstrument(){
+
+	public static Instrument defaultInstrument() {
 		return defaultInstrument;
 	}
 }

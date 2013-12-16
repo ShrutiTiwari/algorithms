@@ -4,6 +4,7 @@
 package com.aqua.music.view.components;
 
 import java.awt.TextArea;
+import java.awt.TextField;
 
 import javax.sound.midi.Instrument;
 import javax.swing.Icon;
@@ -45,7 +46,7 @@ class StateDependentUiImpl implements StateDependentUi {
 	public JPanel topPanel() {
 		return topPanelArea.getPanel();
 	}
-
+	
 	@Override
 	public void updateConsole(String displayText) {
 		consoleArea.setText(displayText);
