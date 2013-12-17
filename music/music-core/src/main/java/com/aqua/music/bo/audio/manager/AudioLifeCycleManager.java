@@ -1,5 +1,6 @@
 package com.aqua.music.bo.audio.manager;
 
+import open.music.api.DeviceType;
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi;
 import open.music.api.StateDependentUi;
@@ -29,4 +30,9 @@ public interface AudioLifeCycleManager {
 	 * @param stateDependentUi
 	 */
 	void addStateObserver(StateDependentUi stateDependentUi);
+
+	/**
+	 * @param deviceType
+	 */
+	void initializeAudioPlayer(DeviceType deviceType);
 }

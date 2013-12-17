@@ -188,4 +188,9 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	public void changeInstrumentTo(String instrument, InstrumentRole changingInstrument) {
 		
 	}
+
+	@Override
+	public String[] allInstruments() {
+		return null;
+	}
 }

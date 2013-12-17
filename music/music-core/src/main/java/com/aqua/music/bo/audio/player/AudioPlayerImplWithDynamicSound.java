@@ -114,4 +114,9 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	public void changeInstrumentTo(String instrument, InstrumentRole instrumentRole) {
 		basicNotePlayer.notifyInstrumentChange(instrument, instrumentRole);
 	}
+
+	@Override
+	public String[] allInstruments() {
+		return basicNotePlayer.allInstruments();
+	}
 }

@@ -1,6 +1,7 @@
 package com.aqua.music.bo.audio.player;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	private final Synthesizer synth;
 	private volatile int activeNoteNumber = -1;
 	private final int rhythmNote = ClassicalNote.S.midiNoteNumber();
-	private final Map<String, Instrument> instrumentsMap = new HashMap<String, Instrument>();
+	private final Map<String, Instrument> instrumentsMap = new LinkedHashMap<String, Instrument>();
 	private String[] instrumentNames;
 
 	public String[] allInstruments() {

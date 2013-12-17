@@ -24,6 +24,8 @@ public interface AudioPlayer {
 	void setAudioPlayRigthsManager(AudioPlayRightsManager audioPlayRightsManager);
 
 	void stop();
+	
+	String[] allInstruments();
 
 	enum Factory {
 		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSound.class),

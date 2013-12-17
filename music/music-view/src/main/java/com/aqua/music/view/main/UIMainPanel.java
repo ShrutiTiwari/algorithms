@@ -33,7 +33,7 @@ public class UIMainPanel<T> {
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
 		jPanelInstance.add(commonComponents.bottomPanel());
-		SingletonFactory.PLAY_API.initializeStateDepenendentUi(commonComponents.stateDependentUi());
+		SingletonFactory.PLAY_API.initialize(commonComponents.stateDependentUi(), null);
 	}
 
 	T getJPanel() {

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
-import com.aqua.music.bo.audio.player.BasicNotePlayer;
+import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -31,8 +31,8 @@ public class PlayApi {
 	PlayApi() {
 		this.playableSongs = PlaybleType.SONG.playables();
 		this.playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
-		this.defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
-		this.instrumentNames = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
+		this.instrumentNames = AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
+		this.defaultInstrument = instrumentNames[73];
 	}
 
 	public Collection<Playable> getAllSongs() {
@@ -123,11 +123,12 @@ public class PlayApi {
 		RESUME;
 	}
 
-	public void initializeStateDepenendentUi(StateDependentUi stateDependentUi) {
+	public void initialize(StateDependentUi stateDependentUi, DeviceType system) {
 		this.stateDependentUi = stateDependentUi;
 		InstrumentRole.MAIN.setTo(defaultInstrument);
 		stateDependentUi.updateInstrument(defaultInstrument);
 		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
+		AudioLifeCycleManager.instance.initializeAudioPlayer(system);
 	}
 
 	public String defaultInstrument() {
