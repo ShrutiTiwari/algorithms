@@ -2,7 +2,10 @@ package open.music.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.sound.midi.Instrument;
 
@@ -22,23 +25,41 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
  * 
  */
 public class PlayApi {
-	private static final Logger logger = LoggerFactory.getLogger(PlayApi.class);
-	private static final Collection<Playable> playableSongs = PlaybleType.SONG.playables();
-	private static final Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
-	private static final Collection<Playable> playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
+	private final Logger logger = LoggerFactory.getLogger(PlayApi.class);
+	private final Collection<Playable> playableSongs;
+	private final Map<String,Instrument> instrumentsMap= new HashMap<String, Instrument>();
+	private final Collection<Playable> playablePlainThaats;
 
-	private static StateDependentUi stateDependentUi;
-	private static Instrument defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
+	private StateDependentUi stateDependentUi;
+	private String defaultInstrument;
+	private String[] instrumentNames;
 
-	public static Collection<Playable> getAllSongs() {
+	PlayApi() {
+		this.playableSongs = PlaybleType.SONG.playables();
+		this.playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
+		this.defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73].getName();
+		Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
+		
+		for (Instrument each : instruments) {
+			instrumentsMap.put(each.getName().trim(), each);
+		}
+		Set<String> instrumentNamesSet = instrumentsMap.keySet();
+		this.instrumentNames=instrumentNamesSet.toArray(new String[instrumentNamesSet.size()] );
+	}
+
+	public Instrument findInstrument(String instrumentName){
+		return instrumentsMap.get(instrumentName);
+	}
+	
+	public Collection<Playable> getAllSongs() {
 		return playableSongs;
 	}
 
-	public static Collection<Playable> getAllPlainThaat() {
+	public Collection<Playable> getAllPlainThaat() {
 		return playablePlainThaats;
 	}
 
-	public static Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
+	public Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
 		List<int[]> allPermutations = permuatationsGenerator.generatePermutations(frequencySet.ascendNotes());
 
 		Collection<Playable> result = new ArrayList<Playable>();
@@ -50,8 +71,8 @@ public class PlayApi {
 		return result;
 	}
 
-	public static Instrument[] getAllInstruments() {
-		return instruments;
+	public String[] getAllInstruments() {
+		return instrumentNames;
 	}
 
 	/**
@@ -59,7 +80,7 @@ public class PlayApi {
 	 * 
 	 * @param frequencyList
 	 */
-	public static void playInLoop(Playable playableitem) {
+	public void playInLoop(Playable playableitem) {
 		String playableName = playableitem.name();
 		stateDependentUi.updatePlayable(playableName);
 		String displayText = "\n\n Playing::" + playableName + "===>" + "\n" + playableitem.asText();
@@ -75,18 +96,18 @@ public class PlayApi {
 	 * 
 	 * @param frequencyList
 	 */
-	public static void play(Playable playableitem) {
+	public void play(Playable playableitem) {
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
 	}
 
-	public static void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
+	public void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
 		AudioTask<Playable> audioTask = audioTaskWith(playableItems, repeatCount);
 		stateDependentUi.setPauseToDisplay();
 		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
-	private static AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final int repeatCount) {
+	private AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final int repeatCount) {
 		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
 			public Playable[] forLoopParameter() {
@@ -118,14 +139,14 @@ public class PlayApi {
 		RESUME;
 	}
 
-	public static void initializeStateDepenendentUi(StateDependentUi stateDependentUi) {
-		PlayApi.stateDependentUi = stateDependentUi;
+	public void initializeStateDepenendentUi(StateDependentUi stateDependentUi) {
+		this.stateDependentUi = stateDependentUi;
 		InstrumentRole.MAIN.setTo(defaultInstrument);
 		stateDependentUi.updateInstrument(defaultInstrument);
 		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
 	}
 
-	public static Instrument defaultInstrument() {
+	public String defaultInstrument() {
 		return defaultInstrument;
 	}
 }

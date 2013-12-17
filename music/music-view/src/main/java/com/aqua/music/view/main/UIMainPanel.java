@@ -4,7 +4,7 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import open.music.api.PlayApi;
+import open.music.api.SingletonFactory;
 
 import com.aqua.music.view.components.CommonUi;
 import com.aqua.music.view.components.UiColor;
@@ -33,7 +33,7 @@ public class UIMainPanel<T> {
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
 		jPanelInstance.add(commonComponents.bottomPanel());
-		PlayApi.initializeStateDepenendentUi(commonComponents.stateDependentUi());
+		SingletonFactory.PLAY_API.initializeStateDepenendentUi(commonComponents.stateDependentUi());
 	}
 
 	T getJPanel() {

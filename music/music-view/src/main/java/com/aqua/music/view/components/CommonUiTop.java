@@ -5,9 +5,7 @@ package com.aqua.music.view.components;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 
-import javax.sound.midi.Instrument;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -67,7 +65,7 @@ class CommonUiTop {
 		private final JLabel currentPlayableLabel;
 		private final JLabel currentSpeedLabel;
 
-		private Instrument mainInstrument;
+		private String mainInstrument;
 		private String playableName;
 		private int speed;
 
@@ -83,9 +81,9 @@ class CommonUiTop {
 			currentPlayableLabel.setText("Playing[ " + playableName + " ]");
 		}
 
-		public void setMainInstrument(Instrument mainInstrument) {
-			this.mainInstrument = mainInstrument;
-			String instrumentName = mainInstrument == null ? "--" : mainInstrument.getName();
+		public void setMainInstrument(String instrument) {
+			this.mainInstrument = instrument;
+			String instrumentName = instrument == null ? "--" : instrument;
 			currentInstrumentLabel.setText("Instrument[ " + instrumentName + " ]");
 		}
 

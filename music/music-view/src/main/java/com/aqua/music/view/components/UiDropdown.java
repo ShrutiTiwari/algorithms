@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.swing.JComboBox;
 
 import open.music.api.PlayApi;
+import open.music.api.SingletonFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,7 @@ class UiDropdown {
 		private final MusicPanel musicPanel;
 		private FrequencySet frequencySet;
 		private PermuatationsGenerator patternItemsCount;
+		private final PlayApi playApi=SingletonFactory.PLAY_API;
 
 		ThaatAndPatternDropdownActionListener(MusicPanel musicPanel, FrequencySet frequencySet2,
 				PermuatationsGenerator patternItemsCount) {
@@ -84,7 +86,7 @@ class UiDropdown {
 			} else {
 				this.patternItemsCount = (PermuatationsGenerator) obj;
 			}
-			musicPanel.refreshSpecificComponentPanel(PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount));
+			musicPanel.refreshSpecificComponentPanel(playApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
 	}
 }

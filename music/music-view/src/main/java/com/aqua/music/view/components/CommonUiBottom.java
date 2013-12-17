@@ -3,7 +3,6 @@ package com.aqua.music.view.components;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import javax.sound.midi.Instrument;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,7 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import open.music.api.InstrumentRole;
-import open.music.api.PlayApi;
+import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
 class CommonUiBottom {
@@ -62,35 +61,24 @@ class CommonUiBottom {
 		}
 
 		public Component displayPane() {
-			Instrument[] allInstruments = PlayApi.getAllInstruments();
-
-			String[] instrumentNames = new String[allInstruments.length];
-			int i = 0;
-			int maxNameLength = 150;
-			for (Instrument each : allInstruments) {
-				String name = each.getName().trim();
-				instrumentNames[i++] = name;
-				if (maxNameLength < name.length()) {
-					maxNameLength = name.length();
-				}
-			}
+			String[] instrumentNames = SingletonFactory.PLAY_API.getAllInstruments();
 			JList jList = new JList(instrumentNames);
-			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, allInstruments, instrumentRole));
+			jList.addListSelectionListener(new InstrumentDropdownActionListener(jList, instrumentNames, instrumentRole));
 
 			jList.setBackground(UiColor.LOW_PRIORITY_CLR);
-			JScrollPane instrumentPane = new UiScrollPane(3, maxNameLength, new Dimension(900, 50)).createScrollPane(jList);
+			JScrollPane instrumentPane = new UiScrollPane(3, 150, new Dimension(900, 50)).createScrollPane(jList);
 			instrumentPane.setBackground(UiColor.BG_CLR);
 			return instrumentPane;
 		}
 
 		private class InstrumentDropdownActionListener implements ListSelectionListener {
 			private final JList jList;
-			private Instrument[] allInstruments;
+			private String[] allInstruments;
 			private InstrumentRole instrumentRole;
 
-			public InstrumentDropdownActionListener(JList jList, Instrument[] allInstruments, InstrumentRole instrumentRole) {
+			public InstrumentDropdownActionListener(JList jList, String[] instrumentNames, InstrumentRole instrumentRole) {
 				this.jList = jList;
-				this.allInstruments = allInstruments;
+				this.allInstruments = instrumentNames;
 				this.instrumentRole = instrumentRole;
 			}
 
@@ -99,7 +87,7 @@ class CommonUiBottom {
 				if (e.getValueIsAdjusting() == false) {
 					int selectedIndex = jList.getSelectedIndex();
 					if (selectedIndex != -1) {
-						Instrument instrument = allInstruments[selectedIndex];
+						String instrument = allInstruments[selectedIndex];
 						instrumentRole.setTo(instrument);
 						stateDependentUi.updateInstrument(instrument);
 					}

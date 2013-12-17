@@ -11,7 +11,7 @@ import static com.aqua.music.model.core.ClassicalNote.N1;
 import static com.aqua.music.model.core.ClassicalNote.R_;
 import static com.aqua.music.model.core.ClassicalNote.S;
 import open.music.api.AudioPlayerSettings;
-import open.music.api.PlayApi;
+import open.music.api.SingletonFactory;
 
 import com.aqua.music.model.raag.MusicalPhrase;
 
@@ -25,7 +25,7 @@ public class RandomSongLines {
 		MusicalPhrase m = new MusicalPhrase().n(M_, D, M_,G, G,R_,G,G, N1,R_, N1, D1).couple(N1,R_).n(G,R_,S);
 		AudioPlayerSettings.increaseTempo();
 		AudioPlayerSettings.increaseTempo();
-		PlayApi.playInLoop(m);
+		SingletonFactory.PLAY_API.playInLoop(m);
 	}
 
 }

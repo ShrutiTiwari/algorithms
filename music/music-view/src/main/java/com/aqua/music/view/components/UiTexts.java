@@ -8,7 +8,7 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 
-import open.music.api.PlayApi;
+import open.music.api.SingletonFactory;
 
 /**
  * @author "Shruti Tiwari"
@@ -28,7 +28,7 @@ interface UiTexts {
 		MESSAGE_TOP("Hello, Great to see you here.", FONT_SIZE.LARGE),
 		INSTRUMENT_LABEL("Change instrument for ", FONT_SIZE.SMALL),
 		
-		STATUS_INSTRUMENT("Instrument[ " + PlayApi.defaultInstrument().getName() + "  ]", FONT_SIZE.SMALL),
+		STATUS_INSTRUMENT("Instrument[ " + SingletonFactory.PLAY_API.defaultInstrument() + "  ]", FONT_SIZE.SMALL),
 		STATUS_SPEED("Speed[ 0 ]", FONT_SIZE.SMALL),
 		STATUS_PLAYABLE("Playing[ - ]", FONT_SIZE.SMALL);
 

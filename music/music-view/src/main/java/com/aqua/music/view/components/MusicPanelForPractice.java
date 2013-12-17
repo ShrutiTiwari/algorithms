@@ -1,7 +1,6 @@
 package com.aqua.music.view.components;
 
 import java.awt.Dimension;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
@@ -19,6 +18,7 @@ import javax.swing.event.ListSelectionListener;
 
 import open.music.api.PlayApi;
 import open.music.api.Playable;
+import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.core.FrequencySet;
@@ -31,6 +31,7 @@ class MusicPanelForPractice extends MusicPanel {
 	private final UiLables pickTitle;
 	private final JTextField playAllCounter;
 	private JPanel specificComponentPanel;
+	private final PlayApi playApi=SingletonFactory.PLAY_API;
 	/**
 	 * Used for plain rehearsing - of thaat and songs
 	 * 
@@ -57,7 +58,7 @@ class MusicPanelForPractice extends MusicPanel {
 		super(true);
 		this.pickTitle = titleLabel;
 		this.playAllCounter = defaultTextField();
-		this.intialItemsList = PlayApi.getAllPatternedThaat(frequencySet, patternItemsCount);
+		this.intialItemsList = playApi.getAllPatternedThaat(frequencySet, patternItemsCount);
 
 		final ThaatAndPatternDropdownActionListener thaatPatternListener = new ThaatAndPatternDropdownActionListener(this, frequencySet,
 				patternItemsCount);
@@ -142,7 +143,7 @@ class MusicPanelForPractice extends MusicPanel {
 				logger.error(e.getMessage());
 			}
 			playAllCounter.setText(" "+count+ " ");
-			PlayApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, count);
+			playApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, count);
 		}
 	}
 
@@ -160,7 +161,7 @@ class MusicPanelForPractice extends MusicPanel {
 			if (e.getValueIsAdjusting() == false) {
 				int selectedIndex = jlist.getSelectedIndex();
 				if (selectedIndex != -1) {
-					PlayApi.playInLoop(allPlayableItems[selectedIndex]);
+					playApi.playInLoop(allPlayableItems[selectedIndex]);
 				}
 			}
 		}

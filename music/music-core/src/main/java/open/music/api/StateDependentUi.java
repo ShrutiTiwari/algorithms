@@ -3,7 +3,6 @@
  */
 package open.music.api;
 
-import javax.sound.midi.Instrument;
 
 /**
  * @author "Shruti Tiwari"
@@ -20,7 +19,7 @@ public interface StateDependentUi {
 
 	public void updateConsole(String displayText);
 
-	public void updateInstrument(Instrument instrument);
+	public void updateInstrument(String instrument);
 
 	/**
 	 * @param playableName
