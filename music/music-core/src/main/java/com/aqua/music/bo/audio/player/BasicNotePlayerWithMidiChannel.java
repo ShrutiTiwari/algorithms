@@ -1,5 +1,9 @@
 package com.aqua.music.bo.audio.player;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -19,26 +23,33 @@ import com.aqua.music.model.core.DynamicFrequency;
  */
 class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMidiChannel.class);
-	private final Instrument[] allInstruments;
 	private final MidiChannel[] mc;
 	private final MidiChannel mainNoteChannel;
 	private final MidiChannel rhythmChannel;
 	private final Synthesizer synth;
 	private volatile int activeNoteNumber = -1;
 	private final int rhythmNote = ClassicalNote.S.midiNoteNumber();
+	private final Map<String, Instrument> instrumentsMap = new HashMap<String, Instrument>();
+	private String[] instrumentNames;
 
-	public Instrument[] allInstruments() {
-		return allInstruments;
+	public String[] allInstruments() {
+		return instrumentNames;
 	}
 
 	public BasicNotePlayerWithMidiChannel() {
 		this.synth = getSynth();
 		this.mc = (synth == null ? null : synth.getChannels());
-		this.allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
 		synth.loadAllInstruments(synth.getDefaultSoundbank());
 		this.rhythmChannel = mc[9];
 		this.mainNoteChannel = mc[8];
-		this.notifyInstrumentChange(allInstruments[13], InstrumentRole.RHYTHM);
+
+		Instrument[] allInstruments = (synth == null ? null : synth.getDefaultSoundbank().getInstruments());
+		for (Instrument each : allInstruments) {
+			instrumentsMap.put(each.getName().trim(), each);
+		}
+		Set<String> instrumentNamesSet = instrumentsMap.keySet();
+		this.instrumentNames = instrumentNamesSet.toArray(new String[instrumentNamesSet.size()]);
+		this.notifyInstrumentChange(allInstruments[13].getName(), InstrumentRole.RHYTHM);
 	}
 
 	@Override
@@ -46,13 +57,14 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 
 	}
 
-	public void notifyInstrumentChange(Instrument instrument, InstrumentRole instrumentRole) {
+	public void notifyInstrumentChange(String instrumentName, InstrumentRole instrumentRole) {
+		Instrument instrument = instrumentsMap.get(instrumentName);
 		if (instrumentRole == InstrumentRole.MAIN) {
-			logger.info("changing main instrument to [" + instrument + "]");
+			logger.info("changing main instrument to [" + instrumentName + "]");
 			synth.loadInstrument(instrument);
 			mainNoteChannel.programChange(instrument.getPatch().getProgram());
 		} else {
-			logger.info("changing rhythm instrument to [" + instrument + "]");
+			logger.info("changing main instrument to [" + instrumentName + "]");
 			synth.loadInstrument(instrument);
 			rhythmChannel.programChange(instrument.getPatch().getProgram());
 		}
@@ -61,7 +73,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	@Override
 	public void play(DynamicFrequency each, int duration) {
 		this.activeNoteNumber = each.midiNoteNumber();
-		//rhythmChannel.noteOn(rhythmNote, 90);
+		// rhythmChannel.noteOn(rhythmNote, 90);
 		mainNoteChannel.noteOn(activeNoteNumber, 127);
 		try {
 			Thread.sleep(duration);
@@ -69,7 +81,7 @@ class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 			e.printStackTrace();
 		}
 		mainNoteChannel.noteOn(activeNoteNumber, 0);
-		//rhythmChannel.noteOn(rhythmNote, 0);
+		// rhythmChannel.noteOn(rhythmNote, 0);
 		activeNoteNumber = -1;
 	}
 

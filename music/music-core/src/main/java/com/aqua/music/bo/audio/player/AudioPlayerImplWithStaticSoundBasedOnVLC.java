@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.sound.midi.Instrument;
-
 import open.music.api.InstrumentRole;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
@@ -187,7 +185,7 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	}
 
 	@Override
-	public void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument) {
+	public void changeInstrumentTo(String instrument, InstrumentRole changingInstrument) {
 		
 	}
 }

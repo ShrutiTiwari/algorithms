@@ -2,8 +2,6 @@ package com.aqua.music.bo.audio.player;
 
 import java.util.Collection;
 
-import javax.sound.midi.Instrument;
-
 import open.music.api.InstrumentRole;
 
 import org.slf4j.Logger;
@@ -59,5 +57,5 @@ public interface AudioPlayer {
 		}
 	}
 
-	void changeInstrumentTo(Instrument instrument, InstrumentRole changingInstrument);
+	void changeInstrumentTo(String instrument, InstrumentRole changingInstrument);
 }

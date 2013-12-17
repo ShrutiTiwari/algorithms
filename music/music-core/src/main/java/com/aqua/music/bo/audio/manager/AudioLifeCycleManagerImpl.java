@@ -4,8 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.sound.midi.Instrument;
-
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 import open.music.api.StateDependentUi;
@@ -23,7 +21,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
-	private volatile Instrument configuredInstrument;
+	private volatile String configuredInstrument;
 
 	private StateDependentUi stateObserver;
 	
@@ -129,7 +127,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public void changeInstrumentTo(Instrument instrument, InstrumentRole instrumentRole) {
+	public void changeInstrumentTo(String instrument, InstrumentRole instrumentRole) {
 		this.configuredInstrument=instrument;
 		if (currentAudioPlayer != null) {
 			currentAudioPlayer.changeInstrumentTo(configuredInstrument, instrumentRole);

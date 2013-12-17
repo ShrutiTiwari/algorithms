@@ -10,6 +10,6 @@ public enum InstrumentRole {
 	RHYTHM;
 
 	public void setTo(String instrument) {
-		AudioLifeCycleManager.instance.changeInstrumentTo(SingletonFactory.PLAY_API.findInstrument(instrument), this);
+		AudioLifeCycleManager.instance.changeInstrumentTo(instrument, this);
 	}
 }

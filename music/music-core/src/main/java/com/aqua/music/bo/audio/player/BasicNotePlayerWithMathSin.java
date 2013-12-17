@@ -1,6 +1,5 @@
 package com.aqua.music.bo.audio.player;
 
-import javax.sound.midi.Instrument;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
@@ -113,14 +112,11 @@ class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 	}
 
 	@Override
-	public void notifyInstrumentChange(Instrument instrument, InstrumentRole changingInstrument) {
-		// TODO Auto-generated method stub
-		
+	public void notifyInstrumentChange(String instrument, InstrumentRole changingInstrument) {
 	}
 
 	@Override
-	public Instrument[] allInstruments() {
-		// TODO Auto-generated method stub
+	public String[] allInstruments() {
 		return null;
 	}
 }

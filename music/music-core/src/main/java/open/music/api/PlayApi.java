@@ -2,12 +2,7 @@ package open.music.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.sound.midi.Instrument;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +22,6 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 public class PlayApi {
 	private final Logger logger = LoggerFactory.getLogger(PlayApi.class);
 	private final Collection<Playable> playableSongs;
-	private final Map<String,Instrument> instrumentsMap= new HashMap<String, Instrument>();
 	private final Collection<Playable> playablePlainThaats;
 
 	private StateDependentUi stateDependentUi;
@@ -37,20 +31,10 @@ public class PlayApi {
 	PlayApi() {
 		this.playableSongs = PlaybleType.SONG.playables();
 		this.playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
-		this.defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73].getName();
-		Instrument[] instruments = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
-		
-		for (Instrument each : instruments) {
-			instrumentsMap.put(each.getName().trim(), each);
-		}
-		Set<String> instrumentNamesSet = instrumentsMap.keySet();
-		this.instrumentNames=instrumentNamesSet.toArray(new String[instrumentNamesSet.size()] );
+		this.defaultInstrument = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments()[73];
+		this.instrumentNames = BasicNotePlayer.MIDI_BASED_PLAYER.allInstruments();
 	}
 
-	public Instrument findInstrument(String instrumentName){
-		return instrumentsMap.get(instrumentName);
-	}
-	
 	public Collection<Playable> getAllSongs() {
 		return playableSongs;
 	}
