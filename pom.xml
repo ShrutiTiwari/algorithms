@@ -126,10 +126,8 @@
 
 	<modules>
 		<module>music</module>
-		<module>algorithms</module>
-		<module>webapps</module>
-		<module>artifacto</module>
-		<module>publicdatafeed</module>
+		<!-- <module>algorithms</module> <module>webapps</module> <module>artifacto</module> 
+			<module>publicdatafeed</module> -->
 	</modules>
 
 </project>
