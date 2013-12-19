@@ -117,6 +117,6 @@ public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 
 	@Override
 	public String[] allInstruments() {
-		return null;
+		return new String[]{};
 	}
 }
