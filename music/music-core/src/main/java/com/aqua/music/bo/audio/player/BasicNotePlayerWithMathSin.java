@@ -26,17 +26,11 @@ public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 	public BasicNotePlayerWithMathSin() {
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aqua.music.bo.audio.player.BasicNotePlayer#finish()
-	 */
 	@Override
 	public void finish() {
 		sdl.drain();		
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.aqua.music.bo.audio.player.BasicNotePlayer#play(com.aqua.music.model.core.DynamicFrequency, int)
-	 */
 	@Override
 	public void play(final DynamicFrequency each, final int duration) {
 		final float frequencyInHz = each.frequencyInHz();
@@ -45,9 +39,6 @@ public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 		sdl.write(buf, 0, buf.length);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aqua.music.bo.audio.player.BasicNotePlayer#start()
-	 */
 	@Override
 	public void start(){
 		AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
@@ -60,9 +51,6 @@ public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aqua.music.bo.audio.player.BasicNotePlayer#stop()
-	 */
 	@Override
 	public void stop() {
 		if (sdl != null) {
@@ -75,9 +63,6 @@ public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.aqua.music.bo.audio.player.BasicNotePlayer#tidyup()
-	 */
 	@Override
 	public void tidyup() {
 		closeStream();		
