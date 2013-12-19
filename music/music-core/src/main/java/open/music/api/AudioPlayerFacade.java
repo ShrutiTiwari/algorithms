@@ -9,25 +9,20 @@ import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
 import com.aqua.music.bo.audio.manager.PlayMode;
-import com.aqua.music.bo.audio.player.AudioPlayer;
 import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
  * 
  */
-public enum AudioPlayerSettings {
-	ASYNCHRONOUS_DYNAMIC_PLAYER(AudioPlayer.Factory.DYNAMIC_AUDIO, PlayMode.Asynchronous),
-	ASYNCHRONOUS_STATIC_PLAYER(AudioPlayer.Factory.STATIC_AUDIO, PlayMode.Asynchronous),
-	SYNCHRONOUS_DYNAMIC_PLAYER(AudioPlayer.Factory.DYNAMIC_AUDIO, PlayMode.Synchronous),
-	SYNCHRONOUS_STATIC_PLAYER(AudioPlayer.Factory.STATIC_AUDIO, PlayMode.Synchronous);
+public enum AudioPlayerFacade {
+	ASYNCHRONOUS_PLAYER(PlayMode.Asynchronous),
+	SYNCHRONOUS_PLAYER(PlayMode.Synchronous);
 
-	private final AudioPlayer.Factory audioPlayerFactory;
-	private static final Logger logger = LoggerFactory.getLogger(AudioPlayerSettings.class);
+	private static final Logger logger = LoggerFactory.getLogger(AudioPlayerFacade.class);
 	private final PlayMode playMode;
 
-	private AudioPlayerSettings(AudioPlayer.Factory audioPlayer, PlayMode playMode) {
-		this.audioPlayerFactory = audioPlayer;
+	private AudioPlayerFacade(PlayMode playMode) {
 		this.playMode = playMode;
 	}
 
@@ -64,15 +59,16 @@ public enum AudioPlayerSettings {
 		}
 	}
 
+	
 	public void play(Collection<? extends DynamicFrequency> frequencyList) {
-		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, 1);
+		playMode.play(frequencyList, 1);
 	}
 
 	public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
-		playMode.play(audioPlayerFactory.fetchInstance(), frequencyList, repeatCount);
+		playMode.play(frequencyList, repeatCount);
 	}
 
 	public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {
-		playMode.playInLoop(audioPlayerFactory.fetchInstance(), frequencyList);
+		playMode.playInLoop(frequencyList);
 	}
 }

@@ -2,7 +2,7 @@ package com.aqua.music.model.raag.song;
 
 import java.util.Collection;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
 import open.music.api.Playable;
 
 import com.aqua.music.model.core.DynamicFrequency;
@@ -39,7 +39,7 @@ public enum Song implements Playable {
 		return song.frequencies();
 	}
 
-	public void playTaan(AudioPlayerSettings audioPlayConfig) {
+	public void playTaan(AudioPlayerFacade audioPlayConfig) {
 		Collection<Taan> taans = song.taans();
 		for (Taan each : taans) {
 			Taan playtaan = each;

@@ -26,6 +26,8 @@ public interface AudioPlayer {
 	void stop();
 	
 	String[] allInstruments();
+	
+	public void setBasicNotePalyer(BasicNotePlayer basicNotePlayer);
 
 	enum Factory {
 		DYNAMIC_AUDIO(AudioPlayerImplWithDynamicSound.class),

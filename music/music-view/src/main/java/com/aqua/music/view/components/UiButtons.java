@@ -14,7 +14,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 
 import org.slf4j.Logger;
@@ -32,28 +32,28 @@ interface UiButtons {
 		void actionListenerWork() {
 			final Icon playIcon = imageResourceCache.imageIcon(IMAGE_PLAY);
 			final Icon pauseIcon = imageResourceCache.imageIcon(IMAGE_PAUSE);
-			Icon newIcon = (AudioPlayerSettings.togglePauseAndResume() == AudioPlayerNextStatus.PAUSE) ? pauseIcon : playIcon;
+			Icon newIcon = (AudioPlayerFacade.togglePauseAndResume() == AudioPlayerNextStatus.PAUSE) ? pauseIcon : playIcon;
 			PAUSE.getButton().setIcon(newIcon);
 		}
 	};
 	UiButtons DECREASE_TEMPO = new ButtonBuilder(IMAGE_DECREASE_TEMPO, "DecreaseTempo", "Click this to decrease tempo.") {
 		@Override
 		void actionListenerWork() {
-			AudioPlayerSettings.decreaseTempo();
+			AudioPlayerFacade.decreaseTempo();
 		}
 	};
 
 	UiButtons INCREASE_TEMPO = new ButtonBuilder(IMAGE_INCREASE_TEMPO, "IncreaseTempo", "Click this to increase tempo.") {
 		@Override
 		void actionListenerWork() {
-			AudioPlayerSettings.increaseTempo();
+			AudioPlayerFacade.increaseTempo();
 		}
 	};
 
 	UiButtons QUIT = new ButtonBuilder("Quit", "Click this to quit!") {
 		@Override
 		void actionListenerWork() {
-			AudioPlayerSettings.stop();
+			AudioPlayerFacade.stop();
 			System.exit(0);
 		}
 	};

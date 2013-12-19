@@ -4,8 +4,6 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import open.music.api.SingletonFactory;
-
 import com.aqua.music.view.components.CommonUi;
 import com.aqua.music.view.components.UiColor;
 import com.aqua.music.view.components.UiJPanelBuilder;
@@ -33,7 +31,6 @@ public class UIMainPanel<T> {
 		jPanelInstance.add(middlePanel);
 		jPanelInstance.add(Box.createVerticalGlue());
 		jPanelInstance.add(commonComponents.bottomPanel());
-		SingletonFactory.PLAY_API.initialize(commonComponents.stateDependentUi(), null);
 	}
 
 	T getJPanel() {

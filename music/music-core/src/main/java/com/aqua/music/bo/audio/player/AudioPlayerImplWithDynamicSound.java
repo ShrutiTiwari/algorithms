@@ -13,8 +13,12 @@ import com.aqua.music.model.core.DynamicFrequency;
  */
 class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private volatile AudioPlayRightsManager audioPlayRightsManager;
-	private final BasicNotePlayer basicNotePlayer = BasicNotePlayer.MIDI_BASED_PLAYER;
+	private BasicNotePlayer basicNotePlayer;
 
+	public void setBasicNotePalyer(BasicNotePlayer basicNotePlayer){
+		this.basicNotePlayer = basicNotePlayer;
+	}
+	
 	public void playFrequencies(final Collection<? extends DynamicFrequency> frequencyList, final int repeatCount) {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();

@@ -11,49 +11,43 @@ import com.aqua.music.model.core.DynamicFrequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public enum PlayMode {
 	Asynchronous {
 		@Override
-		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
-			setup(currentAudioPlayer);
-			executor.execute(currentAudioPlayer.playTask(frequencyList, repeatCount));
+		public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
+			executor.execute(currentPlayer().playTask(frequencyList, repeatCount));
 		}
 
 		@Override
-		public void playInLoop(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList) {
-			setup(currentAudioPlayer);
-			executor.execute(currentAudioPlayer.playTaskInLoop(frequencyList));
+		public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {
+			executor.execute(currentPlayer().playTaskInLoop(frequencyList));
 
 		}
 	},
 	Synchronous {
 		@Override
-		public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
-			setup(currentAudioPlayer);
-			currentAudioPlayer.playTask(frequencyList, repeatCount).run();
+		public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount) {
+			currentPlayer().playTask(frequencyList, repeatCount).run();
 
 		}
 
 		@Override
-		public void playInLoop(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList) {
-			setup(currentAudioPlayer);
-			currentAudioPlayer.playTaskInLoop(frequencyList).run();
+		public void playInLoop(Collection<? extends DynamicFrequency> frequencyList) {
+			currentPlayer().playTaskInLoop(frequencyList).run();
 		}
 	};
 
-	private static final ExecutorService executor = Executors.newCachedThreadPool(new AudioThreadFactory());
-
-	private static void setup(AudioPlayer currentAudioPlayer) {
-		final AudioPlayRightsManager audioPlayRightsManager = (AudioPlayRightsManager) AudioLifeCycleManager.instance;
-		audioPlayRightsManager.setCurrentPlayer(currentAudioPlayer);
-		currentAudioPlayer.setAudioPlayRigthsManager(audioPlayRightsManager);
+	private static AudioPlayer currentPlayer() {
+		return ((AudioLifeCycleManager) AudioLifeCycleManager.instance).currentAudioPlayer();
 	}
 
-	abstract public void play(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList, int repeatCount);
+	private static final ExecutorService executor = Executors.newCachedThreadPool(new AudioThreadFactory());
 
-	abstract public void playInLoop(AudioPlayer currentAudioPlayer, Collection<? extends DynamicFrequency> frequencyList);
+	abstract public void play(Collection<? extends DynamicFrequency> frequencyList, int repeatCount);
+
+	abstract public void playInLoop(Collection<? extends DynamicFrequency> frequencyList);
 
 	public <T> void playTask(final AudioTask<T> audioTask) {
 		final AudioPlayRightsManager audioPlayRightsManager = (AudioPlayRightsManager) AudioLifeCycleManager.instance;

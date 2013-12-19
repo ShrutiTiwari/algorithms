@@ -26,13 +26,11 @@ public class PlayApi {
 
 	private StateDependentUi stateDependentUi;
 	private String defaultInstrument;
-	private String[] instrumentNames;
 
 	PlayApi() {
 		this.playableSongs = PlaybleType.SONG.playables();
 		this.playablePlainThaats = PlaybleType.PLAIN_THAAT.playables();
-		this.instrumentNames = AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
-		this.defaultInstrument = instrumentNames[73];
+		this.defaultInstrument = "Flute";
 	}
 
 	public Collection<Playable> getAllSongs() {
@@ -56,7 +54,7 @@ public class PlayApi {
 	}
 
 	public String[] getAllInstruments() {
-		return instrumentNames;
+		return AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class PlayApi {
 		stateDependentUi.updateConsole(displayText);
 
 		stateDependentUi.setPauseToDisplay();
-		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.playInLoop(playableitem.frequencies());
+		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.playInLoop(playableitem.frequencies());
 	}
 
 	/**
@@ -82,7 +80,7 @@ public class PlayApi {
 	 */
 	public void play(Playable playableitem) {
 		stateDependentUi.setPauseToDisplay();
-		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(playableitem.frequencies(), 1);
+		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.play(playableitem.frequencies(), 1);
 	}
 
 	public void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
@@ -106,7 +104,7 @@ public class PlayApi {
 				String displayText = "Playing::" + text;
 				logger.info(displayText);
 				stateDependentUi.appendToConsole(displayText);
-				AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(playableItem.frequencies(), repeatCount);
+				AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(playableItem.frequencies(), repeatCount);
 			}
 
 			@Override
@@ -123,12 +121,13 @@ public class PlayApi {
 		RESUME;
 	}
 
-	public void initialize(StateDependentUi stateDependentUi, DeviceType system) {
+	public void initialize(StateDependentUi stateDependentUi, DeviceType deviceType) {
 		this.stateDependentUi = stateDependentUi;
 		InstrumentRole.MAIN.setTo(defaultInstrument);
 		stateDependentUi.updateInstrument(defaultInstrument);
 		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
-		AudioLifeCycleManager.instance.initializeAudioPlayer(system);
+		AudioLifeCycleManager.instance.initializeAudioPlayer(deviceType);
+		deviceType.initializeAudioFactory();
 	}
 
 	public String defaultInstrument() {

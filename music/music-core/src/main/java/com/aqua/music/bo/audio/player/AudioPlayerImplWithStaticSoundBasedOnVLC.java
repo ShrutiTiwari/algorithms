@@ -193,4 +193,13 @@ class AudioPlayerImplWithStaticSoundBasedOnVLC implements AudioPlayer {
 	public String[] allInstruments() {
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.aqua.music.bo.audio.player.AudioPlayer#setBasicNotePalyer(com.aqua.music.bo.audio.player.BasicNotePlayer)
+	 */
+	@Override
+	public void setBasicNotePalyer(BasicNotePlayer basicNotePlayer) {
+		// TODO Auto-generated method stub
+		
+	}
 }

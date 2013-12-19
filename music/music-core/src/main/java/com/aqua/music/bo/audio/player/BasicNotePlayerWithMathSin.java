@@ -15,7 +15,7 @@ import com.aqua.music.model.core.DynamicFrequency;
  * @author "Shruti Tiwari"
  *
  */
-class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
+public class BasicNotePlayerWithMathSin implements BasicNotePlayer  {
 	private static final double DEFAULT_VOL = 0.8;
 	private static final Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMathSin.class);
 	private static final float SAMPLE_RATE = 8000f;

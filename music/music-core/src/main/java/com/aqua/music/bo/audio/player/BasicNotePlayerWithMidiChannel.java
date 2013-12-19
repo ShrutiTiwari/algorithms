@@ -1,6 +1,5 @@
 package com.aqua.music.bo.audio.player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +21,7 @@ import com.aqua.music.model.core.DynamicFrequency;
  * @author "Shruti Tiwari"
  * 
  */
-class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
+public class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	Logger logger = LoggerFactory.getLogger(BasicNotePlayerWithMidiChannel.class);
 	private final MidiChannel[] mc;
 	private final MidiChannel mainNoteChannel;

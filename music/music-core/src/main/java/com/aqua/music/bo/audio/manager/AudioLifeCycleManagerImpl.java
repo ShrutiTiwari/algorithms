@@ -26,6 +26,11 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	private StateDependentUi stateObserver;
 	
+	
+	public AudioPlayer currentAudioPlayer(){
+		return currentAudioPlayer;
+	} 
+	
 	AudioLifeCycleManagerImpl() {
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);

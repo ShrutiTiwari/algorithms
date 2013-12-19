@@ -15,28 +15,30 @@ import java.util.List;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
+import open.music.api.DeviceType;
 
 import org.junit.Test;
 
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
-public class AudioLifeCycleManagerTest {
 
-	@Test
+public class AudioLifeCycleManagerTest {
+	//@Test
 	public void testFrequencyPlayer() throws LineUnavailableException {
+		DeviceType.DESKTOP_DYNAMIC.initializeAudioFactory();
 		Frequency[] sample = new Frequency[] { S, R, G, M, P, D, N, S3 };
 		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
-		AudioPlayerSettings.ASYNCHRONOUS_DYNAMIC_PLAYER.play(asList, 1);
+		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(asList, 1);
 	}
 
-	//@Test
+	@Test
 	public void testVlcPlayer() {
 		List<Frequency> frequencyList = new ArrayList<Frequency>();
 		frequencyList.add(ClassicalNote.D);
-		
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(frequencyList, 1);
-	}
 
+		DeviceType.DESKTOP_STATIC.initializeAudioFactory();
+		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(frequencyList, 1);
+	}
 }

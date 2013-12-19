@@ -3,13 +3,15 @@
  */
 package com.aqua.music.model.cyclicset;
 
+import static com.aqua.music.model.core.ClassicalNote.D1;
+import static com.aqua.music.model.core.ClassicalNote.D1_;
 import static com.aqua.music.model.core.ClassicalNote.G;
 import static com.aqua.music.model.core.ClassicalNote.G_;
 import static com.aqua.music.model.core.ClassicalNote.N1;
 import static com.aqua.music.model.core.ClassicalNote.N1_;
 import static com.aqua.music.model.core.ClassicalNote.R;
 import static com.aqua.music.model.core.ClassicalNote.R_;
-import static com.aqua.music.model.core.ClassicalNote.*;
+import static com.aqua.music.model.core.ClassicalNote.S;
 
 import java.util.ArrayList;
 import java.util.List;

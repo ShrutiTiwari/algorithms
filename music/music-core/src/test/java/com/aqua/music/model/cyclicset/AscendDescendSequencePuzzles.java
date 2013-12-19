@@ -2,20 +2,23 @@ package com.aqua.music.model.cyclicset;
 
 import java.util.HashSet;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
+import open.music.api.DeviceType;
 
 public class AscendDescendSequencePuzzles {
 	public void playThaat() {
+		initialize();
 		CyclicFrequencySet playItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL);
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(playItem.frequencies(), 1);
+		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(playItem.frequencies(), 1);
 	}
 
 	public void playMultipleThaats() {
+		initialize();
 		CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets multipleSymmetricFreqSet = new CyclicSequenceNonPermutating.MultipleSymmetricalFreqSets(
 				new SymmetricalSet[] { SymmetricalSet.THAAT_BILAWAL, SymmetricalSet.THAAT_ASAVARI });
 		System.out.println(multipleSymmetricFreqSet.asString());
 		
-		AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle(), 1);
+		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(multipleSymmetricFreqSet.allFrequenciesInCycle(), 1);
 	}
 
 	public void playAllThats() {
@@ -30,13 +33,13 @@ public class AscendDescendSequencePuzzles {
 	}
 
 	private void playAscendAndDescend(int count, SymmetricalSet... raags) {
-		AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).frequencies(), 1);
+		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(SymmetricalSet.THAAT_BILAWAL).frequencies(), 1);
 		System.out.println("\n Played [BILAWAL]");
 		HashSet<SymmetricalSet> hasheddata = randomize(raags);
 		for (SymmetricalSet each : hasheddata) {
 
 			for (int i = 0; i < count; i++) {
-				AudioPlayerSettings.SYNCHRONOUS_STATIC_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).frequencies(), 1);
+				AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each).frequencies(), 1);
 				System.out.println("\nPlayed [" + each.name() + "] ." + i);
 				System.out.println("\n");
 			}
@@ -49,5 +52,9 @@ public class AscendDescendSequencePuzzles {
 			hasheddata.add(each);
 		}
 		return hasheddata;
+	}
+	
+	private void initialize() {
+		DeviceType.DESKTOP_STATIC.initializeAudioFactory();
 	}
 }

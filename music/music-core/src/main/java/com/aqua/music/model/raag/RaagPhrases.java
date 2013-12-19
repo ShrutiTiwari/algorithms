@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.HashSet;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
 
 import com.aqua.music.model.puzzles.RandomShuffler;
 
@@ -55,7 +55,7 @@ public class RaagPhrases {
 		while (true) {
 			MusicalPhrase p = myshuffler.nextRandom();
 			System.out.println("Listen recording");
-			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(p.frequencies(), 1);
+			AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(p.frequencies(), 1);
 			System.out.println("what was the phrase?");
 			try {
 				String userInput = myReader.readLine();

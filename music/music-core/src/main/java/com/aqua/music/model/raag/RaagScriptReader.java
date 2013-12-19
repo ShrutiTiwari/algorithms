@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
 
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.DynamicFrequency;
@@ -27,7 +27,7 @@ public class RaagScriptReader {
 		try {
 			Collection<String[]> allResultLines = new RaagScriptParser(Taal.TEENTAL).parseLines(readFile(fileName));
 			Collection<DynamicFrequency> allFrequencies = printResult(allResultLines);
-			AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER.play(allFrequencies, 1);
+			AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(allFrequencies, 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

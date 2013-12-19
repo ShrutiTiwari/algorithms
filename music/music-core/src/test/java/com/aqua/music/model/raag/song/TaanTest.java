@@ -1,31 +1,40 @@
 package com.aqua.music.model.raag.song;
 
-import open.music.api.AudioPlayerSettings;
+import open.music.api.AudioPlayerFacade;
+import open.music.api.DeviceType;
 
 import org.junit.Test;
 
 public class TaanTest {
 	//@Test
 	public void testJaunpuriTaans1() {
-		Song.S_JAUNPURI.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
+		initialize();
+		Song.S_JAUNPURI.playTaan(AudioPlayerFacade.SYNCHRONOUS_PLAYER);
 	}
 	
 	//@Test
 	public void testBhairavTaans1() {
-		Song.S_BHAIRAV.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
+		initialize();
+		Song.S_BHAIRAV.playTaan(AudioPlayerFacade.SYNCHRONOUS_PLAYER);
 	}
 	
 	//@Test
 	public void testYamanTaans1() {
-		AudioPlayerSettings.increaseTempo();
-		AudioPlayerSettings.increaseTempo();
-		Song.S_YAMAN1.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
+		initialize();
+		AudioPlayerFacade.increaseTempo();
+		AudioPlayerFacade.increaseTempo();
+		Song.S_YAMAN1.playTaan(AudioPlayerFacade.SYNCHRONOUS_PLAYER);
 	}
 
 	@Test
 	public void testBhimpalasiTaans1() {
-		AudioPlayerSettings.increaseTempo();
-		AudioPlayerSettings.increaseTempo();
-		Song.S_BHIMPALASI.playTaan(AudioPlayerSettings.SYNCHRONOUS_DYNAMIC_PLAYER);
+		initialize();
+		AudioPlayerFacade.increaseTempo();
+		AudioPlayerFacade.increaseTempo();
+		Song.S_BHIMPALASI.playTaan(AudioPlayerFacade.SYNCHRONOUS_PLAYER);
+	}
+	
+	private void initialize() {
+		DeviceType.DESKTOP_DYNAMIC.initializeAudioFactory();
 	}
 }
