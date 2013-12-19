@@ -1,7 +1,9 @@
 package com.aqua.music.model.raag.song;
 
+import com.aqua.music.bo.audio.manager.CommonCode;
+
 import open.music.api.AudioPlayerFacade;
-import open.music.api.DeviceType;
+import open.music.api.DesktopConfig;
 
 public class SongTest {
 	// @Test
@@ -19,7 +21,6 @@ public class SongTest {
 	}
 	
 	private void initialize() {
-		DeviceType.DESKTOP_DYNAMIC.initializeAudioFactory();
+		CommonCode.initialize();
 	}
-
 }

@@ -8,9 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.bo.audio.manager.AudioLifeCycleManager;
+import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.AudioPlayer;
+import com.aqua.music.bo.audio.player.BasicNotePlayerWithMathSin;
+import com.aqua.music.bo.audio.player.BasicNotePlayerWithMidiChannel;
+import com.aqua.music.bo.audio.player.AudioPlayer.Factory;
+import com.aqua.music.bo.audio.player.BasicNotePlayer;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -20,12 +25,12 @@ import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
  * 
  */
 public class PlayApi {
+	private String defaultInstrument;
 	private final Logger logger = LoggerFactory.getLogger(PlayApi.class);
-	private final Collection<Playable> playableSongs;
 	private final Collection<Playable> playablePlainThaats;
 
+	private final Collection<Playable> playableSongs;
 	private StateDependentUi stateDependentUi;
-	private String defaultInstrument;
 
 	PlayApi() {
 		this.playableSongs = PlaybleType.SONG.playables();
@@ -33,12 +38,12 @@ public class PlayApi {
 		this.defaultInstrument = "Flute";
 	}
 
-	public Collection<Playable> getAllSongs() {
-		return playableSongs;
+	public String defaultInstrument() {
+		return defaultInstrument;
 	}
 
-	public Collection<Playable> getAllPlainThaat() {
-		return playablePlainThaats;
+	public String[] getAllInstruments() {
+		return AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
 	}
 
 	public Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
@@ -53,24 +58,20 @@ public class PlayApi {
 		return result;
 	}
 
-	public String[] getAllInstruments() {
-		return AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
+	public Collection<Playable> getAllPlainThaat() {
+		return playablePlainThaats;
 	}
 
-	/**
-	 * NOTE: Its a non blocking call
-	 * 
-	 * @param frequencyList
-	 */
-	public void playInLoop(Playable playableitem) {
-		String playableName = playableitem.name();
-		stateDependentUi.updatePlayable(playableName);
-		String displayText = "\n\n Playing::" + playableName + "===>" + "\n" + playableitem.asText();
-		logger.info(displayText);
-		stateDependentUi.updateConsole(displayText);
+	public Collection<Playable> getAllSongs() {
+		return playableSongs;
+	}
 
-		stateDependentUi.setPauseToDisplay();
-		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.playInLoop(playableitem.frequencies());
+	public void initialize(StateDependentUi stateDependentUi, InitializationConfigProvider initializationConfigProvider) {
+		this.stateDependentUi = stateDependentUi;
+		InstrumentRole.MAIN.setTo(defaultInstrument);
+		stateDependentUi.updateInstrument(defaultInstrument);
+		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
+		new Initializer(initializationConfigProvider.getConfig()).initialize();
 	}
 
 	/**
@@ -89,11 +90,28 @@ public class PlayApi {
 		PlayMode.Asynchronous.playTask(audioTask);
 	}
 
+	/**
+	 * NOTE: Its a non blocking call
+	 * 
+	 * @param frequencyList
+	 */
+	public void playInLoop(Playable playableitem) {
+		String playableName = playableitem.name();
+		stateDependentUi.updatePlayable(playableName);
+		String displayText = "\n\n Playing::" + playableName + "===>" + "\n" + playableitem.asText();
+		logger.info(displayText);
+		stateDependentUi.updateConsole(displayText);
+
+		stateDependentUi.setPauseToDisplay();
+		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.playInLoop(playableitem.frequencies());
+	}
+
 	private AudioTask<Playable> audioTaskWith(final Playable[] playableItems, final int repeatCount) {
 		AudioTask<Playable> audioTask = new AudioTask<Playable>() {
 			@Override
-			public Playable[] forLoopParameter() {
-				return playableItems;
+			public void beforeForLoop() {
+				stateDependentUi.updateConsole("Playing all items, each [" + repeatCount + "] times :\n");
+				logger.info("" + playableItems.length);
 			}
 
 			@Override
@@ -108,9 +126,8 @@ public class PlayApi {
 			}
 
 			@Override
-			public void beforeForLoop() {
-				stateDependentUi.updateConsole("Playing all items, each [" + repeatCount + "] times :\n");
-				logger.info("" + playableItems.length);
+			public Playable[] forLoopParameter() {
+				return playableItems;
 			}
 		};
 		return audioTask;
@@ -120,17 +137,70 @@ public class PlayApi {
 		PAUSE,
 		RESUME;
 	}
+	
+	public interface BasicNotePlayerBuidler{
+		BasicNotePlayer build();
+		BasicNotePlayerBuidler DESKTOP_MATH_SIN= new  BasicNotePlayerBuidler() {
+			@Override
+			public BasicNotePlayer build() {
+				return new BasicNotePlayerWithMathSin();
+			}
+		};
+		
+		BasicNotePlayerBuidler DESKTOP_MIDI= new  BasicNotePlayerBuidler() {
+			@Override
+			public BasicNotePlayer build() {
+				return new BasicNotePlayerWithMidiChannel();
+			}
+		};
 
-	public void initialize(StateDependentUi stateDependentUi, DeviceType deviceType) {
-		this.stateDependentUi = stateDependentUi;
-		InstrumentRole.MAIN.setTo(defaultInstrument);
-		stateDependentUi.updateInstrument(defaultInstrument);
-		AudioLifeCycleManager.instance.addStateObserver(stateDependentUi);
-		AudioLifeCycleManager.instance.initializeAudioPlayer(deviceType);
-		deviceType.initializeAudioFactory();
 	}
+	
+	public interface InitializationConfig{
+		AudioPlayer audioPlayer();
+		BasicNotePlayer basicNotePlayer();
+	}
+	
+	public static class InitializationConfigImpl implements InitializationConfig{
+		private final Factory audioFactory;
+		private final BasicNotePlayerBuidler basicNotePlayerBuilder;
+		public InitializationConfigImpl (BasicNotePlayerBuidler basicNotePlayerBuilder, Factory audioFactory) {
+			this.basicNotePlayerBuilder = basicNotePlayerBuilder;
+			this.audioFactory = audioFactory;
+		}	
+		
+		public AudioPlayer audioPlayer(){
+			return audioFactory.fetchInstance();
+		}
+		public BasicNotePlayer basicNotePlayer(){
+			return basicNotePlayerBuilder.build();
+		}
+	}
+	
+	public interface InitializationConfigProvider{
+		InitializationConfig getConfig();
+	}
+	private class Initializer{
+		private InitializationConfig initializationConfig;
+		
+		private Initializer(InitializationConfig initializationConfig){
+			this.initializationConfig=initializationConfig;
+		}
+		
+		private void initialize() {
+			AudioPlayer audioPlayer = initializationConfig.audioPlayer();
+			try {
+				audioPlayer.setBasicNotePalyer(initializationConfig.basicNotePlayer());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			setup(audioPlayer);
+		}
 
-	public String defaultInstrument() {
-		return defaultInstrument;
+		private void setup(AudioPlayer currentAudioPlayer) {
+			final AudioPlayRightsManager audioPlayRightsManager = (AudioPlayRightsManager) AudioLifeCycleManager.instance;
+			audioPlayRightsManager.setCurrentPlayer(currentAudioPlayer);
+			currentAudioPlayer.setAudioPlayRigthsManager(audioPlayRightsManager);
+		}		
 	}
 }

@@ -16,7 +16,4 @@ public interface BasicNotePlayer {
 	void tidyup();
 	void notifyInstrumentChange(String instrument, InstrumentRole changingInstrument);
 	String[] allInstruments();
-	
-	BasicNotePlayer MIDI_BASED_PLAYER = new BasicNotePlayerWithMidiChannel();
-	BasicNotePlayer MATH_SIN_BASED_PLAYER = new BasicNotePlayerWithMathSin();
 }

@@ -7,7 +7,7 @@ import java.awt.Component;
 
 import javax.swing.JPanel;
 
-import open.music.api.DeviceType;
+import open.music.api.DesktopConfig;
 import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
@@ -17,7 +17,8 @@ public class CommonUi<T>{
 	
 	public CommonUi(){
 		this.stateDependentUi = new StateDependentUiImpl();
-		SingletonFactory.PLAY_API.initialize(stateDependentUi, DeviceType.ANDROID);
+		SingletonFactory.PLAY_API.initialize(stateDependentUi, DesktopConfig.DYNAMIC);
+		//SingletonFactory.PLAY_API.initialize(stateDependentUi, AndroidConfigBuilder.AndroidConfig.DYNAMIC);
 		this.bottomPanel = new CommonUiBottom(stateDependentUi).panel();
 	}
 	

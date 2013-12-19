@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import open.music.api.DeviceType;
+import open.music.api.DesktopConfig;
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 import open.music.api.StateDependentUi;
@@ -142,10 +142,5 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	public void addStateObserver(StateDependentUi stateDependentUi) {
 		this.stateObserver=stateDependentUi;
-	}
-
-	@Override
-	public void initializeAudioPlayer(DeviceType deviceType) {
-		
 	}
 }
