@@ -44,19 +44,13 @@ public enum ClassicalNote implements Frequency {
 	S3(BaseNote.S, Octave.UPPER_OCTAVE);
 
 	private final String fileCode;
-	private final float frequencyInHz;
-	private String prettyPrintText;
-	private final String western;
-	private final int midiNoteNumber;
 	private final BaseNote baseNote;
+	private Frequency frequency;
 
 	ClassicalNote(BaseNote baseNote, Octave octave) {
 		this.baseNote = baseNote;
-		this.western = baseNote.westernNotation();
-		this.frequencyInHz = baseNote.getFrequency(octave);
+		this.frequency = baseNote.getFrequencyObject(octave);
 		this.fileCode = name().toLowerCase();
-		this.prettyPrintText = camelCase();
-		this.midiNoteNumber = baseNote.getMidiNumber(octave);
 	}
 
 	@Override
@@ -69,16 +63,16 @@ public enum ClassicalNote implements Frequency {
 	}
 
 	public float frequencyInHz() {
-		return frequencyInHz;
+		return frequency.frequencyInHz();
 	}
 
 	@Override
 	public String prettyPrint() {
-		return prettyPrintText;
+		return frequency.prettyPrint();
 	}
 
 	public String western() {
-		return western;
+		return frequency.western();
 	}
 
 	private String camelCase() {
@@ -89,11 +83,16 @@ public enum ClassicalNote implements Frequency {
 
 	@Override
 	public String toString() {
-		return prettyPrintText;
+		return frequency.prettyPrint();
 	}
 
 	@Override
 	public int midiNoteNumber() {
-		return midiNoteNumber;
+		return frequency.midiNoteNumber();
+	}
+
+	@Override
+	public BaseNote baseNote() {
+		return frequency.baseNote();
 	}
 }

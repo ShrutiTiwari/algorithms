@@ -99,7 +99,6 @@ public class PracticeCustomization {
 		 * 
 		 */
 		public void trimAscend() {
-			// TODO Auto-generated method stub
 			
 		}
 	}

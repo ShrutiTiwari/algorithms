@@ -1,19 +1,8 @@
 package com.aqua.music.model.cyclicset;
 
-import static com.aqua.music.model.core.ClassicalNote.D;
-import static com.aqua.music.model.core.ClassicalNote.D_;
-import static com.aqua.music.model.core.ClassicalNote.G;
-import static com.aqua.music.model.core.ClassicalNote.G_;
-import static com.aqua.music.model.core.ClassicalNote.M;
-import static com.aqua.music.model.core.ClassicalNote.M_;
-import static com.aqua.music.model.core.ClassicalNote.N;
-import static com.aqua.music.model.core.ClassicalNote.N_;
-import static com.aqua.music.model.core.ClassicalNote.P;
-import static com.aqua.music.model.core.ClassicalNote.R;
-import static com.aqua.music.model.core.ClassicalNote.R_;
-import static com.aqua.music.model.core.ClassicalNote.S;
-import static com.aqua.music.model.core.ClassicalNote.S3;
+import static com.aqua.music.model.core.BaseNote.*;
 
+import com.aqua.music.model.core.BaseNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
@@ -25,31 +14,38 @@ import com.aqua.music.model.core.FrequencySet;
  * 
  */
 public enum SymmetricalSet implements FrequencySet {
-	THAAT_ASAVARI(S, R, G_, M, P, D_, N_, S3),
-	THAAT_BHAIRAV(S, R_, G, M, P, D_, N, S3),
-	THAAT_BHAIRAVI(S, R_, G_, M, P, D_, N_, S3),
-	THAAT_BILAWAL(S, R, G, M, P, D, N, S3),
-	THAAT_KAFI(S, R, G_, M, P, D, N_, S3),
-	THAAT_KALYAN(S, R, G, M_, P, D, N, S3),
-	THAAT_KHAMAJ(S, R, G, M, P, D, N_, S3),
-	THAAT_MARWA(S, R_, G, M_, P, D, N, S3),
-	THAAT_PURVI(S, R_, G, M_, P, D_, N, S3),
-	THAAT_TODI(S, R_, G_, M_, P, D_, N, S3);
+	THAAT_ASAVARI(S, R, G_, M, P, D_, N_),
+	THAAT_BHAIRAV(S, R_, G, M, P, D_, N),
+	THAAT_BHAIRAVI(S, R_, G_, M, P, D_, N_),
+	THAAT_BILAWAL(S, R, G, M, P, D, N),
+	THAAT_KAFI(S, R, G_, M, P, D, N_),
+	THAAT_KALYAN(S, R, G, M_, P, D, N),
+	THAAT_KHAMAJ(S, R, G, M, P, D, N_),
+	THAAT_MARWA(S, R_, G, M_, P, D, N),
+	THAAT_PURVI(S, R_, G, M_, P, D_, N),
+	THAAT_TODI(S, R_, G_, M_, P, D_, N);
 
-	private final Frequency[] ascendNotes;
-	private final Frequency[] descendNotes;
+	private final BaseNote[] baseAscendNotes;
+	private final Frequency[] mainAscendNotes;
+	private final Frequency[] mainDescendNotes;
 
-	private SymmetricalSet(Frequency... ascendNotes) {
-		this.ascendNotes = ascendNotes;
-		this.descendNotes = Util.reverse(ascendNotes);
+	private SymmetricalSet(BaseNote... ascendNotes) {
+		this.baseAscendNotes = ascendNotes;
+		this.mainAscendNotes = new Frequency[baseAscendNotes.length+1];
+		int i =0;
+		for(BaseNote each:baseAscendNotes){
+			mainAscendNotes[i++]=each.getFrequencyObject(Octave.MAIN_OCTAVE);
+		}
+		mainAscendNotes[i]=baseAscendNotes[0].getFrequencyObject(Octave.UPPER_OCTAVE);
+		this.mainDescendNotes = Util.reverse(mainAscendNotes);
 	}
 
 	public Frequency[] ascendNotes() {
-		return ascendNotes;
+		return mainAscendNotes;
 	}
 
 	public Frequency[] descendNotes() {
-		return descendNotes;
+		return mainDescendNotes;
 	}
 
 	public String type() {
