@@ -6,12 +6,15 @@ import java.util.Collection;
 
 import javax.swing.JComboBox;
 
+import open.music.api.NoteFragments;
 import open.music.api.PlayApi;
+import open.music.api.PracticeCustomization;
 import open.music.api.SingletonFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aqua.music.model.core.BaseNote.Octave;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
@@ -88,5 +91,44 @@ class UiDropdown {
 			}
 			musicPanel.refreshSpecificComponentPanel(playApi.getAllPatternedThaat(frequencySet, patternItemsCount));
 		}
+	}
+	static class NoteFragementAndOctaveActionListener implements ActionListener {
+		Logger logger = LoggerFactory.getLogger(NoteFragementAndOctaveActionListener.class);
+		private final MusicPanel musicPanel;
+		private NoteFragments noteFragment;
+		private Octave octave;
+		private final PlayApi playApi=SingletonFactory.PLAY_API;
+
+		NoteFragementAndOctaveActionListener(MusicPanel musicPanel) {
+			this.musicPanel = musicPanel;
+			this.noteFragment = NoteFragments.ALL_NOTE;
+			this.octave = Octave.MAIN_OCTAVE;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			JComboBox cbox = (JComboBox) arg0.getSource();
+			Object obj = cbox.getSelectedItem();
+			if (obj instanceof NoteFragments) {
+				this.noteFragment = (NoteFragments) obj;
+			} else {
+				this.octave = (Octave) obj;
+			}
+			musicPanel.refreshSpecificComponentPanel(playApi.getCustomizedThaat(new PracticeCustomization(noteFragment, octave)));
+		}
+	}
+	
+	/**
+	 * @return
+	 */
+	public static JComboBox noteFragmentDropDown() {
+		return createWith(NoteFragments.values(), NoteFragments.ALL_NOTE);
+	}
+
+	/**
+	 * @return
+	 */
+	public static JComboBox octaveDropDown() {
+		return createWith(Octave.values(), Octave.MAIN_OCTAVE);
 	}
 }

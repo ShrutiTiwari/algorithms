@@ -23,6 +23,7 @@ import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
+import com.aqua.music.view.components.UiDropdown.NoteFragementAndOctaveActionListener;
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 import com.aqua.music.view.components.UiTexts.UiLables;
 
@@ -43,6 +44,17 @@ class MusicPanelForPractice extends MusicPanel {
 		this.pickTitle = titleLabel;
 		this.intialItemsList = itemsList;
 		this.playAllCounter = defaultTextField();
+		
+		final NoteFragementAndOctaveActionListener noteFragmentOctaveListener = new NoteFragementAndOctaveActionListener(this);
+
+		final JComboBox noteFragementDropdown = UiDropdown.noteFragmentDropDown();
+		noteFragementDropdown.addActionListener(noteFragmentOctaveListener);
+
+		final JComboBox octaveDropdown = UiDropdown.octaveDropDown();
+		octaveDropdown.addActionListener(noteFragmentOctaveListener);
+
+		addExtraTopControl(noteFragementDropdown);
+		addExtraTopControl(octaveDropdown);
 	}
 
 	/**

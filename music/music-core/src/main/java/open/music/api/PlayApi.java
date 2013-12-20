@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +18,12 @@ import com.aqua.music.bo.audio.player.BasicNotePlayerWithMathSin;
 import com.aqua.music.bo.audio.player.BasicNotePlayerWithMidiChannel;
 import com.aqua.music.bo.audio.player.AudioPlayer.Factory;
 import com.aqua.music.bo.audio.player.BasicNotePlayer;
+import com.aqua.music.model.core.ClassicalNote;
+import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
+import com.aqua.music.model.cyclicset.SymmetricalSet;
 
 /**
  * @author "Shruti Tiwari"
@@ -53,6 +58,17 @@ public class PlayApi {
 		for (int[] eachPermutation : allPermutations) {
 			CyclicFrequencySet playbleItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet,
 					eachPermutation);
+			result.add(playbleItem);
+		}
+		return result;
+	}
+	
+	public Collection<Playable> getCustomizedThaat(PracticeCustomization customization) {
+		Collection<Playable> result = new ArrayList<Playable>();
+		ClassicalNote[] startEndPoints= customization.getStartEndPoint();
+		logger.info("generating pattern for startClassicalNote[" + startEndPoints[0] + "],  endClassicalNote[" + startEndPoints[1] + "]");
+		for(SymmetricalSet each:SymmetricalSet.values()){
+			CyclicFrequencySet playbleItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each, startEndPoints);
 			result.add(playbleItem);
 		}
 		return result;

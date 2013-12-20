@@ -23,6 +23,7 @@ public enum PlaybleType {
 			}
 			return result;
 		}
+
 	},
 	SONG {
 		@Override
@@ -33,6 +34,7 @@ public enum PlaybleType {
 			}
 			return result;
 		}
+
 	};
 	abstract Collection<Playable> playables();
 }

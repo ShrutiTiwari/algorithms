@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import open.music.api.Playable;
-import open.music.api.PracticeCustomization;
 
+import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
@@ -44,9 +44,36 @@ public interface CyclicFrequencySet extends Playable{
 			return forFrequencySetAndPermutation(freqSet, null);
 		}
 
-		public CyclicFrequencySet forFrequencySet(FrequencySet freqSet, PracticeCustomization customization) {
-			FrequencySet customizedFrequencySet= customization.applyOn(freqSet);
-			return forFrequencySetAndPermutation(customizedFrequencySet, null);
+		public CyclicFrequencySet forFrequencySet(final FrequencySet freqSet, ClassicalNote[] startEndPoints) {
+			final Frequency[][] ascDesscNotes = freqSet.ascendDescendNotes(startEndPoints[0], startEndPoints[1]);
+			FrequencySet customfrequencySet=new FrequencySet(){
+				@Override
+				public String name() {
+					return freqSet.name();
+				}
+
+				@Override
+				public String type() {
+					return freqSet.type();
+				}
+
+				@Override
+				public Frequency[] ascendNotes() {
+					return ascDesscNotes[0];
+				}
+
+				@Override
+				public Frequency[] descendNotes() {
+					return ascDesscNotes[1];
+				}
+
+				@Override
+				public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote) {
+					return ascDesscNotes;
+				}
+			};
+			
+			return forFrequencySetAndPermutation(customfrequencySet, null);
 		}
 		
 		public abstract CyclicFrequencySet forFrequencySetAndPermutation(FrequencySet freqSet, int[] permutation);

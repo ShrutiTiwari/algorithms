@@ -2,7 +2,16 @@ package com.aqua.music.model.cyclicset;
 
 import static com.aqua.music.model.core.BaseNote.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import open.music.api.PlayApi;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aqua.music.model.core.BaseNote;
+import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 
@@ -28,15 +37,16 @@ public enum SymmetricalSet implements FrequencySet {
 	private final BaseNote[] baseAscendNotes;
 	private final Frequency[] mainAscendNotes;
 	private final Frequency[] mainDescendNotes;
+	private final Logger logger = LoggerFactory.getLogger(SymmetricalSet.class);
 
 	private SymmetricalSet(BaseNote... ascendNotes) {
 		this.baseAscendNotes = ascendNotes;
-		this.mainAscendNotes = new Frequency[baseAscendNotes.length+1];
-		int i =0;
-		for(BaseNote each:baseAscendNotes){
-			mainAscendNotes[i++]=each.getFrequencyObject(Octave.MAIN_OCTAVE);
+		this.mainAscendNotes = new Frequency[baseAscendNotes.length + 1];
+		int i = 0;
+		for (BaseNote each : baseAscendNotes) {
+			mainAscendNotes[i++] = each.getFrequencyObject(Octave.MAIN_OCTAVE);
 		}
-		mainAscendNotes[i]=baseAscendNotes[0].getFrequencyObject(Octave.UPPER_OCTAVE);
+		mainAscendNotes[i] = baseAscendNotes[0].getFrequencyObject(Octave.UPPER_OCTAVE);
 		this.mainDescendNotes = Util.reverse(mainAscendNotes);
 	}
 
@@ -46,6 +56,35 @@ public enum SymmetricalSet implements FrequencySet {
 
 	public Frequency[] descendNotes() {
 		return mainDescendNotes;
+	}
+
+	public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote) {
+		List<Frequency> resultAscendNoteList = new ArrayList<Frequency>();
+		Octave octave = startClassicalNote.octave();
+		boolean startNoteFound = false;
+		boolean endNoteFound = false;
+
+		do {
+			for (BaseNote each : baseAscendNotes) {
+				if (each != startClassicalNote.baseNote()) {
+					if (!startNoteFound) {
+						continue;
+					}
+				} else {
+					startNoteFound = true;
+				}
+				Frequency currentNote = each.getFrequencyObject(octave);
+				resultAscendNoteList.add(currentNote);
+				if (currentNote.frequencyInHz() == endClassicalNote.frequencyInHz()) {
+					endNoteFound=true;
+					break;
+				}
+			}
+			octave = octave.next();
+		}while (!endNoteFound);
+		logger.info("generating pattern for resultAscendNoteList[" + resultAscendNoteList + "]");
+		Frequency[] resultAscendNotes = resultAscendNoteList.toArray(new Frequency[resultAscendNoteList.size()]);
+		return new Frequency[][] { resultAscendNotes, Util.reverse(resultAscendNotes) };
 	}
 
 	public String type() {

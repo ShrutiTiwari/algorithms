@@ -1,11 +1,13 @@
 package com.aqua.music.model.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public enum BaseNote {
 	D(new BaseFrequenciesBuilder("D", "F#", 53, new float[] { 185.00F, 369.99F, 739.99F })),
@@ -19,19 +21,19 @@ public enum BaseNote {
 	P(new BaseFrequenciesBuilder("P", "E", 51, new float[] { 164.81F, 329.63F, 659.26F })),
 	R(new BaseFrequenciesBuilder("R", "B#", 46, new float[] { 123.47F, 246.94F, 493.88F })),
 	R_(new BaseFrequenciesBuilder("R_", "B", 45, new float[] { 116.54F, 233.08F, 466.16F })),
-	S(new BaseFrequenciesBuilder("S", "A", 44, new float[] { 110F, 220F, 440F }));
+	S(new BaseFrequenciesBuilder("S", "A", 44, new float[] { 110F, 220F, 440F, 880F }));
 
 	private AbstractFrequency[] allFrequencies;
 
 	BaseNote(BaseFrequenciesBuilder baseFrequenciesBuilder) {
 		this.allFrequencies = baseFrequenciesBuilder.frequenciesArray;
-		for(AbstractFrequency each: allFrequencies ){
+		for (AbstractFrequency each : allFrequencies) {
 			each.setBaseNote(this);
 		}
 	}
 
 	public Frequency getFrequencyObject(Octave octave) {
-		return allFrequencies[findIndex(octave)];
+		return allFrequencies[octave.index()];
 	}
 
 	private String camelCase() {
@@ -40,22 +42,76 @@ public enum BaseNote {
 		return camelCase;
 	}
 
-	private int findIndex(Octave octave) {
-		switch (octave) {
-		case LOWER_OCTAVE:
-			return 0;
-		case MAIN_OCTAVE:
-			return 1;
-		case UPPER_OCTAVE:
-			return allFrequencies.length - 1;
+	public enum Octave {
+		LOWER_OCTAVE(0) {
+			@Override
+			public Octave next() {
+				return MAIN_OCTAVE;
+			}
+
+			@Override
+			public Octave previous() {
+				return null;
+			}
+		},
+		MAIN_OCTAVE(1) {
+			@Override
+			public Octave next() {
+				return UPPER_OCTAVE;
+			}
+
+			@Override
+			public Octave previous() {
+				return LOWER_OCTAVE;
+			}
+		},
+		UPPER_OCTAVE(2) {
+			@Override
+			public Octave next() {
+				return UPPER2_OCTAVE;
+			}
+
+			@Override
+			public Octave previous() {
+				return MAIN_OCTAVE;
+			}
+		}, UPPER2_OCTAVE(3) {
+			@Override
+			public Octave next() {
+				return null;
+			}
+
+			@Override
+			public Octave previous() {
+				return UPPER_OCTAVE;
+			}
+		};
+
+		private final int index;
+
+		private Octave(int index) {
+			this.index = index;
 		}
-		return 0;
+
+		public abstract Octave next();
+		public abstract Octave previous();
+		
+		public int index() {
+			return index;
+		}
+
 	}
 
-	public enum Octave {
-		LOWER_OCTAVE,
-		MAIN_OCTAVE,
-		UPPER_OCTAVE;
+	static class OctaveMap {
+		private static final Map<Integer, Octave> indexedOctave = new HashMap<Integer, BaseNote.Octave>();
+		static{
+			for (Octave each : Octave.values()) {
+				indexedOctave.put(each.index, each);
+			}
+		}
+		public static Octave forIndex(int index) {
+			return indexedOctave.get(index);
+		}
 	}
 
 	static class AbstractFrequency implements Frequency {
@@ -64,22 +120,28 @@ public enum BaseNote {
 		private final int midiNoteNumber;
 		private final String westernNotation;
 		private BaseNote baseNote;
+		private Octave octave;
 
-		public AbstractFrequency(float frequencyInHz, int midiNoteNumber, String westernNotation, String easternNotation) {
+		public AbstractFrequency(float frequencyInHz, int midiNoteNumber, String westernNotation, String easternNotation, Octave octave) {
+			this.octave = octave;
 			this.frequencyInHz = frequencyInHz;
 			this.midiNoteNumber = midiNoteNumber;
 			this.westernNotation = westernNotation;
-			this.easternNotation= easternNotation;
+			this.easternNotation = easternNotation;
 		}
 
-		public void setBaseNote(BaseNote baseNote){
-			this.baseNote=baseNote;
+		public Octave octave() {
+			return octave;
 		}
-		
-		public BaseNote baseNote(){
+
+		public void setBaseNote(BaseNote baseNote) {
+			this.baseNote = baseNote;
+		}
+
+		public BaseNote baseNote() {
 			return baseNote;
 		}
-		
+
 		@Override
 		public int duration() {
 			return MusicPeriod.SINGLE_BEAT.durationInMilliSec();
@@ -118,11 +180,12 @@ public enum BaseNote {
 			List<Frequency> freqList = new ArrayList<Frequency>();
 			int i = 0;
 			int midiNumber = startMidiNumber;
-			for (float each : frequencies) {
+			for (float eachFrequencyInHz : frequencies) {
 				String westernNotation = (i == 1 ? wNotation : (wNotation + (i + 1)));
 				String easternNotation = (i == 1 ? eNotation : (eNotation + (i + 1)));
-				freqList.add(new AbstractFrequency(each, midiNumber, westernNotation,easternNotation));
-				midiNumber += 12; i++;
+				freqList.add(new AbstractFrequency(eachFrequencyInHz, midiNumber, westernNotation, easternNotation, OctaveMap.forIndex(i)));
+				midiNumber += 12;
+				i++;
 			}
 			this.frequenciesArray = freqList.toArray(new AbstractFrequency[freqList.size()]);
 		}
