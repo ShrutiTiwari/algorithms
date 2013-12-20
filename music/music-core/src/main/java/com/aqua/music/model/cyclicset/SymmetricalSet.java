@@ -82,7 +82,6 @@ public enum SymmetricalSet implements FrequencySet {
 			}
 			octave = octave.next();
 		}while (!endNoteFound);
-		logger.info("generating pattern for resultAscendNoteList[" + resultAscendNoteList + "]");
 		Frequency[] resultAscendNotes = resultAscendNoteList.toArray(new Frequency[resultAscendNoteList.size()]);
 		return new Frequency[][] { resultAscendNotes, Util.reverse(resultAscendNotes) };
 	}
