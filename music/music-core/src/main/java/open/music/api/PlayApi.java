@@ -83,6 +83,12 @@ public class PlayApi {
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.play(playableitem.frequencies(), 1);
 	}
+	
+	public void play(Playable playableitem,PracticeCustomization practiceCustomization) {
+		stateDependentUi.setPauseToDisplay();
+		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.play(playableitem.frequencies(), 1);
+	}
+	
 
 	public void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
 		AudioTask<Playable> audioTask = audioTaskWith(playableItems, repeatCount);

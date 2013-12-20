@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import open.music.api.Playable;
+import open.music.api.PracticeCustomization;
 
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
@@ -43,6 +44,11 @@ public interface CyclicFrequencySet extends Playable{
 			return forFrequencySetAndPermutation(freqSet, null);
 		}
 
+		public CyclicFrequencySet forFrequencySet(FrequencySet freqSet, PracticeCustomization customization) {
+			FrequencySet customizedFrequencySet= customization.applyOn(freqSet);
+			return forFrequencySetAndPermutation(customizedFrequencySet, null);
+		}
+		
 		public abstract CyclicFrequencySet forFrequencySetAndPermutation(FrequencySet freqSet, int[] permutation);
 	}
 	

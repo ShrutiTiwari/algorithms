@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import open.music.api.PracticeCustomization;
+
+import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 /**
@@ -37,5 +40,14 @@ class CyclicFrequencySetWithAsymmetry implements CyclicFrequencySet {
 	@Override
 	public String asText() {
 		return "";
+	}
+
+	/* (non-Javadoc)
+	 * @see open.music.api.Playable#frequencies(open.music.api.PracticeCustomization)
+	 */
+	@Override
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

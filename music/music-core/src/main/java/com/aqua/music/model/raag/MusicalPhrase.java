@@ -1,9 +1,11 @@
 package com.aqua.music.model.raag;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import open.music.api.Playable;
+import open.music.api.PracticeCustomization;
 
 import com.aqua.music.model.core.DynamicFrequency;
 import com.aqua.music.model.core.DynamicFrequency.CustomFreqDuration;
@@ -130,5 +132,14 @@ public class MusicalPhrase implements Playable{
 	@Override
 	public String asText() {
 		return printLine();
+	}
+
+	/* (non-Javadoc)
+	 * @see open.music.api.Playable#frequencies(open.music.api.PracticeCustomization)
+	 */
+	@Override
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

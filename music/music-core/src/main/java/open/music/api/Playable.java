@@ -12,4 +12,6 @@ public interface Playable {
 	public String name();
 	public String asText();
 	public Collection<? extends DynamicFrequency> frequencies();
+	
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization);
 }

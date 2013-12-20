@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import open.music.api.Playable;
+import open.music.api.PracticeCustomization;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
@@ -49,6 +50,15 @@ public enum RaagAlap implements Playable{
 			return null;
 		}
 
+	}
+
+	/* (non-Javadoc)
+	 * @see open.music.api.Playable#frequencies(open.music.api.PracticeCustomization)
+	 */
+	@Override
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

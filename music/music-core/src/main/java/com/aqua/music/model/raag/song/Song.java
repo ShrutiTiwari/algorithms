@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import open.music.api.AudioPlayerFacade;
 import open.music.api.Playable;
+import open.music.api.PracticeCustomization;
 
 import com.aqua.music.model.core.DynamicFrequency;
 
@@ -50,5 +51,10 @@ public enum Song implements Playable {
 
 	public String songNameAsText() {
 		return this.name();
+	}
+
+	@Override
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization) {
+		return null;
 	}
 }

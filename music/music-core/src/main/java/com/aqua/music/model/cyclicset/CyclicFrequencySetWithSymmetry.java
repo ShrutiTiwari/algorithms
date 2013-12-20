@@ -2,6 +2,8 @@ package com.aqua.music.model.cyclicset;
 
 import java.util.Collection;
 
+import open.music.api.PracticeCustomization;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,11 @@ class CyclicFrequencySetWithSymmetry implements CyclicFrequencySet {
 	public Collection<? extends DynamicFrequency> frequencies() {
 		return allFrequencies;
 	}
+	@Override
+	public Collection<? extends DynamicFrequency> frequencies(PracticeCustomization practiceCustomization) {
+		return null;
+	}
+
 	@Override
 	public String name() {
 		return name;
