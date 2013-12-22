@@ -35,35 +35,39 @@ public enum SymmetricalSet implements FrequencySet {
 	THAAT_TODI(S, R_, G_, M_, P, D_, N);
 
 	private final BaseNote[] baseAscendNotes;
-	private final Frequency[] mainAscendNotes;
-	private final Frequency[] mainDescendNotes;
+	private final Frequency[] mainOctaveAscendNotes;
+	private final Frequency[] mainOctaveDescendNotes;
 	private final Logger logger = LoggerFactory.getLogger(SymmetricalSet.class);
 
 	private SymmetricalSet(BaseNote... ascendNotes) {
 		this.baseAscendNotes = ascendNotes;
-		this.mainAscendNotes = new Frequency[baseAscendNotes.length + 1];
+		this.mainOctaveAscendNotes = new Frequency[baseAscendNotes.length + 1];
 		int i = 0;
 		for (BaseNote each : baseAscendNotes) {
-			mainAscendNotes[i++] = each.getFrequencyObject(Octave.MAIN_OCTAVE);
+			mainOctaveAscendNotes[i++] = each.getFrequencyObject(Octave.MAIN_OCTAVE);
 		}
-		mainAscendNotes[i] = baseAscendNotes[0].getFrequencyObject(Octave.UPPER_OCTAVE);
-		this.mainDescendNotes = Util.reverse(mainAscendNotes);
+		mainOctaveAscendNotes[i] = baseAscendNotes[0].getFrequencyObject(Octave.UPPER_OCTAVE);
+		this.mainOctaveDescendNotes = Util.reverse(mainOctaveAscendNotes);
 	}
 
 	public Frequency[] ascendNotes() {
-		return mainAscendNotes;
+		return mainOctaveAscendNotes;
 	}
 
 	public Frequency[] descendNotes() {
-		return mainDescendNotes;
+		return mainOctaveDescendNotes;
 	}
 
-	public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote) {
+	public Frequency[][] ascendDescendNotes(Frequency startClassicalNote, Frequency endClassicalNote) {
 		List<Frequency> resultAscendNoteList = new ArrayList<Frequency>();
 		Octave octave = startClassicalNote.octave();
 		boolean startNoteFound = false;
 		boolean endNoteFound = false;
 
+		ClassicalNote endMainNote= (ClassicalNote)endClassicalNote;
+		
+		ClassicalNote endAlternateNote=findAlternativeNote(endMainNote);
+		
 		do {
 			for (BaseNote each : baseAscendNotes) {
 				if (each != startClassicalNote.baseNote()) {
@@ -75,7 +79,8 @@ public enum SymmetricalSet implements FrequencySet {
 				}
 				Frequency currentNote = each.getFrequencyObject(octave);
 				resultAscendNoteList.add(currentNote);
-				if (currentNote.frequencyInHz() == endClassicalNote.frequencyInHz()) {
+				float currentNoteFreq = currentNote.frequencyInHz();
+				if (currentNoteFreq == endClassicalNote.frequencyInHz() || currentNoteFreq == endAlternateNote.frequencyInHz()) {
 					endNoteFound=true;
 					break;
 				}
@@ -84,6 +89,20 @@ public enum SymmetricalSet implements FrequencySet {
 		}while (!endNoteFound);
 		Frequency[] resultAscendNotes = resultAscendNoteList.toArray(new Frequency[resultAscendNoteList.size()]);
 		return new Frequency[][] { resultAscendNotes, Util.reverse(resultAscendNotes) };
+	}
+
+	private ClassicalNote findAlternativeNote(ClassicalNote endMainNote) {
+		if((endMainNote.baseNote()==BaseNote.S)||(endMainNote.baseNote()==BaseNote.P)){
+			return endMainNote;
+		} 
+		String endMainNoteName = endMainNote.name();
+		String alternativeEndMainNoteName = endMainNote.name();
+		if(endMainNoteName.contains("_")){
+			alternativeEndMainNoteName=endMainNoteName.replace("_", "");
+		}else{
+			alternativeEndMainNoteName=endMainNoteName + "_";
+		}
+		return ClassicalNote.valueOf(alternativeEndMainNoteName);
 	}
 
 	public String type() {

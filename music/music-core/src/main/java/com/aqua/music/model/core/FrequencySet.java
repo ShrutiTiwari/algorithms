@@ -14,7 +14,7 @@ public interface FrequencySet {
 
 	public Frequency[] descendNotes();
 	
-	public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote);
+	public Frequency[][] ascendDescendNotes(Frequency startClassicalNote, Frequency endClassicalNote);
 
 	static abstract class Util {
 		public static Frequency[] reverse(Frequency... ascendNotes) {

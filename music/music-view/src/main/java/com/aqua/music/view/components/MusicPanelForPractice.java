@@ -3,7 +3,9 @@ package com.aqua.music.view.components;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,6 +23,7 @@ import open.music.api.Playable;
 import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
+import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet.PermuatationsGenerator;
 import com.aqua.music.view.components.UiDropdown.NoteFragementAndOctaveActionListener;
@@ -32,7 +35,8 @@ class MusicPanelForPractice extends MusicPanel {
 	private final UiLables pickTitle;
 	private final JTextField playAllCounter;
 	private JPanel specificComponentPanel;
-	private final PlayApi playApi=SingletonFactory.PLAY_API;
+	private final PlayApi playApi = SingletonFactory.PLAY_API;
+
 	/**
 	 * Used for plain rehearsing - of thaat and songs
 	 * 
@@ -44,17 +48,23 @@ class MusicPanelForPractice extends MusicPanel {
 		this.pickTitle = titleLabel;
 		this.intialItemsList = itemsList;
 		this.playAllCounter = defaultTextField();
-		
+
 		final NoteFragementAndOctaveActionListener noteFragmentOctaveListener = new NoteFragementAndOctaveActionListener(this);
 
-		final JComboBox noteFragementDropdown = UiDropdown.noteFragmentDropDown();
-		noteFragementDropdown.addActionListener(noteFragmentOctaveListener);
+		List<ClassicalNote> allNotes = new ArrayList<ClassicalNote>();
+		for (ClassicalNote each : ClassicalNote.values()) {
+			if (!each.name().contains("_")) {
+				allNotes.add(each);
+			}
+		}
+		ClassicalNote[] displayClassicalNotes = allNotes.toArray(new ClassicalNote[allNotes.size()]);
 
-		final JComboBox octaveDropdown = UiDropdown.octaveDropDown();
-		octaveDropdown.addActionListener(noteFragmentOctaveListener);
+		for (JComboBox each : new JComboBox[] { UiDropdown.noteFragmentDropDown(), UiDropdown.octaveDropDown(),
+				UiDropdown.startNoteDropDown(displayClassicalNotes), UiDropdown.endNoteDropDown(displayClassicalNotes) }) {
+			each.addActionListener(noteFragmentOctaveListener);
+			addExtraTopControl(each);
+		}
 
-		addExtraTopControl(noteFragementDropdown);
-		addExtraTopControl(octaveDropdown);
 	}
 
 	/**
@@ -114,7 +124,7 @@ class MusicPanelForPractice extends MusicPanel {
 		playAreaPanel.add(new UiScrollPane().createScrollPane(playItemsList));
 
 		JButton playAllButton = UiButtons.MusicButtons.PLAYER_FOR_ALL.getButton();
-		playAllButton.addActionListener(new PlayAllItemsActionListener(playAllCounter,allPlayableItems));
+		playAllButton.addActionListener(new PlayAllItemsActionListener(playAllCounter, allPlayableItems));
 
 		specificComponentPanel.add(labelPanel);
 		specificComponentPanel.add(playAreaPanel);
@@ -140,21 +150,21 @@ class MusicPanelForPractice extends MusicPanel {
 
 		public PlayAllItemsActionListener(JTextField playAllCounter, final Playable[] playableItems) {
 			this.playableItems = playableItems;
-			this.playAllCounter=playAllCounter;
+			this.playAllCounter = playAllCounter;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			int count=5;
-			try{
-				int val=Integer.parseInt(playAllCounter.getText().trim());
-				if(val>=1){
-					count=val;
+			int count = 5;
+			try {
+				int val = Integer.parseInt(playAllCounter.getText().trim());
+				if (val >= 1) {
+					count = val;
 				}
-			}catch(Exception e){
+			} catch (Exception e) {
 				logger.error(e.getMessage());
 			}
-			playAllCounter.setText(" "+count+ " ");
+			playAllCounter.setText(" " + count + " ");
 			playApi.playAllItemsWithInteractiveDisplayInTextArea(playableItems, count);
 		}
 	}

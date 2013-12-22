@@ -5,6 +5,7 @@ package open.music.api;
 
 import com.aqua.music.model.core.BaseNote.Octave;
 import com.aqua.music.model.core.ClassicalNote;
+import com.aqua.music.model.core.Frequency;
 
 /**
  * @author "Shruti Tiwari"
@@ -39,7 +40,7 @@ public class PracticeCustomization {
 	 * @param freqSet
 	 * @return
 	 */
-	public ClassicalNote[] getStartEndPoint() {
+	public Frequency[] getStartEndPoint() {
 		if (this.octave==Octave.MAIN_OCTAVE&&this.noteFragments==NoteFragments.ALL_NOTE) {
 			return completeMiddleOctave;
 		}

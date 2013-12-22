@@ -63,9 +63,9 @@ public class PlayApi {
 		return result;
 	}
 	
-	public Collection<Playable> getCustomizedThaat(PracticeCustomization customization) {
+	
+	public Collection<Playable> getCustomizedThaat(Frequency[] startEndPoints) {
 		Collection<Playable> result = new ArrayList<Playable>();
-		ClassicalNote[] startEndPoints= customization.getStartEndPoint();
 		logger.info("generating pattern for startClassicalNote[" + startEndPoints[0] + "],  endClassicalNote[" + startEndPoints[1] + "]");
 		for(SymmetricalSet each:SymmetricalSet.values()){
 			CyclicFrequencySet playbleItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each, startEndPoints);

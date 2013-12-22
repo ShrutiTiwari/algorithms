@@ -71,7 +71,8 @@ public enum RaagArohiAvrohi implements FrequencySet {
 	}
 
 	@Override
-	public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote) {
+	public Frequency[][] ascendDescendNotes(Frequency startClassicalNote, Frequency endClassicalNote) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

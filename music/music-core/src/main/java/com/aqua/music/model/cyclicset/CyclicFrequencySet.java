@@ -44,7 +44,7 @@ public interface CyclicFrequencySet extends Playable{
 			return forFrequencySetAndPermutation(freqSet, null);
 		}
 
-		public CyclicFrequencySet forFrequencySet(final FrequencySet freqSet, ClassicalNote[] startEndPoints) {
+		public CyclicFrequencySet forFrequencySet(final FrequencySet freqSet, Frequency[] startEndPoints) {
 			final Frequency[][] ascDesscNotes = freqSet.ascendDescendNotes(startEndPoints[0], startEndPoints[1]);
 			FrequencySet customfrequencySet=new FrequencySet(){
 				@Override
@@ -68,7 +68,7 @@ public interface CyclicFrequencySet extends Playable{
 				}
 
 				@Override
-				public Frequency[][] ascendDescendNotes(ClassicalNote startClassicalNote, ClassicalNote endClassicalNote) {
+				public Frequency[][] ascendDescendNotes(Frequency startClassicalNote, Frequency endClassicalNote) {
 					return ascDesscNotes;
 				}
 			};
