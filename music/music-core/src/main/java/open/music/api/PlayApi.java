@@ -62,12 +62,11 @@ public class PlayApi {
 		}
 		return result;
 	}
-	
-	
+
 	public Collection<Playable> getCustomizedThaat(Frequency[] startEndPoints) {
 		Collection<Playable> result = new ArrayList<Playable>();
 		logger.info("generating pattern for startClassicalNote[" + startEndPoints[0] + "],  endClassicalNote[" + startEndPoints[1] + "]");
-		for(SymmetricalSet each:SymmetricalSet.values()){
+		for (SymmetricalSet each : SymmetricalSet.values()) {
 			CyclicFrequencySet playbleItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySet(each, startEndPoints);
 			result.add(playbleItem);
 		}
@@ -99,12 +98,11 @@ public class PlayApi {
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.play(playableitem.frequencies(), 1);
 	}
-	
-	public void play(Playable playableitem,PracticeCustomization practiceCustomization) {
+
+	public void play(Playable playableitem, PracticeCustomization practiceCustomization) {
 		stateDependentUi.setPauseToDisplay();
 		AudioPlayerFacade.ASYNCHRONOUS_PLAYER.play(playableitem.frequencies(), 1);
 	}
-	
 
 	public void playAllItemsWithInteractiveDisplayInTextArea(final Playable[] playableItems, int repeatCount) {
 		AudioTask<Playable> audioTask = audioTaskWith(playableItems, repeatCount);
@@ -159,17 +157,18 @@ public class PlayApi {
 		PAUSE,
 		RESUME;
 	}
-	
-	public interface BasicNotePlayerBuidler{
+
+	public interface BasicNotePlayerBuidler {
 		BasicNotePlayer build();
-		BasicNotePlayerBuidler DESKTOP_MATH_SIN= new  BasicNotePlayerBuidler() {
+
+		BasicNotePlayerBuidler DESKTOP_MATH_SIN = new BasicNotePlayerBuidler() {
 			@Override
 			public BasicNotePlayer build() {
 				return new BasicNotePlayerWithMathSin();
 			}
 		};
-		
-		BasicNotePlayerBuidler DESKTOP_MIDI= new  BasicNotePlayerBuidler() {
+
+		BasicNotePlayerBuidler DESKTOP_MIDI = new BasicNotePlayerBuidler() {
 			@Override
 			public BasicNotePlayer build() {
 				return new BasicNotePlayerWithMidiChannel();
@@ -177,38 +176,42 @@ public class PlayApi {
 		};
 
 	}
-	
-	public interface InitializationConfig{
+
+	public interface InitializationConfig {
 		AudioPlayer audioPlayer();
+
 		BasicNotePlayer basicNotePlayer();
 	}
-	
-	public static class InitializationConfigImpl implements InitializationConfig{
+
+	public static class InitializationConfigImpl implements InitializationConfig {
 		private final Factory audioFactory;
 		private final BasicNotePlayerBuidler basicNotePlayerBuilder;
-		public InitializationConfigImpl (BasicNotePlayerBuidler basicNotePlayerBuilder, Factory audioFactory) {
+
+		public InitializationConfigImpl(BasicNotePlayerBuidler basicNotePlayerBuilder, Factory audioFactory) {
 			this.basicNotePlayerBuilder = basicNotePlayerBuilder;
 			this.audioFactory = audioFactory;
-		}	
-		
-		public AudioPlayer audioPlayer(){
+		}
+
+		public AudioPlayer audioPlayer() {
 			return audioFactory.fetchInstance();
 		}
-		public BasicNotePlayer basicNotePlayer(){
+
+		public BasicNotePlayer basicNotePlayer() {
 			return basicNotePlayerBuilder.build();
 		}
 	}
-	
-	public interface InitializationConfigProvider{
+
+	public interface InitializationConfigProvider {
 		InitializationConfig getConfig();
 	}
-	private class Initializer{
+
+	private class Initializer {
 		private InitializationConfig initializationConfig;
-		
-		private Initializer(InitializationConfig initializationConfig){
-			this.initializationConfig=initializationConfig;
+
+		private Initializer(InitializationConfig initializationConfig) {
+			this.initializationConfig = initializationConfig;
 		}
-		
+
 		private void initialize() {
 			AudioPlayer audioPlayer = initializationConfig.audioPlayer();
 			try {
@@ -223,6 +226,6 @@ public class PlayApi {
 			final AudioPlayRightsManager audioPlayRightsManager = (AudioPlayRightsManager) AudioLifeCycleManager.instance;
 			audioPlayRightsManager.setCurrentPlayer(currentAudioPlayer);
 			currentAudioPlayer.setAudioPlayRigthsManager(audioPlayRightsManager);
-		}		
+		}
 	}
 }

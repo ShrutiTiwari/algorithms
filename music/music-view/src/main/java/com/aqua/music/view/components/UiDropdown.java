@@ -18,6 +18,7 @@ import open.music.api.NoteFragments;
 import open.music.api.PlayApi;
 import open.music.api.PracticeCustomization;
 import open.music.api.SingletonFactory;
+import open.music.api.StateDependentUi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ import com.aqua.music.model.puzzles.QuizController;
 import com.aqua.music.model.puzzles.QuizLevel;
 
 class UiDropdown {
-	
+
 	public static JComboBox endNoteDropDown(ClassicalNote[] displayClassicalNotes) {
 		return createWith(COMMAND_END_NOTE, displayClassicalNotes, ClassicalNote.S3);
 	}
@@ -84,12 +85,14 @@ class UiDropdown {
 		private Octave octave;
 		private Frequency[] startEndPoints = new Frequency[2];
 		private final PlayApi playApi = SingletonFactory.PLAY_API;
+		private StateDependentUi stateDependentUi;
 
-		NoteFragementAndOctaveActionListener(MusicPanel musicPanel) {
+		NoteFragementAndOctaveActionListener(MusicPanel musicPanel, StateDependentUi stateDependentUi) {
 			this.musicPanel = musicPanel;
 			this.noteFragment = NoteFragments.ALL_NOTE;
 			this.octave = Octave.MAIN_OCTAVE;
 			this.startEndPoints = new PracticeCustomization(noteFragment, octave).getStartEndPoint();
+			this.stateDependentUi=stateDependentUi;
 		}
 
 		@Override
@@ -109,16 +112,28 @@ class UiDropdown {
 				break;
 			case COMMAND_START_NOTE:
 				ClassicalNote startNote = (ClassicalNote) obj;
+				if (startNote.frequencyInHz() > startEndPoints[1].frequencyInHz()) {
+					musicPanel.alertLabel().setText("Invalid combination, startNote cant be less than endNote.");
+					musicPanel.alertLabel().setVisible(true);
+					return;
+				}
 				startEndPoints[0] = startNote;
 				break;
 			case COMMAND_END_NOTE:
 				ClassicalNote endNote = (ClassicalNote) obj;
+				if (endNote.frequencyInHz() < startEndPoints[0].frequencyInHz()) {
+					musicPanel.alertLabel().setText("Invalid combination, startNote cant be less than endNote.");
+					musicPanel.alertLabel().setVisible(true);
+					return;
+				}
 				startEndPoints[1] = endNote;
 				break;
-			default: 
+			default:
 				return;
 			}
-			musicPanel.refreshSpecificComponentPanel(playApi.getCustomizedThaat(startEndPoints));
+			musicPanel.alertLabel().setVisible(false);
+			musicPanel.customizationLabel().setText("Customized play between [" + startEndPoints[0] + "] to [" + startEndPoints[1] + "]");
+			stateDependentUi.setStartEndPoints(startEndPoints);
 		}
 	}
 

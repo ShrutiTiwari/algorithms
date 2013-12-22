@@ -64,13 +64,15 @@ public enum SymmetricalSet implements FrequencySet {
 		boolean startNoteFound = false;
 		boolean endNoteFound = false;
 
-		ClassicalNote endMainNote= (ClassicalNote)endClassicalNote;
+		ClassicalNote startMainNote= (ClassicalNote)startClassicalNote;	
+		ClassicalNote startAlternateNote=findAlternativeNote(startMainNote);
 		
+		ClassicalNote endMainNote= (ClassicalNote)endClassicalNote;
 		ClassicalNote endAlternateNote=findAlternativeNote(endMainNote);
 		
 		do {
 			for (BaseNote each : baseAscendNotes) {
-				if (each != startClassicalNote.baseNote()) {
+				if (!(each == startClassicalNote.baseNote() || each == startAlternateNote.baseNote())) {
 					if (!startNoteFound) {
 						continue;
 					}

@@ -4,10 +4,14 @@
 package com.aqua.music.view.components;
 
 import java.awt.TextArea;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import com.aqua.music.model.core.Frequency;
 
 import open.music.api.StateDependentUi;
 
@@ -19,6 +23,7 @@ class StateDependentUiImpl implements StateDependentUi {
 	private final CommonUiTop topPanelArea;
 	private final TextArea consoleArea;
 	private final JButton pauseButton;
+	private final List<StartEndPointChangeListener> listeners= new ArrayList<StartEndPointChangeListener>();
 
 	public StateDependentUiImpl() {
 		this.topPanelArea = new CommonUiTop();
@@ -71,5 +76,16 @@ class StateDependentUiImpl implements StateDependentUi {
 		textArea.setVisible(true);
 		textArea.setBackground(UiColor.LOW_PRIORITY_CLR);
 		return textArea;
+	}
+
+	public void setStartEndPoints(Frequency[] startEndPoints) {
+		for(StartEndPointChangeListener each: listeners){
+			each.changedEndPoints(startEndPoints);
+		}
+	}
+
+	@Override
+	public void registerStartEndPointChangeListener(StartEndPointChangeListener listener) {
+		this.listeners.add(listener);
 	}
 }

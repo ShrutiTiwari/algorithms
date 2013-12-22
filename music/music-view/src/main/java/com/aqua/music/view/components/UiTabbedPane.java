@@ -1,13 +1,9 @@
 package com.aqua.music.view.components;
 
 import static com.aqua.music.view.components.UiTexts.TITLE_PUZZLES;
-import static com.aqua.music.view.components.UiTexts.TITLE_SONG_TAB;
-import static com.aqua.music.view.components.UiTexts.TITLE_THAAT;
-import static com.aqua.music.view.components.UiTexts.TITLE_THAAT_PATTERN;
 
 import javax.swing.JTabbedPane;
 
-import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
@@ -26,9 +22,9 @@ public class UiTabbedPane {
 		JTabbedPane mainTabbedPane = new JTabbedPane();
 		
 		JTabbedPane pracitceTabbedPane = new JTabbedPane();
-		pracitceTabbedPane.addTab(TITLE_THAAT, new MusicPanelForPractice(stateDependentUi,SingletonFactory.PLAY_API.getAllPlainThaat(),UiTexts.UiLables.PRACTICE_A_THAAT).getPanel());
-		pracitceTabbedPane.addTab(TITLE_THAAT_PATTERN, new MusicPanelForPractice(stateDependentUi,firstThaat,PermuatationsGenerator.PAIR, UiTexts.UiLables.PRACTICE_A_PATTERN).getPanel());
-		pracitceTabbedPane.addTab(TITLE_SONG_TAB, new MusicPanelForPractice(stateDependentUi,SingletonFactory.PLAY_API.getAllSongs(),UiTexts.UiLables.PRACTICE_A_SONG).getPanel());
+		pracitceTabbedPane.addTab(MusicPracticePanelType.THAAT.title(), new MusicPanelForPractice(MusicPracticePanelType.THAAT,stateDependentUi).getPanel());
+		pracitceTabbedPane.addTab(MusicPracticePanelType.PATTERN.title(), new MusicPanelForPractice(MusicPracticePanelType.PATTERN,stateDependentUi,firstThaat, PermuatationsGenerator.PAIR).getPanel());
+		pracitceTabbedPane.addTab(MusicPracticePanelType.SONG.title(), new MusicPanelForPractice(MusicPracticePanelType.SONG,stateDependentUi).getPanel());
 		mainTabbedPane.addTab(UiTexts.TITLE_PRACTICE, pracitceTabbedPane);
 		
 		mainTabbedPane.addTab(TITLE_PUZZLES, new MusicPanelForQuiz(stateDependentUi,firstQuizLevel).getPanel());

@@ -3,10 +3,11 @@
  */
 package open.music.api;
 
+import com.aqua.music.model.core.Frequency;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public interface StateDependentUi {
 
@@ -25,9 +26,17 @@ public interface StateDependentUi {
 	 * @param playableName
 	 */
 	public void updatePlayable(String playableName);
-	
+
 	/**
 	 * @param multipler
 	 */
 	public void updateTempo(int multipler);
+
+	public void setStartEndPoints(Frequency[] startEndPoints);
+
+	public void registerStartEndPointChangeListener(StartEndPointChangeListener listener);
+
+	public interface StartEndPointChangeListener {
+		public void changedEndPoints(Frequency[] startEndPoints);
+	}
 }

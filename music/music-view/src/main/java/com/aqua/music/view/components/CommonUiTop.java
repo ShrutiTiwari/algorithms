@@ -14,31 +14,32 @@ import javax.swing.JPanel;
 
 class CommonUiTop {
 	private final CurrentState currentState;
-	private final JPanel leftPanel = UiJPanelBuilder.LEFT_FLOWLAYOUT.createPanel();
+	private final JPanel firstPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 	private final JPanel mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 	private final JButton pauseButton;
-	private JPanel rightPanel;
+	private JPanel secondPanel=UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 
 	public CommonUiTop() {
-		mainPanel.add(leftPanel);
-
+		mainPanel.add(firstPanel);
+		mainPanel.add(secondPanel);
+		
 		this.pauseButton = UiButtons.PAUSE.getButton();
-		this.rightPanel = UiJPanelBuilder.RIGHT_FLOWLAYOUT.createPanel();
 		this.currentState = new CurrentState();
 
-		addToPanel(currentState.currentPlayableLabel, rightPanel);
-		addToPanel(pauseButton, rightPanel);
-		rightPanel.add(new JLabel("  "));
-
-		addToPanel(currentState.currentInstrumentLabel, rightPanel);
-
-		rightPanel.add(new JLabel("  "));
-		addToPanel(currentState.currentSpeedLabel, rightPanel);
-		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), rightPanel);
-		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), rightPanel);
-
-		leftPanel.add(UiTexts.UiLables.MESSAGE_TOP.getLabel());
-		mainPanel.add(rightPanel);
+		firstPanel.add(UiTexts.UiLables.MESSAGE_TOP.getLabel());
+		
+		secondPanel.add(Box.createHorizontalGlue());
+		addToPanel(currentState.currentPlayableLabel, secondPanel);
+		addToPanel(pauseButton, secondPanel);
+		secondPanel.add(Box.createHorizontalGlue());
+		
+		addToPanel(currentState.currentInstrumentLabel, secondPanel);
+		secondPanel.add(Box.createHorizontalGlue());
+		
+		addToPanel(UiButtons.INCREASE_TEMPO.getButton(), secondPanel);
+		addToPanel(currentState.currentSpeedLabel, secondPanel);
+		addToPanel(UiButtons.DECREASE_TEMPO.getButton(), secondPanel);
+		secondPanel.add(Box.createHorizontalGlue());
 	}
 
 	private static void addToPanel(JComponent each, JPanel containerPanel) {
