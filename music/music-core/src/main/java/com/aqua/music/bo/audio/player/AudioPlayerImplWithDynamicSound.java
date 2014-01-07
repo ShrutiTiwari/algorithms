@@ -24,7 +24,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.debug("acquired right to play");
-			basicNotePlayer.start(calculateTotalDuration(frequencyList));
+			basicNotePlayer.start(calculateTotalDuration(frequencyList)*repeatCount);
 			generateSound(frequencyList, repeatCount);
 			basicNotePlayer.finish();
 		} catch (Exception e) {
@@ -40,8 +40,8 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.debug("acquired right to play");
-			basicNotePlayer.start(calculateTotalDuration(frequencyList));
 			while (!audioPlayRightsManager.isMarkedToStopPlaying()) {
+				basicNotePlayer.start(calculateTotalDuration(frequencyList));
 				generateSound(frequencyList, 1);
 			}
 			basicNotePlayer.finish();
