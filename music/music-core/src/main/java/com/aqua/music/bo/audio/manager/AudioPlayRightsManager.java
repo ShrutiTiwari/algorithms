@@ -17,5 +17,5 @@ public interface AudioPlayRightsManager {
 
 	boolean pauseCurrentPlay();
 	
-	int tempoMultilier(int duration);
+	int tempoMultiplier(int duration);
 }

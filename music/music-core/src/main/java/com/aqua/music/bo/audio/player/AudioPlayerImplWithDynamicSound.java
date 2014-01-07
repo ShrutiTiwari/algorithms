@@ -6,6 +6,7 @@ import open.music.api.InstrumentRole;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
+import com.aqua.music.model.core.Frequency;
 
 /**
  * @author "Shruti Tiwari"
@@ -23,7 +24,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.debug("acquired right to play");
-			basicNotePlayer.start();
+			basicNotePlayer.start(calculateTotalDuration(frequencyList));
 			generateSound(frequencyList, repeatCount);
 			basicNotePlayer.finish();
 		} catch (Exception e) {
@@ -39,7 +40,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 		try {
 			audioPlayRightsManager.acquireRightToPlay();
 			logger.debug("acquired right to play");
-			basicNotePlayer.start();
+			basicNotePlayer.start(calculateTotalDuration(frequencyList));
 			while (!audioPlayRightsManager.isMarkedToStopPlaying()) {
 				generateSound(frequencyList, 1);
 			}
@@ -51,6 +52,15 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 			logger.debug("releasing right to play");
 			audioPlayRightsManager.releaseRightToPlay();
 		}
+	}
+
+	private int calculateTotalDuration(final Collection<? extends DynamicFrequency> frequencyList) {
+		int totalDuration=0;
+		for(DynamicFrequency each: frequencyList){
+			final int customizedDuration = audioPlayRightsManager.tempoMultiplier(each.duration());
+			totalDuration+=customizedDuration;
+		}
+		return totalDuration;
 	}
 
 	public final Runnable playTask(final Collection<? extends DynamicFrequency> frequencyList, final int repeatCount) {
@@ -101,7 +111,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 				if (audioPlayRightsManager.isMarkedToStopPlaying()) {
 					return;
 				} else {
-					final int customizedDuration = audioPlayRightsManager.tempoMultilier(each.duration());
+					final int customizedDuration = audioPlayRightsManager.tempoMultiplier(each.duration());
 					throwExceptionForInsaneInput(customizedDuration);
 					basicNotePlayer.play(each, customizedDuration);
 				}

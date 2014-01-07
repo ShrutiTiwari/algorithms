@@ -40,7 +40,7 @@ public class BasicNotePlayerForAndroid implements BasicNotePlayer  {
 	}
 
 	@Override
-	public void start(){
+	public void start(int totalDuration){
 		AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
 		try {
 			this.sdl = AudioSystem.getSourceDataLine(af);

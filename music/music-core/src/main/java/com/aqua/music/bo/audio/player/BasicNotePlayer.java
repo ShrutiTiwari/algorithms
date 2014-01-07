@@ -11,7 +11,7 @@ import com.aqua.music.model.core.DynamicFrequency;
 public interface BasicNotePlayer {
 	void finish();
 	void play(DynamicFrequency each, int duration);
-	void start();
+	void start(int totalDuration);
 	void stop();
 	void tidyup();
 	void notifyInstrumentChange(String instrument, InstrumentRole changingInstrument);

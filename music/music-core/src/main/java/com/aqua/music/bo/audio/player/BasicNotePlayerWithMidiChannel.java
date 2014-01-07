@@ -86,7 +86,7 @@ public class BasicNotePlayerWithMidiChannel implements BasicNotePlayer {
 	}
 
 	@Override
-	public void start() {
+	public void start(int totalDuration) {
 
 	}
 

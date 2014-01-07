@@ -119,7 +119,7 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public int tempoMultilier(int duration) {
+	public int tempoMultiplier(int duration) {
 		final int customizedDuration = (multipler == 0) ? duration : newDuration(duration);
 		return customizedDuration;
 	}

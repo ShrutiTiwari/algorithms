@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +12,10 @@ import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.bo.audio.manager.AudioTask;
 import com.aqua.music.bo.audio.manager.PlayMode;
 import com.aqua.music.bo.audio.player.AudioPlayer;
-import com.aqua.music.bo.audio.player.BasicNotePlayerWithMathSin;
-import com.aqua.music.bo.audio.player.BasicNotePlayerWithMidiChannel;
 import com.aqua.music.bo.audio.player.AudioPlayer.Factory;
 import com.aqua.music.bo.audio.player.BasicNotePlayer;
-import com.aqua.music.model.core.ClassicalNote;
+import com.aqua.music.bo.audio.player.BasicNotePlayerWithMathSin;
+import com.aqua.music.bo.audio.player.BasicNotePlayerWithMidiChannel;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 import com.aqua.music.model.cyclicset.CyclicFrequencySet;
