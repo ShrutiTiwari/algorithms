@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Practice Indian Classical Music</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_increase_tempo">Increase Tempo</string>
+    <string name="button_decrease_tempo">Decrease Tempo</string>
+    <string name="button_stop">Stop</string>
+
+</resources>
