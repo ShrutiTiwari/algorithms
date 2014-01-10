@@ -4,16 +4,14 @@ import java.util.List;
 
 import open.music.api.Playable;
 import open.music.api.SingletonFactory;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AbsListView;
 
-public class MainActivity extends SoundPlayActivity {
+public class PatternActivity extends SoundPlayActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.pattern_play);
 		intializeAudioSystem();
 		populateList();
 	}
@@ -28,8 +26,5 @@ public class MainActivity extends SoundPlayActivity {
 		listView.setAdapter(adapter);
 		thaatClickListener = new PlyableClickListener(this);
 		listView.setOnItemClickListener(thaatClickListener);
-	}
-	public void playPattern(View view) {
-		startActivity(new Intent(this, PatternActivity.class));
 	}
 }
