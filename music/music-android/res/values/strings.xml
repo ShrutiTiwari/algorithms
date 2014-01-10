@@ -7,5 +7,14 @@
     <string name="button_increase_tempo">Increase Tempo</string>
     <string name="button_decrease_tempo">Decrease Tempo</string>
     <string name="button_stop">Stop</string>
-
+    <string name="plainThat">Plain-Thaat</string>
+    <string name="patterns">Pattern-Thaat</string>
+    <string name="button_pattern">Click to practice patterns</string>
+    <string name="play_patterns">Play Patterns</string>
+    <string name="home_msg">Hello, Great to see you here.</string>
+    <string name="pattern_msg">Practice with patterns now.</string>
+    <string name="tempo">Tempo[]</string>
+    <string name="playing">Playing[]</string>
+    <string name="home_choose_msg">Choose a thaat to play or "Play all"</string>
+    <string name="pattern_choose_msg">Choose a pattern to play or "Play all"</string>
 </resources>
