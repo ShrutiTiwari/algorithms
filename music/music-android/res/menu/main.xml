@@ -4,4 +4,8 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/home"
         android:title="@string/plainThat"/>
+    <item
+        android:id="@+id/song"
+        android:showAsAction="ifRoom"
+        android:title="@string/song"/>    
 </menu>

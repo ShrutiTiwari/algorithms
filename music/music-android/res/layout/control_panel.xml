@@ -1,49 +1,64 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_column="0"
+    android:columnCount="1"
     android:layout_row="2"
-    android:orientation="horizontal" >
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/playing"
-        android:textSize="20sp" />
+        android:layout_column="0"
+        android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/imageButton3"
+        <TextView
+            android:id="@+id/plyaingNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="@string/playing"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:contentDescription="@string/button_stop"
+            android:onClick="stop"
+            android:src="@drawable/button_pause" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|top"
-        android:contentDescription="@string/button_stop"
-        android:onClick="stop"
-        android:src="@drawable/button_pause" />
+        android:layout_column="0"
+        android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:contentDescription="@string/button_increase_tempo"
-        android:onClick="increaseTempo"
-        android:src="@drawable/arrow_up" />
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_increase_tempo"
+            android:onClick="increaseTempo"
+            android:src="@drawable/arrow_up" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/tempo"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tempo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="@string/tempo"
+            android:textSize="20sp" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/button_decrease_tempo"
-        android:onClick="decreaseTempo"
-        android:src="@drawable/arrow_down" />
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_decrease_tempo"
+            android:onClick="decreaseTempo"
+            android:src="@drawable/arrow_down" />
+    </LinearLayout>
 
-</LinearLayout>
+</GridLayout>
