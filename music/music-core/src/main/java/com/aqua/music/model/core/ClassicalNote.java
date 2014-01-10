@@ -39,7 +39,7 @@ public enum ClassicalNote implements Frequency {
 	R1(BaseNote.R),
 	R1_(BaseNote.R_),
 	R3(BaseNote.R),
-	R3_(BaseNote.R),
+	R3_(BaseNote.R_),
 	S(BaseNote.S),
 	S1(BaseNote.S),
 	S3(BaseNote.S), S4(BaseNote.S);

@@ -4,6 +4,7 @@
 package com.aqua.music.view.components;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JLabel;
 
@@ -36,17 +37,17 @@ public enum MusicPracticePanelType {
 
 	private final String title;
 	private final UiLables uiLables;
-	private final Collection<Playable> itemsList;
+	private final List<Playable> itemsList;
 	private final boolean customizationAllowed;
 
-	private MusicPracticePanelType(String title, UiLables uiLables, Collection<Playable> itemsList, boolean customizationAllowed) {
+	private MusicPracticePanelType(String title, UiLables uiLables, List<Playable> itemsList, boolean customizationAllowed) {
 		this.title = title;
 		this.uiLables = uiLables;
 		this.itemsList = itemsList;
 		this.customizationAllowed = customizationAllowed;
 	}
 
-	public Collection<Playable> itemsList() {
+	public List<Playable> itemsList() {
 		return itemsList;
 	}
 

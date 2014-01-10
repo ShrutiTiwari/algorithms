@@ -29,9 +29,9 @@ import com.aqua.music.model.cyclicset.SymmetricalSet;
 public class PlayApi {
 	private String defaultInstrument;
 	private final Logger logger = LoggerFactory.getLogger(PlayApi.class);
-	private final Collection<Playable> playablePlainThaats;
+	private final List<Playable> playablePlainThaats;
 
-	private final Collection<Playable> playableSongs;
+	private final List<Playable> playableSongs;
 	private StateDependentUi stateDependentUi;
 
 	PlayApi() {
@@ -48,10 +48,10 @@ public class PlayApi {
 		return AudioPlayer.Factory.DYNAMIC_AUDIO.fetchInstance().allInstruments();
 	}
 
-	public Collection<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
+	public List<Playable> getAllPatternedThaat(FrequencySet frequencySet, PermuatationsGenerator permuatationsGenerator) {
 		List<int[]> allPermutations = permuatationsGenerator.generatePermutations(frequencySet.ascendNotes());
 
-		Collection<Playable> result = new ArrayList<Playable>();
+		List<Playable> result = new ArrayList<Playable>();
 		for (int[] eachPermutation : allPermutations) {
 			CyclicFrequencySet playbleItem = CyclicFrequencySet.Type.SYMMETRICAL.forFrequencySetAndPermutation(frequencySet,
 					eachPermutation);
@@ -70,11 +70,11 @@ public class PlayApi {
 		return result;
 	}
 
-	public Collection<Playable> getAllPlainThaat() {
+	public List<Playable> getAllPlainThaat() {
 		return playablePlainThaats;
 	}
 
-	public Collection<Playable> getAllSongs() {
+	public List<Playable> getAllSongs() {
 		return playableSongs;
 	}
 

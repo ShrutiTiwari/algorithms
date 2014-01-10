@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -32,7 +31,7 @@ import com.aqua.music.view.components.UiDropdown.NoteFragementAndOctaveActionLis
 import com.aqua.music.view.components.UiDropdown.ThaatAndPatternDropdownActionListener;
 
 class MusicPanelForPractice extends MusicPanel {
-	private final Collection<Playable> intialItemsList;
+	private final List<Playable> intialItemsList;
 	private final JTextField playAllCounter;
 	private final PlayApi playApi = SingletonFactory.PLAY_API;
 	private final MusicPracticePanelType practicePanel;
@@ -104,7 +103,7 @@ class MusicPanelForPractice extends MusicPanel {
 
 		JPanel playAreaPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 
-		Collection<Playable> itemsList = (Collection<Playable>) selectedConfiguration;
+		List<Playable> itemsList = (List<Playable>) selectedConfiguration;
 		if (itemsList == null) {
 			itemsList = this.intialItemsList;
 		}
