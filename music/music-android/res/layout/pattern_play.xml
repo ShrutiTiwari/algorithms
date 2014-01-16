@@ -34,6 +34,8 @@
 	    android:textSize="20sp"
 	    android:layout_marginTop="@dimen/activity_vertical_margin"
 	    android:layout_gravity="left"
+	    android:textStyle="bold"
+	    android:layout_marginBottom="8dp"
 	    android:text="@string/pattern_choose_msg"/>
     
     <GridView
@@ -45,6 +47,7 @@
         android:layout_row="5"
         android:clickable="true"
         android:numColumns="auto_fit"
-        android:overScrollMode="always"/>
+        android:overScrollMode="always"
+        android:background="#A4C639"/>
 
 </GridLayout>

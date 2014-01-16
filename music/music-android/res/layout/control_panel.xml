@@ -18,7 +18,8 @@
             android:layout_gravity="left"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="@string/playing"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+             />
 
         <ImageButton
             android:id="@+id/imageButton3"
