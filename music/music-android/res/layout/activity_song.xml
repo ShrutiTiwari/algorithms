@@ -10,16 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <!-- android:background="#999999" -->
-
     <TextView
         android:layout_gravity="center_horizontal"
         android:layout_row="1"
         android:text="@string/title_scrn_song"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textSize="30sp" />
-
-    <include layout="@layout/control_panel"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -41,4 +37,9 @@
         android:numColumns="auto_fit"
         android:overScrollMode="always" 
         android:background="#A4C639"/>
+    
+    <include
+        android:layout_marginTop="8dp"
+        android:layout_row="5"
+        layout="@layout/control_panel" />    
 </GridLayout>
