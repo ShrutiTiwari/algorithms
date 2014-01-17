@@ -11,20 +11,20 @@
 
     <!-- control panel -->
     <string name="tempo">Tempo[]</string>
-    <string name="playing">Playing[]</string>
+    <string name="playing">Playing[---]</string>
     <string name="button_increase_tempo">Increase Tempo</string>
     <string name="button_decrease_tempo">Decrease Tempo</string>
     <string name="button_stop">Stop</string>
 
     <!-- home screen -->
     <string name="title_home">Hello, Great to see you here.</string>
-    <string name="thaat_choose_msg">Click a thaat to play or "Play all"</string>
+    <string name="thaat_choose_msg">Click a thaat to play</string>
     <string name="play_patterns">Practice Patterns</string>
     
     <!-- pattern screen -->
     <string name="title_scrn_pattern">Practice with patterns now.</string>
-    <string name="thaat_choose_msg1">Choose a thaat</string>
-    <string name="pattern_choose_msg">Click a pattern to play or "Play all"</string>
+    <string name="thaat_choose_msg1">Change thaat:  </string>
+    <string name="pattern_choose_msg">Click a pattern to play</string>
 
     <!-- song screen -->
     <string name="title_scrn_song">Great, you can play bandish(songs) here!</string>
