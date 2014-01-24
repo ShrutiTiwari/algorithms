@@ -13,24 +13,22 @@
 
     <TextView
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_row="1"
-        android:text="@string/title_home"
+        android:text="@string/title_scrn_song"
         android:textColor="@android:color/white"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:textStyle="bold"
         android:textSize="30sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_row="3"
-        android:text="@string/thaat_choose_msg"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textStyle="bold"
+	    android:layout_marginBottom="8dp"
+	    android:textColor="@android:color/white"
+        android:text="@string/song_choose_msg"
+        android:textSize="20sp" />
 
     <GridView
         android:id="@+id/list"
@@ -39,25 +37,13 @@
         android:layout_column="0"
         android:layout_gravity="left|top"
         android:layout_row="4"
-        android:background="#A4C639"
         android:clickable="true"
         android:numColumns="auto_fit"
-        android:overScrollMode="always" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_row="5"
-        android:onClick="playPattern"
-        android:textColor="@android:color/white"
-        android:text="@string/play_patterns" />
-
+        android:overScrollMode="always" 
+        android:background="#A4C639"/>
+    
     <include
         android:layout_marginTop="8dp"
-        android:layout_row="6"
-        layout="@layout/control_panel" />
-
+        android:layout_row="5"
+        layout="@layout/control_panel" />    
 </GridLayout>
