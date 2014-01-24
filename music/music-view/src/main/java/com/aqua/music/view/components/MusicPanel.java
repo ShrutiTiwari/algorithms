@@ -102,5 +102,4 @@ abstract class MusicPanel {
 			initialized = true;
 		}
 	}
-
 }

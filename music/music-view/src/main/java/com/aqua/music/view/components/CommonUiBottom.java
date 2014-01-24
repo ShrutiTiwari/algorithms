@@ -24,7 +24,7 @@ class CommonUiBottom {
 		return bottomPanel;
 	}
 
-	public CommonUiBottom(StateDependentUi stateDependentUi) {
+	CommonUiBottom(StateDependentUi stateDependentUi) {
 		this.bottomPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 		this.stateDependentUi = stateDependentUi;
 		addInstrument(InstrumentRole.MAIN);
@@ -46,7 +46,7 @@ class CommonUiBottom {
 
 	public class InstrumentDisplay {
 		private final InstrumentRole instrumentRole;
-		InstrumentDisplay(InstrumentRole instrumentRole) {
+		private InstrumentDisplay(InstrumentRole instrumentRole) {
 			this.instrumentRole = instrumentRole;
 		}
 

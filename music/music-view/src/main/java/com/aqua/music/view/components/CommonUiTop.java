@@ -17,9 +17,9 @@ class CommonUiTop {
 	private final JPanel firstPanel = UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 	private final JPanel mainPanel = UiJPanelBuilder.BOX_VERTICAL.createPanel();
 	private final JButton pauseButton;
-	private JPanel secondPanel=UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
+	private final JPanel secondPanel=UiJPanelBuilder.BOX_HORIZONTAL.createPanel();
 
-	public CommonUiTop() {
+	CommonUiTop() {
 		mainPanel.add(firstPanel);
 		mainPanel.add(secondPanel);
 		
@@ -66,10 +66,6 @@ class CommonUiTop {
 		private final JLabel currentPlayableLabel;
 		private final JLabel currentSpeedLabel;
 
-		private String mainInstrument;
-		private String playableName;
-		private int speed;
-
 		private CurrentState() {
 			this.currentPlayableLabel = UiTexts.UiLables.STATUS_PLAYABLE.getLabel();
 			this.currentInstrumentLabel = UiTexts.UiLables.STATUS_INSTRUMENT.getLabel();
@@ -77,19 +73,16 @@ class CommonUiTop {
 		}
 
 		public void setCurrentPlayable(String currentPlayable) {
-			this.playableName = currentPlayable;
 			String playableName = currentPlayable == null ? "--" : currentPlayable;
 			currentPlayableLabel.setText("Playing[ " + playableName + " ]");
 		}
 
 		public void setMainInstrument(String instrument) {
-			this.mainInstrument = instrument;
 			String instrumentName = instrument == null ? "--" : instrument;
 			currentInstrumentLabel.setText("Instrument[ " + instrumentName + " ]");
 		}
 
 		public void setSpeed(int speed) {
-			this.speed = speed;
 			currentSpeedLabel.setText("Speed[ " + speed + " ]");
 		}
 	}

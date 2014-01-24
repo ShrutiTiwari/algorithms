@@ -18,8 +18,8 @@ class StaticAudioLibrary {
 	private static final Logger logger = LoggerFactory.getLogger(StaticAudioLibrary.class);
 	private static Map<String, File> library = Duration.ONE_SEC.library;
 
-	private static final String AUDIO_LIBRARY = "recognition-puzzles/";
-	private static final String FOLDER_PREFIX = "note-recognition-";
+	private static final String AUDIO_LIBRARY = "audio/";
+	private static final String FOLDER_PREFIX = "note-";
 
 	public static void addFileIfFound(List<File> audioFiles, Frequency note) {
 		File audioFile = library.get(note.fileCode());

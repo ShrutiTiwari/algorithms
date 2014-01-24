@@ -27,7 +27,6 @@ public class AudioLifeCycleManagerTest {
 	public void testFrequencyPlayer() throws LineUnavailableException {
 		CommonCode.initialize();
 		Frequency[] sample = new Frequency[] { S, R, G, M, P, D, N, S3 };
-		// int durationInMilliSec = 2000;
 		List<Frequency> asList = Arrays.asList(sample);
 		AudioPlayerFacade.SYNCHRONOUS_PLAYER.play(asList, 1);
 	}
