@@ -11,7 +11,7 @@ import open.music.api.DesktopConfig;
 import open.music.api.SingletonFactory;
 import open.music.api.StateDependentUi;
 
-public class CommonUi<T>{
+public class CommonUi{
 	private final StateDependentUiImpl stateDependentUi;
 	private final JPanel bottomPanel;
 	

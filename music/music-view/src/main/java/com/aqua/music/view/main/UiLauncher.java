@@ -1,8 +1,13 @@
 package com.aqua.music.view.main;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public class UiLauncher {
 	/**
@@ -10,24 +15,36 @@ public class UiLauncher {
 	 * invoked from the event-dispatching thread.
 	 */
 	public static void main(String[] args) {
-		GuiLauncher.SWING.launch();
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				SwingBasedUi swingBasedUi = new SwingBasedUi();
+				swingBasedUi.addPanel(new UIMainPanel());
+				swingBasedUi.display();
+			}
+		});
 	}
 
-	public interface GuiLauncher {
-		void launch();
+	static class SwingBasedUi {
+		private static final String frameTitle = "Music";
+		private static final Dimension preferredSizeForMainPane = new Dimension(450, 450);
+		private final JFrame swingframe;
 
-		GuiLauncher SWING = new GuiLauncher() {
-			@Override
-			public void launch() {
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						// UIManager.put("swing.boldMetal", Boolean.FALSE);
-						UiMainContainer uiMainContainer = UiMainContainer.SWING;
-						uiMainContainer.addPanel(new UIMainPanel());
-						uiMainContainer.display();
-					}
-				});
-			}
-		};
+		public SwingBasedUi() {
+			this.swingframe = new JFrame(frameTitle);
+			swingframe.setLocationRelativeTo(null);
+			swingframe.addWindowListener(new AppCloseWindowsListener());
+		}
+
+		public SwingBasedUi addPanel(UIMainPanel uiMainPanel) {
+			swingframe.add(uiMainPanel.getJPanel(), BorderLayout.CENTER);
+			return this;
+		}
+
+		public void display() {
+			swingframe.pack();
+			swingframe.setVisible(true);
+			swingframe.setLocationRelativeTo(null);
+			swingframe.getContentPane().setPreferredSize(preferredSizeForMainPane);
+		}
 	}
 }

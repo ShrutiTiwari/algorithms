@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class AppletLauncher extends JApplet {
 	public void init() {
 		try {
-			add(new UIMainPanel<JPanel>().getJPanel(), BorderLayout.CENTER);
+			add(new UIMainPanel().getJPanel(), BorderLayout.CENTER);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("createGUI failed");
