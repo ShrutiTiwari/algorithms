@@ -18,7 +18,6 @@ public class CommonUi{
 	public CommonUi(){
 		this.stateDependentUi = new StateDependentUiImpl();
 		SingletonFactory.PLAY_API.initialize(stateDependentUi, DesktopConfig.DYNAMIC);
-		//SingletonFactory.PLAY_API.initialize(stateDependentUi, AndroidConfigBuilder.AndroidConfig.DYNAMIC);
 		this.bottomPanel = new CommonUiBottom(stateDependentUi).panel();
 	}
 	

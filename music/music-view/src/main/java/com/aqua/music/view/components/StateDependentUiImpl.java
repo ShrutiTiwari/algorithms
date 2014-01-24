@@ -11,9 +11,9 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.aqua.music.model.core.Frequency;
-
 import open.music.api.StateDependentUi;
+
+import com.aqua.music.model.core.Frequency;
 
 /**
  * @author "Shruti Tiwari"

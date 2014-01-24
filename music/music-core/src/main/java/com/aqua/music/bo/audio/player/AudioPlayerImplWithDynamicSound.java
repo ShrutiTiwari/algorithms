@@ -6,7 +6,6 @@ import open.music.api.InstrumentRole;
 
 import com.aqua.music.bo.audio.manager.AudioPlayRightsManager;
 import com.aqua.music.model.core.DynamicFrequency;
-import com.aqua.music.model.core.Frequency;
 
 /**
  * @author "Shruti Tiwari"
@@ -57,7 +56,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 	private int calculateTotalDuration(final Collection<? extends DynamicFrequency> frequencyList) {
 		int totalDuration=0;
 		for(DynamicFrequency each: frequencyList){
-			final int customizedDuration = audioPlayRightsManager.tempoMultiplier(each.duration());
+			final int customizedDuration = audioPlayRightsManager.customizedTempoDuration(each.duration());
 			totalDuration+=customizedDuration;
 		}
 		return totalDuration;
@@ -111,7 +110,7 @@ class AudioPlayerImplWithDynamicSound implements AudioPlayer {
 				if (audioPlayRightsManager.isMarkedToStopPlaying()) {
 					return;
 				} else {
-					final int customizedDuration = audioPlayRightsManager.tempoMultiplier(each.duration());
+					final int customizedDuration = audioPlayRightsManager.customizedTempoDuration(each.duration());
 					throwExceptionForInsaneInput(customizedDuration);
 					basicNotePlayer.play(each, customizedDuration);
 				}

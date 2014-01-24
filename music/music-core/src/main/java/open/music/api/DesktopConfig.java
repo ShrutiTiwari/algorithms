@@ -14,7 +14,7 @@ public enum DesktopConfig implements InitializationConfigProvider{
 	DYNAMIC(new InitializationConfigImpl(BasicNotePlayerBuidler.DESKTOP_MIDI, AudioPlayer.Factory.DYNAMIC_AUDIO)),
 	STATIC(new InitializationConfigImpl(BasicNotePlayerBuidler.DESKTOP_MIDI, AudioPlayer.Factory.STATIC_AUDIO));
 
-	private InitializationConfig initializationConfig;
+	private final InitializationConfig initializationConfig;
 	
 	private DesktopConfig(InitializationConfig initializationConfig) {
 		this.initializationConfig = initializationConfig;

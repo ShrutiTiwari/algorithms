@@ -1,9 +1,8 @@
 package com.aqua.music.model.raag.song;
 
-import com.aqua.music.bo.audio.manager.CommonCode;
-
 import open.music.api.AudioPlayerFacade;
-import open.music.api.DesktopConfig;
+
+import com.aqua.music.bo.audio.manager.CommonCode;
 
 public class SongTest {
 	// @Test

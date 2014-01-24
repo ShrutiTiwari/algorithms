@@ -1,7 +1,6 @@
 package com.aqua.music.model.raag.song;
 
 import open.music.api.AudioPlayerFacade;
-import open.music.api.DesktopConfig;
 
 import org.junit.Test;
 

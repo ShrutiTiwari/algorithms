@@ -9,7 +9,6 @@ import java.util.List;
 
 import open.music.api.Playable;
 
-import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 

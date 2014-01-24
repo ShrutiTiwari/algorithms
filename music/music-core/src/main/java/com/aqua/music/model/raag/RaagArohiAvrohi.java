@@ -15,7 +15,6 @@ import static com.aqua.music.model.core.ClassicalNote.R_;
 import static com.aqua.music.model.core.ClassicalNote.S;
 import static com.aqua.music.model.core.ClassicalNote.S3;
 
-import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;
 

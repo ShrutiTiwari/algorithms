@@ -1,16 +1,26 @@
 package com.aqua.music.model.cyclicset;
 
-import static com.aqua.music.model.core.BaseNote.*;
+import static com.aqua.music.model.core.BaseNote.D;
+import static com.aqua.music.model.core.BaseNote.D_;
+import static com.aqua.music.model.core.BaseNote.G;
+import static com.aqua.music.model.core.BaseNote.G_;
+import static com.aqua.music.model.core.BaseNote.M;
+import static com.aqua.music.model.core.BaseNote.M_;
+import static com.aqua.music.model.core.BaseNote.N;
+import static com.aqua.music.model.core.BaseNote.N_;
+import static com.aqua.music.model.core.BaseNote.P;
+import static com.aqua.music.model.core.BaseNote.R;
+import static com.aqua.music.model.core.BaseNote.R_;
+import static com.aqua.music.model.core.BaseNote.S;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import open.music.api.PlayApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aqua.music.model.core.BaseNote;
+import com.aqua.music.model.core.BaseNote.Octave;
 import com.aqua.music.model.core.ClassicalNote;
 import com.aqua.music.model.core.Frequency;
 import com.aqua.music.model.core.FrequencySet;

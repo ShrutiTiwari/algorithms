@@ -11,14 +11,14 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 
 /**
  * @author "Shruti Tiwari"
- *
+ * 
  */
 public interface AudioLifeCycleManager {
-	Logger logger = LoggerFactory.getLogger(AudioLifeCycleManager.class);
+	final Logger logger = LoggerFactory.getLogger(AudioLifeCycleManager.class);
 	final AudioLifeCycleManager instance = new AudioLifeCycleManagerImpl();
-	
+
 	void stop();
-	
+
 	AudioPlayer currentAudioPlayer();
 
 	PlayApi.AudioPlayerNextStatus togglePauseAndResume();

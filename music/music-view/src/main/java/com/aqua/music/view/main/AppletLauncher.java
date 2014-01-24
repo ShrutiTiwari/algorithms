@@ -3,7 +3,6 @@ package com.aqua.music.view.main;
 import java.awt.BorderLayout;
 
 import javax.swing.JApplet;
-import javax.swing.JPanel;
 
 /**
  * @author "Shruti Tiwari"

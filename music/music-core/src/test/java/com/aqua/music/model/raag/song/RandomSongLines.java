@@ -11,7 +11,6 @@ import static com.aqua.music.model.core.ClassicalNote.N1;
 import static com.aqua.music.model.core.ClassicalNote.R_;
 import static com.aqua.music.model.core.ClassicalNote.S;
 import open.music.api.AudioPlayerFacade;
-import open.music.api.DesktopConfig;
 import open.music.api.SingletonFactory;
 
 import com.aqua.music.bo.audio.manager.CommonCode;

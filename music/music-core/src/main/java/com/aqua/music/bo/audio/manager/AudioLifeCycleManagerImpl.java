@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import open.music.api.DesktopConfig;
 import open.music.api.InstrumentRole;
 import open.music.api.PlayApi.AudioPlayerNextStatus;
 import open.music.api.StateDependentUi;
@@ -18,7 +17,7 @@ import com.aqua.music.bo.audio.player.AudioPlayer;
 class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRightsManager {
 	private AudioPlayer currentAudioPlayer;
 
-	private volatile int multipler = 0;
+	private volatile int tempoMultipler = 0;
 	private final AtomicBoolean pauseCurrentPlay;
 	private final Lock permitToPlay;
 	private final AtomicBoolean stopCurrentPlay;
@@ -26,7 +25,8 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	private StateDependentUi stateObserver;
 	
-	
+	private final int MULTIPLER_SLOWEST_ALLOWED_TEMPO = -9;
+	private final int MULTIPLER_FASTEST_ALLOWED_TEMPO = 9;
 	public AudioPlayer currentAudioPlayer(){
 		return currentAudioPlayer;
 	} 
@@ -35,10 +35,6 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 		this.permitToPlay = new ReentrantLock();
 		this.stopCurrentPlay = new AtomicBoolean(false);
 		this.pauseCurrentPlay = new AtomicBoolean(false);
-	}
-
-	AudioLifeCycleManagerImpl(int durationInMsec, double vol) {
-		this();
 	}
 
 	@Override
@@ -56,24 +52,24 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 
 	@Override
 	public void decreaseTempo() {
-		if (this.multipler == -9) {
-			logger.info("at min tempo! [" + multipler + "]");
+		if (this.tempoMultipler == MULTIPLER_SLOWEST_ALLOWED_TEMPO) {
+			logger.info("at min tempo! [" + tempoMultipler + "]");
 			return;
 		}
-		this.multipler = multipler - 1;
-		logger.info("Decreased tempo [" + multipler + "]");
-		stateObserver.updateTempo(multipler);
+		this.tempoMultipler = tempoMultipler - 1;
+		logger.info("Decreased tempo [" + tempoMultipler + "]");
+		stateObserver.updateTempo(tempoMultipler);
 	}
 
 	@Override
 	public void increaseTempo() {
-		if (this.multipler == 9) {
-			logger.info("at max tempo! [" + multipler + "]");
+		if (this.tempoMultipler == MULTIPLER_FASTEST_ALLOWED_TEMPO) {
+			logger.info("at max tempo! [" + tempoMultipler + "]");
 			return;
 		}
-		this.multipler = multipler + 1;
-		logger.info("Increased tempo [" + multipler + "]");
-		stateObserver.updateTempo(multipler);
+		this.tempoMultipler = tempoMultipler + 1;
+		logger.info("Increased tempo [" + tempoMultipler + "]");
+		stateObserver.updateTempo(tempoMultipler);
 	}
 
 	@Override
@@ -119,17 +115,13 @@ class AudioLifeCycleManagerImpl implements AudioLifeCycleManager, AudioPlayRight
 	}
 
 	@Override
-	public int tempoMultiplier(int duration) {
-		final int customizedDuration = (multipler == 0) ? duration : newDuration(duration);
+	public int customizedTempoDuration(int duration) {
+		final int customizedDuration = (tempoMultipler == 0) ? duration : newDuration(duration);
 		return customizedDuration;
 	}
 
-	AudioLifeCycleManagerImpl setDurationAndVolume(int durationInMsec, double vol) {
-		return new AudioLifeCycleManagerImpl(durationInMsec, vol);
-	}
-
 	private int newDuration(int duration) {
-		return Math.round((float) (duration - (0.1 * multipler * duration)));
+		return Math.round((float) (duration - (0.1 * tempoMultipler * duration)));
 	}
 
 	@Override

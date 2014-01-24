@@ -24,7 +24,7 @@ public interface AndroidConfigBuilder {
 		DYNAMIC(new InitializationConfigImpl(AndroidConfigBuilder.ANDROID, AudioPlayer.Factory.DYNAMIC_AUDIO)),
 		STATIC(new InitializationConfigImpl(AndroidConfigBuilder.ANDROID, AudioPlayer.Factory.STATIC_AUDIO));
 
-		private InitializationConfig initializationConfig;
+		private final InitializationConfig initializationConfig;
 		private AndroidConfig(InitializationConfig initializationConfig) {
 			this.initializationConfig = initializationConfig;
 		}
